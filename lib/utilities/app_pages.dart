@@ -1,3 +1,5 @@
+import 'package:cluster_arabia/ui/pages/login/bind/login_bind.dart';
+import 'package:cluster_arabia/ui/pages/login/view/login_view.dart';
 import 'package:cluster_arabia/ui/pages/splash/bind/splash_bind.dart';
 import 'package:cluster_arabia/ui/pages/splash/view/spash_view.dart';
 import 'package:cluster_arabia/utilities/app_routes.dart';
@@ -9,6 +11,11 @@ abstract class AppPages {
       name: Routes.splash,
       page: () => const SplashPage(),
       binding: SplashBinding(),
+    ),
+    GetPage(
+      name: Routes.login,
+      page: () => const LoginPage(),
+      binding: LoginBinding(),
     ),
   ];
 }
