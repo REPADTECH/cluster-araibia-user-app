@@ -7,3 +7,14 @@ customStyle(var fontSize, var color, var fontWeight) {
     fontWeight: fontWeight,
   );
 }
+
+var defaultUnderLine = const TextStyle(
+  fontSize: 14,
+  fontWeight: FontWeight.normal,
+  color: Colors.transparent,
+  shadows: [
+    Shadow(offset: Offset(0, -1), color: Color.fromRGBO(51, 138, 254, 1))
+  ],
+  decoration: TextDecoration.underline,
+  decorationColor: Color.fromRGBO(51, 138, 254, 1),
+);
