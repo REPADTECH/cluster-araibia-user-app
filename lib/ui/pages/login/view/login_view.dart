@@ -2,6 +2,7 @@ import 'package:cluster_arabia/res/colors.dart';
 import 'package:cluster_arabia/res/images.dart';
 import 'package:cluster_arabia/res/style.dart';
 import 'package:cluster_arabia/ui/pages/login/bind/login_bind.dart';
+import 'package:cluster_arabia/utilities/app_routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -250,17 +251,22 @@ class LoginPage extends StatelessWidget {
                             SizedBox(
                               height: 10,
                             ),
-                            Container(
-                              width: 250,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(5)),
-                              child: Text('Verify',
-                                  style: customStyle(
-                                      15.0, primaryColorPurple, FontWeight.bold))
-                                  .cToCenter,
-                            ).cHero('Login button')
+                            InkWell(
+                              onTap: (){
+                                Get.toNamed(Routes.home);
+                              },
+                              child: Container(
+                                width: 250,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(5)),
+                                child: Text('Verify',
+                                    style: customStyle(
+                                        15.0, primaryColorPurple, FontWeight.bold))
+                                    .cToCenter,
+                              ).cHero('Login button'),
+                            )
                           ])
                         ],
                       ),
