@@ -1,5 +1,9 @@
+import 'package:cluster_arabia/ui/pages/Invoice/bind/invoice_bind.dart';
+import 'package:cluster_arabia/ui/pages/Invoice/view/invoice_view.dart';
 import 'package:cluster_arabia/ui/pages/home/bind/home_bind.dart';
 import 'package:cluster_arabia/ui/pages/home/view/home_view.dart';
+import 'package:cluster_arabia/ui/pages/home_stack_dashboard/bind/home_stack_dashboard_bind.dart';
+import 'package:cluster_arabia/ui/pages/home_stack_dashboard/view/home_stack_dashborad_view.dart';
 import 'package:cluster_arabia/ui/pages/login/bind/login_bind.dart';
 import 'package:cluster_arabia/ui/pages/login/view/login_view.dart';
 import 'package:cluster_arabia/ui/pages/splash/bind/splash_bind.dart';
@@ -23,6 +27,16 @@ abstract class AppPages {
       name: Routes.home,
       page: () => const HomePage(),
       binding: HomeBinding(),
+    ),
+    GetPage(
+      name: Routes.homeStackDashboard,
+      page: () => const HomeStackDashboard(),
+      binding: HomeStackDashboardBinding(),
+    ),
+    GetPage(
+      name: Routes.invoice,
+      page: () => const InvoicePage(),
+      binding: InvoiceBinding(),
     ),
   ];
 }

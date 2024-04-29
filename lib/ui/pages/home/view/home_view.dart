@@ -2,7 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cluster_arabia/res/colors.dart';
 import 'package:cluster_arabia/res/images.dart';
 import 'package:cluster_arabia/res/style.dart';
+import 'package:cluster_arabia/ui/pages/home/bind/home_bind.dart';
 import 'package:cluster_arabia/ui/pages/home/view/home_more.dart';
+import 'package:cluster_arabia/ui/pages/home_stack_dashboard/bind/home_stack_dashboard_bind.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -25,7 +27,7 @@ class HomePage extends StatelessWidget {
         ),
       ),
       onPressed: () {
-        // NewHomeMainController.to.scaffoldKey.currentState?.openDrawer();
+        HomeStackDashboardController.to.scaffoldKey.currentState?.openDrawer();
       },
     ),
         title: Column(

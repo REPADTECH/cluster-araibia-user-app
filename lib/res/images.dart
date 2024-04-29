@@ -6,7 +6,14 @@ const String profilePic = 'assets/images/profilepic.png';
 const String child_sticker = 'assets/images/child_sticker.png';
 const String racoBanner = 'assets/images/raco_banner.svg';
 const String invoice_inquiry = 'assets/icons/invoice_inquiry.png';
-const String studentsIcon = 'assets/icons/studentsIcon.png';
-const String profileIcon = 'assets/icons/profileIcon.png';
-const String transactionIcon = 'assets/icons/transactionIcon.png';
+const String studentsIcon = 'assets/icons/studentsIcon.svg';
+const String profileIcon = 'assets/icons/profileIcon.svg';
+const String transactionIcon = 'assets/icons/transactionIcon.svg';
 const String bottomBanner = 'assets/images/bottomBanner.png';
+const String homeIcon = 'assets/icons/homeIcon.svg';
+const String contactUs = 'assets/icons/contactUs.svg';
+const String aboutUs = 'assets/icons/aboutUs.svg';
+const String privacyPolicy = 'assets/icons/privacyPolicy.svg';
+const String signOutIcon = 'assets/icons/signOutIcon.svg';
+const String clearUpdateIcon = 'assets/icons/clear_update_icon.svg';
+

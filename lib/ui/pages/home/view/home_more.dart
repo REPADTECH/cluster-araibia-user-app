@@ -3,9 +3,16 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cluster_arabia/res/colors.dart';
 import 'package:cluster_arabia/res/images.dart';
 import 'package:cluster_arabia/res/style.dart';
+import 'package:cluster_arabia/ui/pages/home/bind/home_bind.dart';
+import 'package:cluster_arabia/ui/pages/home_stack_dashboard/bind/home_stack_dashboard_bind.dart';
+import 'package:cluster_arabia/utilities/app_routes.dart';
+import 'package:dotted_line/dotted_line.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_utils/flutter_custom_utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 class FirstPart extends StatelessWidget {
   const FirstPart({super.key});
@@ -171,20 +178,30 @@ class BillOverView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 135,
+      padding: EdgeInsets.symmetric(vertical: 5),
+      // height: 135,
       width: context.cWidth,
       decoration: BoxDecoration(
-          color: Color.fromRGBO(240, 243, 253, 1),
+          color: Color.fromRGBO(255, 255, 255, 1),
+          // color: Color.fromRGBO(240, 243, 253, 1),
           borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: Colors.black54, width: 0.2)),
+        boxShadow: const [
+          BoxShadow(
+            blurRadius: 2,
+            spreadRadius: 0,
+            color: Color.fromRGBO(0, 0, 0, 0.25),
+          ),
+        ],
+          // border: Border.all(color: Colors.black54, width: 0.2),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Bill Overview',
-                  style: customStyle(14.0, Colors.black, FontWeight.bold)),
+              Text('Overview of Billing for August 2024',
+                  style: customStyle(12.0, Colors.black, FontWeight.bold)),
               Container(
                 width: 90,
                 height: 30,
@@ -201,73 +218,86 @@ class BillOverView extends StatelessWidget {
               )
             ],
           ),
-          Divider(
-            color: Color.fromRGBO(159, 159, 159, 1),
-            thickness: 0.5,
-          ),
+          SizedBox(height: 8,),
+          DottedLine(dashColor: Color.fromRGBO(159, 159, 159, 1),lineThickness: 0.5,),
+          SizedBox(height: 8,),
+          // Divider(
+          //   color: Color.fromRGBO(159, 159, 159, 1),
+          //   thickness: 0.5,
+          // ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('Bill Date',
-                      style: customStyle(10.0, Colors.black, FontWeight.normal))
+                      style: customStyle(11.0, Colors.black, FontWeight.normal))
                   .cExpanded(1),
-              Text('Vat %',
-                      style: customStyle(10.0, Colors.black, FontWeight.normal))
+              Text('Student Name',
+                      style: customStyle(11.0, Colors.black, FontWeight.normal))
                   .cExpanded(1),
-              Text('Vat Amount',
-                      style: customStyle(10.0, Colors.black, FontWeight.normal))
-                  .cExpanded(1),
-              Text('Bill Amount',
-                      style: customStyle(10.0, Colors.black, FontWeight.normal))
+              Text('Class',
+                      style: customStyle(11.0, Colors.black, FontWeight.normal))
                   .cExpanded(1),
               Text('Amount to pay',
-                      style: customStyle(9.0, Colors.black, FontWeight.normal))
+                      style: customStyle(11.0, Colors.black, FontWeight.normal))
                   .cExpanded(1),
             ],
           ),
-          Divider(
-            color: Color.fromRGBO(159, 159, 159, 1),
-            thickness: 0.5,
+          SizedBox(height: 5,),
+          DottedLine(dashColor: Color.fromRGBO(159, 159, 159, 1),lineThickness: 0.5,),
+          SizedBox(height: 5,),
+          // Divider(
+          //   color: Color.fromRGBO(159, 159, 159, 1),
+          //   thickness: 0.5,
+          // ),
+          ListView.builder(
+            itemCount: 3,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemBuilder: (context,i) {
+              return Row(
+                children: [
+                  Text('Aug 2024',
+                          style: customStyle(
+                              11.0, primaryColorPurple, FontWeight.normal))
+                      .cExpanded(1),
+                  Text('Sharafas OM',
+                          style: customStyle(
+                              11.0, primaryColorPurple, FontWeight.normal))
+                      .cExpanded(1),
+                  Text('10(B)',
+                          style: customStyle(
+                              11.0, primaryColorPurple, FontWeight.normal))
+                      .cExpanded(1),
+                  Text('SAR 115.00',
+                          style: customStyle(
+                              11.0, primaryColorPurple, FontWeight.normal))
+                      .cExpanded(1),
+                ],
+              );
+            }
           ),
+          SizedBox(height: 8,),
+          DottedLine(dashColor: Color.fromRGBO(159, 159, 159, 1),lineThickness: 0.5,),
+          SizedBox(height: 8,),
           Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text('Aug 2024',
-                      style: customStyle(
-                          10.0, primaryColorPurple, FontWeight.normal))
-                  .cExpanded(1),
-              Text('15.00 %',
-                      style: customStyle(
-                          10.0, primaryColorPurple, FontWeight.normal))
-                  .cExpanded(1),
-              Text('SAR 15.00',
-                      style: customStyle(
-                          10.0, primaryColorPurple, FontWeight.normal))
-                  .cExpanded(1),
-              Text('SAR 100.00',
-                      style: customStyle(
-                          10.0, primaryColorPurple, FontWeight.normal))
-                  .cExpanded(1),
-              Text('SAR 115.00',
-                      style: customStyle(
-                          10.0, primaryColorPurple, FontWeight.normal))
-                  .cExpanded(1),
-            ],
-          ),
-          SizedBox(
-            height: 12,
-          ),
-          Row(
-            children: [
-              Image.asset(invoice_inquiry),
-              SizedBox(
-                width: 5,
-              ),
-              Text(
-                  'This invoice is system-generated. For inquiries, please contact us.',
-                  style: customStyle(8.0, Color.fromRGBO(159, 159, 159, 1),
-                      FontWeight.normal)),
-            ],
-          )
+              Text('SAR 345.00',
+                  style: customStyle(
+                      11.0, primaryColorPurple, FontWeight.normal))
+          ],).cPadOnly(r: 24)
+          // Row(
+          //   children: [
+          //     Image.asset(invoice_inquiry),
+          //     SizedBox(
+          //       width: 5,
+          //     ),
+          //     Text(
+          //         'This invoice is system-generated. For inquiries, please contact us.',
+          //         style: customStyle(8.0, Color.fromRGBO(159, 159, 159, 1),
+          //             FontWeight.normal)),
+          //   ],
+          // )
         ],
       ).cPadOnly(l: 10, r: 10, t: 10),
     ).cPadAll(10);
@@ -330,10 +360,10 @@ class MenuBox extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Image.asset(
+          SvgPicture.asset(
             img,
-            height: 30,
-            width: 30,
+            height: 25,
+            width: 25,
           ),
           SizedBox(
             width: 2,
@@ -359,6 +389,10 @@ class BottomImageList extends StatelessWidget {
           child: Image.asset(bottomBanner),
         );
       }
-    ).cPadOnly(t: 10);
+    ).cPadOnly(t: 10,b: 10);
   }
 }
+
+
+
+

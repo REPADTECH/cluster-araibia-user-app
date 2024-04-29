@@ -253,7 +253,7 @@ class LoginPage extends StatelessWidget {
                             ),
                             InkWell(
                               onTap: (){
-                                Get.toNamed(Routes.home);
+                                Get.offAllNamed(Routes.homeStackDashboard);
                               },
                               child: Container(
                                 width: 250,
