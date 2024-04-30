@@ -46,7 +46,8 @@ dependencies:
   badges: ^3.1.2
   carousel_slider: ^4.2.1
   dotted_line: ^3.2.2
-
+  dropdown_search: ^5.0.6
+  syncfusion_flutter_datepicker: ^25.1.42
 
 
 

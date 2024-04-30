@@ -16,4 +16,6 @@ const String aboutUs = 'assets/icons/aboutUs.svg';
 const String privacyPolicy = 'assets/icons/privacyPolicy.svg';
 const String signOutIcon = 'assets/icons/signOutIcon.svg';
 const String clearUpdateIcon = 'assets/icons/clear_update_icon.svg';
+const String schoolcap = 'assets/icons/schoolcap.svg';
+const String routeIcon = 'assets/icons/routeIcon.svg';
 

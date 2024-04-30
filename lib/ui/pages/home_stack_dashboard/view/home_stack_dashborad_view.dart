@@ -68,7 +68,7 @@ class HomeStackDashboard extends StatelessWidget {
                     width: 25,
                   ),
                 ),
-                label: 'Students',
+                label: 'Children',
                 backgroundColor: Colors.white,
               ),
               BottomNavigationBarItem(

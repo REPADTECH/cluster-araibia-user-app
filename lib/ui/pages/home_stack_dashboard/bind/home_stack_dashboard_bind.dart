@@ -1,3 +1,4 @@
+import 'package:cluster_arabia/ui/pages/Invoice/bind/invoice_bind.dart';
 import 'package:cluster_arabia/ui/pages/home/bind/home_bind.dart';
 import 'package:cluster_arabia/utilities/app_routes.dart';
 import 'package:cluster_arabia/utilities/com_binding.dart';
@@ -9,6 +10,8 @@ class HomeStackDashboardBinding implements Bindings {
   @override
   void dependencies() {
     Get.put(HomeStackDashboardController());
+    Get.put(HomeController());
+    Get.put(InvoiceController());
   }
 }
 
@@ -18,6 +21,7 @@ class HomeStackDashboardController extends GetxController {
   var scaffoldKey = GlobalKey<ScaffoldState>();
   var indexedStack = 0.obs;
   var tabIndex = 0.obs;
+
 
   void changeTabIndex(int index) {
     try {
