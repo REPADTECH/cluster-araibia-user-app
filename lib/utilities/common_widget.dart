@@ -1,8 +1,10 @@
+import 'package:cluster_arabia/res/colors.dart';
 import 'package:cluster_arabia/res/images.dart';
 import 'package:cluster_arabia/res/style.dart';
 import 'package:cluster_arabia/ui/pages/home_stack_dashboard/bind/home_stack_dashboard_bind.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_utils/flutter_custom_utils.dart';
+import 'package:flutter_date_range_picker/flutter_date_range_picker.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
@@ -120,4 +122,152 @@ class CustomButtonWidget extends StatelessWidget {
   }
 }
 
-
+void dateRangePickerDialog(BuildContext context,
+    {required void Function()? onTapCancel,
+      required void Function()? onTapConfirm,
+      DateTime? maxDate,
+      bool? isForward = false,
+      DateTime? minDate,
+      DateRange? initialDateRange,
+      DateTime? initialDisplayedDate,
+      required void Function(DateRange?) onDateRangeChanged}) {
+  showDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          buttonPadding: EdgeInsets.zero,
+          iconPadding: EdgeInsets.zero,
+          insetPadding: EdgeInsets.zero,
+          contentPadding: EdgeInsets.zero,
+          actionsPadding: EdgeInsets.zero,
+          actions: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                const Divider().cPadZero,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                        onPressed: onTapCancel,
+                        child: Text('Cancel',
+                            style: customStyle(
+                                14.0, Colors.blue, FontWeight.normal))),
+                    TextButton(
+                        onPressed: onTapConfirm,
+                        child: Text('Confirm',
+                            style: customStyle(
+                                14.0, Colors.blue, FontWeight.normal))),
+                  ],
+                ).cPadOnly(r: 15, b: 10, t: 0),
+              ],
+            ),
+          ],
+          content: DateRangePickerWidget(
+            height: 250,
+            doubleMonth: false,
+            minimumDateRangeLength: 2,
+            initialDateRange: initialDateRange,
+            maxDate: maxDate,
+            minDate: minDate,
+            initialDisplayedDate: initialDisplayedDate,
+            onDateRangeChanged: onDateRangeChanged,
+            theme: CalendarTheme(
+              quickDateRangeTextStyle: TextStyle(fontSize: 11),
+              selectedColor: primaryColorPurple,
+              dayNameTextStyle:
+              customStyle(10.0, Colors.black45, FontWeight.normal),
+              inRangeColor: primaryColorPurple,
+              inRangeTextStyle:
+              customStyle(10.0, Colors.white, FontWeight.normal),
+              selectedTextStyle:
+              customStyle(9.0, Colors.white, FontWeight.bold),
+              todayTextStyle: customStyle(10.0, Colors.blue, FontWeight.bold),
+              defaultTextStyle:
+              customStyle(9.0, Colors.black, FontWeight.normal),
+              radius: 5,
+              tileSize: 20,
+              disabledTextStyle: const TextStyle(color: Colors.grey),
+            ),
+            quickDateRanges: (isForward ?? false)
+                ? [
+              QuickDateRange(dateRange: null, label: "Remove date range"),
+              QuickDateRange(
+                label: 'next 3 days',
+                dateRange: DateRange(
+                  DateTime.now(),
+                  DateTime.now().add(const Duration(days: 3)),
+                ),
+              ),
+              QuickDateRange(
+                label: 'next 7 days',
+                dateRange: DateRange(
+                  DateTime.now(),
+                  DateTime.now().add(const Duration(days: 7)),
+                ),
+              ),
+              QuickDateRange(
+                label: 'next 30 days',
+                dateRange: DateRange(
+                  DateTime.now(),
+                  DateTime.now().add(const Duration(days: 30)),
+                ),
+              ),
+              QuickDateRange(
+                label: 'next 90 days',
+                dateRange: DateRange(
+                  DateTime.now(),
+                  DateTime.now().add(const Duration(days: 90)),
+                ),
+              ),
+              QuickDateRange(
+                label: 'next 180 days',
+                dateRange: DateRange(
+                  DateTime.now(),
+                  DateTime.now().add(const Duration(days: 180)),
+                ),
+              ),
+            ]
+                : [
+              QuickDateRange(dateRange: null, label: "Remove date range"),
+              QuickDateRange(
+                label: 'Last 3 days',
+                dateRange: DateRange(
+                  DateTime.now().subtract(const Duration(days: 3)),
+                  DateTime.now(),
+                ),
+              ),
+              QuickDateRange(
+                label: 'Last 7 days',
+                dateRange: DateRange(
+                  DateTime.now().subtract(const Duration(days: 7)),
+                  DateTime.now(),
+                ),
+              ),
+              QuickDateRange(
+                label: 'Last 30 days',
+                dateRange: DateRange(
+                  DateTime.now().subtract(const Duration(days: 30)),
+                  DateTime.now(),
+                ),
+              ),
+              QuickDateRange(
+                label: 'Last 90 days',
+                dateRange: DateRange(
+                  DateTime.now().subtract(const Duration(days: 90)),
+                  DateTime.now(),
+                ),
+              ),
+              QuickDateRange(
+                label: 'Last 180 days',
+                dateRange: DateRange(
+                  DateTime.now().subtract(const Duration(days: 180)),
+                  DateTime.now(),
+                ),
+              ),
+            ],
+          ),
+        );
+      });
+}

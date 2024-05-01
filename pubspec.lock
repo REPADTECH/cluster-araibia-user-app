@@ -97,14 +97,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.12"
-  cross_file:
-    dependency: transitive
-    description:
-      name: cross_file
-      sha256: "55d7b444feb71301ef6b8838dbc1ae02e63dd48c8773f3810ff53bb1e2945b32"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.4+1"
   crypto:
     dependency: transitive
     description:
@@ -125,10 +117,10 @@ packages:
     dependency: transitive
     description:
       name: device_info_plus
-      sha256: eead12d1a1ed83d8283ab4c2f3fca23ac4082f29f25f29dff0f758f57d06ec91
+      sha256: "77f757b789ff68e4eaf9c56d1752309bd9f7ad557cb105b938a7f8eb89e59110"
       url: "https://pub.dev"
     source: hosted
-    version: "10.1.0"
+    version: "9.1.2"
   device_info_plus_platform_interface:
     dependency: transitive
     description:
@@ -181,10 +173,10 @@ packages:
     dependency: transitive
     description:
       name: file_picker
-      sha256: b6283d7387310ad83bc4f3bc245b75d223a032ae6eba275afcd585de2b9a1476
+      sha256: "1bbf65dd997458a08b531042ec3794112a6c39c07c37ff22113d2e7e4f81d4e4"
       url: "https://pub.dev"
     source: hosted
-    version: "8.0.1"
+    version: "6.2.1"
   fixnum:
     dependency: transitive
     description:
@@ -210,10 +202,18 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_custom_utils
-      sha256: "9323ee737bdcfffa97dd7ea69eb4b82e747214ae2da08182de3f6499d42a9c2c"
+      sha256: "1bcb56dcb889b49135985e7b3e5e34f014ce3bc80c24213fb6752cdef798afea"
       url: "https://pub.dev"
     source: hosted
-    version: "0.4.23"
+    version: "0.4.21"
+  flutter_date_range_picker:
+    dependency: "direct main"
+    description:
+      name: flutter_date_range_picker
+      sha256: c670b418bb3ca9d7e4a6afe21e48b90c57a03f22c35e468ccc8c6552a21883c9
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.14"
   flutter_easyloading:
     dependency: "direct main"
     description:
@@ -297,13 +297,13 @@ packages:
     source: hosted
     version: "4.0.2"
   intl:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: intl
-      sha256: d6f56758b7d3014a48af9701c085700aac781a92a87a62b1333b46d8879661cf
+      sha256: "3bc132a9dbce73a7e4a21a17d06e1878839ffbf975568bc875c60537824b0c4d"
       url: "https://pub.dev"
     source: hosted
-    version: "0.19.0"
+    version: "0.18.1"
   leak_tracker:
     dependency: transitive
     description:
@@ -541,22 +541,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
-  syncfusion_flutter_core:
-    dependency: transitive
-    description:
-      name: syncfusion_flutter_core
-      sha256: fc61878342caee6da7979ca0ca9bb178f1eb5ca9b836dada34b83caa39e4bfed
-      url: "https://pub.dev"
-    source: hosted
-    version: "25.1.42"
-  syncfusion_flutter_datepicker:
-    dependency: "direct main"
-    description:
-      name: syncfusion_flutter_datepicker
-      sha256: "90398b38bceedc34575823ea27d6a1927934852ff2de8f1c1326e35d5b186b58"
-      url: "https://pub.dev"
-    source: hosted
-    version: "25.1.42"
   synchronized:
     dependency: transitive
     description:

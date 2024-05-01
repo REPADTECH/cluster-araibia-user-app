@@ -18,4 +18,6 @@ const String signOutIcon = 'assets/icons/signOutIcon.svg';
 const String clearUpdateIcon = 'assets/icons/clear_update_icon.svg';
 const String schoolcap = 'assets/icons/schoolcap.svg';
 const String routeIcon = 'assets/icons/routeIcon.svg';
+const String locationIcon = 'assets/icons/mapIcon.svg';
+
 

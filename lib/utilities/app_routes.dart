@@ -4,4 +4,5 @@ abstract class Routes {
   static const home = '/home';
   static const homeStackDashboard = '/homeStackDashboard';
   static const invoice = '/invoice';
+  static const children = '/children';
 }

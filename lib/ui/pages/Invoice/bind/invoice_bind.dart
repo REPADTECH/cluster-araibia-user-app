@@ -1,4 +1,6 @@
+import 'package:flutter_date_range_picker/flutter_date_range_picker.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class InvoiceBinding implements Bindings {
   @override
@@ -13,6 +15,11 @@ class InvoiceController extends GetxController {
   final RxString categoryValue = 'Student Name'.obs;
   // List<String> categoryItems = [];
   List<String> categoryItems = ['Sharafas','Sharun','Rohith','Ramees','Salman'];
+
+  DateRange? selectedDateRange;
+  var startDatePass = DateFormat('yyyy-MM-dd').format(DateTime.now());
+  var endDatePass = DateFormat('yyyy-MM-dd').format(DateTime.now());
+
 
   DateTime? startMonth;
   DateTime? endMonth;

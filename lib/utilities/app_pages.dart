@@ -1,5 +1,7 @@
 import 'package:cluster_arabia/ui/pages/Invoice/bind/invoice_bind.dart';
 import 'package:cluster_arabia/ui/pages/Invoice/view/invoice_view.dart';
+import 'package:cluster_arabia/ui/pages/children/bind/children_bind.dart';
+import 'package:cluster_arabia/ui/pages/children/view/children_view.dart';
 import 'package:cluster_arabia/ui/pages/home/bind/home_bind.dart';
 import 'package:cluster_arabia/ui/pages/home/view/home_view.dart';
 import 'package:cluster_arabia/ui/pages/home_stack_dashboard/bind/home_stack_dashboard_bind.dart';
@@ -37,6 +39,11 @@ abstract class AppPages {
       name: Routes.invoice,
       page: () => const InvoicePage(),
       binding: InvoiceBinding(),
+    ),
+    GetPage(
+      name: Routes.children,
+      page: () => const ChildrenView(),
+      binding: ChildrenBinding(),
     ),
   ];
 }

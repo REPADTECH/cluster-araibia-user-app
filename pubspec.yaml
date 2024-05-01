@@ -36,7 +36,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
   get: ^4.6.6
-  flutter_custom_utils: ^0.4.23
+  flutter_custom_utils: ^0.4.12
   flutter_svg: ^1.1.6
   google_fonts: ^6.2.1
   flutter_easyloading: ^3.0.5
@@ -47,7 +47,9 @@ dependencies:
   carousel_slider: ^4.2.1
   dotted_line: ^3.2.2
   dropdown_search: ^5.0.6
-  syncfusion_flutter_datepicker: ^25.1.42
+  flutter_date_range_picker: ^0.0.14
+  intl: ^0.18.1
+  #custom_date_range_picker: ^1.0.10
 
 
 

@@ -7,9 +7,10 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_utils/flutter_custom_utils.dart';
+import 'package:flutter_date_range_picker/flutter_date_range_picker.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+// import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class FirstPart extends StatelessWidget {
   const FirstPart({super.key});
@@ -20,7 +21,7 @@ class FirstPart extends StatelessWidget {
       return Row(
         children: [
           Container(
-              height: 40,
+              height: 43,
               width: 200,
               decoration: BoxDecoration(
                   border: Border.all(color: Colors.black, width: 0.5),
@@ -57,49 +58,93 @@ class FirstPart extends StatelessWidget {
                   ),
                 ],
               )
-              // DropdownSearch(
-              //   items: logic.dropdownvalue,
-              //   dropdownDecoratorProps:
-              //   const DropDownDecoratorProps(
-              //     dropdownSearchDecoration:
-              //     InputDecoration(
-              //         border:
-              //         InputBorder.none),
-              //   ),
-              //   popupProps: PopupProps.menu(
-              //     constraints:
-              //     const BoxConstraints(
-              //         maxHeight: 150),
-              //     showSearchBox: false,
-              //     showSelectedItems: false,
-              //     disabledItemFn: (String s) =>
-              //         s.startsWith('I'),
-              //   ),
-              //   enabled: true,
-              //   onChanged: (val) {
-              //     logic.selectedValue.value =
-              //     '$val';
-              //     logic.update();
-              //   },
-              //   selectedItem:
-              //   logic.selectedValue.value,
-              // ),
               ),
           SizedBox(
             width: 10,
           ),
-          InkWell(
-            onTap: (){
-
-            },
-            child: Container(
-              height: 40,
-              width: 120,
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black, width: 0.5),
-                  borderRadius: BorderRadius.circular(5)),
-            ),
+          Column(
+            children: [
+              InkWell(
+                onTap: (){
+                  showMonthPicker(context: context, isStartMonth: true);
+                },
+                child: Container(
+                height: 20,
+                width: 120,
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black, width: 0.5),
+                    borderRadius: BorderRadius.circular(5)),
+                  child:
+                  Text(
+                      (logic.startMonth!=null)? '${logic.startMonth}':'Start date').cPadOnly(l: 20).cToCenter ,
+                  // Text("Select Start Month") ,
+                ),
+              ),
+              InkWell(
+                onTap: (){
+                  showMonthPicker(context: context, isStartMonth: false);
+                },
+                child: Container(
+                  height: 20,
+                  width: 120,
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black, width: 0.5),
+                      borderRadius: BorderRadius.circular(5)),
+                  child:
+                  Text((logic.endMonth!=null)?'${logic.endMonth}':'End date').cPadOnly(l: 20).cToCenter,
+                  // Text("Select End Month"),
+                ).cPadOnly(t: 3),
+              ),            ],
           ),
+
+          // InkWell(
+          //   onTap: () {
+          //     dateRangePickerDialog(context,
+          //         isForward: true,
+          //         minDate: DateTime.now(),
+          //         initialDateRange:
+          //         DateRange(DateTime.now(), DateTime.now()),
+          //         initialDisplayedDate:
+          //         logic.selectedDateRange?.start ??
+          //             DateTime.now(), onDateRangeChanged: (v) {
+          //           logic.selectedDateRange = v;
+          //           logic.startDatePass = v!.start
+          //               .cGetFormattedDate(format: 'yyyy-MM-dd');
+          //           logic.endDatePass =
+          //               v.end.cGetFormattedDate(format: 'yyyy-MM-dd');
+          //           logic.update();
+          //           print(
+          //               'selectedDateRange${logic.selectedDateRange}');
+          //         }, onTapCancel: () {
+          //           logic.selectedDateRange = null;
+          //           logic.startDatePass = '';
+          //           logic.endDatePass = '';
+          //           logic.update();
+          //           Get.back();
+          //         }, onTapConfirm: () {
+          //           cLog('${logic.startDatePass}-${logic.endDatePass}');
+          //           // logic.getCouponList();
+          //           Get.back();
+          //         });
+          //   },
+          //   child: Container(
+          //     height: 40,
+          //     width: 120,
+          //     decoration: BoxDecoration(
+          //         border: Border.all(color: Colors.black, width: 0.5),
+          //         borderRadius: BorderRadius.circular(5)),
+          //     child:    Text(
+          //       // logic.selectedDateRange == null
+          //       ((logic.startDatePass) == '' &&
+          //           logic.endDatePass == '')
+          //           ? 'Select Date Range'
+          //       // : '${logic.selectedDateRange}',
+          //           : '${(logic.startDatePass).cGetFormattedDate(format: 'dd/MM/yyyy')} — ${(logic.endDatePass).cGetFormattedDate(format: 'dd/MM/yyyy')}',
+          //       style: customStyle(
+          //           13.0, Colors.black, FontWeight.bold),
+          //     ).cToCenter.cExpanded(1),
+          //   ),
+          // ),
         ],
       ).cPadOnly(t: 15, l: 15);
     });
@@ -321,15 +366,6 @@ class ListPart extends StatelessWidget {
                   // SfDateRangePicker(
                   //   view: DateRangePickerView.year,
                   // )
-                  //   ElevatedButton(
-                  //     onPressed: () => showMonthPicker(context: context, isStartMonth: true),
-                  //     child: Text("Select Start Month"),
-                  //   ),
-                  //   ElevatedButton(
-                  //     onPressed: () => showMonthPicker(context: context, isStartMonth: false),
-                  //     child: Text("Select End Month"),
-                  //   ),
-                  // Text("Start Month: ${logic.startMonth} - End Month: ${logic.endMonth}")
 
                   ],
                 ),
@@ -368,7 +404,8 @@ Future<void> showMonthPicker({
   );
 
   if (picked != null) {
-    final DateTime selectedMonth = DateTime(picked.year, picked.month);
+    final DateTime selectedMonth = DateTime(picked.year, picked.month,picked.day);
+    // final DateTime selectedMonth = DateTime(picked.year, picked.month);
     if (isStartMonth) {
       InvoiceController.to.setStartMonth(selectedMonth);
     } else {

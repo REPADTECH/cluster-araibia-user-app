@@ -2,6 +2,7 @@ import 'package:cluster_arabia/res/colors.dart';
 import 'package:cluster_arabia/res/images.dart';
 import 'package:cluster_arabia/res/style.dart';
 import 'package:cluster_arabia/ui/pages/Invoice/view/invoice_view.dart';
+import 'package:cluster_arabia/ui/pages/children/view/children_view.dart';
 import 'package:cluster_arabia/ui/pages/home/view/home_more.dart';
 import 'package:cluster_arabia/ui/pages/home/view/home_view.dart';
 import 'package:cluster_arabia/ui/pages/home_stack_dashboard/bind/home_stack_dashboard_bind.dart';
@@ -27,7 +28,7 @@ class HomeStackDashboard extends StatelessWidget {
             children: const [
               HomePage(),
               InvoicePage(),
-              // CategoriesView(),
+              ChildrenView(),
               // WishList(),
               // MyAccountPage(),
             ],
