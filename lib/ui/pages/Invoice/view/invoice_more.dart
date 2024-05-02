@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cluster_arabia/res/colors.dart';
 import 'package:cluster_arabia/res/images.dart';
 import 'package:cluster_arabia/res/style.dart';
@@ -10,7 +12,7 @@ import 'package:flutter_custom_utils/flutter_custom_utils.dart';
 import 'package:flutter_date_range_picker/flutter_date_range_picker.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-// import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class FirstPart extends StatelessWidget {
   const FirstPart({super.key});
@@ -28,14 +30,20 @@ class FirstPart extends StatelessWidget {
                   borderRadius: BorderRadius.circular(5)),
               child: Row(
                 children: [
-                  Image.asset(profilePic,width: 25,height: 25,).cPadOnly(l: 5),
-                  SizedBox(width: 15,),
+                  Image.asset(
+                    profilePic,
+                    width: 25,
+                    height: 25,
+                  ).cPadOnly(l: 5),
+                  SizedBox(
+                    width: 15,
+                  ),
                   SizedBox(
                     width: 150,
                     child: DropdownSearch(
                       dropdownDecoratorProps: DropDownDecoratorProps(
                           dropdownSearchDecoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(vertical: 8),
+                              contentPadding: EdgeInsets.symmetric(vertical: 8),
                               disabledBorder: InputBorder.none,
                               border: InputBorder.none)),
                       popupProps: PopupProps.menu(
@@ -57,45 +65,65 @@ class FirstPart extends StatelessWidget {
                     ),
                   ),
                 ],
-              )
-              ),
+              )),
           SizedBox(
             width: 10,
           ),
-          Column(
-            children: [
-              InkWell(
-                onTap: (){
-                  showMonthPicker(context: context, isStartMonth: true);
-                },
-                child: Container(
-                height: 20,
-                width: 120,
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black, width: 0.5),
-                    borderRadius: BorderRadius.circular(5)),
-                  child:
-                  Text(
-                      (logic.startMonth!=null)? '${logic.startMonth}':'Start date').cPadOnly(l: 20).cToCenter ,
-                  // Text("Select Start Month") ,
-                ),
-              ),
-              InkWell(
-                onTap: (){
-                  showMonthPicker(context: context, isStartMonth: false);
-                },
-                child: Container(
-                  height: 20,
-                  width: 120,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black, width: 0.5),
-                      borderRadius: BorderRadius.circular(5)),
-                  child:
-                  Text((logic.endMonth!=null)?'${logic.endMonth}':'End date').cPadOnly(l: 20).cToCenter,
-                  // Text("Select End Month"),
-                ).cPadOnly(t: 3),
-              ),            ],
-          ),
+          InkWell(
+            onTap: () {
+              dateSelectPopup(context: context);
+            },
+            child: Container(
+              height: 40,
+              width: 120,
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black, width: 0.5),
+                  borderRadius: BorderRadius.circular(5)),
+              child:  Text(
+            (logic.startMonth == null &&
+                logic.endMonth == null)
+                ? 'Select Date Range'
+                :
+            '${(logic.startMonth)?.cGetFormattedDate(format: 'MM/yyyy')} — ${(logic.endMonth == null)?(logic.startMonth)?.cGetFormattedDate(format: 'MM/yyyy'):(logic.endMonth)?.cGetFormattedDate(format: 'MM/yyyy')}',
+            style: customStyle(
+                12.0, Colors.black, FontWeight.normal),
+          ).cToCenter,
+            ),
+          )
+          // Column(
+          //   children: [
+          //     InkWell(
+          //       onTap: (){
+          //         showMonthPicker(context: context, isStartMonth: true);
+          //       },
+          //       child: Container(
+          //       height: 20,
+          //       width: 120,
+          //       decoration: BoxDecoration(
+          //           border: Border.all(color: Colors.black, width: 0.5),
+          //           borderRadius: BorderRadius.circular(5)),
+          //         child:
+          //         Text(
+          //             (logic.startMonth!=null)? '${logic.startMonth}':'Start date').cPadOnly(l: 20).cToCenter ,
+          //         // Text("Select Start Month") ,
+          //       ),
+          //     ),
+          //     InkWell(
+          //       onTap: (){
+          //         showMonthPicker(context: context, isStartMonth: false);
+          //       },
+          //       child: Container(
+          //         height: 20,
+          //         width: 120,
+          //         decoration: BoxDecoration(
+          //             border: Border.all(color: Colors.black, width: 0.5),
+          //             borderRadius: BorderRadius.circular(5)),
+          //         child:
+          //         Text((logic.endMonth!=null)?'${logic.endMonth}':'End date').cPadOnly(l: 20).cToCenter,
+          //         // Text("Select End Month"),
+          //       ).cPadOnly(t: 3),
+          //     ),            ],
+          // ),
 
           // InkWell(
           //   onTap: () {
@@ -151,6 +179,54 @@ class FirstPart extends StatelessWidget {
   }
 }
 
+void dateSelectPopup({
+  required BuildContext context,
+  String id = '',
+  var from,
+}) {
+  showDialog<void>(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        scrollable: true,
+        contentPadding: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // Set the border radius here
+        ),
+        content: SingleChildScrollView(
+          child: GetBuilder<InvoiceController>(builder: (logic) {
+            return SfDateRangePicker(
+              confirmText: 'SELECT',
+              showNavigationArrow: true,
+              onSubmit: (v) {
+                if (v is PickerDateRange) {
+                  final DateTime? rangeStartDate = v.startDate;
+                  final DateTime? rangeEndDate = v.endDate;
+                  logic.startMonth=rangeStartDate;
+                  logic.endMonth=rangeEndDate;
+                  logic.update();
+                  print(rangeStartDate);
+                  print('//////${logic.startMonth}');
+                  print(rangeEndDate);
+                }
+                Get.back();
+              },
+              onCancel: () {
+                Get.back();
+              },
+              showActionButtons: true,
+              showTodayButton: true,
+              view: DateRangePickerView.decade,
+              selectionMode: DateRangePickerSelectionMode.range,
+            ).cClipAll(10);
+          }),
+        ),
+      );
+    },
+  );
+}
+
 class ListPart extends StatelessWidget {
   final String month;
   final String invoiceNo;
@@ -176,203 +252,202 @@ class ListPart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<InvoiceController>(
-      builder: (logic) {
-        return ListView.builder(
-            itemCount: 2,
-            shrinkWrap: true,
-            itemBuilder: (context, i) {
-              return Container(
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                // height: 135,
-                width: context.cWidth,
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(255, 255, 255, 1),
-                  // color: Color.fromRGBO(240, 243, 253, 1),
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: const [
-                    BoxShadow(
-                      blurRadius: 6,
-                      spreadRadius: 1,
-                      color: Color.fromRGBO(0, 0, 0, 0.25),
-                    ),
-                  ],
-                  // border: Border.all(color: Colors.black54, width: 0.2),
-                ),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
+    return GetBuilder<InvoiceController>(builder: (logic) {
+      return ListView.builder(
+          itemCount: 2,
+          shrinkWrap: true,
+          itemBuilder: (context, i) {
+            return Container(
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              // height: 135,
+              width: context.cWidth,
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(255, 255, 255, 1),
+                // color: Color.fromRGBO(240, 243, 253, 1),
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: const [
+                  BoxShadow(
+                    blurRadius: 6,
+                    spreadRadius: 1,
+                    color: Color.fromRGBO(0, 0, 0, 0.25),
+                  ),
+                ],
+                // border: Border.all(color: Colors.black54, width: 0.2),
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.access_time_filled_rounded,
+                            size: 18,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(month)
+                        ],
+                      ),
+                      Container(
+                        width: 60,
+                        height: 25,
+                        decoration: BoxDecoration(
+                            color: (i == 0)
+                                ? Color.fromRGBO(255, 243, 235, 1)
+                                : Color.fromRGBO(221, 252, 243, 1),
+                            border: Border.all(
+                                color: (i == 0)
+                                    ? Color.fromRGBO(249, 122, 30, 1)
+                                    : Color.fromRGBO(33, 196, 141, 1)),
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(
-                              Icons.access_time_filled_rounded,
-                              size: 18,
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(month)
-                          ],
-                        ),
-                        Container(
-                          width: 60,
-                          height: 25,
-                          decoration: BoxDecoration(
-                              color: (i == 0)
-                                  ? Color.fromRGBO(255, 243, 235, 1)
-                                  : Color.fromRGBO(221, 252, 243, 1),
-                              border: Border.all(
+                            Container(
+                                height: 8,
+                                width: 8,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
                                   color: (i == 0)
                                       ? Color.fromRGBO(249, 122, 30, 1)
-                                      : Color.fromRGBO(33, 196, 141, 1)),
-                              borderRadius: BorderRadius.circular(20)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                  height: 8,
-                                  width: 8,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: (i == 0)
-                                        ? Color.fromRGBO(249, 122, 30, 1)
-                                        : Color.fromRGBO(33, 196, 141, 1),
-                                  )),
-                              SizedBox(
-                                width: 8,
-                              ),
-                              Text(
-                                (i == 0) ? 'Open' : 'Paid',
-                                style: customStyle(
-                                    13.0,
-                                    (i == 0)
-                                        ? Color.fromRGBO(249, 122, 30, 1)
-                                        : Color.fromRGBO(33, 196, 141, 1),
-                                    FontWeight.normal),
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Invoice no ${invoiceNo}'),
-                        Text(
-                          'SAR ${totalAmt}',
-                          style: customStyle(12.0, Colors.black, FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    DottedLine(
-                      dashGapLength: 6,
-                      lineThickness: 0.5,
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Row(
-                      children: [
-                        Image.asset(
-                          profilePic,
-                          height: 25,
-                          width: 25,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(studentName,
-                            style:
-                                customStyle(13.0, Colors.black, FontWeight.bold)),
-                        Text('(${division})',
-                            style: customStyle(13.0, Color.fromRGBO(99, 99, 99, 1),
-                                FontWeight.bold)),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        SvgPicture.asset(
-                          schoolcap,
-                          height: 12,
-                          width: 12,
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(schoolName,
-                            style:
-                                customStyle(12.0, Colors.black, FontWeight.normal)),
-                        Text(' (${schoolCode})',
-                            style: customStyle(12.0, Color.fromRGBO(99, 99, 99, 1),
-                                FontWeight.normal)),
-                      ],
-                    ).cPadOnly(t: 5),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            SvgPicture.asset(
-                              routeIcon,
-                              height: 12,
-                              width: 12,
-                            ),
+                                      : Color.fromRGBO(33, 196, 141, 1),
+                                )),
                             SizedBox(
-                              width: 7,
+                              width: 8,
                             ),
-                            Text(routeName,
-                                style: customStyle(
-                                    11.0, Colors.black, FontWeight.normal)),
-                            Text(' (${pickupName})',
-                                style: customStyle(
-                                    11.0,
-                                    Color.fromRGBO(99, 99, 99, 1),
-                                    FontWeight.normal)),
-                          ],
-                        ).cPadOnly(t: 5),
-                        Row(
-                          children: [
-                            CustomButtonWidget(
-                              backgroundColor: Colors.white,
-                              borderColor: primaryColorPurple,
-                              vPadding: 4,
-                              width: 60,
-                              buttonTitle: 'View Bill',
-                              titleStyle: customStyle(
-                                  10.0, primaryColorPurple, FontWeight.bold),
-                            ),
-                            if (i == 0)
-                              CustomButtonWidget(
-                                backgroundColor: primaryColorPurple,
-                                vPadding: 4,
-                                width: 40,
-                                buttonTitle: 'Pay',
-                                titleStyle: customStyle(
-                                    10.0, Colors.white, FontWeight.bold),
-                              ).cPadOnly(l: 7),
+                            Text(
+                              (i == 0) ? 'Open' : 'Paid',
+                              style: customStyle(
+                                  13.0,
+                                  (i == 0)
+                                      ? Color.fromRGBO(249, 122, 30, 1)
+                                      : Color.fromRGBO(33, 196, 141, 1),
+                                  FontWeight.normal),
+                            )
                           ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Invoice no ${invoiceNo}'),
+                      Text(
+                        'SAR ${totalAmt}',
+                        style: customStyle(12.0, Colors.black, FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  DottedLine(
+                    dashGapLength: 6,
+                    lineThickness: 0.5,
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    children: [
+                      Image.asset(
+                        profilePic,
+                        height: 25,
+                        width: 25,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(studentName,
+                          style:
+                              customStyle(13.0, Colors.black, FontWeight.bold)),
+                      Text('(${division})',
+                          style: customStyle(13.0,
+                              Color.fromRGBO(99, 99, 99, 1), FontWeight.bold)),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      SvgPicture.asset(
+                        schoolcap,
+                        height: 12,
+                        width: 12,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(schoolName,
+                          style: customStyle(
+                              12.0, Colors.black, FontWeight.normal)),
+                      Text(' (${schoolCode})',
+                          style: customStyle(
+                              12.0,
+                              Color.fromRGBO(99, 99, 99, 1),
+                              FontWeight.normal)),
+                    ],
+                  ).cPadOnly(t: 5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          SvgPicture.asset(
+                            routeIcon,
+                            height: 12,
+                            width: 12,
+                          ),
+                          SizedBox(
+                            width: 7,
+                          ),
+                          Text(routeName,
+                              style: customStyle(
+                                  11.0, Colors.black, FontWeight.normal)),
+                          Text(' (${pickupName})',
+                              style: customStyle(
+                                  11.0,
+                                  Color.fromRGBO(99, 99, 99, 1),
+                                  FontWeight.normal)),
+                        ],
+                      ).cPadOnly(t: 5),
+                      Row(
+                        children: [
+                          CustomButtonWidget(
+                            backgroundColor: Colors.white,
+                            borderColor: primaryColorPurple,
+                            vPadding: 4,
+                            width: 60,
+                            buttonTitle: 'View Bill',
+                            titleStyle: customStyle(
+                                10.0, primaryColorPurple, FontWeight.bold),
+                          ),
+                          if (i == 0)
+                            CustomButtonWidget(
+                              backgroundColor: primaryColorPurple,
+                              vPadding: 4,
+                              width: 40,
+                              buttonTitle: 'Pay',
+                              titleStyle: customStyle(
+                                  10.0, Colors.white, FontWeight.bold),
+                            ).cPadOnly(l: 7),
+                        ],
+                      ),
+                    ],
+                  ),
                   // SfDateRangePicker(
                   //   view: DateRangePickerView.year,
                   // )
-
-                  ],
-                ),
-              ).cMargOnly(t: 15, l: 15, r: 15);
-            });
-      }
-    );
+                ],
+              ),
+            ).cMargOnly(t: 15, l: 15, r: 15);
+          });
+    });
   }
 }
 
@@ -386,7 +461,9 @@ Future<void> showMonthPicker({
     initialDate: DateTime.now(),
     firstDate: DateTime(2000),
     lastDate: DateTime(2100),
-    helpText: isStartMonth ? 'SELECT START MONTH' : 'SELECT END MONTH', // Can change the help text accordingly
+    helpText: isStartMonth
+        ? 'SELECT START MONTH'
+        : 'SELECT END MONTH', // Can change the help text accordingly
     fieldLabelText: 'Month',
     fieldHintText: 'Month/Year',
     builder: (context, child) {
@@ -404,7 +481,8 @@ Future<void> showMonthPicker({
   );
 
   if (picked != null) {
-    final DateTime selectedMonth = DateTime(picked.year, picked.month,picked.day);
+    final DateTime selectedMonth =
+        DateTime(picked.year, picked.month, picked.day);
     // final DateTime selectedMonth = DateTime(picked.year, picked.month);
     if (isStartMonth) {
       InvoiceController.to.setStartMonth(selectedMonth);
@@ -413,4 +491,3 @@ Future<void> showMonthPicker({
     }
   }
 }
-

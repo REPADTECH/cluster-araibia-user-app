@@ -68,6 +68,7 @@ class ListPart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemCount: 3,
         itemBuilder: (context, i) {
@@ -208,7 +209,7 @@ class ListPart extends StatelessWidget {
                     .cPosition(r: 0, b: 0),
               ],
             ),
-          ).cPadOnly(t: 13);
+          ).cPadOnly(t: (i==0)?5:13);
         });
   }
 }
@@ -224,6 +225,7 @@ class SelectionButton extends StatelessWidget {
           Wrap(
             children: [
               ActionChip(
+                visualDensity: VisualDensity(vertical: -3),
                 // avatar: Icon(Icons.remove),
                 backgroundColor: (logic.isSelected == 0)
                     ? Color.fromRGBO(65, 54, 133, 1)
@@ -247,6 +249,8 @@ class SelectionButton extends StatelessWidget {
                 width: 8,
               ),
               ActionChip(
+                visualDensity: VisualDensity(vertical: -3),
+
                 // avatar: Icon(Icons.remove),
                 backgroundColor: (logic.isSelected == 1)
                     ? Color.fromRGBO(65, 54, 133, 1)
@@ -270,6 +274,8 @@ class SelectionButton extends StatelessWidget {
                 width: 8,
               ),
               ActionChip(
+                visualDensity: VisualDensity(vertical: -3),
+
                 // avatar: Icon(Icons.remove),
                 backgroundColor: (logic.isSelected == 2)
                     ? Color.fromRGBO(65, 54, 133, 1)
@@ -292,7 +298,7 @@ class SelectionButton extends StatelessWidget {
             ],
           ),
         ],
-      );
+      ).cPadOnly(t: 5);
     });
   }
 }

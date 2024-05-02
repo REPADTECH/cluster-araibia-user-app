@@ -6,6 +6,7 @@ import 'package:cluster_arabia/res/style.dart';
 import 'package:cluster_arabia/ui/pages/home/bind/home_bind.dart';
 import 'package:cluster_arabia/ui/pages/home_stack_dashboard/bind/home_stack_dashboard_bind.dart';
 import 'package:cluster_arabia/utilities/app_routes.dart';
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ import 'package:flutter_custom_utils/flutter_custom_utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class FirstPart extends StatelessWidget {
   const FirstPart({super.key});
@@ -151,24 +153,72 @@ class BannerSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      // aspectRatio: 392 / 200,
-      aspectRatio: 1.96,
-      child: CarouselSlider.builder(
-        itemCount: 4,
-        // itemCount: logic.bannerListModel?.data?.banners?.length ?? 0,
-        itemBuilder: (BuildContext context, int index, int realIndex) {
-          return GestureDetector(child: SvgPicture.asset(racoBanner));
-        },
-        options: CarouselOptions(
-          autoPlay: true,
-          height: context.cWidth,
-          viewportFraction: 1.0,
-          enlargeCenterPage: false,
-        ),
-      ),
-      //.cPadSymmetric(h: 0).cPadOnly(t: 8),
-    ).cPadOnly(t: 10);
+    return GetBuilder<HomeController>(
+      builder: (logic) {
+        return Stack(
+          children: [
+            SizedBox(
+              height: 190,
+              child: PageView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 4,
+                itemBuilder: (context, index) {
+                  return SvgPicture.asset(racoBanner);
+                },
+                onPageChanged: (v){
+                  logic.currentPage.value = v;
+                  logic.update();
+                },
+              ),
+            ),
+            DotsIndicator(
+              dotsCount: 4,
+              position: logic.currentPage.value,
+              decorator: DotsDecorator(
+                spacing: EdgeInsets.all(3),
+                color: Colors.white, // Inactive dot color
+                activeColor: primaryColorPurple,
+                // activeSize: const Size.square(12.0), // Size of the active dot
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  side: BorderSide(color: primaryColorPurple,width: 0.5)// Border radius of active dot
+                ),
+
+              ),
+            ).cPosition(b: 10,l: 0,r: 0),
+            // AspectRatio(
+            //   // aspectRatio: 392 / 200,
+            //   aspectRatio: 1.96,
+            //   child: CarouselSlider.builder(
+            //     itemCount: 4,
+            //     // itemCount: logic.bannerListModel?.data?.banners?.length ?? 0,
+            //     itemBuilder: (BuildContext context, int index, int realIndex) {
+            //       return GestureDetector(
+            //           child: SvgPicture.asset(racoBanner));
+            //     },
+            //     options:
+            //     CarouselOptions(
+            //       autoPlay: true,
+            //       height: context.cWidth,
+            //       viewportFraction: 1.0,
+            //       enlargeCenterPage: false,
+            //     ),
+            //
+            //   ),
+            //   //.cPadSymmetric(h: 0).cPadOnly(t: 8),
+            // ).cPadOnly(t: 10),
+            // DotsIndicator(
+            //   dotsCount: 4,
+            //   position: index,
+            //   decorator: DotsDecorator(
+            //     color: Colors.black87, // Inactive color
+            //     activeColor: Colors.redAccent,
+            //   ),
+            // )
+          ],
+        ).cPadOnly(t: 4);
+      }
+    );
   }
 }
 
@@ -392,6 +442,56 @@ class BottomImageList extends StatelessWidget {
     ).cPadOnly(t: 10,b: 10);
   }
 }
+
+void dateSelectPopupHome({
+  required BuildContext context,
+  String id = '',
+  var from,
+}) {
+  showDialog<void>(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        scrollable: true,
+        contentPadding: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // Set the border radius here
+        ),
+        content: SingleChildScrollView(
+          child: GetBuilder<HomeController>(builder: (logic) {
+            return SfDateRangePicker(
+              confirmText: 'SELECT',
+              showNavigationArrow: true,
+              onSubmit: (v) {
+                if (v is PickerDateRange) {
+                  final DateTime? rangeStartDate = v.startDate;
+                  final DateTime? rangeEndDate = v.endDate;
+                  logic.startMonth=rangeStartDate;
+                  logic.endMonth=rangeEndDate;
+                  logic.update();
+                  print(rangeStartDate);
+                  print('//////${logic.startMonth}');
+                  print(rangeEndDate);
+                }
+                Get.back();
+              },
+              onCancel: () {
+                Get.back();
+              },
+              showActionButtons: true,
+              showTodayButton: true,
+              view: DateRangePickerView.decade,
+              selectionMode: DateRangePickerSelectionMode.range,
+            ).cClipAll(10);
+          }),
+        ),
+      );
+    },
+  );
+}
+
+
 
 
 

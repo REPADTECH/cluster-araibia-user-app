@@ -17,94 +17,92 @@ class HomeStackDashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetX<HomeStackDashboardController>(
-      builder: (logic) {
-        return Scaffold(
-          key: logic.scaffoldKey,
-          drawer: const HomeDrawer(),
-          backgroundColor: Colors.white,
-          body: IndexedStack(
-            index: logic.indexedStack.value,
-            children: const [
-              HomePage(),
-              InvoicePage(),
-              ChildrenView(),
-              // WishList(),
-              // MyAccountPage(),
-            ],
-          ),
-          bottomNavigationBar: BottomNavigationBar(
-            items: <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: SvgPicture.asset(
-                    // AssetImage(homeBottomIcon),
-                   homeIcon,
-                    height: 25,
-                    width: 25,
-                  ),
+    return GetX<HomeStackDashboardController>(builder: (logic) {
+      return Scaffold(
+        key: logic.scaffoldKey,
+        drawer: const HomeDrawer(),
+        backgroundColor: Colors.white,
+        body: IndexedStack(
+          index: logic.indexedStack.value,
+          children: const [
+            HomePage(),
+            InvoicePage(),
+            ChildrenView(),
+            // WishList(),
+            // MyAccountPage(),
+          ],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: SvgPicture.asset(
+                  // AssetImage(homeBottomIcon),
+                  homeIcon,
+                  height: 25,
+                  width: 25,
                 ),
-                label: 'Home',
-                backgroundColor: Colors.white,
               ),
-              BottomNavigationBarItem(
-                icon: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: SvgPicture.asset(
-                    transactionIcon,
-                    height: 25,
-                    width: 25,
-                  ),
-                ),
-                label: 'Invoice',
-                backgroundColor: Colors.white,
-              ),
-              BottomNavigationBarItem(
-                icon: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: SvgPicture.asset(
-                 studentsIcon,
-                    height: 25,
-                    width: 25,
-                  ),
-                ),
-                label: 'Children',
-                backgroundColor: Colors.white,
-              ),
-              BottomNavigationBarItem(
-                icon: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: SvgPicture.asset(
-                    profileIcon,
-                    height: 25,
-                    width: 25,
-                  ),
-                ),
-                label: 'Profile',
-                backgroundColor: Colors.white,
-              ),
-            ],
-            elevation: 5,
-            currentIndex: logic.tabIndex.value,
-            selectedItemColor: primaryColorPurple,
-            unselectedItemColor: const Color.fromRGBO(126, 126, 126, 1),
-            selectedLabelStyle: customStyle(
-              11.0,
-              const Color.fromRGBO(0, 38, 89, 1),
-              FontWeight.normal,
+              label: 'Home',
+              backgroundColor: Colors.white,
             ),
-            unselectedLabelStyle: customStyle(
-              11.0,
-              const Color.fromRGBO(126, 126, 126, 1),
-              FontWeight.normal,
+            BottomNavigationBarItem(
+              icon: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: SvgPicture.asset(
+                  transactionIcon,
+                  height: 25,
+                  width: 25,
+                ),
+              ),
+              label: 'Invoice',
+              backgroundColor: Colors.white,
             ),
-            showUnselectedLabels: true,
-            onTap: logic.changeTabIndex,
+            BottomNavigationBarItem(
+              icon: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: SvgPicture.asset(
+                  studentsIcon,
+                  height: 25,
+                  width: 25,
+                ),
+              ),
+              label: 'Children',
+              backgroundColor: Colors.white,
+            ),
+            BottomNavigationBarItem(
+              icon: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: SvgPicture.asset(
+                  profileIcon,
+                  height: 25,
+                  width: 25,
+                ),
+              ),
+              label: 'Profile',
+              backgroundColor: Colors.white,
+            ),
+          ],
+          elevation: 5,
+          currentIndex: logic.tabIndex.value,
+          selectedItemColor: primaryColorPurple,
+          unselectedItemColor: const Color.fromRGBO(126, 126, 126, 1),
+          selectedLabelStyle: customStyle(
+            11.0,
+            const Color.fromRGBO(0, 38, 89, 1),
+            FontWeight.normal,
           ),
-        );
-      }
-    );
+          unselectedLabelStyle: customStyle(
+            11.0,
+            const Color.fromRGBO(126, 126, 126, 1),
+            FontWeight.normal,
+          ),
+          showUnselectedLabels: true,
+          onTap: logic.changeTabIndex,
+        ),
+      );
+    });
   }
 }
 
@@ -132,141 +130,109 @@ class HomeDrawer extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                     SizedBox(
+                    SizedBox(
                       height: 25,
                     ),
                     Row(
                       children: [
-                        Image.asset(profilePic,height: 45,width: 45,),
-                        SizedBox(width: 15,),
+                        Image.asset(
+                          profilePic,
+                          height: 45,
+                          width: 45,
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
                         Column(
-                          crossAxisAlignment:CrossAxisAlignment.start,
-                            children: [
-                          Text('Sharafas OM',style: customStyle(20.0, Colors.black, FontWeight.bold)),
-                          Text('sharafasom@gmail.com',style: customStyle(12.0, Color.fromRGBO(83, 97, 107, 1), FontWeight.normal)),
-                        ],)
-                      ],),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Text('Account',style: customStyle(17.0, Color.fromRGBO(83, 97, 107, 1), FontWeight.normal)).cPadOnly(l: 10),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                   GestureDetector(
-                        onTap: () {
-                          Get.back();
-                          // Get.toNamed(Routes.toCart);
-                        },
-                        child: WishListItem(
-                          name: 'Profile',
-                          icon: profileIcon,
-                        ).cPadSymmetric(h: 8),
-                      ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Get.back();
-                        // Get.toNamed(Routes.toWishList);
-                      },
-                      child: WishListItem(
-                        name: 'Invoice',
-                        icon: transactionIcon,
-                      ).cPadSymmetric(h: 8),
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Sharafas OM',
+                                style: customStyle(
+                                    20.0, Colors.black, FontWeight.bold)),
+                            Text('sharafasom@gmail.com',
+                                style: customStyle(
+                                    12.0,
+                                    Color.fromRGBO(83, 97, 107, 1),
+                                    FontWeight.normal)),
+                          ],
+                        )
+                      ],
                     ),
                     const SizedBox(
                       height: 20,
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        Get.back();
-                        // Get.toNamed(Routes.selectAddressDrawer);
-                      },
-                      child: WishListItem(
-                        name: 'Students',
-                        icon: studentsIcon,
-                      ).cPadSymmetric(h: 8),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Text('Policy',style: customStyle(17.0, Color.fromRGBO(83, 97, 107, 1), FontWeight.normal)).cPadOnly(l: 10),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Get.back();
-                        // Get.toNamed(Routes.toCart);
-                      },
-                      child: WishListItem(
-                        name: 'Contact Us',
-                        icon: contactUs,
-                      ).cPadSymmetric(h: 8),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Get.back();
-                        // Get.toNamed(Routes.toWishList);
-                      },
-                      child: WishListItem(
-                        name: 'About Us',
-                        icon: aboutUs,
-                      ).cPadSymmetric(h: 8),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Get.back();
-                        // Get.toNamed(Routes.selectAddressDrawer);
-                      },
-                      child: WishListItem(
-                        name: 'Privacy Policy',
-                        icon: privacyPolicy,
-                      ).cPadSymmetric(h: 8),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Text('Other',style: customStyle(17.0, Color.fromRGBO(83, 97, 107, 1), FontWeight.normal)).cPadOnly(l: 10),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(left: 10),
-                      width: context.cWidth,
-                      height: 20,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          SvgPicture.asset(
-                            signOutIcon,
-                            width: 20,
-                            height: 20,
-                          ),
-                          const SizedBox(
-                            width: 18,
-                          ),
-                          Text(
-                            'Sign out',
+                    Text('Account',
                             style: customStyle(
-                              15.0,
-                              const Color.fromRGBO(238,36,86,1),
-                              FontWeight.normal,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ).cPadSymmetric(h: 8)
+                                17.0,
+                                Color.fromRGBO(83, 97, 107, 1),
+                                FontWeight.normal))
+                        .cPadOnly(l: 10),
+                    // const SizedBox(
+                    //   height: 10,
+                    // ),
+                    WishListItem(
+                      name: 'Profile',
+                      icon: profileIcon,
+                      onTap: (){
 
+                      },
+                    ).cPadSymmetric(h: 8),
+                    WishListItem(
+                      name: 'Invoice',
+                      icon: transactionIcon, onTap: (){
+
+                    },
+                    ).cPadSymmetric(h: 8),
+                    WishListItem(
+                      name: 'Students',
+                      icon: studentsIcon, onTap: (){
+
+                    },
+                    ).cPadSymmetric(h: 8),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text('Policy',
+                            style: customStyle(
+                                17.0,
+                                Color.fromRGBO(83, 97, 107, 1),
+                                FontWeight.normal))
+                        .cPadOnly(l: 10),
+                    WishListItem(
+                      name: 'Contact Us',
+                      icon: contactUs, onTap: (){
+
+                    },
+                    ).cPadSymmetric(h: 8),
+                    WishListItem(
+                      name: 'About Us',
+                      icon: aboutUs, onTap: (){
+
+                    },
+                    ).cPadSymmetric(h: 8),
+                    WishListItem(
+                      name: 'Privacy Policy',
+                      icon: privacyPolicy, onTap: (){
+
+                    },
+                    ).cPadSymmetric(h: 8),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text('Other',
+                            style: customStyle(
+                                17.0,
+                                Color.fromRGBO(83, 97, 107, 1),
+                                FontWeight.normal))
+                        .cPadOnly(l: 10),
+                    WishListItem(
+                      name: 'Sign out',
+                      icon: signOutIcon,
+                      textColor: Color.fromRGBO(238, 36, 86, 1),
+                      onTap: (){
+
+                      },
+                    ).cPadSymmetric(h: 8),
                   ],
                 ).cPadOnly(l: 15),
               ),
@@ -281,41 +247,37 @@ class HomeDrawer extends StatelessWidget {
 class WishListItem extends StatelessWidget {
   var icon;
   var name;
+  final Function onTap;
+  final Color textColor;
+
 
   WishListItem({
     Key? key,
     required this.icon,
     required this.name,
+    required this.onTap,
+    this.textColor = Colors.black,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(left: 10),
-      width: context.cWidth,
-      height: 20,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          SvgPicture.asset(
-            icon,
-            width: 20,
-            height: 20,
-          ),
-          const SizedBox(
-            width: 18,
-          ),
-          Text(
-            name,
-            style: customStyle(
-              15.0,
-              const Color.fromRGBO(0, 0, 0, 1),
-              FontWeight.normal,
-            ),
-          ),
-        ],
+    return ListTile(
+      visualDensity: VisualDensity(vertical: -3),
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8))),
+      leading: SvgPicture.asset(
+        icon,
+        width: 20,
+        height: 20,
       ),
-    );
+      title: Text(
+        name,
+        style: TextStyle(
+            fontSize: 13,
+            color:textColor,
+            fontWeight: FontWeight.normal),
+      ),
+      onTap: () => onTap(),
+    ).cPadOnly(b: 2, r: 10);
   }
 }

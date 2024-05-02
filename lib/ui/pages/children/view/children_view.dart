@@ -11,23 +11,25 @@ class ChildrenView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: commonAppBarBack('Children', primaryColorPurple),
-      body: Column(
-        children: [
-          SearchPart(),
-          SelectionButton(),
-          ListPart(
-            studentName: 'Sharafas OM',
-            gender: 'Male',
-            schoolName: 'TEST SCHOOL ABCD',
-            schoolCode: 'ABC1234',
-            routeName: 'Route name',
-            pickupName: 'pickup point name',
-            location: 'Suite 875 579 Cole Club, Chaunceymouth, MI 04708-1942 ',
-            amount: 'SAR 100.50',
-            division: '4(B)',
-          )
-        ],
-      ).cPadAll(10),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SearchPart(),
+            SelectionButton(),
+            ListPart(
+              studentName: 'Sharafas OM',
+              gender: 'Male',
+              schoolName: 'TEST SCHOOL ABCD',
+              schoolCode: 'ABC1234',
+              routeName: 'Route name',
+              pickupName: 'pickup point name',
+              location: 'Suite 875 579 Cole Club, Chaunceymouth, MI 04708-1942 ',
+              amount: 'SAR 100.50',
+              division: '4(B)',
+            )
+          ],
+        ).cPadAll(10),
+      ),
     );
   }
 }
