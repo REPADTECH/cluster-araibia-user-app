@@ -23,7 +23,7 @@ class FirstPart extends StatelessWidget {
       return Row(
         children: [
           Container(
-              height: 43,
+              height: 40,
               width: 200,
               decoration: BoxDecoration(
                   border: Border.all(color: Colors.black, width: 0.5),
@@ -256,6 +256,7 @@ class ListPart extends StatelessWidget {
       return ListView.builder(
           itemCount: 2,
           shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
           itemBuilder: (context, i) {
             return Container(
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),

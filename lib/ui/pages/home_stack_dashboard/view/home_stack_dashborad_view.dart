@@ -6,6 +6,7 @@ import 'package:cluster_arabia/ui/pages/children/view/children_view.dart';
 import 'package:cluster_arabia/ui/pages/home/view/home_more.dart';
 import 'package:cluster_arabia/ui/pages/home/view/home_view.dart';
 import 'package:cluster_arabia/ui/pages/home_stack_dashboard/bind/home_stack_dashboard_bind.dart';
+import 'package:cluster_arabia/ui/pages/profile/view/profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_utils/flutter_custom_utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -28,7 +29,7 @@ class HomeStackDashboard extends StatelessWidget {
             HomePage(),
             InvoicePage(),
             ChildrenView(),
-            // WishList(),
+            ProfileView(),
             // MyAccountPage(),
           ],
         ),
@@ -39,7 +40,18 @@ class HomeStackDashboard extends StatelessWidget {
                 padding: EdgeInsets.all(8.0),
                 child: SvgPicture.asset(
                   // AssetImage(homeBottomIcon),
-                  homeIcon,
+                  // homeIcon,
+                  home_angle_Icon,
+                  height: 25,
+                  width: 25,
+                ),
+              ),
+              activeIcon: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: SvgPicture.asset(
+                  // AssetImage(homeBottomIcon),
+                  // homeIcon,
+                  homeAngleFillIcon,
                   height: 25,
                   width: 25,
                 ),
@@ -51,7 +63,17 @@ class HomeStackDashboard extends StatelessWidget {
               icon: Padding(
                 padding: EdgeInsets.all(8.0),
                 child: SvgPicture.asset(
-                  transactionIcon,
+                  // transactionIcon,
+                  invoice_narrow_Icon,
+                  height: 25,
+                  width: 25,
+                ),
+              ),
+              activeIcon: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: SvgPicture.asset(
+                  // transactionIcon,
+                  invoice_fill_Icon,
                   height: 25,
                   width: 25,
                 ),
@@ -75,7 +97,16 @@ class HomeStackDashboard extends StatelessWidget {
               icon: Padding(
                 padding: EdgeInsets.all(8.0),
                 child: SvgPicture.asset(
-                  profileIcon,
+                  // profileIcon,
+                  profile_unfill_Icon,
+                  height: 25,
+                  width: 25,
+                ),
+              ),
+              activeIcon: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: SvgPicture.asset(
+                  profile_fill_Icon,
                   height: 25,
                   width: 25,
                 ),
@@ -170,20 +201,20 @@ class HomeDrawer extends StatelessWidget {
                     // const SizedBox(
                     //   height: 10,
                     // ),
-                    WishListItem(
+                    ListTileItem(
                       name: 'Profile',
                       icon: profileIcon,
                       onTap: (){
 
                       },
                     ).cPadSymmetric(h: 8),
-                    WishListItem(
+                    ListTileItem(
                       name: 'Invoice',
                       icon: transactionIcon, onTap: (){
 
                     },
                     ).cPadSymmetric(h: 8),
-                    WishListItem(
+                    ListTileItem(
                       name: 'Students',
                       icon: studentsIcon, onTap: (){
 
@@ -198,19 +229,19 @@ class HomeDrawer extends StatelessWidget {
                                 Color.fromRGBO(83, 97, 107, 1),
                                 FontWeight.normal))
                         .cPadOnly(l: 10),
-                    WishListItem(
+                    ListTileItem(
                       name: 'Contact Us',
                       icon: contactUs, onTap: (){
 
                     },
                     ).cPadSymmetric(h: 8),
-                    WishListItem(
+                    ListTileItem(
                       name: 'About Us',
                       icon: aboutUs, onTap: (){
 
                     },
                     ).cPadSymmetric(h: 8),
-                    WishListItem(
+                    ListTileItem(
                       name: 'Privacy Policy',
                       icon: privacyPolicy, onTap: (){
 
@@ -225,7 +256,7 @@ class HomeDrawer extends StatelessWidget {
                                 Color.fromRGBO(83, 97, 107, 1),
                                 FontWeight.normal))
                         .cPadOnly(l: 10),
-                    WishListItem(
+                    ListTileItem(
                       name: 'Sign out',
                       icon: signOutIcon,
                       textColor: Color.fromRGBO(238, 36, 86, 1),
@@ -244,14 +275,14 @@ class HomeDrawer extends StatelessWidget {
   }
 }
 
-class WishListItem extends StatelessWidget {
+class ListTileItem extends StatelessWidget {
   var icon;
   var name;
   final Function onTap;
   final Color textColor;
 
 
-  WishListItem({
+  ListTileItem({
     Key? key,
     required this.icon,
     required this.name,

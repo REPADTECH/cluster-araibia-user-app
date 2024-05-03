@@ -1,6 +1,7 @@
 import 'package:cluster_arabia/ui/pages/Invoice/bind/invoice_bind.dart';
 import 'package:cluster_arabia/ui/pages/children/bind/children_bind.dart';
 import 'package:cluster_arabia/ui/pages/home/bind/home_bind.dart';
+import 'package:cluster_arabia/ui/pages/profile/bind/profile_bind.dart';
 import 'package:cluster_arabia/utilities/app_routes.dart';
 import 'package:cluster_arabia/utilities/com_binding.dart';
 import 'package:cluster_arabia/utilities/strings.dart';
@@ -14,6 +15,7 @@ class HomeStackDashboardBinding implements Bindings {
     Get.put(HomeController());
     Get.put(InvoiceController());
     Get.put(ChildrenController());
+    Get.put(ProfileController());
   }
 }
 

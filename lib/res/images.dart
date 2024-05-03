@@ -19,5 +19,13 @@ const String clearUpdateIcon = 'assets/icons/clear_update_icon.svg';
 const String schoolcap = 'assets/icons/schoolcap.svg';
 const String routeIcon = 'assets/icons/routeIcon.svg';
 const String locationIcon = 'assets/icons/mapIcon.svg';
-
+const String addressIcon = 'assets/icons/addressIcon.png';
+const String cam = 'assets/icons/imgCam.svg';
+const String man = 'assets/images/man.png';
+const String homeAngleFillIcon = 'assets/icons/home-angleI_fill_Icon.svg';
+const String home_angle_Icon = 'assets/icons/home_angle_Icon.svg';
+const String invoice_fill_Icon = 'assets/icons/invoice_fill_Icon.svg';
+const String invoice_narrow_Icon = 'assets/icons/invoice_narrow.svg';
+const String profile_fill_Icon = 'assets/icons/profile_fill_Icon.svg';
+const String profile_unfill_Icon = 'assets/icons/profile_unfill_Icon.svg';
 

@@ -23,7 +23,6 @@ class InvoicePage extends StatelessWidget {
         children: [
           FirstPart(),
           ListPart(month: 'Aug 2024', invoiceNo: '#70360936703496', totalAmt: '115.23', studentName: 'Sharafas OM ', division: '10 A', schoolName: 'TEST SCHOOL ABCD', routeName: 'Route name', pickupName: 'pickup point name', schoolCode: 'ABC1234',)
-
         ],
       ),
     );
