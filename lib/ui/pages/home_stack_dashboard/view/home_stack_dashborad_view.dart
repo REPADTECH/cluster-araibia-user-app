@@ -7,6 +7,7 @@ import 'package:cluster_arabia/ui/pages/home/view/home_more.dart';
 import 'package:cluster_arabia/ui/pages/home/view/home_view.dart';
 import 'package:cluster_arabia/ui/pages/home_stack_dashboard/bind/home_stack_dashboard_bind.dart';
 import 'package:cluster_arabia/ui/pages/profile/view/profile_view.dart';
+import 'package:cluster_arabia/utilities/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_utils/flutter_custom_utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -85,7 +86,16 @@ class HomeStackDashboard extends StatelessWidget {
               icon: Padding(
                 padding: EdgeInsets.all(8.0),
                 child: SvgPicture.asset(
-                  studentsIcon,
+                  // studentsIcon,
+                  children_unfill_Icon,
+                  height: 25,
+                  width: 25,
+                ),
+              ),
+              activeIcon: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: SvgPicture.asset(
+                  children_fill_Icon,
                   height: 25,
                   width: 25,
                 ),
@@ -205,19 +215,22 @@ class HomeDrawer extends StatelessWidget {
                       name: 'Profile',
                       icon: profileIcon,
                       onTap: (){
-
+                        HomeStackDashboardController.to.changeTabIndex(3);
+                        Get.back();
                       },
                     ).cPadSymmetric(h: 8),
                     ListTileItem(
                       name: 'Invoice',
                       icon: transactionIcon, onTap: (){
-
+                      HomeStackDashboardController.to.changeTabIndex(1);
+                      Get.back();
                     },
                     ).cPadSymmetric(h: 8),
                     ListTileItem(
-                      name: 'Students',
+                      name: 'Children',
                       icon: studentsIcon, onTap: (){
-
+                      Get.back();
+                      HomeStackDashboardController.to.changeTabIndex(2);
                     },
                     ).cPadSymmetric(h: 8),
                     const SizedBox(

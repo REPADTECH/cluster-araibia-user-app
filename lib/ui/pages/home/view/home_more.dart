@@ -98,7 +98,7 @@ class ChildBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 120,
+      // width: 120,
       height: 70,
       decoration: BoxDecoration(
           color: Color.fromRGBO(246, 246, 246, 1),
@@ -132,6 +132,7 @@ class ChildBox extends StatelessWidget {
                   )
                 ],
               ),
+              SizedBox(width: 4,),
               Image.asset(
                 child_sticker,
                 height: 30,
@@ -332,10 +333,16 @@ class BillOverView extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
+              Text('',
+                  ).cExpanded(1),
+              Text('',
+                  ).cExpanded(1),
+              Text('',
+               ).cExpanded(1),
               Text('SAR 345.00',
                   style: customStyle(
-                      11.0, primaryColorPurple, FontWeight.normal))
-          ],).cPadOnly(r: 24)
+                      11.0, primaryColorPurple, FontWeight.normal)).cExpanded(1),
+          ],)
           // Row(
           //   children: [
           //     Image.asset(invoice_inquiry),
@@ -368,23 +375,38 @@ class MainMenu extends StatelessWidget {
         ).cPadOnly(l: 10),
         Row(
           children: [
-            MenuBox(
-              text: 'Students',
-              img: studentsIcon,
+            InkWell(
+              onTap: (){
+                Get.toNamed(Routes.children);
+              },
+              child: MenuBox(
+                text: 'Children',
+                img: studentsIcon,
+              ),
             ).cExpanded(1),
             SizedBox(
               width: 10,
             ),
-            MenuBox(
-              text: 'Transaction',
-              img: transactionIcon,
+            InkWell(
+              onTap: (){
+                Get.toNamed(Routes.invoice);
+              },
+              child: MenuBox(
+                text: 'Invoice',
+                img: transactionIcon,
+              ),
             ).cExpanded(1),
             SizedBox(
               width: 10,
             ),
-            MenuBox(
-              text: 'Profile',
-              img: profileIcon,
+            InkWell(
+              onTap: (){
+                Get.toNamed(Routes.profile);
+              },
+              child: MenuBox(
+                text: 'Profile',
+                img: profileIcon,
+              ),
             ).cExpanded(1),
           ],
         ).cPadOnly(l: 10, r: 10, t: 5)
@@ -460,30 +482,34 @@ void dateSelectPopupHome({
         ),
         content: SingleChildScrollView(
           child: GetBuilder<HomeController>(builder: (logic) {
-            return SfDateRangePicker(
-              confirmText: 'SELECT',
-              showNavigationArrow: true,
-              onSubmit: (v) {
-                if (v is PickerDateRange) {
-                  final DateTime? rangeStartDate = v.startDate;
-                  final DateTime? rangeEndDate = v.endDate;
-                  logic.startMonth=rangeStartDate;
-                  logic.endMonth=rangeEndDate;
-                  logic.update();
-                  print(rangeStartDate);
-                  print('//////${logic.startMonth}');
-                  print(rangeEndDate);
-                }
-                Get.back();
-              },
-              onCancel: () {
-                Get.back();
-              },
-              showActionButtons: true,
-              showTodayButton: true,
-              view: DateRangePickerView.decade,
-              selectionMode: DateRangePickerSelectionMode.range,
-            ).cClipAll(10);
+            return SizedBox(
+              height: 300,
+              width: context.cWidth/2,
+              child: SfDateRangePicker(
+                confirmText: 'SELECT',
+                showNavigationArrow: true,
+                onSubmit: (v) {
+                  if (v is PickerDateRange) {
+                    final DateTime? rangeStartDate = v.startDate;
+                    final DateTime? rangeEndDate = v.endDate;
+                    logic.startMonth=rangeStartDate;
+                    logic.endMonth=rangeEndDate;
+                    logic.update();
+                    print(rangeStartDate);
+                    print('//////${logic.startMonth}');
+                    print(rangeEndDate);
+                  }
+                  Get.back();
+                },
+                onCancel: () {
+                  Get.back();
+                },
+                showActionButtons: true,
+                showTodayButton: true,
+                view: DateRangePickerView.decade,
+                selectionMode: DateRangePickerSelectionMode.range,
+              ).cClipAll(10),
+            );
           }),
         ),
       );

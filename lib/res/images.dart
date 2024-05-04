@@ -28,4 +28,8 @@ const String invoice_fill_Icon = 'assets/icons/invoice_fill_Icon.svg';
 const String invoice_narrow_Icon = 'assets/icons/invoice_narrow.svg';
 const String profile_fill_Icon = 'assets/icons/profile_fill_Icon.svg';
 const String profile_unfill_Icon = 'assets/icons/profile_unfill_Icon.svg';
+const String children_fill_Icon = 'assets/icons/children_fill_Icon.svg';
+const String children_unfill_Icon = 'assets/icons/children_unfill_Icon.svg';
+const String childrenProfile = 'assets/images/childrenProfile.png';
+const String disableRequestIcon = 'assets/icons/disableRequestIcon.svg';
 

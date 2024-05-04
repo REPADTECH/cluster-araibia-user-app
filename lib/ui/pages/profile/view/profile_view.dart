@@ -19,11 +19,13 @@ class ProfileView extends StatelessWidget {
         },
           child: Icon(Icons.arrow_back_ios,)),
       ),
-      body: Column(children: [
-        ProfileImagePart(),
-        ListTilePart(),
-        AddressSection()
-      ],),
+      body: SingleChildScrollView(
+        child: Column(children: [
+          ProfileImagePart(),
+          ListTilePart(),
+          AddressSection()
+        ],),
+      ),
     );
   }
 }

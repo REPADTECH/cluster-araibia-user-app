@@ -74,8 +74,9 @@ class FirstPart extends StatelessWidget {
               dateSelectPopup(context: context);
             },
             child: Container(
+              padding: EdgeInsets.all(5),
               height: 40,
-              width: 120,
+              // width: 120,
               decoration: BoxDecoration(
                   border: Border.all(color: Colors.black, width: 0.5),
                   borderRadius: BorderRadius.circular(5)),
@@ -196,30 +197,34 @@ void dateSelectPopup({
         ),
         content: SingleChildScrollView(
           child: GetBuilder<InvoiceController>(builder: (logic) {
-            return SfDateRangePicker(
-              confirmText: 'SELECT',
-              showNavigationArrow: true,
-              onSubmit: (v) {
-                if (v is PickerDateRange) {
-                  final DateTime? rangeStartDate = v.startDate;
-                  final DateTime? rangeEndDate = v.endDate;
-                  logic.startMonth=rangeStartDate;
-                  logic.endMonth=rangeEndDate;
-                  logic.update();
-                  print(rangeStartDate);
-                  print('//////${logic.startMonth}');
-                  print(rangeEndDate);
-                }
-                Get.back();
-              },
-              onCancel: () {
-                Get.back();
-              },
-              showActionButtons: true,
-              showTodayButton: true,
-              view: DateRangePickerView.decade,
-              selectionMode: DateRangePickerSelectionMode.range,
-            ).cClipAll(10);
+            return Container(
+              height: 300,
+              width: context.cWidth/2,
+              child: SfDateRangePicker(
+                confirmText: 'SELECT',
+                showNavigationArrow: true,
+                onSubmit: (v) {
+                  if (v is PickerDateRange) {
+                    final DateTime? rangeStartDate = v.startDate;
+                    final DateTime? rangeEndDate = v.endDate;
+                    logic.startMonth=rangeStartDate;
+                    logic.endMonth=rangeEndDate;
+                    logic.update();
+                    print(rangeStartDate);
+                    print('//////${logic.startMonth}');
+                    print(rangeEndDate);
+                  }
+                  Get.back();
+                },
+                onCancel: () {
+                  Get.back();
+                },
+                showActionButtons: true,
+                showTodayButton: true,
+                view: DateRangePickerView.decade,
+                selectionMode: DateRangePickerSelectionMode.range,
+              ).cClipAll(10),
+            );
           }),
         ),
       );
@@ -423,7 +428,7 @@ class ListPart extends StatelessWidget {
                             backgroundColor: Colors.white,
                             borderColor: primaryColorPurple,
                             vPadding: 4,
-                            width: 60,
+                            width: (context.cWidth>=800)?80:60,
                             buttonTitle: 'View Bill',
                             titleStyle: customStyle(
                                 10.0, primaryColorPurple, FontWeight.bold),
@@ -432,7 +437,7 @@ class ListPart extends StatelessWidget {
                             CustomButtonWidget(
                               backgroundColor: primaryColorPurple,
                               vPadding: 4,
-                              width: 40,
+                              width: (context.cWidth>=800)?60:45,
                               buttonTitle: 'Pay',
                               titleStyle: customStyle(
                                   10.0, Colors.white, FontWeight.bold),
