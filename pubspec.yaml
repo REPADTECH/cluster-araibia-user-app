@@ -51,6 +51,8 @@ dependencies:
   intl: ^0.18.1
   syncfusion_flutter_datepicker: ^25.1.42
   dots_indicator: ^3.0.0
+  google_maps_flutter: ^2.2.1
+
   #custom_date_range_picker: ^1.0.10
 
 

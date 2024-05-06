@@ -21,6 +21,19 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Color.fromRGBO(65, 54, 133, 1),
+        bottomNavigationBar: Container(
+          height: 20,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Powered By REPADTECH PRIVATE LIMITED',
+                style: customStyle(
+                    9.0, Colors.white, FontWeight.normal))
+                .cPadOnly(b: 10,
+              // t:130
+                      ),
+            ],
+          ),),
         // resizeToAvoidBottomInset: false,
         body: GetBuilder< LoginController>(builder: (logic) {
           return Form(
@@ -28,7 +41,7 @@ class LoginPage extends StatelessWidget {
             child: SingleChildScrollView(
               child: SizedBox(
                 width: context.cWidth,
-                height: context.cHeight,
+                // height: context.cHeight,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -286,12 +299,6 @@ class LoginPage extends StatelessWidget {
                           ])
                       ],
                     ),
-                    Text('Powered By REPADTECH PRIVATE LIMITED',
-                            style: customStyle(
-                                9.0, Colors.white, FontWeight.normal))
-                        .cPadOnly(b: 10,
-                        // t:130
-                    )
                   ],
                 ),
               ),

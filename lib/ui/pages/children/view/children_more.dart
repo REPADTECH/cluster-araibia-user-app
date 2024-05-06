@@ -44,27 +44,11 @@ class SearchPart extends StatelessWidget {
 }
 
 class ListPart extends StatelessWidget {
-  final String studentName;
-  final String gender;
-  final String schoolName;
-  final String schoolCode;
-  final String routeName;
-  final String pickupName;
-  final String location;
-  final String amount;
-  final String division;
+
 
   const ListPart(
       {super.key,
-      required this.studentName,
-      required this.gender,
-      required this.schoolName,
-      required this.schoolCode,
-      required this.routeName,
-      required this.pickupName,
-      required this.location,
-      required this.amount,
-      required this.division});
+     });
 
   @override
   Widget build(BuildContext context) {
@@ -108,10 +92,10 @@ class ListPart extends StatelessWidget {
                           SizedBox(
                             width: 8,
                           ),
-                          Text(studentName,
+                          Text('Sharafas OM',
                               style: customStyle(
                                   15.0, Colors.black, FontWeight.bold)),
-                          Text(' (${gender})',
+                          Text(' (Male)',
                               style: customStyle(
                                   13.0,
                                   Color.fromRGBO(99, 99, 99, 1),
@@ -128,7 +112,7 @@ class ListPart extends StatelessWidget {
                           SizedBox(
                               width: 270,
                               child: Text(
-                                location,
+                                'Suite 875 579 Cole Club, Chaunceymouth, MI 04708-1942 ',
                                 style: customStyle(
                                     11.0, Colors.black, FontWeight.normal),
                               ))
@@ -144,10 +128,10 @@ class ListPart extends StatelessWidget {
                           SizedBox(
                             width: 5,
                           ),
-                          Text(schoolName,
+                          Text('TEST SCHOOL ABCD',
                               style: customStyle(
                                   12.0, Colors.black, FontWeight.normal)),
-                          Text(' (${schoolCode})',
+                          Text(' (ABC1234)',
                               style: customStyle(
                                   12.0,
                                   Color.fromRGBO(99, 99, 99, 1),
@@ -164,10 +148,10 @@ class ListPart extends StatelessWidget {
                           SizedBox(
                             width: 7,
                           ),
-                          Text(routeName,
+                          Text('Route name',
                               style: customStyle(
                                   11.0, Colors.black, FontWeight.normal)),
-                          Text(' (${pickupName})',
+                          Text(' (pickup point name)',
                               style: customStyle(
                                   11.0,
                                   Color.fromRGBO(99, 99, 99, 1),
@@ -184,7 +168,7 @@ class ListPart extends StatelessWidget {
                           vPadding: 4,
                           width: (context.cWidth>=800)?55:45,
                           radius: 13,
-                          buttonTitle: division,
+                          buttonTitle: '4(B)',
                           titleStyle:
                               customStyle(11.0, Colors.black, FontWeight.normal)),
                       SizedBox(
@@ -208,7 +192,7 @@ class ListPart extends StatelessWidget {
                           vPadding: 4,
                           // width: 85,
                           radius: 13,
-                          buttonTitle: amount,
+                          buttonTitle: 'SAR 100.50',
                           titleStyle:
                               customStyle(11.0, Colors.black, FontWeight.normal))
                       .cPosition(r: 0, b: 0),

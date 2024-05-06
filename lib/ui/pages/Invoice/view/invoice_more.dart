@@ -233,32 +233,15 @@ void dateSelectPopup({
 }
 
 class ListPart extends StatelessWidget {
-  final String month;
-  final String invoiceNo;
-  final String totalAmt;
-  final String studentName;
-  final String division;
-  final String schoolName;
-  final String schoolCode;
-  final String routeName;
-  final String pickupName;
 
   const ListPart(
-      {super.key,
-      required this.month,
-      required this.invoiceNo,
-      required this.totalAmt,
-      required this.studentName,
-      required this.division,
-      required this.schoolName,
-      required this.routeName,
-      required this.pickupName,
-      required this.schoolCode});
+      {super.key,});
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<InvoiceController>(builder: (logic) {
-      return ListView.builder(
+      return
+        ListView.builder(
           itemCount: 2,
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
@@ -294,7 +277,7 @@ class ListPart extends StatelessWidget {
                           SizedBox(
                             width: 5,
                           ),
-                          Text(month)
+                          Text('Aug 2024')
                         ],
                       ),
                       Container(
@@ -344,9 +327,9 @@ class ListPart extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Invoice no ${invoiceNo}'),
+                      Text('Invoice no #70360936703496'),
                       Text(
-                        'SAR ${totalAmt}',
+                        'SAR 115.23',
                         style: customStyle(12.0, Colors.black, FontWeight.bold),
                       ),
                     ],
@@ -371,10 +354,10 @@ class ListPart extends StatelessWidget {
                       SizedBox(
                         width: 10,
                       ),
-                      Text(studentName,
+                      Text('Sharafas OM ',
                           style:
                               customStyle(13.0, Colors.black, FontWeight.bold)),
-                      Text('(${division})',
+                      Text('(10 A)',
                           style: customStyle(13.0,
                               Color.fromRGBO(99, 99, 99, 1), FontWeight.bold)),
                     ],
@@ -389,10 +372,10 @@ class ListPart extends StatelessWidget {
                       SizedBox(
                         width: 5,
                       ),
-                      Text(schoolName,
+                      Text('TEST SCHOOL ABCD',
                           style: customStyle(
                               12.0, Colors.black, FontWeight.normal)),
-                      Text(' (${schoolCode})',
+                      Text(' (ABC1234)',
                           style: customStyle(
                               12.0,
                               Color.fromRGBO(99, 99, 99, 1),
@@ -412,10 +395,10 @@ class ListPart extends StatelessWidget {
                           SizedBox(
                             width: 7,
                           ),
-                          Text(routeName,
+                          Text('Route name',
                               style: customStyle(
                                   11.0, Colors.black, FontWeight.normal)),
-                          Text(' (${pickupName})',
+                          Text(' (pickup point name)',
                               style: customStyle(
                                   11.0,
                                   Color.fromRGBO(99, 99, 99, 1),
@@ -424,24 +407,34 @@ class ListPart extends StatelessWidget {
                       ).cPadOnly(t: 5),
                       Row(
                         children: [
-                          CustomButtonWidget(
-                            backgroundColor: Colors.white,
-                            borderColor: primaryColorPurple,
-                            vPadding: 4,
-                            width: (context.cWidth>=800)?80:60,
-                            buttonTitle: 'View Bill',
-                            titleStyle: customStyle(
-                                10.0, primaryColorPurple, FontWeight.bold),
+                          InkWell(
+                            onTap: (){
+
+                            },
+                            child: CustomButtonWidget(
+                              backgroundColor: Colors.white,
+                              borderColor: primaryColorPurple,
+                              vPadding: 4,
+                              width: (context.cWidth>=800)?80:60,
+                              buttonTitle: 'View Bill',
+                              titleStyle: customStyle(
+                                  10.0, primaryColorPurple, FontWeight.bold),
+                            ),
                           ),
                           if (i == 0)
-                            CustomButtonWidget(
-                              backgroundColor: primaryColorPurple,
-                              vPadding: 4,
-                              width: (context.cWidth>=800)?60:45,
-                              buttonTitle: 'Pay',
-                              titleStyle: customStyle(
-                                  10.0, Colors.white, FontWeight.bold),
-                            ).cPadOnly(l: 7),
+                            InkWell(
+                              onTap: (){
+
+                              },
+                              child: CustomButtonWidget(
+                                backgroundColor: primaryColorPurple,
+                                vPadding: 4,
+                                width: (context.cWidth>=800)?60:45,
+                                buttonTitle: 'Pay',
+                                titleStyle: customStyle(
+                                    10.0, Colors.white, FontWeight.bold),
+                              ).cPadOnly(l: 7),
+                            ),
                         ],
                       ),
                     ],
