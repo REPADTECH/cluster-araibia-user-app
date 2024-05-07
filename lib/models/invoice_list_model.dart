@@ -3,7 +3,7 @@ class InvoiceListModel {
   bool? success;
   String? message;
   String? instance;
-  List<Data>? data;
+  Data? data;
 
   InvoiceListModel({this.success, this.message, this.instance, this.data});
 
@@ -17,8 +17,8 @@ class InvoiceListModel {
     if(json["instance"] is String) {
       instance = json["instance"];
     }
-    if(json["data"] is List) {
-      data = json["data"] == null ? null : (json["data"] as List).map((e) => Data.fromJson(e)).toList();
+    if(json["data"] is Map) {
+      data = json["data"] == null ? null : Data.fromJson(json["data"]);
     }
   }
 
@@ -28,13 +28,38 @@ class InvoiceListModel {
     _data["message"] = message;
     _data["instance"] = instance;
     if(data != null) {
-      _data["data"] = data?.map((e) => e.toJson()).toList();
+      _data["data"] = data?.toJson();
     }
     return _data;
   }
 }
 
 class Data {
+  List<DataList>? dataList;
+  int? perPageCount;
+
+  Data({this.dataList, this.perPageCount});
+
+  Data.fromJson(Map<String, dynamic> json) {
+    if(json["dataList"] is List) {
+      dataList = json["dataList"] == null ? null : (json["dataList"] as List).map((e) => DataList.fromJson(e)).toList();
+    }
+    if(json["per_page_count"] is num) {
+      perPageCount = (json["per_page_count"] as num).toInt();
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> _data = <String, dynamic>{};
+    if(dataList != null) {
+      _data["dataList"] = dataList?.map((e) => e.toJson()).toList();
+    }
+    _data["per_page_count"] = perPageCount;
+    return _data;
+  }
+}
+
+class DataList {
   String? id;
   dynamic title;
   dynamic description;
@@ -59,9 +84,9 @@ class Data {
   TotalBillAmountData? totalBillAmountData;
   Student? student;
 
-  Data({this.id, this.title, this.description, this.couponCode, this.couponDescription, this.couponValue, this.amount, this.taxAmount, this.tax, this.creditType, this.financeType, this.paymentMode, this.paidOn, this.billedOn, this.businessName, this.companyPhone, this.address, this.createdAt, this.updatedAt, this.img, this.school, this.totalBillAmountData, this.student});
+  DataList({this.id, this.title, this.description, this.couponCode, this.couponDescription, this.couponValue, this.amount, this.taxAmount, this.tax, this.creditType, this.financeType, this.paymentMode, this.paidOn, this.billedOn, this.businessName, this.companyPhone, this.address, this.createdAt, this.updatedAt, this.img, this.school, this.totalBillAmountData, this.student});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  DataList.fromJson(Map<String, dynamic> json) {
     if(json["id"] is String) {
       id = json["id"];
     }
