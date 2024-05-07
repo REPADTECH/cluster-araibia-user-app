@@ -1,4 +1,5 @@
 import 'package:cluster_arabia/models/login_model.dart';
+import 'package:cluster_arabia/models/otp_verify_model.dart';
 import 'package:cluster_arabia/utilities/com_binding.dart';
 import 'package:cluster_arabia/utilities/dio.dart';
 import 'package:cluster_arabia/utilities/strings.dart';
@@ -35,6 +36,23 @@ class Api extends GetConnect {
       ),
     ).then((value) {
       return LoginModel.fromJson(value.body ?? err);
+    });
+  }
+
+  Future<OtpModelClass> otpVerifyOtp({
+    required String otpToken,
+    required String otp,
+  }) {
+    return post(
+      'p/auth/login/otp/verify',
+      FormData(
+        {
+          'otp_token': otpToken,
+          'otp': otp,
+        },
+      ),
+    ).then((value) {
+      return OtpModelClass.fromJson(value.body ?? err);
     });
   }
 }

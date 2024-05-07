@@ -187,9 +187,10 @@ class LoginPage extends StatelessWidget {
                             ),
                             InkWell(
                               onTap: () {
-                                logic.otpDesign.value =
-                                    !logic.otpDesign.value;
-                                logic.update();
+
+                                logic.checkLogin(
+                                  context:context,
+                                );
                               },
                               child: Container(
                                 width: 250,
@@ -216,8 +217,9 @@ class LoginPage extends StatelessWidget {
                               textFieldAlignment:
                                   MainAxisAlignment.spaceAround,
                               contentPadding:
-                                  EdgeInsets.symmetric(vertical: 8),
+                                  const EdgeInsets.symmetric(vertical: 8),
                               spaceBetween: 10,
+
                               otpFieldStyle: OtpFieldStyle(
                                 backgroundColor: Colors.transparent,
                                 enabledBorderColor: Colors.white,
@@ -229,11 +231,14 @@ class LoginPage extends StatelessWidget {
                                   fontSize: 17, color: Colors.white),
                               onCompleted: (pin) {
                                 logic.otp.value = pin;
+                                logic.verifyOtp(
+                                  context:context,
+                                );
                               },
                             )
                                 .cAlignment(Alignment.center)
                                 .cPadOnly(l: 10, r: 10),
-                            SizedBox(
+                            const SizedBox(
                               height: 20,
                             ),
                             Row(
@@ -242,7 +247,7 @@ class LoginPage extends StatelessWidget {
                                 Row(
                                   children: [
                                     Text(
-                                        'Didn\'t received the code +9876543210',
+                                        'Did\'t received the code ${logic.mob.text}',
                                         style: const TextStyle(
                                             color: Color.fromRGBO(
                                                 255, 255, 255, 0.6),
@@ -275,12 +280,15 @@ class LoginPage extends StatelessWidget {
                                 )
                               ],
                             ).cPadOnly(l: 5),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             InkWell(
                               onTap: () {
-                                Get.offAllNamed(Routes.homeStackDashboard);
+                                //
+                                logic.verifyOtp(
+                                  context:context,
+                                );
                               },
                               child: Container(
                                 width: 250,

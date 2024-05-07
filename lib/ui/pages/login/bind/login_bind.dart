@@ -1,5 +1,12 @@
-
 import 'package:cherry_toast/cherry_toast.dart';
+import 'package:cluster_arabia/models/login_model.dart';
+import 'package:cluster_arabia/models/otp_verify_model.dart';
+import 'package:cluster_arabia/res/images.dart';
+import 'package:cluster_arabia/utilities/api_provider.dart';
+import 'package:cluster_arabia/utilities/app_routes.dart';
+import 'package:cluster_arabia/utilities/com_binding.dart';
+import 'package:cluster_arabia/utilities/strings.dart';
+import 'package:cluster_arabia/utilities/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -16,7 +23,8 @@ class LoginController extends GetxController {
   static LoginController get to => Get.find();
 
   var loginPageView = GlobalKey<FormState>();
-
+  LoginModel? loginModel;
+  OtpModelClass? otpModelClass;
   var otp = ''.obs;
   var otpDesign = true.obs;
   var keyBoardIsVisible = false.obs;
@@ -25,7 +33,6 @@ class LoginController extends GetxController {
 
   OtpFieldController otpFieldController = OtpFieldController();
   var mob = TextEditingController();
-
 
   @override
   void onInit() {
@@ -57,8 +64,7 @@ class LoginController extends GetxController {
       validatorNumber.value = true;
       errorMessage = 'Please enter valid mobile number';
       update();
-    }
-    else{
+    } else {
       errorMessage = '';
       validatorNumber.value = false;
       update();
@@ -67,4 +73,47 @@ class LoginController extends GetxController {
     return null;
   }
 
+  void checkLogin({required BuildContext context}) async {
+    if (loginPageView.currentState?.validate() ?? false) {
+      try {
+        showLoading();
+        loginModel = await Api.to.userLogin(phone: mob.text);
+        dismissLoading();
+        if (loginModel?.success ?? true) {
+          otpDesign.value = !otpDesign.value;
+          otpFieldController.setValue(loginModel?.data?.otp?[0] ?? '', 0);
+          otpFieldController.setValue(loginModel?.data?.otp?[1] ?? '', 1);
+          otpFieldController.setValue(loginModel?.data?.otp?[2] ?? '', 2);
+          otpFieldController.setValue(loginModel?.data?.otp?[3] ?? '', 3);
+        } else {
+          showToast(context: context, message: loginModel?.message ?? '');
+        }
+      } catch (e) {
+        print('Exception : $e');
+      } finally {
+        update();
+      }
+    }
+  }
+
+  void verifyOtp({required BuildContext context}) async {
+    try {
+      showLoading();
+      otpModelClass = await Api.to.otpVerifyOtp(
+        otpToken: loginModel?.data?.otpToken ?? '',
+        otp: otp.value,
+      );
+      dismissLoading();
+      if (otpModelClass?.success ?? true) {
+        AppSession.to.session.write(SessionKeys.API_KEY, otpModelClass?.data?.token??'');
+        Get.offAllNamed(Routes.homeStackDashboard);
+      } else {
+        showToast(context: context, message: otpModelClass?.message ?? '');
+      }
+    } catch (e) {
+      print('Exception : $e');
+    } finally {
+      update();
+    }
+  }
 }
