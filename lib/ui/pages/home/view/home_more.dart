@@ -324,7 +324,7 @@ class BillOverView extends StatelessWidget {
                               style: customStyle(
                                   11.0, primaryColorPurple, FontWeight.normal))
                           .cExpanded(1),
-                      Text('SAR ${(double.parse('${monthCharge?.students?[i]?.amount??0}')+double.parse('${monthCharge?.students?[i]?.tax??0}')/100)}',
+                      Text('SAR ${(double.parse('${monthCharge?.students?[i]?.amount??0}')+double.parse('${monthCharge?.students?[i]?.tax??0}'))/100}',
                               style: customStyle(
                                   11.0, primaryColorPurple, FontWeight.normal))
                           .cExpanded(1),
