@@ -178,8 +178,8 @@ class HomeDrawer extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        Image.asset(
-                          profilePic,
+                        Image.network(
+                          logic.profileModel?.data?.img??'',
                           height: 45,
                           width: 45,
                         ),
