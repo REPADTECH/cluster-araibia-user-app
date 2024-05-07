@@ -12,6 +12,7 @@ class ChildrenInnerPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
         leading: InkWell(
           onTap: (){
             Get.back();
@@ -34,7 +35,7 @@ class ChildrenInnerPage extends StatelessWidget {
             ),
             BusDetails(),
             OtherInfo()
-        ],).cPadAll(20),
+        ],).cPadOnly(l: 15,r: 15,t: 10,b: 10),
       ),
     );
   }

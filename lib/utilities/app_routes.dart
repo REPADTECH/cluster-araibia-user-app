@@ -7,4 +7,6 @@ abstract class Routes {
   static const children = '/children';
   static const profile = '/profile';
   static const childrenInnerPage = '/childrenInnerPage';
+  static const contactUs = '/contactUs';
+  static const aboutUs = '/aboutUs';
 }

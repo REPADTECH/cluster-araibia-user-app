@@ -245,13 +245,13 @@ class HomeDrawer extends StatelessWidget {
                     ListTileItem(
                       name: 'Contact Us',
                       icon: contactUs, onTap: (){
-
+                        Get.toNamed(Routes.contactUs);
                     },
                     ).cPadSymmetric(h: 8),
                     ListTileItem(
                       name: 'About Us',
                       icon: aboutUs, onTap: (){
-
+                      Get.toNamed(Routes.aboutUs);
                     },
                     ).cPadSymmetric(h: 8),
                     ListTileItem(

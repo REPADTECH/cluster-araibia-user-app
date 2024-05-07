@@ -1,9 +1,13 @@
+import 'package:cluster_arabia/ui/pages/About_us/bind/about_us_bind.dart';
+import 'package:cluster_arabia/ui/pages/About_us/view/about_us_view.dart';
 import 'package:cluster_arabia/ui/pages/Invoice/bind/invoice_bind.dart';
 import 'package:cluster_arabia/ui/pages/Invoice/view/invoice_view.dart';
 import 'package:cluster_arabia/ui/pages/children/bind/children_bind.dart';
 import 'package:cluster_arabia/ui/pages/children/view/children_view.dart';
 import 'package:cluster_arabia/ui/pages/children_innerpage/bind/children_innerpage_bind.dart';
 import 'package:cluster_arabia/ui/pages/children_innerpage/view/children_innerpage_view.dart';
+import 'package:cluster_arabia/ui/pages/contact_us/bind/contact_us_bind.dart';
+import 'package:cluster_arabia/ui/pages/contact_us/view/contact_us_view.dart';
 import 'package:cluster_arabia/ui/pages/home/bind/home_bind.dart';
 import 'package:cluster_arabia/ui/pages/home/view/home_view.dart';
 import 'package:cluster_arabia/ui/pages/home_stack_dashboard/bind/home_stack_dashboard_bind.dart';
@@ -58,6 +62,16 @@ abstract class AppPages {
       name: Routes.childrenInnerPage,
       page: () => const ChildrenInnerPage(),
       binding: ChildrenInnerPageBinding(),
+    ),
+    GetPage(
+      name: Routes.contactUs,
+      page: () => const ContactUs(),
+      binding: ContactUsBinding(),
+    ),
+    GetPage(
+      name: Routes.aboutUs,
+      page: () => const AboutUsPage(),
+      binding: AboutUsBinding(),
     ),
   ];
 }
