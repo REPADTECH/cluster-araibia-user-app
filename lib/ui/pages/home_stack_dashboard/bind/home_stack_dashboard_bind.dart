@@ -49,16 +49,13 @@ class HomeStackDashboardController extends GetxController {
 
   void updateControllersOnTabChange(int index) {
     if (index == 1) {
-      // AdvancedSearchController.to.onInit();
+      HomeController.to.onInit();
     } else if (index == 0) {
-      // updateDashboardData();
+      InvoiceController.to.onInit();
     } else if (index == 2) {
-      // CategoriesController.to.onInit();
-      // NewDashBoardController.to.getCategory();
+      ChildrenController.to.onInit();
     } else if (index == 3) {
-      // WishListController.to.onInit();
-    } else if (index == 4) {
-      // handleAccountTab();
+      ProfileController.to.onInit();
     }
   }
 
