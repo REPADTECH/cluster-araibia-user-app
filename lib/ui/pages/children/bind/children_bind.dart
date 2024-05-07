@@ -13,6 +13,7 @@ class ChildrenBinding implements Bindings {
 
 class ChildrenController extends GetxController {
   static ChildrenController get to => Get.find();
+  final searchChildrenController = TextEditingController();
   late ScrollController scrollController;
   var isSelected=0;
   student.StudentModelList?studentModelList;
@@ -23,7 +24,7 @@ class ChildrenController extends GetxController {
 
   @override
   void onInit() {
-    studentList.clear();
+    clearData();
     scrollController = ScrollController();
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
@@ -45,10 +46,15 @@ class ChildrenController extends GetxController {
     }
   }
 
+  clearData(){
+    studentList.clear();
+    searchChildrenController.text='';
+  }
+
   Future<void> getStudentList() async {
     try {
       showLoading();
-      studentModelList = await Api.to.getStudentsList(status: true, page: pageNO);
+      studentModelList = await Api.to.getStudentsList(status: true, page: pageNO,search: searchChildrenController.text);
       dismissLoading();
       if (!(studentModelList?.success ?? true)) {
         showToast(context: context, message: studentModelList?.message ?? '');

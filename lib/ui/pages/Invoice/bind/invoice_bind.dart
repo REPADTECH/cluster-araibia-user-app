@@ -27,7 +27,7 @@ class InvoiceController extends GetxController {
 
   List<invoice.DataList> invoiceList = [];
   var pageNO = 1;
-  final RxString categoryValue = 'Student Name'.obs;
+  final RxString selectDropDownValue = 'Student Name'.obs;
 
   // List<String> categoryItems = [];
   List<String> categoryItems = [

@@ -16,29 +16,46 @@ class SearchPart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: context.cWidth,
-      height: 40,
-      decoration: BoxDecoration(
-          border: Border.all(color: primaryColorPurple),
-          borderRadius: BorderRadius.circular(18)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          SizedBox(
-              width: 270,
-              child: TextFormField(
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.only(left: 15, bottom: 13),
-                    hintText: 'Search...'),
-              )),
-          Icon(
-            Icons.search,
-            size: 20,
-          )
-        ],
-      ).cPadOnly(r: 10),
+    return GetBuilder<ChildrenController>(
+      builder: (logic) {
+        return Container(
+          width: context.cWidth,
+          height: 40,
+          decoration: BoxDecoration(
+              border: Border.all(color: primaryColorPurple),
+              borderRadius: BorderRadius.circular(18)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                  width: 270,
+                  child: TextFormField(
+                    controller: logic.searchChildrenController,
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.only(left: 15, bottom: 13),
+                        hintText: 'Search...'),
+                    onFieldSubmitted: (val) {
+                      logic.studentList.clear();
+                      logic.pageNO = 1;
+                      logic.getStudentList();
+                    },
+                    onChanged: (v) {
+                      if (v.isEmpty) {
+                        logic.studentList.clear();
+                        logic.pageNO = 1;
+                        logic.getStudentList();
+                      }
+                    },
+                  )),
+              Icon(
+                Icons.search,
+                size: 20,
+              )
+            ],
+          ).cPadOnly(r: 10),
+        );
+      }
     );
   }
 }

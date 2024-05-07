@@ -65,7 +65,7 @@ class FirstPart extends StatelessWidget {
                         logic.filterChoosed=value?.id??'';
                         logic.getInvoiceList();
                       },
-                      selectedItem: null,
+                      selectedItem:  logic.studentModelList?.data?.dataList?.cFirst  ,
                     ),
                   ),
                 ],
