@@ -61,6 +61,7 @@ class FirstPart extends StatelessWidget {
                       enabled: true,
                       onChanged: ( value) {
                         logic.billFilterdStudentChoosed=value;
+                        logic.filterChoosed=value?.id??'';
                         logic.clearData();
                         logic.getInvoiceList();
                       },

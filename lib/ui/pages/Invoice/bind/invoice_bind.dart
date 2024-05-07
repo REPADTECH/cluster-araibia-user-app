@@ -23,6 +23,7 @@ class InvoiceController extends GetxController {
   student.StudentModelList? studentModelList;
   ProfileModel? profileModel;
   student.DataList?billFilterdStudentChoosed;
+  var filterChoosed='';
 
   List<invoice.DataList> invoiceList = [];
   var pageNO = 1;
@@ -57,6 +58,7 @@ class InvoiceController extends GetxController {
   }
   clearData(){
     invoiceList.clear();
+    filterChoosed='';
     billFilterdStudentChoosed=null;
   }
   @override
@@ -89,9 +91,9 @@ class InvoiceController extends GetxController {
     try {
       showLoading();
       invoiceListModel = await Api.to.getInvoiceList(page: pageNO,
-      studentId: billFilterdStudentChoosed?.id??'',
-        startDate: startMonth.toString().cGetFormattedDate(format: 'YYYY-MM-dd'),
-        endDate: endMonth.toString().cGetFormattedDate(format: 'YYYY-MM-dd'),
+      studentId: filterChoosed,
+        startDate: startMonth.toString().cGetFormattedDate(format: 'yyyy-MM-dd'),
+        endDate: endMonth.toString().cGetFormattedDate(format: 'yyyy-MM-dd'),
       );
       dismissLoading();
       if (!(invoiceListModel?.success ?? true)) {
