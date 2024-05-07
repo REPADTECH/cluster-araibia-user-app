@@ -54,6 +54,7 @@ dependencies:
   google_maps_flutter: ^2.2.1
   dio: ^5.4.3+1
   get_storage: ^2.1.1
+  toastification: ^2.0.0
 
   #custom_date_range_picker: ^1.0.10
 

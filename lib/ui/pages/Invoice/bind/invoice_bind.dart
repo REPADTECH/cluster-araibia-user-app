@@ -61,6 +61,7 @@ class InvoiceController extends GetxController {
   @override
   void onInit() {
     clearData();
+    getProfile();
     scrollController = ScrollController();
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
@@ -70,7 +71,7 @@ class InvoiceController extends GetxController {
     });
     getInvoiceList();
     getStudentData();
-    getProfile();
+
     super.onInit();
   }
 

@@ -62,7 +62,7 @@ class FirstPart extends StatelessWidget {
                       onChanged: ( value) {
                         logic.billFilterdStudentChoosed=value;
                       },
-                      selectedItem: logic.studentModelList?.data?.dataList??[].cFirst,
+                      selectedItem: null,
                     ),
                   ),
                 ],

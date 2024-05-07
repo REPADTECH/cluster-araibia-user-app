@@ -53,6 +53,7 @@ class Data {
     }
   }
 
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> _data = <String, dynamic>{};
     if(dataList != null) {
@@ -89,6 +90,11 @@ class DataList {
   BusInRoute? busInRoute;
 
   DataList({this.id, this.studentName, this.admissionNo, this.gender, this.parentType, this.country, this.state, this.std, this.division, this.serviceStartedOn, this.serviceEndedOn, this.cancellationReason, this.address, this.status, this.createdAt, this.updatedAt, this.img, this.studentLatitude, this.studentLongitude, this.school, this.pickUp, this.busInRoute});
+
+  @override
+  String toString(){
+    return '$studentName ($std $division)';
+  }
 
   DataList.fromJson(Map<String, dynamic> json) {
     if(json["id"] is String) {
@@ -224,6 +230,7 @@ class BusInRoute {
     return _data;
   }
 }
+
 
 class RouteInfo {
   String? id;

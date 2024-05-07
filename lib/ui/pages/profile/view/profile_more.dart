@@ -1,6 +1,7 @@
 import 'package:cluster_arabia/res/images.dart';
 import 'package:cluster_arabia/res/style.dart';
 import 'package:cluster_arabia/ui/pages/profile/bind/profile_bind.dart';
+import 'package:cluster_arabia/utilities/app_routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -101,27 +102,37 @@ class ListTilePart extends StatelessWidget {
         ListTileItemProfile(
           name: 'Invoice',
           icon: transactionIcon,
-          onTap: () {},
+          onTap: () {
+            Get.toNamed(Routes.invoice);
+          },
         ).cPadSymmetric(h: 8),
         ListTileItemProfile(
           name: 'Children',
           icon: studentsIcon,
-          onTap: () {},
+          onTap: () {
+            Get.toNamed(Routes.children);
+          },
         ).cPadSymmetric(h: 8),
         ListTileItemProfile(
           name: 'Contact Us',
           icon: contactUs,
-          onTap: () {},
+          onTap: () {
+            Get.toNamed(Routes.contactUs);
+          },
         ).cPadSymmetric(h: 8),
         ListTileItemProfile(
           name: 'About Us',
           icon: aboutUs,
-          onTap: () {},
+          onTap: () {
+            Get.toNamed(Routes.aboutUs);
+          },
         ).cPadSymmetric(h: 8),
         ListTileItemProfile(
           name: 'Privacy Policy',
           icon: privacyPolicy,
-          onTap: () {},
+          onTap: () {
+            Get.toNamed(Routes.privacyPolicy);
+          },
         ).cPadSymmetric(h: 8),
       ],
     ).cPadOnly(t: 30, l: 15);
