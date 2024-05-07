@@ -55,10 +55,11 @@ class Data {
   String? createdAt;
   String? updatedAt;
   String? img;
+  School? school;
   TotalBillAmountData? totalBillAmountData;
   Student? student;
 
-  Data({this.id, this.title, this.description, this.couponCode, this.couponDescription, this.couponValue, this.amount, this.taxAmount, this.tax, this.creditType, this.financeType, this.paymentMode, this.paidOn, this.billedOn, this.businessName, this.companyPhone, this.address, this.createdAt, this.updatedAt, this.img, this.totalBillAmountData, this.student});
+  Data({this.id, this.title, this.description, this.couponCode, this.couponDescription, this.couponValue, this.amount, this.taxAmount, this.tax, this.creditType, this.financeType, this.paymentMode, this.paidOn, this.billedOn, this.businessName, this.companyPhone, this.address, this.createdAt, this.updatedAt, this.img, this.school, this.totalBillAmountData, this.student});
 
   Data.fromJson(Map<String, dynamic> json) {
     if(json["id"] is String) {
@@ -105,6 +106,9 @@ class Data {
     if(json["img"] is String) {
       img = json["img"];
     }
+    if(json["school"] is Map) {
+      school = json["school"] == null ? null : School.fromJson(json["school"]);
+    }
     if(json["total_bill_amount_data"] is Map) {
       totalBillAmountData = json["total_bill_amount_data"] == null ? null : TotalBillAmountData.fromJson(json["total_bill_amount_data"]);
     }
@@ -135,6 +139,9 @@ class Data {
     _data["createdAt"] = createdAt;
     _data["updatedAt"] = updatedAt;
     _data["img"] = img;
+    if(school != null) {
+      _data["school"] = school?.toJson();
+    }
     if(totalBillAmountData != null) {
       _data["total_bill_amount_data"] = totalBillAmountData?.toJson();
     }
@@ -413,6 +420,49 @@ class TotalBillAmountData {
     _data["coupon_val"] = couponVal;
     _data["coupon_code"] = couponCode;
     _data["tax_percentage"] = taxPercentage;
+    return _data;
+  }
+}
+
+class School {
+  String? id;
+  String? name;
+  String? email;
+  String? phone;
+  String? address;
+  int? studentCapacity;
+
+  School({this.id, this.name, this.email, this.phone, this.address, this.studentCapacity});
+
+  School.fromJson(Map<String, dynamic> json) {
+    if(json["id"] is String) {
+      id = json["id"];
+    }
+    if(json["name"] is String) {
+      name = json["name"];
+    }
+    if(json["email"] is String) {
+      email = json["email"];
+    }
+    if(json["phone"] is String) {
+      phone = json["phone"];
+    }
+    if(json["address"] is String) {
+      address = json["address"];
+    }
+    if(json["student_capacity"] is num) {
+      studentCapacity = (json["student_capacity"] as num).toInt();
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> _data = <String, dynamic>{};
+    _data["id"] = id;
+    _data["name"] = name;
+    _data["email"] = email;
+    _data["phone"] = phone;
+    _data["address"] = address;
+    _data["student_capacity"] = studentCapacity;
     return _data;
   }
 }

@@ -241,7 +241,7 @@ class ListPart extends StatelessWidget {
           itemCount: logic.invoiceList?.length ?? 0,
           shrinkWrap: true,
           controller: logic.scrollController,
-          physics: NeverScrollableScrollPhysics(),
+          physics: AlwaysScrollableScrollPhysics(),
           itemBuilder: (context, i) {
             var data = logic.invoiceList?[i];
             return Container(
@@ -372,10 +372,10 @@ class ListPart extends StatelessWidget {
                       SizedBox(
                         width: 5,
                       ),
-                      Text('TEST SCHOOL ABCD',
+                      Text(data?.school?.name??'',
                           style: customStyle(
                               12.0, Colors.black, FontWeight.normal)),
-                      Text(' (004)',
+                      Text(' (${data?.school?.id??''})',
                           style: customStyle(
                               12.0,
                               Color.fromRGBO(99, 99, 99, 1),
