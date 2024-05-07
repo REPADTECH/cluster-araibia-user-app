@@ -1,10 +1,12 @@
 import 'package:cluster_arabia/models/invoice_list_model.dart' as invoice;
+import 'package:cluster_arabia/models/profile_model.dart';
 import 'package:cluster_arabia/utilities/api_provider.dart';
 import 'package:cluster_arabia/utilities/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_date_range_picker/flutter_date_range_picker.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:cluster_arabia/models/student_list_model.dart' as student;
 
 class InvoiceBinding implements Bindings {
   @override
@@ -16,12 +18,23 @@ class InvoiceBinding implements Bindings {
 class InvoiceController extends GetxController {
   static InvoiceController get to => Get.find();
   late BuildContext context;
-  invoice.InvoiceListModel?invoiceListModel;
-  List<invoice.Data> invoiceList=[];
-  var pageNO=1;
+  invoice.InvoiceListModel? invoiceListModel;
+  student.StudentModelList? studentModelList;
+  ProfileModel? profileModel;
+  student.DataList?billFilterdStudentChoosed;
+
+  List<invoice.Data> invoiceList = [];
+  var pageNO = 1;
   final RxString categoryValue = 'Student Name'.obs;
+
   // List<String> categoryItems = [];
-  List<String> categoryItems = ['Sharafas','Sharun','Rohith','Ramees','Salman'];
+  List<String> categoryItems = [
+    'Sharafas',
+    'Sharun',
+    'Rohith',
+    'Ramees',
+    'Salman'
+  ];
 
   DateRange? selectedDateRange;
   var startDatePass = DateFormat('yyyy-MM-dd').format(DateTime.now());
@@ -29,23 +42,25 @@ class InvoiceController extends GetxController {
   late ScrollController scrollController;
   bool hasNextPage = false;
 
-
   DateTime? startMonth;
   DateTime? endMonth;
 
   void setStartMonth(DateTime month) {
-  startMonth = month;
-  update(); // This triggers the UI updates
+    startMonth = month;
+    update(); // This triggers the UI updates
   }
 
   void setEndMonth(DateTime month) {
-  endMonth = month;
-  update(); // This triggers the UI updates
+    endMonth = month;
+    update(); // This triggers the UI updates
   }
-
+  clearData(){
+    invoiceList.clear();
+    billFilterdStudentChoosed=null;
+  }
   @override
   void onInit() {
-    invoiceList.clear();
+    clearData();
     scrollController = ScrollController();
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
@@ -54,8 +69,11 @@ class InvoiceController extends GetxController {
       }
     });
     getInvoiceList();
+    getStudentData();
+    getProfile();
     super.onInit();
   }
+
   void loadMore() async {
     if (hasNextPage) {
       pageNO = pageNO + 1;
@@ -66,17 +84,16 @@ class InvoiceController extends GetxController {
     }
   }
 
-  void getInvoiceList() async{
+  void getInvoiceList() async {
     try {
       showLoading();
       invoiceListModel = await Api.to.getInvoiceList(page: pageNO);
       dismissLoading();
       if (!(invoiceListModel?.success ?? true)) {
         showToast(context: context, message: invoiceListModel?.message ?? '');
-      }else{
-        hasNextPage = ((invoiceListModel?.data ?? []).length == 20)
-            ? true
-            : false;
+      } else {
+        hasNextPage =
+            ((invoiceListModel?.data ?? []).length == 20) ? true : false;
         invoiceList.addAll((invoiceListModel?.data ?? []));
       }
     } catch (e) {
@@ -86,4 +103,33 @@ class InvoiceController extends GetxController {
     }
   }
 
+  Future<void> getStudentData() async {
+    try {
+      showLoading();
+      studentModelList = await Api.to.getStudentsList(status: true, page: 1);
+      dismissLoading();
+      if (!(studentModelList?.success ?? true)) {
+        showToast(context: context, message: studentModelList?.message ?? '');
+      }
+    } catch (e) {
+      showToast(context: context, message: e.toString());
+    } finally {
+      update();
+    }
+  }
+
+  void getProfile() async {
+    try {
+      showLoading();
+      profileModel = await Api.to.getProfile();
+      dismissLoading();
+      if (!(profileModel?.success ?? true)) {
+        showToast(context: context, message: profileModel?.message ?? '');
+      }
+    } catch (e) {
+      showToast(context: context, message: e.toString());
+    } finally {
+      update();
+    }
+  }
 }

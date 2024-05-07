@@ -9,9 +9,10 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_utils/flutter_custom_utils.dart';
-import 'package:flutter_date_range_picker/flutter_date_range_picker.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:cluster_arabia/models/student_list_model.dart' as student;
+
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class FirstPart extends StatelessWidget {
@@ -30,8 +31,8 @@ class FirstPart extends StatelessWidget {
                   borderRadius: BorderRadius.circular(5)),
               child: Row(
                 children: [
-                  Image.asset(
-                    profilePic,
+                  Image.network(
+                    logic.profileModel?.data?.img??'',
                     width: 25,
                     height: 25,
                   ).cPadOnly(l: 5),
@@ -40,7 +41,7 @@ class FirstPart extends StatelessWidget {
                   ),
                   SizedBox(
                     width: 150,
-                    child: DropdownSearch(
+                    child: DropdownSearch<student.DataList>(
                       dropdownDecoratorProps: DropDownDecoratorProps(
                           dropdownSearchDecoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(vertical: 8),
@@ -54,14 +55,14 @@ class FirstPart extends StatelessWidget {
                         // ),
                         showSearchBox: true,
                         showSelectedItems: false,
-                        disabledItemFn: (String s) => s.startsWith('I'),
+                        disabledItemFn: (student.DataList s) => (s.gender??'').startsWith('I'),
                       ),
-                      items: logic.categoryItems,
+                      items: logic.studentModelList?.data?.dataList??[],
                       enabled: true,
-                      onChanged: (value) {
-                        // logic.chooseCategoryId(value.toString());
+                      onChanged: ( value) {
+                        logic.billFilterdStudentChoosed=value;
                       },
-                      selectedItem: logic.categoryValue.value,
+                      selectedItem: logic.studentModelList?.data?.dataList??[].cFirst,
                     ),
                   ),
                 ],
@@ -308,7 +309,9 @@ class ListPart extends StatelessWidget {
                                 width: 8,
                               ),
                               Text(
-                                ((data?.paidOn ?? '').isEmpty) ? 'Open' : 'Paid',
+                                ((data?.paidOn ?? '').isEmpty)
+                                    ? 'Open'
+                                    : 'Paid',
                                 style: customStyle(
                                     13.0,
                                     ((data?.paidOn ?? '').isEmpty)
@@ -321,7 +324,7 @@ class ListPart extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 8,
                     ),
                     Row(
@@ -330,24 +333,25 @@ class ListPart extends StatelessWidget {
                         Text('Invoice no ${data?.id ?? ''}'),
                         Text(
                           'SAR ${(double.parse('${data?.amount ?? 0}') + double.parse('${data?.tax ?? 0}')) / 100}',
-                          style: customStyle(12.0, Colors.black, FontWeight.bold),
+                          style:
+                              customStyle(12.0, Colors.black, FontWeight.bold),
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
-                    DottedLine(
+                    const DottedLine(
                       dashGapLength: 6,
                       lineThickness: 0.5,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Row(
                       children: [
-                        Image.asset(
-                          profilePic,
+                        Image.network(
+                          data?.img ?? '',
                           height: 25,
                           width: 25,
                         ),
@@ -355,12 +359,14 @@ class ListPart extends StatelessWidget {
                           width: 10,
                         ),
                         Text(data?.student?.name ?? '',
-                            style:
-                                customStyle(13.0, Colors.black, FontWeight.bold)),
+                            style: customStyle(
+                                13.0, Colors.black, FontWeight.bold)),
                         Text(
                             '(${data?.student?.std ?? ''} ${data?.student?.division ?? ''})',
-                            style: customStyle(13.0,
-                                Color.fromRGBO(99, 99, 99, 1), FontWeight.bold)),
+                            style: customStyle(
+                                13.0,
+                                Color.fromRGBO(99, 99, 99, 1),
+                                FontWeight.bold)),
                       ],
                     ),
                     Row(
@@ -373,10 +379,10 @@ class ListPart extends StatelessWidget {
                         SizedBox(
                           width: 5,
                         ),
-                        Text(data?.school?.name??'',
+                        Text(data?.school?.name ?? '',
                             style: customStyle(
                                 12.0, Colors.black, FontWeight.normal)),
-                        Text(' (${data?.school?.id??''})',
+                        Text(' (${data?.school?.id ?? ''})',
                             style: customStyle(
                                 12.0,
                                 Color.fromRGBO(99, 99, 99, 1),
@@ -397,7 +403,8 @@ class ListPart extends StatelessWidget {
                               width: 7,
                             ),
                             Text(
-                                data?.student?.busInRoute?.routeInfo?.routeName ??
+                                data?.student?.busInRoute?.routeInfo
+                                        ?.routeName ??
                                     '',
                                 style: customStyle(
                                     11.0, Colors.black, FontWeight.normal)),
