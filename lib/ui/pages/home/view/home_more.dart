@@ -253,8 +253,8 @@ class BillOverView extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Overview of Billing for ${(logic.startDatePass.cGetFormattedDate(format: 'MMM-yyyy'))} - ${(logic.endDatePass.cGetFormattedDate(format: 'MMM-yyyy'))}',
-                      style: customStyle(12.0, Colors.black, FontWeight.bold)),
+                  Text('Overview of Billing for ${(logic.startDatePass.cGetFormattedDate(format: 'MMM-yyyy'))}',
+                      style: customStyle(11.0, Colors.black, FontWeight.bold)),
                   Container(
                     width: 90,
                     height: 30,
@@ -344,7 +344,7 @@ class BillOverView extends StatelessWidget {
                       ).cExpanded(1),
                   Text('',
                    ).cExpanded(1),
-                  Text('SAR 345.00',
+                  Text('SAR ${(double.parse('${logic.homeBillAmount?.data?.totalPayableAmount??0}')/100)}',
                       style: customStyle(
                           11.0, primaryColorPurple, FontWeight.normal)).cExpanded(1),
               ],)

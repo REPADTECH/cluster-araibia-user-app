@@ -8,7 +8,7 @@ import 'package:flutter_date_range_picker/flutter_date_range_picker.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-AppBar  commonAppBarBack(String titleName, var bColor) {
+AppBar  commonAppBarBack(String titleName, var bColor,  VoidCallback? onTap) {
   return AppBar(
     backgroundColor: bColor,
     elevation: 0,
@@ -33,7 +33,9 @@ AppBar  commonAppBarBack(String titleName, var bColor) {
       ),
     ),
     actions: [
-      SvgPicture.asset(clearUpdateIcon,height: 20,width: 20,).cPadOnly(r: 15),
+      InkWell(
+        onTap: onTap,
+          child: SvgPicture.asset(clearUpdateIcon,height: 20,width: 20,).cPadOnly(r: 15)),
     ],
   );
 }

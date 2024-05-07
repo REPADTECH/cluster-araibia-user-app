@@ -72,17 +72,17 @@ class ProfileImagePart extends StatelessWidget {
                   logic.profileModel?.data?.address ?? '',
                   style: customStyle(12.0, Colors.black87, FontWeight.normal),
                 ),
-                Container(
-                  height: 30,
-                  width: 100,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey, width: 0.5),
-                      borderRadius: BorderRadius.circular(7)),
-                  child: Text(
-                    'Edit profile',
-                    style: customStyle(13.0, Colors.black87, FontWeight.bold),
-                  ).cToCenter,
-                ).cPadOnly(t: 15)
+                // Container(
+                //   height: 30,
+                //   width: 100,
+                //   decoration: BoxDecoration(
+                //       border: Border.all(color: Colors.grey, width: 0.5),
+                //       borderRadius: BorderRadius.circular(7)),
+                //   child: Text(
+                //     'Edit profile',
+                //     style: customStyle(13.0, Colors.black87, FontWeight.bold),
+                //   ).cToCenter,
+                // ).cPadOnly(t: 15)
               ],
             )
           ],

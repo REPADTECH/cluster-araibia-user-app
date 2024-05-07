@@ -10,7 +10,7 @@ class ContactUs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBarBack( 'Contact Us', primaryColorPurple,),
+      appBar: commonAppBarBack( 'Contact Us', primaryColorPurple,(){}),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

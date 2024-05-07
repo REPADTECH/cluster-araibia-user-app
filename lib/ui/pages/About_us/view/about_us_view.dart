@@ -10,7 +10,8 @@ class AboutUsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBarBack('About Us', primaryColorPurple),
+      appBar: commonAppBarBack('About Us', primaryColorPurple,(){
+      }),
       body: Column(children: [
         ListView.builder(
           itemCount: 3,

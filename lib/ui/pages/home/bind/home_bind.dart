@@ -50,7 +50,7 @@ class HomeController extends GetxController {
     try {
       showLoading();
       homeBillAmount =
-          await Api.to.getHomePageBillAmount(startDate: '', endDate: '');
+          await Api.to.getHomePageBillAmount(startDate: startDatePass, endDate: endDatePass);
       dismissLoading();
       if (!(homeBillAmount?.success ?? true)) {
         showToast(context: context, message: homeBillAmount?.message ?? '');

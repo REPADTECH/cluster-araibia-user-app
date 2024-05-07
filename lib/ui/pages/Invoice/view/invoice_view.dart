@@ -20,6 +20,9 @@ class InvoicePage extends StatelessWidget {
       appBar: commonAppBarBack(
         'Invoices',
         primaryColorPurple,
+          (){
+          InvoiceController.to.onInit();
+          }
       ),
       body: Column(
         children: [

@@ -12,7 +12,7 @@ class ChildrenView extends StatelessWidget {
   Widget build(BuildContext context) {
     ChildrenController.to.context = context;
     return Scaffold(
-      appBar: commonAppBarBack('Children', primaryColorPurple),
+      appBar: commonAppBarBack('Children', primaryColorPurple,(){ChildrenController.to.onInit();}),
       body: SingleChildScrollView(
         child: Column(
           children: [SearchPart(), SelectionButton(), ListPart()],

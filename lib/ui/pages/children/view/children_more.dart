@@ -58,8 +58,10 @@ class ListPart extends StatelessWidget {
           physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: logic.studentModelList?.data?.dataList?.length??0,
+            controller: logic.scrollController,
             itemBuilder: (context, i) {
-            var data=logic.studentModelList?.data?.dataList?[i];
+            var data=logic.studentList?[i];
+            // var data=logic.studentModelList?.data?.dataList?[i];
               return InkWell(
                 onTap: (){
                   Get.toNamed(Routes.childrenInnerPage);
