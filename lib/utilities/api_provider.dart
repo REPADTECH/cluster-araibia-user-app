@@ -1,3 +1,4 @@
+import 'package:cluster_arabia/models/invoice_list_model.dart';
 import 'package:cluster_arabia/models/login_model.dart';
 import 'package:cluster_arabia/models/otp_verify_model.dart';
 import 'package:cluster_arabia/models/profile_model.dart';
@@ -87,6 +88,14 @@ class Api extends GetConnect {
   }) {
     return get('p/student/view/$studentId').then((value) {
       return StudentViewById.fromJson(value.body ?? err);
+    });
+  }
+
+  Future<InvoiceListModel> getInvoiceList({
+    required var page,
+  }) {
+    return get('p/bill/list/$page').then((value) {
+      return InvoiceListModel.fromJson(value.body ?? err);
     });
   }
 }

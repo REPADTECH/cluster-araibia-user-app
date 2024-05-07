@@ -80,15 +80,12 @@ class FirstPart extends StatelessWidget {
               decoration: BoxDecoration(
                   border: Border.all(color: Colors.black, width: 0.5),
                   borderRadius: BorderRadius.circular(5)),
-              child:  Text(
-            (logic.startMonth == null &&
-                logic.endMonth == null)
-                ? 'Select Date Range'
-                :
-            '${(logic.startMonth)?.cGetFormattedDate(format: 'MM/yyyy')} — ${(logic.endMonth == null)?(logic.startMonth)?.cGetFormattedDate(format: 'MM/yyyy'):(logic.endMonth)?.cGetFormattedDate(format: 'MM/yyyy')}',
-            style: customStyle(
-                12.0, Colors.black, FontWeight.normal),
-          ).cToCenter,
+              child: Text(
+                (logic.startMonth == null && logic.endMonth == null)
+                    ? 'Select Date Range'
+                    : '${(logic.startMonth)?.cGetFormattedDate(format: 'MM/yyyy')} — ${(logic.endMonth == null) ? (logic.startMonth)?.cGetFormattedDate(format: 'MM/yyyy') : (logic.endMonth)?.cGetFormattedDate(format: 'MM/yyyy')}',
+                style: customStyle(12.0, Colors.black, FontWeight.normal),
+              ).cToCenter,
             ),
           )
           // Column(
@@ -199,7 +196,7 @@ void dateSelectPopup({
           child: GetBuilder<InvoiceController>(builder: (logic) {
             return Container(
               height: 300,
-              width: context.cWidth/2,
+              width: context.cWidth / 2,
               child: SfDateRangePicker(
                 confirmText: 'SELECT',
                 showNavigationArrow: true,
@@ -207,8 +204,8 @@ void dateSelectPopup({
                   if (v is PickerDateRange) {
                     final DateTime? rangeStartDate = v.startDate;
                     final DateTime? rangeEndDate = v.endDate;
-                    logic.startMonth=rangeStartDate;
-                    logic.endMonth=rangeEndDate;
+                    logic.startMonth = rangeStartDate;
+                    logic.endMonth = rangeEndDate;
                     logic.update();
                     print(rangeStartDate);
                     print('//////${logic.startMonth}');
@@ -233,19 +230,20 @@ void dateSelectPopup({
 }
 
 class ListPart extends StatelessWidget {
-
-  const ListPart(
-      {super.key,});
+  const ListPart({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<InvoiceController>(builder: (logic) {
-      return
-        ListView.builder(
-          itemCount: 2,
+      return ListView.builder(
+          itemCount: logic.invoiceList?.length ?? 0,
           shrinkWrap: true,
+          controller: logic.scrollController,
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (context, i) {
+            var data = logic.invoiceList?[i];
             return Container(
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               // height: 135,
@@ -277,18 +275,19 @@ class ListPart extends StatelessWidget {
                           SizedBox(
                             width: 5,
                           ),
-                          Text('Aug 2024')
+                          Text((data?.billedOn ?? '')
+                              .cGetFormattedDate(format: 'MMM yyyy'))
                         ],
                       ),
                       Container(
                         width: 60,
                         height: 25,
                         decoration: BoxDecoration(
-                            color: (i == 0)
+                            color: ((data?.paidOn ?? '').isEmpty)
                                 ? Color.fromRGBO(255, 243, 235, 1)
                                 : Color.fromRGBO(221, 252, 243, 1),
                             border: Border.all(
-                                color: (i == 0)
+                                color: ((data?.paidOn ?? '').isEmpty)
                                     ? Color.fromRGBO(249, 122, 30, 1)
                                     : Color.fromRGBO(33, 196, 141, 1)),
                             borderRadius: BorderRadius.circular(20)),
@@ -300,7 +299,7 @@ class ListPart extends StatelessWidget {
                                 width: 8,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: (i == 0)
+                                  color: ((data?.paidOn ?? '').isEmpty)
                                       ? Color.fromRGBO(249, 122, 30, 1)
                                       : Color.fromRGBO(33, 196, 141, 1),
                                 )),
@@ -308,10 +307,10 @@ class ListPart extends StatelessWidget {
                               width: 8,
                             ),
                             Text(
-                              (i == 0) ? 'Open' : 'Paid',
+                              ((data?.paidOn ?? '').isEmpty) ? 'Open' : 'Paid',
                               style: customStyle(
                                   13.0,
-                                  (i == 0)
+                                  ((data?.paidOn ?? '').isEmpty)
                                       ? Color.fromRGBO(249, 122, 30, 1)
                                       : Color.fromRGBO(33, 196, 141, 1),
                                   FontWeight.normal),
@@ -327,9 +326,9 @@ class ListPart extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Invoice no #70360936703496'),
+                      Text('Invoice no ${data?.id ?? ''}'),
                       Text(
-                        'SAR 115.23',
+                        'SAR ${(double.parse('${data?.amount ?? 0}') + double.parse('${data?.tax ?? 0}')) / 100}',
                         style: customStyle(12.0, Colors.black, FontWeight.bold),
                       ),
                     ],
@@ -354,10 +353,11 @@ class ListPart extends StatelessWidget {
                       SizedBox(
                         width: 10,
                       ),
-                      Text('Sharafas OM ',
+                      Text(data?.student?.name ?? '',
                           style:
                               customStyle(13.0, Colors.black, FontWeight.bold)),
-                      Text('(10 A)',
+                      Text(
+                          '(${data?.student?.std ?? ''} ${data?.student?.division ?? ''})',
                           style: customStyle(13.0,
                               Color.fromRGBO(99, 99, 99, 1), FontWeight.bold)),
                     ],
@@ -375,7 +375,7 @@ class ListPart extends StatelessWidget {
                       Text('TEST SCHOOL ABCD',
                           style: customStyle(
                               12.0, Colors.black, FontWeight.normal)),
-                      Text(' (ABC1234)',
+                      Text(' (004)',
                           style: customStyle(
                               12.0,
                               Color.fromRGBO(99, 99, 99, 1),
@@ -395,10 +395,13 @@ class ListPart extends StatelessWidget {
                           SizedBox(
                             width: 7,
                           ),
-                          Text('Route name',
+                          Text(
+                              data?.student?.busInRoute?.routeInfo?.routeName ??
+                                  '',
                               style: customStyle(
                                   11.0, Colors.black, FontWeight.normal)),
-                          Text(' (pickup point name)',
+                          Text(
+                              ' (${data?.student?.busInRoute?.routeInfo?.startingPoint ?? ''})',
                               style: customStyle(
                                   11.0,
                                   Color.fromRGBO(99, 99, 99, 1),
@@ -408,14 +411,12 @@ class ListPart extends StatelessWidget {
                       Row(
                         children: [
                           InkWell(
-                            onTap: (){
-
-                            },
+                            onTap: () {},
                             child: CustomButtonWidget(
                               backgroundColor: Colors.white,
                               borderColor: primaryColorPurple,
                               vPadding: 4,
-                              width: (context.cWidth>=800)?80:60,
+                              width: (context.cWidth >= 800) ? 80 : 60,
                               buttonTitle: 'View Bill',
                               titleStyle: customStyle(
                                   10.0, primaryColorPurple, FontWeight.bold),
@@ -423,13 +424,11 @@ class ListPart extends StatelessWidget {
                           ),
                           if (i == 0)
                             InkWell(
-                              onTap: (){
-
-                              },
+                              onTap: () {},
                               child: CustomButtonWidget(
                                 backgroundColor: primaryColorPurple,
                                 vPadding: 4,
-                                width: (context.cWidth>=800)?60:45,
+                                width: (context.cWidth >= 800) ? 60 : 45,
                                 buttonTitle: 'Pay',
                                 titleStyle: customStyle(
                                     10.0, Colors.white, FontWeight.bold),
@@ -460,9 +459,8 @@ Future<void> showMonthPicker({
     initialDate: DateTime.now(),
     firstDate: DateTime(2000),
     lastDate: DateTime(2100),
-    helpText: isStartMonth
-        ? 'SELECT START MONTH'
-        : 'SELECT END MONTH', // Can change the help text accordingly
+    helpText: isStartMonth ? 'SELECT START MONTH' : 'SELECT END MONTH',
+    // Can change the help text accordingly
     fieldLabelText: 'Month',
     fieldHintText: 'Month/Year',
     builder: (context, child) {

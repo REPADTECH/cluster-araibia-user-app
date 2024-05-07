@@ -1,6 +1,7 @@
 import 'package:cluster_arabia/res/colors.dart';
 import 'package:cluster_arabia/res/images.dart';
 import 'package:cluster_arabia/res/style.dart';
+import 'package:cluster_arabia/ui/pages/Invoice/bind/invoice_bind.dart';
 import 'package:cluster_arabia/ui/pages/Invoice/view/invoice_more.dart';
 import 'package:cluster_arabia/utilities/common_widget.dart';
 import 'package:dotted_line/dotted_line.dart';
@@ -13,6 +14,7 @@ class InvoicePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    InvoiceController.to.context=context;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: commonAppBarBack(
