@@ -1,7 +1,9 @@
 
 import 'package:cluster_arabia/utilities/api_provider.dart';
+import 'package:cluster_arabia/utilities/app_routes.dart';
 import 'package:cluster_arabia/utilities/strings.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class ComBinding implements Bindings {
   @override
@@ -13,35 +15,17 @@ class ComBinding implements Bindings {
 
 class AppSession extends GetxController {
   static AppSession get to => Get.find();
-  // SessionManager sessionManager = SessionManager();
-  // late SharedPreferences prefs;
+  var session = GetStorage('cluster_arabia');
 
-//  var session = SessionManager();
+
   @override
   Future<void> onInit() async {
-    // prefs= await SharedPreferences.getInstance();
-    // await SessionManager().set(SessionKeys.TO_FIREBASE, null);
-    // await SessionManager().update();
     super.onInit();
   }
 
+  void logout() {
+    AppSession.to.session.erase();
+    Get.offNamed(Routes.splash);
+  }
 
-
-  // Future<void> logout() async {
-  //   Map<String, dynamic> myMsg = {
-  //     'msg': '',
-  //   };
-  //   var langChoosed = await (AppSession.to.prefs.getString( SessionKeys.LANG_TYPE));
-  //   FlutterBackgroundService().invoke(
-  //     SessionKeys.LOGINCHECK,
-  //     myMsg,
-  //   );
-  //   //GetStorage('Amj_db').write(SessionKeys.LANG_TYPE, langChoosed);
-  //   // AppSession.to.session.destroy();
-  //   prefs.clear();
-  //   // await SessionManager().update();
-  //   AppSession.to.prefs.setString(SessionKeys.LANG_TYPE, langChoosed??'');
-  //   prefs.setString(SessionKeys.LANG_TYPE_MAIN, langChoosed??'');
-  //   Get.offNamed(Routes.splash);
-  // }
 }
