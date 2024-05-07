@@ -1,6 +1,7 @@
 import 'package:cluster_arabia/models/login_model.dart';
 import 'package:cluster_arabia/models/otp_verify_model.dart';
 import 'package:cluster_arabia/models/profile_model.dart';
+import 'package:cluster_arabia/models/student_by_id.dart';
 import 'package:cluster_arabia/models/student_list_model.dart';
 import 'package:cluster_arabia/utilities/com_binding.dart';
 import 'package:cluster_arabia/utilities/dio.dart';
@@ -78,6 +79,14 @@ class Api extends GetConnect {
             'p/student/list/$page?search=$search&route_id=$routeId&pickup_id=$pickUpId&country=$country&state=$state&school_id=$schoolId&status=$status')
         .then((value) {
       return StudentModelList.fromJson(value.body ?? err);
+    });
+  }
+
+  Future<StudentViewById> getStudentById({
+    required var studentId,
+  }) {
+    return get('p/student/view/$studentId').then((value) {
+      return StudentViewById.fromJson(value.body ?? err);
     });
   }
 }
