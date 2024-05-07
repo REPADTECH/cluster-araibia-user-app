@@ -228,136 +228,143 @@ class BillOverView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 5),
-      // height: 135,
-      width: context.cWidth,
-      decoration: BoxDecoration(
-          color: Color.fromRGBO(255, 255, 255, 1),
-          // color: Color.fromRGBO(240, 243, 253, 1),
-          borderRadius: BorderRadius.circular(15),
-        boxShadow: const [
-          BoxShadow(
-            blurRadius: 2,
-            spreadRadius: 0,
-            color: Color.fromRGBO(0, 0, 0, 0.25),
-          ),
-        ],
-          // border: Border.all(color: Colors.black54, width: 0.2),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Overview of Billing for August 2024',
-                  style: customStyle(12.0, Colors.black, FontWeight.bold)),
-              Container(
-                width: 90,
-                height: 30,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(
-                      color: primaryColorPurple,
-                    ),
-                    borderRadius: BorderRadius.circular(8)),
-                child: Text('Pay Bill',
-                        style: customStyle(
-                            13.0, primaryColorPurple, FontWeight.normal))
-                    .cToCenter,
-              )
+    return GetBuilder<HomeController>(
+      builder: (logic) {
+        return Container(
+          padding: EdgeInsets.symmetric(vertical: 5),
+          // height: 135,
+          width: context.cWidth,
+          decoration: BoxDecoration(
+              color: Color.fromRGBO(255, 255, 255, 1),
+              // color: Color.fromRGBO(240, 243, 253, 1),
+              borderRadius: BorderRadius.circular(15),
+            boxShadow: const [
+              BoxShadow(
+                blurRadius: 2,
+                spreadRadius: 0,
+                color: Color.fromRGBO(0, 0, 0, 0.25),
+              ),
             ],
+              // border: Border.all(color: Colors.black54, width: 0.2),
           ),
-          SizedBox(height: 8,),
-          DottedLine(dashColor: Color.fromRGBO(159, 159, 159, 1),lineThickness: 0.5,),
-          SizedBox(height: 8,),
-          // Divider(
-          //   color: Color.fromRGBO(159, 159, 159, 1),
-          //   thickness: 0.5,
-          // ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Bill Date',
-                      style: customStyle(11.0, Colors.black, FontWeight.normal))
-                  .cExpanded(1),
-              Text('Student Name',
-                      style: customStyle(11.0, Colors.black, FontWeight.normal))
-                  .cExpanded(1),
-              Text('Class',
-                      style: customStyle(11.0, Colors.black, FontWeight.normal))
-                  .cExpanded(1),
-              Text('Amount to pay',
-                      style: customStyle(11.0, Colors.black, FontWeight.normal))
-                  .cExpanded(1),
-            ],
-          ),
-          SizedBox(height: 5,),
-          DottedLine(dashColor: Color.fromRGBO(159, 159, 159, 1),lineThickness: 0.5,),
-          SizedBox(height: 5,),
-          // Divider(
-          //   color: Color.fromRGBO(159, 159, 159, 1),
-          //   thickness: 0.5,
-          // ),
-          ListView.builder(
-            itemCount: 3,
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemBuilder: (context,i) {
-              return Row(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Aug 2024',
-                          style: customStyle(
-                              11.0, primaryColorPurple, FontWeight.normal))
+                  Text('Overview of Billing for ${(logic.startDatePass.cGetFormattedDate(format: 'MMM-yyyy'))} - ${(logic.endDatePass.cGetFormattedDate(format: 'MMM-yyyy'))}',
+                      style: customStyle(12.0, Colors.black, FontWeight.bold)),
+                  Container(
+                    width: 90,
+                    height: 30,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(
+                          color: primaryColorPurple,
+                        ),
+                        borderRadius: BorderRadius.circular(8)),
+                    child: Text('Pay Bill',
+                            style: customStyle(
+                                13.0, primaryColorPurple, FontWeight.normal))
+                        .cToCenter,
+                  )
+                ],
+              ),
+              SizedBox(height: 8,),
+              DottedLine(dashColor: Color.fromRGBO(159, 159, 159, 1),lineThickness: 0.5,),
+              SizedBox(height: 8,),
+              // Divider(
+              //   color: Color.fromRGBO(159, 159, 159, 1),
+              //   thickness: 0.5,
+              // ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Bill Date',
+                          style: customStyle(11.0, Colors.black, FontWeight.normal))
                       .cExpanded(1),
-                  Text('Sharafas OM',
-                          style: customStyle(
-                              11.0, primaryColorPurple, FontWeight.normal))
+                  Text('Student Name',
+                          style: customStyle(11.0, Colors.black, FontWeight.normal))
                       .cExpanded(1),
-                  Text('10(B)',
-                          style: customStyle(
-                              11.0, primaryColorPurple, FontWeight.normal))
+                  Text('Class',
+                          style: customStyle(11.0, Colors.black, FontWeight.normal))
                       .cExpanded(1),
-                  Text('SAR 115.00',
-                          style: customStyle(
-                              11.0, primaryColorPurple, FontWeight.normal))
+                  Text('Amount to pay',
+                          style: customStyle(11.0, Colors.black, FontWeight.normal))
                       .cExpanded(1),
                 ],
-              );
-            }
-          ),
-          SizedBox(height: 8,),
-          DottedLine(dashColor: Color.fromRGBO(159, 159, 159, 1),lineThickness: 0.5,),
-          SizedBox(height: 8,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Text('',
-                  ).cExpanded(1),
-              Text('',
-                  ).cExpanded(1),
-              Text('',
-               ).cExpanded(1),
-              Text('SAR 345.00',
-                  style: customStyle(
-                      11.0, primaryColorPurple, FontWeight.normal)).cExpanded(1),
-          ],)
-          // Row(
-          //   children: [
-          //     Image.asset(invoice_inquiry),
-          //     SizedBox(
-          //       width: 5,
-          //     ),
-          //     Text(
-          //         'This invoice is system-generated. For inquiries, please contact us.',
-          //         style: customStyle(8.0, Color.fromRGBO(159, 159, 159, 1),
-          //             FontWeight.normal)),
-          //   ],
-          // )
-        ],
-      ).cPadOnly(l: 10, r: 10, t: 10),
-    ).cPadAll(10);
+              ),
+              SizedBox(height: 5,),
+              DottedLine(dashColor: Color.fromRGBO(159, 159, 159, 1),lineThickness: 0.5,),
+              SizedBox(height: 5,),
+              // Divider(
+              //   color: Color.fromRGBO(159, 159, 159, 1),
+              //   thickness: 0.5,
+              // ),
+              ListView.builder(
+                itemCount: logic.homeBillAmount?.data?.students?.length??0,
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemBuilder: (context,i) {
+                  var monthCharge=logic.homeBillAmount?.data?.monthlyCharge?.cFirst;
+                  var students=logic.homeBillAmount?.data?.students?[i];
+
+                  return Row(
+                    children: [
+                      Text('${monthCharge?.monthName??' '}-${monthCharge?.year??''}',
+                              style: customStyle(
+                                  11.0, primaryColorPurple, FontWeight.normal))
+                          .cExpanded(1),
+                      Text(students?.studentName??'',
+                              style: customStyle(
+                                  11.0, primaryColorPurple, FontWeight.normal))
+                          .cExpanded(1),
+                      Text('${students?.classNo}',
+                              style: customStyle(
+                                  11.0, primaryColorPurple, FontWeight.normal))
+                          .cExpanded(1),
+                      Text('SAR ${(double.parse('${monthCharge?.students?[i]?.amount??0}')+double.parse('${monthCharge?.students?[i]?.tax??0}')/100)}',
+                              style: customStyle(
+                                  11.0, primaryColorPurple, FontWeight.normal))
+                          .cExpanded(1),
+                    ],
+                  );
+                }
+              ),
+              SizedBox(height: 8,),
+              DottedLine(dashColor: Color.fromRGBO(159, 159, 159, 1),lineThickness: 0.5,),
+              SizedBox(height: 8,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text('',
+                      ).cExpanded(1),
+                  Text('',
+                      ).cExpanded(1),
+                  Text('',
+                   ).cExpanded(1),
+                  Text('SAR 345.00',
+                      style: customStyle(
+                          11.0, primaryColorPurple, FontWeight.normal)).cExpanded(1),
+              ],)
+              // Row(
+              //   children: [
+              //     Image.asset(invoice_inquiry),
+              //     SizedBox(
+              //       width: 5,
+              //     ),
+              //     Text(
+              //         'This invoice is system-generated. For inquiries, please contact us.',
+              //         style: customStyle(8.0, Color.fromRGBO(159, 159, 159, 1),
+              //             FontWeight.normal)),
+              //   ],
+              // )
+            ],
+          ).cPadOnly(l: 10, r: 10, t: 10),
+        ).cPadAll(10);
+      }
+    );
   }
 }
 
@@ -494,6 +501,9 @@ void dateSelectPopupHome({
                     final DateTime? rangeEndDate = v.endDate;
                     logic.startMonth=rangeStartDate;
                     logic.endMonth=rangeEndDate;
+                    logic.startDatePass=rangeStartDate.toString().cGetFormattedDate(format: 'yyyy-MM-dd');
+                    logic.endDatePass=rangeStartDate.toString().cGetFormattedDate(format: 'yyyy-MM-dd');
+                    logic.getHomeAmount();
                     logic.update();
                     print(rangeStartDate);
                     print('//////${logic.startMonth}');

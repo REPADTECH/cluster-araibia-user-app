@@ -1,3 +1,4 @@
+import 'package:cluster_arabia/models/home_page_models.dart';
 import 'package:cluster_arabia/models/invoice_list_model.dart';
 import 'package:cluster_arabia/models/login_model.dart';
 import 'package:cluster_arabia/models/otp_verify_model.dart';
@@ -97,9 +98,25 @@ class Api extends GetConnect {
     var startDate,
     var endDate,
   }) {
-    print('Get Invoice URL : p/bill/list/$page?student_id=$studentId&start_date=$startDate&end_date=$endDate');
     return get('p/bill/list/$page?student_id=$studentId&start_date=$startDate&end_date=$endDate').then((value) {
       return InvoiceListModel.fromJson(value.body ?? err);
+    });
+  }
+
+  Future<HomeBillAmount> getHomePageBillAmount({
+    required String startDate,
+    required String endDate,
+  }) {
+    return post(
+      'p/bill/view/home',
+      FormData(
+        {
+          'startDate': startDate,
+          'endDate': endDate,
+        },
+      ),
+    ).then((value) {
+      return HomeBillAmount.fromJson(value.body ?? err);
     });
   }
 }
