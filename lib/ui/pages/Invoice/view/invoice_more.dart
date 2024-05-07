@@ -61,6 +61,7 @@ class FirstPart extends StatelessWidget {
                       enabled: true,
                       onChanged: ( value) {
                         logic.billFilterdStudentChoosed=value;
+                        logic.clearData();
                         logic.getInvoiceList();
                       },
                       selectedItem: null,
@@ -209,6 +210,7 @@ void dateSelectPopup({
                     logic.startMonth = rangeStartDate;
                     logic.endMonth = rangeEndDate;
                     logic.update();
+                    logic.clearData();
                     logic.getInvoiceList();
 
                     print(rangeStartDate);
