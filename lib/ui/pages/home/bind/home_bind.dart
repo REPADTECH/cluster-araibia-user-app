@@ -1,7 +1,9 @@
+import 'package:cluster_arabia/models/home_page_models.dart';
 import 'package:cluster_arabia/models/profile_model.dart';
 import 'package:cluster_arabia/utilities/api_provider.dart';
 import 'package:cluster_arabia/utilities/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_utils/flutter_custom_utils.dart';
 import 'package:get/get.dart';
 
 class HomeBinding implements Bindings {
@@ -13,16 +15,19 @@ class HomeBinding implements Bindings {
 
 class HomeController extends GetxController {
   static HomeController get to => Get.find();
-
+  var startDatePass = DateTime.now().cGetFormattedDate(format: 'yyyy-MM-dd'),
+      endDatePass = DateTime.now().cGetFormattedDate(format: 'yyyy-MM-dd');
   final currentPage = 0.obs;
   ProfileModel? profileModel;
   late BuildContext context;
   DateTime? startMonth;
   DateTime? endMonth;
+  HomeBillAmount? homeBillAmount;
 
   @override
   void onInit() {
     getProfile();
+    getHomeAmount();
     super.onInit();
   }
 
@@ -33,6 +38,22 @@ class HomeController extends GetxController {
       dismissLoading();
       if (!(profileModel?.success ?? true)) {
         showToast(context: context, message: profileModel?.message ?? '');
+      }
+    } catch (e) {
+      showToast(context: context, message: e.toString());
+    } finally {
+      update();
+    }
+  }
+
+  void getHomeAmount() async {
+    try {
+      showLoading();
+      homeBillAmount =
+          await Api.to.getHomePageBillAmount(startDate: '', endDate: '');
+      dismissLoading();
+      if (!(homeBillAmount?.success ?? true)) {
+        showToast(context: context, message: homeBillAmount?.message ?? '');
       }
     } catch (e) {
       showToast(context: context, message: e.toString());
