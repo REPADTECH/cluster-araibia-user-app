@@ -3,6 +3,7 @@ import 'package:cluster_arabia/models/profile_model.dart';
 import 'package:cluster_arabia/utilities/api_provider.dart';
 import 'package:cluster_arabia/utilities/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_utils/flutter_custom_utils.dart';
 import 'package:flutter_date_range_picker/flutter_date_range_picker.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -23,7 +24,7 @@ class InvoiceController extends GetxController {
   ProfileModel? profileModel;
   student.DataList?billFilterdStudentChoosed;
 
-  List<invoice.Data> invoiceList = [];
+  List<invoice.DataList> invoiceList = [];
   var pageNO = 1;
   final RxString categoryValue = 'Student Name'.obs;
 
@@ -87,14 +88,18 @@ class InvoiceController extends GetxController {
   void getInvoiceList() async {
     try {
       showLoading();
-      invoiceListModel = await Api.to.getInvoiceList(page: pageNO);
+      invoiceListModel = await Api.to.getInvoiceList(page: pageNO,
+      studentId: billFilterdStudentChoosed?.id??'',
+        startDate: startMonth.toString().cGetFormattedDate(format: 'YYYY-MM-dd'),
+        endDate: endMonth.toString().cGetFormattedDate(format: 'YYYY-MM-dd'),
+      );
       dismissLoading();
       if (!(invoiceListModel?.success ?? true)) {
         showToast(context: context, message: invoiceListModel?.message ?? '');
       } else {
         hasNextPage =
-            ((invoiceListModel?.data ?? []).length == 20) ? true : false;
-        invoiceList.addAll((invoiceListModel?.data ?? []));
+            ((invoiceListModel?.data?.dataList ?? []).length == 20) ? true : false;
+        invoiceList.addAll((invoiceListModel?.data?.dataList ?? []));
       }
     } catch (e) {
       showToast(context: context, message: e.toString());

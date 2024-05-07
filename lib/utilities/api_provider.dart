@@ -93,8 +93,11 @@ class Api extends GetConnect {
 
   Future<InvoiceListModel> getInvoiceList({
     required var page,
+    var studentId,
+    var startDate,
+    var endDate,
   }) {
-    return get('p/bill/list/$page').then((value) {
+    return get('p/bill/list/$page?student_id=$studentId&start_date=$startDate&end_date=$endDate').then((value) {
       return InvoiceListModel.fromJson(value.body ?? err);
     });
   }
