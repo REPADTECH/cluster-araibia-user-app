@@ -14,6 +14,8 @@ import 'package:cluster_arabia/ui/pages/home_stack_dashboard/bind/home_stack_das
 import 'package:cluster_arabia/ui/pages/home_stack_dashboard/view/home_stack_dashborad_view.dart';
 import 'package:cluster_arabia/ui/pages/login/bind/login_bind.dart';
 import 'package:cluster_arabia/ui/pages/login/view/login_view.dart';
+import 'package:cluster_arabia/ui/pages/privary_policy/bind/privacy_policy_bind.dart';
+import 'package:cluster_arabia/ui/pages/privary_policy/view/privacy_policy_view.dart';
 import 'package:cluster_arabia/ui/pages/profile/bind/profile_bind.dart';
 import 'package:cluster_arabia/ui/pages/profile/view/profile_view.dart';
 import 'package:cluster_arabia/ui/pages/splash/bind/splash_bind.dart';
@@ -72,6 +74,11 @@ abstract class AppPages {
       name: Routes.aboutUs,
       page: () => const AboutUsPage(),
       binding: AboutUsBinding(),
+    ),
+    GetPage(
+      name: Routes.privacyPolicy,
+      page: () => const PrivacyPolicy(),
+      binding: PrivacyPolicyBinding(),
     ),
   ];
 }

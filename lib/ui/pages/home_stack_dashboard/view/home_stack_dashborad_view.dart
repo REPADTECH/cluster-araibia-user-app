@@ -8,6 +8,7 @@ import 'package:cluster_arabia/ui/pages/home/view/home_view.dart';
 import 'package:cluster_arabia/ui/pages/home_stack_dashboard/bind/home_stack_dashboard_bind.dart';
 import 'package:cluster_arabia/ui/pages/profile/view/profile_view.dart';
 import 'package:cluster_arabia/utilities/app_routes.dart';
+import 'package:cluster_arabia/utilities/com_binding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_utils/flutter_custom_utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -257,7 +258,7 @@ class HomeDrawer extends StatelessWidget {
                     ListTileItem(
                       name: 'Privacy Policy',
                       icon: privacyPolicy, onTap: (){
-
+                      Get.toNamed(Routes.privacyPolicy);
                     },
                     ).cPadSymmetric(h: 8),
                     const SizedBox(
@@ -274,7 +275,7 @@ class HomeDrawer extends StatelessWidget {
                       icon: signOutIcon,
                       textColor: Color.fromRGBO(238, 36, 86, 1),
                       onTap: (){
-
+AppSession.to.logout();
                       },
                     ).cPadSymmetric(h: 8),
                   ],

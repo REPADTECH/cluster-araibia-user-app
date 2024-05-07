@@ -9,6 +9,7 @@ import 'package:cluster_arabia/utilities/strings.dart';
 import 'package:cluster_arabia/utilities/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_custom_utils/flutter_custom_utils.dart';
 import 'package:get/get.dart';
 import 'package:otp_text_field/otp_text_field.dart';
 
@@ -81,10 +82,15 @@ class LoginController extends GetxController {
         dismissLoading();
         if (loginModel?.success ?? true) {
           otpDesign.value = !otpDesign.value;
-          otpFieldController.setValue(loginModel?.data?.otp?[0] ?? '', 0);
-          otpFieldController.setValue(loginModel?.data?.otp?[1] ?? '', 1);
-          otpFieldController.setValue(loginModel?.data?.otp?[2] ?? '', 2);
-          otpFieldController.setValue(loginModel?.data?.otp?[3] ?? '', 3);
+          otp.value=loginModel?.data?.otp ?? '';
+          1.cDelay((){
+            var otpValue = loginModel?.data?.otp ?? '';
+            otpFieldController.setValue(otpValue[0],0);
+            otpFieldController.setValue(otpValue[1],1);
+            otpFieldController.setValue(otpValue[2],2);
+            otpFieldController.setValue(otpValue[3],3);
+            update();
+          });
         } else {
           showToast(context: context, message: loginModel?.message ?? '');
         }
@@ -105,7 +111,8 @@ class LoginController extends GetxController {
       );
       dismissLoading();
       if (otpModelClass?.success ?? true) {
-        AppSession.to.session.write(SessionKeys.API_KEY, otpModelClass?.data?.token??'');
+        AppSession.to.session
+            .write(SessionKeys.API_KEY, otpModelClass?.data?.token ?? '');
         Get.offAllNamed(Routes.homeStackDashboard);
       } else {
         showToast(context: context, message: otpModelClass?.message ?? '');

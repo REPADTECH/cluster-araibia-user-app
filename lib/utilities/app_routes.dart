@@ -9,4 +9,5 @@ abstract class Routes {
   static const childrenInnerPage = '/childrenInnerPage';
   static const contactUs = '/contactUs';
   static const aboutUs = '/aboutUs';
+  static const privacyPolicy = '/privacyPolicy';
 }
