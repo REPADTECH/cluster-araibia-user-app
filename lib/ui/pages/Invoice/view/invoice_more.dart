@@ -237,214 +237,216 @@ class ListPart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<InvoiceController>(builder: (logic) {
-      return ListView.builder(
-          itemCount: logic.invoiceList?.length ?? 0,
-          shrinkWrap: true,
-          controller: logic.scrollController,
-          physics: AlwaysScrollableScrollPhysics(),
-          itemBuilder: (context, i) {
-            var data = logic.invoiceList?[i];
-            return Container(
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-              // height: 135,
-              width: context.cWidth,
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(255, 255, 255, 1),
-                // color: Color.fromRGBO(240, 243, 253, 1),
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: const [
-                  BoxShadow(
-                    blurRadius: 6,
-                    spreadRadius: 1,
-                    color: Color.fromRGBO(0, 0, 0, 0.25),
-                  ),
-                ],
-                // border: Border.all(color: Colors.black54, width: 0.2),
-              ),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.access_time_filled_rounded,
-                            size: 18,
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text((data?.billedOn ?? '')
-                              .cGetFormattedDate(format: 'MMM yyyy'))
-                        ],
-                      ),
-                      Container(
-                        width: 60,
-                        height: 25,
-                        decoration: BoxDecoration(
-                            color: ((data?.paidOn ?? '').isEmpty)
-                                ? Color.fromRGBO(255, 243, 235, 1)
-                                : Color.fromRGBO(221, 252, 243, 1),
-                            border: Border.all(
-                                color: ((data?.paidOn ?? '').isEmpty)
-                                    ? Color.fromRGBO(249, 122, 30, 1)
-                                    : Color.fromRGBO(33, 196, 141, 1)),
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+      return Expanded(
+        child: ListView.builder(
+            itemCount: logic.invoiceList?.length ?? 0,
+            shrinkWrap: true,
+            controller: logic.scrollController,
+            physics: AlwaysScrollableScrollPhysics(),
+            itemBuilder: (context, i) {
+              var data = logic.invoiceList?[i];
+              return Container(
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                // height: 135,
+                width: context.cWidth,
+                decoration: BoxDecoration(
+                  color: Color.fromRGBO(255, 255, 255, 1),
+                  // color: Color.fromRGBO(240, 243, 253, 1),
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: const [
+                    BoxShadow(
+                      blurRadius: 6,
+                      spreadRadius: 1,
+                      color: Color.fromRGBO(0, 0, 0, 0.25),
+                    ),
+                  ],
+                  // border: Border.all(color: Colors.black54, width: 0.2),
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
                           children: [
-                            Container(
-                                height: 8,
-                                width: 8,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: ((data?.paidOn ?? '').isEmpty)
-                                      ? Color.fromRGBO(249, 122, 30, 1)
-                                      : Color.fromRGBO(33, 196, 141, 1),
-                                )),
-                            SizedBox(
-                              width: 8,
+                            Icon(
+                              Icons.access_time_filled_rounded,
+                              size: 18,
                             ),
-                            Text(
-                              ((data?.paidOn ?? '').isEmpty) ? 'Open' : 'Paid',
-                              style: customStyle(
-                                  13.0,
-                                  ((data?.paidOn ?? '').isEmpty)
-                                      ? Color.fromRGBO(249, 122, 30, 1)
-                                      : Color.fromRGBO(33, 196, 141, 1),
-                                  FontWeight.normal),
-                            )
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text((data?.billedOn ?? '')
+                                .cGetFormattedDate(format: 'MMM yyyy'))
                           ],
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Invoice no ${data?.id ?? ''}'),
-                      Text(
-                        'SAR ${(double.parse('${data?.amount ?? 0}') + double.parse('${data?.tax ?? 0}')) / 100}',
-                        style: customStyle(12.0, Colors.black, FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  DottedLine(
-                    dashGapLength: 6,
-                    lineThickness: 0.5,
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Row(
-                    children: [
-                      Image.asset(
-                        profilePic,
-                        height: 25,
-                        width: 25,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(data?.student?.name ?? '',
-                          style:
-                              customStyle(13.0, Colors.black, FontWeight.bold)),
-                      Text(
-                          '(${data?.student?.std ?? ''} ${data?.student?.division ?? ''})',
-                          style: customStyle(13.0,
-                              Color.fromRGBO(99, 99, 99, 1), FontWeight.bold)),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      SvgPicture.asset(
-                        schoolcap,
-                        height: 12,
-                        width: 12,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(data?.school?.name??'',
-                          style: customStyle(
-                              12.0, Colors.black, FontWeight.normal)),
-                      Text(' (${data?.school?.id??''})',
-                          style: customStyle(
-                              12.0,
-                              Color.fromRGBO(99, 99, 99, 1),
-                              FontWeight.normal)),
-                    ],
-                  ).cPadOnly(t: 5),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            routeIcon,
-                            height: 12,
-                            width: 12,
+                        Container(
+                          width: 60,
+                          height: 25,
+                          decoration: BoxDecoration(
+                              color: ((data?.paidOn ?? '').isEmpty)
+                                  ? Color.fromRGBO(255, 243, 235, 1)
+                                  : Color.fromRGBO(221, 252, 243, 1),
+                              border: Border.all(
+                                  color: ((data?.paidOn ?? '').isEmpty)
+                                      ? Color.fromRGBO(249, 122, 30, 1)
+                                      : Color.fromRGBO(33, 196, 141, 1)),
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                  height: 8,
+                                  width: 8,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: ((data?.paidOn ?? '').isEmpty)
+                                        ? Color.fromRGBO(249, 122, 30, 1)
+                                        : Color.fromRGBO(33, 196, 141, 1),
+                                  )),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                ((data?.paidOn ?? '').isEmpty) ? 'Open' : 'Paid',
+                                style: customStyle(
+                                    13.0,
+                                    ((data?.paidOn ?? '').isEmpty)
+                                        ? Color.fromRGBO(249, 122, 30, 1)
+                                        : Color.fromRGBO(33, 196, 141, 1),
+                                    FontWeight.normal),
+                              )
+                            ],
                           ),
-                          SizedBox(
-                            width: 7,
-                          ),
-                          Text(
-                              data?.student?.busInRoute?.routeInfo?.routeName ??
-                                  '',
-                              style: customStyle(
-                                  11.0, Colors.black, FontWeight.normal)),
-                          Text(
-                              ' (${data?.student?.busInRoute?.routeInfo?.startingPoint ?? ''})',
-                              style: customStyle(
-                                  11.0,
-                                  Color.fromRGBO(99, 99, 99, 1),
-                                  FontWeight.normal)),
-                        ],
-                      ).cPadOnly(t: 5),
-                      Row(
-                        children: [
-                          InkWell(
-                            onTap: () {},
-                            child: CustomButtonWidget(
-                              backgroundColor: Colors.white,
-                              borderColor: primaryColorPurple,
-                              vPadding: 4,
-                              width: (context.cWidth >= 800) ? 80 : 60,
-                              buttonTitle: 'View Bill',
-                              titleStyle: customStyle(
-                                  10.0, primaryColorPurple, FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Invoice no ${data?.id ?? ''}'),
+                        Text(
+                          'SAR ${(double.parse('${data?.amount ?? 0}') + double.parse('${data?.tax ?? 0}')) / 100}',
+                          style: customStyle(12.0, Colors.black, FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    DottedLine(
+                      dashGapLength: 6,
+                      lineThickness: 0.5,
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      children: [
+                        Image.asset(
+                          profilePic,
+                          height: 25,
+                          width: 25,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(data?.student?.name ?? '',
+                            style:
+                                customStyle(13.0, Colors.black, FontWeight.bold)),
+                        Text(
+                            '(${data?.student?.std ?? ''} ${data?.student?.division ?? ''})',
+                            style: customStyle(13.0,
+                                Color.fromRGBO(99, 99, 99, 1), FontWeight.bold)),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        SvgPicture.asset(
+                          schoolcap,
+                          height: 12,
+                          width: 12,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(data?.school?.name??'',
+                            style: customStyle(
+                                12.0, Colors.black, FontWeight.normal)),
+                        Text(' (${data?.school?.id??''})',
+                            style: customStyle(
+                                12.0,
+                                Color.fromRGBO(99, 99, 99, 1),
+                                FontWeight.normal)),
+                      ],
+                    ).cPadOnly(t: 5),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            SvgPicture.asset(
+                              routeIcon,
+                              height: 12,
+                              width: 12,
                             ),
-                          ),
-                          if (i == 0)
+                            SizedBox(
+                              width: 7,
+                            ),
+                            Text(
+                                data?.student?.busInRoute?.routeInfo?.routeName ??
+                                    '',
+                                style: customStyle(
+                                    11.0, Colors.black, FontWeight.normal)),
+                            Text(
+                                ' (${data?.student?.busInRoute?.routeInfo?.startingPoint ?? ''})',
+                                style: customStyle(
+                                    11.0,
+                                    Color.fromRGBO(99, 99, 99, 1),
+                                    FontWeight.normal)),
+                          ],
+                        ).cPadOnly(t: 5),
+                        Row(
+                          children: [
                             InkWell(
                               onTap: () {},
                               child: CustomButtonWidget(
-                                backgroundColor: primaryColorPurple,
+                                backgroundColor: Colors.white,
+                                borderColor: primaryColorPurple,
                                 vPadding: 4,
-                                width: (context.cWidth >= 800) ? 60 : 45,
-                                buttonTitle: 'Pay',
+                                width: (context.cWidth >= 800) ? 80 : 60,
+                                buttonTitle: 'View Bill',
                                 titleStyle: customStyle(
-                                    10.0, Colors.white, FontWeight.bold),
-                              ).cPadOnly(l: 7),
+                                    10.0, primaryColorPurple, FontWeight.bold),
+                              ),
                             ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  // SfDateRangePicker(
-                  //   view: DateRangePickerView.year,
-                  // )
-                ],
-              ),
-            ).cMargOnly(t: 15, l: 15, r: 15);
-          });
+                            if (i == 0)
+                              InkWell(
+                                onTap: () {},
+                                child: CustomButtonWidget(
+                                  backgroundColor: primaryColorPurple,
+                                  vPadding: 4,
+                                  width: (context.cWidth >= 800) ? 60 : 45,
+                                  buttonTitle: 'Pay',
+                                  titleStyle: customStyle(
+                                      10.0, Colors.white, FontWeight.bold),
+                                ).cPadOnly(l: 7),
+                              ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    // SfDateRangePicker(
+                    //   view: DateRangePickerView.year,
+                    // )
+                  ],
+                ),
+              ).cMargOnly(t: 15, l: 15, r: 15);
+            }),
+      );
     });
   }
 }
