@@ -39,8 +39,8 @@ class InvoiceController extends GetxController {
   ];
 
   DateRange? selectedDateRange;
-  var startDatePass = DateFormat('yyyy-MM-dd').format(DateTime.now());
-  var endDatePass = DateFormat('yyyy-MM-dd').format(DateTime.now());
+  var startDatePass ;
+  var endDatePass;
   late ScrollController scrollController;
   bool hasNextPage = false;
 
@@ -59,6 +59,8 @@ class InvoiceController extends GetxController {
   clearData(){
     invoiceList.clear();
     filterChoosed='';
+    startDatePass=null;
+    endDatePass=null;
     billFilterdStudentChoosed=null;
   }
   @override
@@ -93,8 +95,8 @@ class InvoiceController extends GetxController {
       showLoading();
       invoiceListModel = await Api.to.getInvoiceList(page: pageNO,
       studentId: filterChoosed,
-        startDate: startMonth.toString().cGetFormattedDate(format: 'yyyy-MM-dd'),
-        endDate: endMonth.toString().cGetFormattedDate(format: 'yyyy-MM-dd'),
+        startDate: startDatePass,
+        endDate: endDatePass,
       );
       dismissLoading();
       if (!(invoiceListModel?.success ?? true)) {

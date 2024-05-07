@@ -60,10 +60,9 @@ class FirstPart extends StatelessWidget {
                       items: logic.studentModelList?.data?.dataList??[],
                       enabled: true,
                       onChanged: ( value) {
-                        logic.clearData();
+                        logic.invoiceList.clear();
                         logic.billFilterdStudentChoosed=value;
                         logic.filterChoosed=value?.id??'';
-                        //
                         logic.getInvoiceList();
                       },
                       selectedItem: null,
@@ -211,8 +210,10 @@ void dateSelectPopup({
                     final DateTime? rangeEndDate = v.endDate;
                     logic.startMonth = rangeStartDate;
                     logic.endMonth = rangeEndDate;
+                    logic.endDatePass=rangeEndDate.toString().cGetFormattedDate(format: 'yyyy-MM-dd');
+                    logic.startDatePass=rangeStartDate.toString().cGetFormattedDate(format: 'yyyy-MM-dd');
                     logic.update();
-                    logic.clearData();
+                    logic.invoiceList.clear();
                     logic.getInvoiceList();
 
                     print(rangeStartDate);
