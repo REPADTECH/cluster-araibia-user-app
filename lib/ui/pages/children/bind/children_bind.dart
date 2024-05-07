@@ -24,7 +24,7 @@ class ChildrenController extends GetxController {
   Future<void> getStudentList() async {
     try {
       showLoading();
-      studentModelList = await Api.to.getStudentsList(status: true, page: 0);
+      studentModelList = await Api.to.getStudentsList(status: true, page: 1);
       dismissLoading();
       if (!(studentModelList?.success ?? true)) {
         showToast(context: context, message: studentModelList?.message ?? '');
