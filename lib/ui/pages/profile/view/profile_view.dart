@@ -10,21 +10,23 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    HomeStackDashboardController.to.context = context;
     return Scaffold(
-      appBar: AppBar(backgroundColor:Color.fromRGBO(242, 250, 251, 1),
-      leading: InkWell(
-        onTap: (){
-          HomeStackDashboardController.to.changeTabIndex(0);
-          Get.back();
-        },
-          child: Icon(Icons.arrow_back_ios,)),
+      appBar: AppBar(
+        backgroundColor: Color.fromRGBO(242, 250, 251, 1),
+        leading: InkWell(
+            onTap: () {
+              HomeStackDashboardController.to.changeTabIndex(0);
+              Get.back();
+            },
+            child: Icon(
+              Icons.arrow_back_ios,
+            )),
       ),
       body: SingleChildScrollView(
-        child: Column(children: [
-          ProfileImagePart(),
-          ListTilePart(),
-          AddressSection()
-        ],),
+        child: Column(
+          children: [ProfileImagePart(), ListTilePart(), AddressSection()],
+        ),
       ),
     );
   }

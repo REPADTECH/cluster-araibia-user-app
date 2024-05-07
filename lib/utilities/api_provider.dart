@@ -1,5 +1,6 @@
 import 'package:cluster_arabia/models/login_model.dart';
 import 'package:cluster_arabia/models/otp_verify_model.dart';
+import 'package:cluster_arabia/models/profile_model.dart';
 import 'package:cluster_arabia/utilities/com_binding.dart';
 import 'package:cluster_arabia/utilities/dio.dart';
 import 'package:cluster_arabia/utilities/strings.dart';
@@ -53,6 +54,12 @@ class Api extends GetConnect {
       ),
     ).then((value) {
       return OtpModelClass.fromJson(value.body ?? err);
+    });
+  }
+
+  Future<ProfileModel> getProfile() {
+    return get('p/auth/profile').then((value) {
+      return ProfileModel.fromJson(value.body ?? err);
     });
   }
 }

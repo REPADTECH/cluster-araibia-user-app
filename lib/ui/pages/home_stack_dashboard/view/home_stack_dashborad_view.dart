@@ -20,6 +20,7 @@ class HomeStackDashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    HomeStackDashboardController.to.context = context;
     return GetX<HomeStackDashboardController>(builder: (logic) {
       return Scaffold(
         key: logic.scaffoldKey,
@@ -188,10 +189,10 @@ class HomeDrawer extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Sharafas OM',
+                            Text(logic.profileModel?.data?.name ?? '',
                                 style: customStyle(
                                     20.0, Colors.black, FontWeight.bold)),
-                            Text('sharafasom@gmail.com',
+                            Text(logic.profileModel?.data?.email ?? '',
                                 style: customStyle(
                                     12.0,
                                     Color.fromRGBO(83, 97, 107, 1),
@@ -215,24 +216,26 @@ class HomeDrawer extends StatelessWidget {
                     ListTileItem(
                       name: 'Profile',
                       icon: profileIcon,
-                      onTap: (){
+                      onTap: () {
                         HomeStackDashboardController.to.changeTabIndex(3);
                         Get.back();
                       },
                     ).cPadSymmetric(h: 8),
                     ListTileItem(
                       name: 'Invoice',
-                      icon: transactionIcon, onTap: (){
-                      HomeStackDashboardController.to.changeTabIndex(1);
-                      Get.back();
-                    },
+                      icon: transactionIcon,
+                      onTap: () {
+                        HomeStackDashboardController.to.changeTabIndex(1);
+                        Get.back();
+                      },
                     ).cPadSymmetric(h: 8),
                     ListTileItem(
                       name: 'Children',
-                      icon: studentsIcon, onTap: (){
-                      Get.back();
-                      HomeStackDashboardController.to.changeTabIndex(2);
-                    },
+                      icon: studentsIcon,
+                      onTap: () {
+                        Get.back();
+                        HomeStackDashboardController.to.changeTabIndex(2);
+                      },
                     ).cPadSymmetric(h: 8),
                     const SizedBox(
                       height: 10,
@@ -245,21 +248,24 @@ class HomeDrawer extends StatelessWidget {
                         .cPadOnly(l: 10),
                     ListTileItem(
                       name: 'Contact Us',
-                      icon: contactUs, onTap: (){
+                      icon: contactUs,
+                      onTap: () {
                         Get.toNamed(Routes.contactUs);
-                    },
+                      },
                     ).cPadSymmetric(h: 8),
                     ListTileItem(
                       name: 'About Us',
-                      icon: aboutUs, onTap: (){
-                      Get.toNamed(Routes.aboutUs);
-                    },
+                      icon: aboutUs,
+                      onTap: () {
+                        Get.toNamed(Routes.aboutUs);
+                      },
                     ).cPadSymmetric(h: 8),
                     ListTileItem(
                       name: 'Privacy Policy',
-                      icon: privacyPolicy, onTap: (){
-                      Get.toNamed(Routes.privacyPolicy);
-                    },
+                      icon: privacyPolicy,
+                      onTap: () {
+                        Get.toNamed(Routes.privacyPolicy);
+                      },
                     ).cPadSymmetric(h: 8),
                     const SizedBox(
                       height: 5,
@@ -274,8 +280,8 @@ class HomeDrawer extends StatelessWidget {
                       name: 'Sign out',
                       icon: signOutIcon,
                       textColor: Color.fromRGBO(238, 36, 86, 1),
-                      onTap: (){
-AppSession.to.logout();
+                      onTap: () {
+                        AppSession.to.logout();
                       },
                     ).cPadSymmetric(h: 8),
                   ],
@@ -294,7 +300,6 @@ class ListTileItem extends StatelessWidget {
   var name;
   final Function onTap;
   final Color textColor;
-
 
   ListTileItem({
     Key? key,
@@ -318,9 +323,7 @@ class ListTileItem extends StatelessWidget {
       title: Text(
         name,
         style: TextStyle(
-            fontSize: 13,
-            color:textColor,
-            fontWeight: FontWeight.normal),
+            fontSize: 13, color: textColor, fontWeight: FontWeight.normal),
       ),
       onTap: () => onTap(),
     ).cPadOnly(b: 2, r: 10);
