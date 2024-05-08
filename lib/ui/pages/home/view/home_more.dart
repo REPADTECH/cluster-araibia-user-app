@@ -40,7 +40,10 @@ class FirstPart extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'SAR ${logic.homeBillAmount?.data?.totalPayableAmount ?? '0.0'}',
+                      'SAR ${double.parse('${
+                            logic.homeBillAmount?.data?.totalPayableAmount ??
+                                '0.0'
+                          }')/100}',
                       style: customStyle(25.0, Colors.white, FontWeight.bold),
                     ),
                     Text(
@@ -159,10 +162,13 @@ class ChildBox extends StatelessWidget {
               SizedBox(
                 width: 4,
               ),
-              Image.network(
-                profileImg,
-                height: 30,
+              CachedNetworkImage(
+                imageUrl: profileImg ?? '',
                 width: 35,
+                height: 30,
+                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                    CircularProgressIndicator(value: downloadProgress.progress),
+                errorWidget: (context, url, error) => Icon(Icons.error),
               )
             ],
           ),
@@ -189,7 +195,13 @@ class BannerSection extends StatelessWidget {
               itemCount: logic.sliderModel?.data?.length ?? 0,
               itemBuilder: (context, index) {
                 var data = logic.sliderModel?.data?[index];
-                return Image.network(data?.img ?? '');
+                //return Image.network(data?.img ?? '');
+                return CachedNetworkImage(
+                  imageUrl: data?.img ?? '',
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      CircularProgressIndicator(value: downloadProgress.progress),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                );
               },
               onPageChanged: (v) {
                 logic.currentPage.value = v;
@@ -524,7 +536,12 @@ class BottomImageList extends StatelessWidget {
             itemBuilder: (context, i) {
               var data=logic.bannerListModel?.data?[i];
               return Container(
-                child: Image.network(data?.img??""),
+                child: CachedNetworkImage(
+                  imageUrl: data?.img ?? '',
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      CircularProgressIndicator(value: downloadProgress.progress),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                ),
               );
             }).cPadOnly(t: 10, b: 10);
       }
