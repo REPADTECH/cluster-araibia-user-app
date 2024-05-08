@@ -204,6 +204,7 @@ void dateSelectPopup({
               child: SfDateRangePicker(
                 confirmText: 'SELECT',
                 showNavigationArrow: true,
+                controller: logic.dateRangeController,
                 onSubmit: (v) {
                   if (v is PickerDateRange) {
                     final DateTime? rangeStartDate = v.startDate;

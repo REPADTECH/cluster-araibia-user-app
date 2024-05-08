@@ -8,6 +8,7 @@ import 'package:flutter_date_range_picker/flutter_date_range_picker.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:cluster_arabia/models/student_list_model.dart' as student;
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class InvoiceBinding implements Bindings {
   @override
@@ -18,6 +19,7 @@ class InvoiceBinding implements Bindings {
 
 class InvoiceController extends GetxController {
   static InvoiceController get to => Get.find();
+  final dateRangeController = DateRangePickerController();
   late BuildContext context;
   invoice.InvoiceListModel? invoiceListModel;
   student.StudentModelList? studentModelList;
@@ -62,6 +64,8 @@ class InvoiceController extends GetxController {
     startDatePass=null;
     endDatePass=null;
     billFilterdStudentChoosed=null;
+    dateRangeController.selectedRanges=[];
+    update();
   }
   @override
   void onInit() {

@@ -81,7 +81,7 @@ class ListPart extends StatelessWidget {
             // var data=logic.studentModelList?.data?.dataList?[i];
               return InkWell(
                 onTap: (){
-                  Get.toNamed(Routes.childrenInnerPage);
+                  Get.toNamed(Routes.childrenInnerPage,arguments: [data?.id??'']);
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
