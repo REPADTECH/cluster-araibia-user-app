@@ -55,7 +55,7 @@ class LoginController extends GetxController {
   }
 
   String? validateMobileNumbers(String? value) {
-    final RegExp mobileRegex = RegExp(r'^\d{8}$');
+    final RegExp mobileRegex = RegExp(r'^\d{10}$');
     if (value == null || value.isEmpty) {
       validatorNumber.value = true;
       errorMessage = 'Enter Mobile Number';
