@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cluster_arabia/res/colors.dart';
 import 'package:cluster_arabia/res/images.dart';
 import 'package:cluster_arabia/res/style.dart';
@@ -31,10 +32,12 @@ class FirstPart extends StatelessWidget {
                   borderRadius: BorderRadius.circular(5)),
               child: Row(
                 children: [
-                  Image.network(
-                    logic.profileModel?.data?.img??'',
+                  CachedNetworkImage(
+                    imageUrl: logic.profileModel?.data?.img??'',
+                    placeholder: (context, url) => CircularProgressIndicator(),
                     width: 25,
                     height: 25,
+                    errorWidget: (context, url, error) => Icon(Icons.error),
                   ).cPadOnly(l: 5),
                   SizedBox(
                     width: 15,
@@ -359,10 +362,12 @@ class ListPart extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        Image.network(
-                          data?.img ?? '',
+                        CachedNetworkImage(
+                          imageUrl: data?.img ?? '',
                           height: 25,
                           width: 25,
+                          placeholder: (context, url) => CircularProgressIndicator(),
+                          errorWidget: (context, url, error) => Icon(Icons.error),
                         ),
                         SizedBox(
                           width: 10,
@@ -460,7 +465,7 @@ class ListPart extends StatelessWidget {
                     // )
                   ],
                 ),
-              ).cMargOnly(t: 15, l: 15, r: 15);
+              ).cMargOnly(t: 5, l: 15, r: 15,b: 10);
             }),
       );
     });

@@ -65,6 +65,7 @@ class InvoiceController extends GetxController {
     endDatePass=null;
     billFilterdStudentChoosed=null;
     dateRangeController.selectedRanges=[];
+    dateRangeController.selectedRanges=[];
     update();
   }
   @override
