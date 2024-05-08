@@ -21,79 +21,91 @@ class FirstPart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          height: 118,
-          width: context.cWidth,
-          decoration: BoxDecoration(
-              color: primaryColorPurple,
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(25),
-                  bottomRight: Radius.circular(25))),
-          child: Stack(
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            // crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'SAR 400.00',
-                    style: customStyle(25.0, Colors.white, FontWeight.bold),
-                  ),
-                  Text(
-                    'Total payable amount',
-                    style: customStyle(10.0, Color.fromRGBO(206, 207, 237, 1),
-                        FontWeight.normal),
-                  ),
-                ],
-              ),
-              Positioned(
-                  right: 60,
-                  child: Image.asset(
-                    profilePic,
-                    height: 40,
-                    width: 40,
-                  )),
-              Positioned(
-                  right: 35,
-                  child: Image.asset(
-                    profilePic,
-                    height: 40,
-                    width: 40,
-                  )),
-              Positioned(
-                  right: 10,
-                  child: Image.asset(
-                    profilePic,
-                    height: 40,
-                    width: 40,
-                  )),
-            ],
-          ).cPadOnly(t: 10, l: 40, r: 15),
-        ),
-        Row(
+    return GetBuilder<HomeController>(
+      builder: (logic) {
+        return Stack(
           children: [
-            ChildBox(
-              no: '1',
+            Container(
+              height: 118,
+              width: context.cWidth,
+              decoration: BoxDecoration(
+                  color: primaryColorPurple,
+                  borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(25),
+                      bottomRight: Radius.circular(25))),
+              child: Stack(
+                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                // crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'SAR ${logic.homeBillAmount?.data?.totalPayableAmount??'0.0'}',
+                        style: customStyle(25.0, Colors.white, FontWeight.bold),
+                      ),
+                      Text(
+                        'Total payable amount',
+                        style: customStyle(10.0, Color.fromRGBO(206, 207, 237, 1),
+                            FontWeight.normal),
+                      ),
+                    ],
+                  ),
+                  Positioned(
+                      right: 60,
+                      child: Image.asset(
+                        profilePic,
+                        height: 40,
+                        width: 40,
+                      )),
+                  Positioned(
+                      right: 35,
+                      child: Image.asset(
+                        profilePic,
+                        height: 40,
+                        width: 40,
+                      )),
+                  Positioned(
+                      right: 10,
+                      child: Image.asset(
+                        profilePic,
+                        height: 40,
+                        width: 40,
+                      )),
+                ],
+              ).cPadOnly(t: 10, l: 40, r: 15),
             ),
-            SizedBox(
-              width: 15,
-            ),
-            ChildBox(
-              no: '2',
-            ),
+            ListView.builder(itemBuilder: (cnt,i){
+              return Container();
+            })
+            // Row(
+            //   children: [
+            //     ChildBox(
+            //       no: '1',
+            //     ),
+            //     SizedBox(
+            //       width: 15,
+            //     ),
+            //     ChildBox(
+            //       no: '2',
+            //     ),
+            //   ],
+            // ).cPadOnly(t: 72, l: 30),
           ],
-        ).cPadOnly(t: 72, l: 30),
-      ],
+        );
+      }
     );
   }
 }
 
 class ChildBox extends StatelessWidget {
   final String no;
-  const ChildBox({super.key, required this.no});
+  var price;
+  var month;
+   ChildBox({super.key, required this.no,
+  required this.price,
+    required this.month
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +134,7 @@ class ChildBox extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'SAR 200.00',
+                    'SAR ${price}',
                     style: customStyle(11.0, Colors.black, FontWeight.bold),
                   ),
                   Text(
@@ -140,7 +152,7 @@ class ChildBox extends StatelessWidget {
               )
             ],
           ),
-          Text('Aug 2024',
+          Text(month,
                   style: customStyle(12.0, Colors.black, FontWeight.bold))
               .cPadOnly(t: 5)
         ],
