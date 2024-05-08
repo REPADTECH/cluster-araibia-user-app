@@ -62,13 +62,14 @@ class FirstPart extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
                       itemBuilder: (cnt, i) {
+                        var students=(logic.homeBillAmount?.data?.students?[i]);
                         var positiond = logic.totWidth;
                         positiond =
                             (i == 0) ? logic.totWidth : logic.totWidth - 25;
                         return Positioned(
                           right: positiond.toDouble(),
                           child: CachedNetworkImage(
-                            imageUrl: profilePic,
+                            imageUrl: students?.img??'',
                             height: 40,
                             width: 40,
                             placeholder: (context, url) =>
