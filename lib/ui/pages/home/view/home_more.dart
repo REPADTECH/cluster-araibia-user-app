@@ -97,7 +97,7 @@ class FirstPart extends StatelessWidget {
                         '${monthlyCharge?.monthName ?? ''} ${monthlyCharge?.year ?? ''}',
                   );
                 }),
-          )
+          ).cPadOnly(t: 72, l: 30),
           // Row(
           //   children: [
           //     ChildBox(
