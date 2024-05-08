@@ -91,7 +91,8 @@ class HomePage extends StatelessWidget {
             children: [
               FirstPart(),
               BannerSection(),
-              BillOverView(),
+              BillOverView().cVisible(
+                  (logic.homeBillAmount?.data?.monthlyCharge ?? []).isNotEmpty),
               MainMenu(),
               BottomImageList()
             ],

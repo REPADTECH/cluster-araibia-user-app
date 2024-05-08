@@ -10,6 +10,7 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_custom_utils/flutter_custom_utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -81,14 +82,16 @@ class FirstPart extends StatelessWidget {
                 //       }),
                 // )
                 Positioned(
-                    right: 60,
-                    // child: Image.network(
-                    //   (logic.homeBillAmount?.data?.students?.cFirst)?.img??'',
-                    //   height: 40,
-                    //   width: 40,
-                    // ).cClipAll(40),
+                  right: 60,
+                  // child: Image.network(
+                  //   (logic.homeBillAmount?.data?.students?.cFirst)?.img??'',
+                  //   height: 40,
+                  //   width: 40,
+                  // ).cClipAll(40),
                   child: CachedNetworkImage(
-                    imageUrl: (logic.homeBillAmount?.data?.students?.cFirst)?.img??'',
+                    imageUrl:
+                        (logic.homeBillAmount?.data?.students?.cFirst)?.img ??
+                            '',
                     placeholder: (context, url) => CircularProgressIndicator(),
                     width: 40,
                     height: 40,
@@ -96,9 +99,14 @@ class FirstPart extends StatelessWidget {
                   ).cClipAll(40),
                 ),
                 Positioned(
-                    right: 35,
+                  right: 35,
                   child: CachedNetworkImage(
-                    imageUrl: ((logic.homeBillAmount?.data?.students?.length??0)>2)?((logic.homeBillAmount?.data?.students?[1])?.img??''):'',
+                    imageUrl: ((logic.homeBillAmount?.data?.students?.length ??
+                                0) >
+                            2)
+                        ? ((logic.homeBillAmount?.data?.students?[1])?.img ??
+                            '')
+                        : '',
                     placeholder: (context, url) => CircularProgressIndicator(),
                     width: 40,
                     height: 40,
@@ -106,9 +114,14 @@ class FirstPart extends StatelessWidget {
                   ).cClipAll(40),
                 ),
                 Positioned(
-                    right: 10,
+                  right: 10,
                   child: CachedNetworkImage(
-                    imageUrl: ((logic.homeBillAmount?.data?.students?.length??0)>3)?((logic.homeBillAmount?.data?.students?[2])?.img??''):'',
+                    imageUrl: ((logic.homeBillAmount?.data?.students?.length ??
+                                0) >
+                            3)
+                        ? ((logic.homeBillAmount?.data?.students?[2])?.img ??
+                            '')
+                        : '',
                     placeholder: (context, url) => CircularProgressIndicator(),
                     width: 40,
                     height: 40,
@@ -229,8 +242,8 @@ class BannerSection extends StatelessWidget {
     return GetBuilder<HomeController>(builder: (logic) {
       return Stack(
         children: [
-          SizedBox(
-            height: 190,
+          AspectRatio(
+            aspectRatio: 2.01,
             child: PageView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: logic.sliderModel?.data?.length ?? 0,
@@ -576,12 +589,16 @@ class BottomImageList extends StatelessWidget {
           shrinkWrap: true,
           itemBuilder: (context, i) {
             var data = logic.bannerListModel?.data?[i];
-            return Container(
-              child: CachedNetworkImage(
-                imageUrl: data?.img ?? '',
-                progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    CircularProgressIndicator(value: downloadProgress.progress),
-                errorWidget: (context, url, error) => Icon(Icons.error),
+            return AspectRatio(
+              aspectRatio: 2.01,
+              child: Container(
+                child: CachedNetworkImage(
+                  imageUrl: data?.img ?? '',
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      CircularProgressIndicator(
+                          value: downloadProgress.progress),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                ),
               ),
             );
           }).cPadOnly(t: 10, b: 10);

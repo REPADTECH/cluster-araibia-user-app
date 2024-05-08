@@ -50,14 +50,11 @@ class FirstPart extends StatelessWidget {
                               contentPadding: EdgeInsets.symmetric(vertical: 8),
                               disabledBorder: InputBorder.none,
                               border: InputBorder.none)),
+                      itemAsString: (student.DataList v) => v.studentName ?? '',
                       popupProps: PopupProps.menu(
-                        // textStyle: customStyle(
-                        //   13.0,
-                        //   Color.fromRGBO(0, 0, 0, 0.4),
-                        //   FontWeight.normal,
-                        // ),
-                        showSearchBox: true,
+                        showSearchBox: false,
                         showSelectedItems: false,
+
                         disabledItemFn: (student.DataList s) => (s.gender??'').startsWith('I'),
                       ),
                       items: logic.studentModelList?.data?.dataList??[],
@@ -425,7 +422,7 @@ class ListPart extends StatelessWidget {
                             Text(
                                 ' (${data?.student?.busInRoute?.routeInfo?.startingPoint ?? ''})',
                                 style: customStyle(
-                                    11.0,
+                                    10.0,
                                     Color.fromRGBO(99, 99, 99, 1),
                                     FontWeight.normal)),
                           ],
