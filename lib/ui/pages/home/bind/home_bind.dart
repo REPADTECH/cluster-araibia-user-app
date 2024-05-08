@@ -1,3 +1,4 @@
+import 'package:cluster_arabia/models/banner_list_model.dart';
 import 'package:cluster_arabia/models/home_page_models.dart';
 import 'package:cluster_arabia/models/profile_model.dart';
 import 'package:cluster_arabia/utilities/api_provider.dart';
@@ -19,6 +20,8 @@ class HomeController extends GetxController {
       endDatePass = DateTime.now().cGetFormattedDate(format: 'yyyy-MM-dd');
   final currentPage = 0.obs;
   ProfileModel? profileModel;
+  BannerListModel?bannerListModel;
+  BannerListModel?sliderModel;
   late BuildContext context;
   DateTime? startMonth;
   DateTime? endMonth;
@@ -28,6 +31,7 @@ class HomeController extends GetxController {
   void onInit() {
     getProfile();
     getHomeAmount();
+    getBannerData();
     super.onInit();
   }
 
@@ -55,6 +59,23 @@ class HomeController extends GetxController {
       if (!(homeBillAmount?.success ?? true)) {
         showToast(context: context, message: homeBillAmount?.message ?? '');
       }
+    } catch (e) {
+      showToast(context: context, message: e.toString());
+    } finally {
+      update();
+    }
+  }
+
+  void getBannerData() async{
+    try {
+      showLoading();
+      bannerListModel =
+      await Api.to.getBannerList(bannerTYpe: 'banner');
+      dismissLoading();
+      showLoading();
+      sliderModel =
+      await Api.to.getBannerList(bannerTYpe: 'slider');
+      dismissLoading();
     } catch (e) {
       showToast(context: context, message: e.toString());
     } finally {

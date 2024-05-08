@@ -1,3 +1,4 @@
+import 'package:cluster_arabia/models/banner_list_model.dart';
 import 'package:cluster_arabia/models/home_page_models.dart';
 import 'package:cluster_arabia/models/invoice_list_model.dart';
 import 'package:cluster_arabia/models/login_model.dart';
@@ -89,6 +90,14 @@ class Api extends GetConnect {
   }) {
     return get('p/student/view/$studentId').then((value) {
       return StudentViewById.fromJson(value.body ?? err);
+    });
+  }
+
+  Future<BannerListModel> getBannerList({
+    required var bannerTYpe,
+  }) {
+    return get('p/ads/list?type=$bannerTYpe').then((value) {
+      return BannerListModel.fromJson(value.body ?? err);
     });
   }
 

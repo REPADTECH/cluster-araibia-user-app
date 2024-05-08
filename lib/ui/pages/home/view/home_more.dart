@@ -86,6 +86,7 @@ class FirstPart extends StatelessWidget {
                 itemBuilder: (cnt, i) {
                   var data = logic.homeBillAmount?.data?.monthlyCharge?.cFirst
                       ?.students?[i];
+                  var student = logic.homeBillAmount?.data?.students?[i];
                   var monthlyCharge =
                       logic.homeBillAmount?.data?.monthlyCharge?.cFirst;
                   return ChildBox(
@@ -95,22 +96,10 @@ class FirstPart extends StatelessWidget {
                         100),
                     month:
                         '${monthlyCharge?.monthName ?? ''} ${monthlyCharge?.year ?? ''}',
-                  ).cPadOnly(l: (i==0)?0:30);
+                    profileImg: student?.img ?? '',
+                  ).cPadOnly(l: (i == 0) ? 0 : 15);
                 }),
           ).cPadOnly(t: 72, l: 30),
-          // Row(
-          //   children: [
-          //     ChildBox(
-          //       no: '1',
-          //     ),
-          //     SizedBox(
-          //       width: 15,
-          //     ),
-          //     ChildBox(
-          //       no: '2',
-          //     ),
-          //   ],
-          // ).cPadOnly(t: 72, l: 30),
         ],
       );
     });
@@ -121,9 +110,14 @@ class ChildBox extends StatelessWidget {
   final String no;
   var price;
   var month;
+  var profileImg;
 
   ChildBox(
-      {super.key, required this.no, required this.price, required this.month});
+      {super.key,
+      required this.no,
+      required this.price,
+      required this.month,
+      required this.profileImg});
 
   @override
   Widget build(BuildContext context) {
@@ -165,8 +159,8 @@ class ChildBox extends StatelessWidget {
               SizedBox(
                 width: 4,
               ),
-              Image.asset(
-                child_sticker,
+              Image.network(
+                profileImg,
                 height: 30,
                 width: 35,
               )
@@ -192,9 +186,10 @@ class BannerSection extends StatelessWidget {
             height: 190,
             child: PageView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: 4,
+              itemCount: logic.sliderModel?.data?.length ?? 0,
               itemBuilder: (context, index) {
-                return SvgPicture.asset(racoBanner);
+                var data = logic.sliderModel?.data?[index];
+                return Image.network(data?.img ?? '');
               },
               onPageChanged: (v) {
                 logic.currentPage.value = v;
@@ -203,7 +198,7 @@ class BannerSection extends StatelessWidget {
             ),
           ),
           DotsIndicator(
-            dotsCount: 4,
+            dotsCount: logic.sliderModel?.data?.length ?? 1,
             position: logic.currentPage.value,
             decorator: DotsDecorator(
               spacing: EdgeInsets.all(3),
@@ -521,14 +516,19 @@ class BottomImageList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        itemCount: 1,
-        shrinkWrap: true,
-        itemBuilder: (context, i) {
-          return Container(
-            child: Image.asset(bottomBanner),
-          );
-        }).cPadOnly(t: 10, b: 10);
+    return GetBuilder<HomeController>(
+      builder: (logic) {
+        return ListView.builder(
+            itemCount: logic.bannerListModel?.data?.length??0,
+            shrinkWrap: true,
+            itemBuilder: (context, i) {
+              var data=logic.bannerListModel?.data?[i];
+              return Container(
+                child: Image.network(data?.img??""),
+              );
+            }).cPadOnly(t: 10, b: 10);
+      }
+    );
   }
 }
 
