@@ -51,56 +51,70 @@ class FirstPart extends StatelessWidget {
                     ),
                   ],
                 ),
-                Expanded(
-                  child: ListView.builder(
-                      itemCount:
-                          ((logic.homeBillAmount?.data?.students?.length ?? 0) <
-                                  3)
-                              ? logic.homeBillAmount?.data?.students?.length ??
-                                  0
-                              : 3,
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      itemBuilder: (cnt, i) {
-                        var students=(logic.homeBillAmount?.data?.students?[i]);
-                        var positiond = logic.totWidth;
-                        positiond =
-                            (i == 0) ? logic.totWidth : logic.totWidth - 25;
-                        return Positioned(
-                          right: positiond.toDouble(),
-                          child: CachedNetworkImage(
-                            imageUrl: students?.img??'',
-                            height: 40,
-                            width: 40,
-                            placeholder: (context, url) =>
-                                CircularProgressIndicator(),
-                            errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
-                          ),
-                        );
-                      }),
-                )
-                // Positioned(
-                //     right: 60,
-                //     child: Image.asset(
-                //       profilePic,
-                //       height: 40,
-                //       width: 40,
-                //     )),
-                // Positioned(
-                //     right: 35,
-                //     child: Image.asset(
-                //       profilePic,
-                //       height: 40,
-                //       width: 40,
-                //     )),
-                // Positioned(
-                //     right: 10,
-                //     child: Image.asset(
-                //       profilePic,
-                //       height: 40,
-                //       width: 40,
-                //     )),
+                // Expanded(
+                //   child: ListView.builder(
+                //       itemCount:
+                //           ((logic.homeBillAmount?.data?.students?.length ?? 0) <
+                //                   3)
+                //               ? logic.homeBillAmount?.data?.students?.length ??
+                //                   0
+                //               : 3,
+                //       scrollDirection: Axis.horizontal,
+                //       shrinkWrap: true,
+                //       itemBuilder: (cnt, i) {
+                //         var students=(logic.homeBillAmount?.data?.students?[i]);
+                //         var positiond = logic.totWidth;
+                //         positiond =
+                //             (i == 0) ? logic.totWidth : logic.totWidth - 25;
+                //         return Positioned(
+                //           right: positiond.toDouble(),
+                //           child: CachedNetworkImage(
+                //             imageUrl: students?.img??'',
+                //             height: 40,
+                //             width: 40,
+                //             placeholder: (context, url) =>
+                //                 CircularProgressIndicator(),
+                //             errorWidget: (context, url, error) =>
+                //                 Icon(Icons.error),
+                //           ),
+                //         );
+                //       }),
+                // )
+                Positioned(
+                    right: 60,
+                    // child: Image.network(
+                    //   (logic.homeBillAmount?.data?.students?.cFirst)?.img??'',
+                    //   height: 40,
+                    //   width: 40,
+                    // ).cClipAll(40),
+                  child: CachedNetworkImage(
+                    imageUrl: (logic.homeBillAmount?.data?.students?.cFirst)?.img??'',
+                    placeholder: (context, url) => CircularProgressIndicator(),
+                    width: 40,
+                    height: 40,
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                  ).cClipAll(40),
+                ),
+                Positioned(
+                    right: 35,
+                  child: CachedNetworkImage(
+                    imageUrl: ((logic.homeBillAmount?.data?.students?.length??0)>2)?((logic.homeBillAmount?.data?.students?[1])?.img??''):'',
+                    placeholder: (context, url) => CircularProgressIndicator(),
+                    width: 40,
+                    height: 40,
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                  ).cClipAll(40),
+                ),
+                Positioned(
+                    right: 10,
+                  child: CachedNetworkImage(
+                    imageUrl: ((logic.homeBillAmount?.data?.students?.length??0)>3)?((logic.homeBillAmount?.data?.students?[2])?.img??''):'',
+                    placeholder: (context, url) => CircularProgressIndicator(),
+                    width: 40,
+                    height: 40,
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                  ).cClipAll(40),
+                ),
               ],
             ).cPadOnly(t: 10, l: 40, r: 15),
           ),
