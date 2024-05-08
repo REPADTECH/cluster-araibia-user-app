@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
     //   initState: (_) {},
     //   builder: (logic) {
         return GetMaterialApp(
-          title: 'The Reward',
+          title: 'Parent App',
           debugShowCheckedModeBanner: false,
           initialRoute: Routes.splash,
           // translations: LocaleString(),

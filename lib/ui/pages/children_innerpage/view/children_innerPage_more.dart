@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cluster_arabia/res/colors.dart';
 import 'package:cluster_arabia/res/images.dart';
 import 'package:cluster_arabia/res/style.dart';
@@ -6,6 +7,7 @@ import 'package:cluster_arabia/utilities/common_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_utils/flutter_custom_utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -20,7 +22,14 @@ class ProfilePart extends StatelessWidget {
         return Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Image.network(logic.studentViewById?.data?.img??'',height: 80,width: 80,),
+            CachedNetworkImage(
+              imageUrl: (logic.studentViewById?.data?.img??''),
+              placeholder: (context, url) => CircularProgressIndicator(),
+              width: 80,
+              height: 80,
+              errorWidget: (context, url, error) => Icon(Icons.error),
+            ),
+            // Image.network(logic.studentViewById?.data?.img??'',height: 80,width: 80,),
             // Image.asset(childrenProfile,height: 80,width: 80,),
             SizedBox(width: 15,),
             Column(
@@ -118,7 +127,7 @@ class SchoolDetails extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                Image.asset(childrenProfile,height: 80,width: 80,),
+                SvgPicture.asset(schoolImage,height: 80,width: 80,),
                 SizedBox(width: 15,),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -167,7 +176,14 @@ class BusDetails extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Image.asset(childrenProfile,height: 80,width: 80,),
+                      CachedNetworkImage(
+                        imageUrl: (logic.studentViewById?.data?.busInRoute?.busInfo?.img??busImage),
+                        placeholder: (context, url) => CircularProgressIndicator(),
+                        width: 80,
+                        height: 80,
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      ),
+                      // Image.network(logic.studentViewById?.data?.busInRoute?.busInfo?.img??busImage,height: 80,width: 80,),
                       SizedBox(width: 15,),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

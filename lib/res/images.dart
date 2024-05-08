@@ -32,4 +32,7 @@ const String children_fill_Icon = 'assets/icons/children_fill_Icon.svg';
 const String children_unfill_Icon = 'assets/icons/children_unfill_Icon.svg';
 const String childrenProfile = 'assets/images/childrenProfile.png';
 const String disableRequestIcon = 'assets/icons/disableRequestIcon.svg';
+const String schoolImage = 'assets/images/schoollmages.svg';
+const String busImage = 'assets/images/busImage.svg';
+const String coupon_fill_icon = 'assets/icons/coupon_fill_icon.svg';
 

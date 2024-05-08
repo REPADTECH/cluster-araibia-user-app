@@ -22,6 +22,10 @@ class StudentViewById {
     }
   }
 
+  static List<StudentViewById> fromList(List<Map<String, dynamic>> list) {
+    return list.map((map) => StudentViewById.fromJson(map)).toList();
+  }
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> _data = <String, dynamic>{};
     _data["success"] = success;
@@ -100,8 +104,8 @@ class Data {
     if(json["address"] is String) {
       address = json["address"];
     }
-    if(json["status"] is num) {
-      status = (json["status"] as num).toInt();
+    if(json["status"] is int) {
+      status = json["status"];
     }
     if(json["createdAt"] is String) {
       createdAt = json["createdAt"];
@@ -112,11 +116,11 @@ class Data {
     if(json["img"] is String) {
       img = json["img"];
     }
-    if(json["student_latitude"] is num) {
-      studentLatitude = (json["student_latitude"] as num).toDouble();
+    if(json["student_latitude"] is double) {
+      studentLatitude = json["student_latitude"];
     }
-    if(json["student_longitude"] is num) {
-      studentLongitude = (json["student_longitude"] as num).toDouble();
+    if(json["student_longitude"] is double) {
+      studentLongitude = json["student_longitude"];
     }
     if(json["school"] is Map) {
       school = json["school"] == null ? null : School.fromJson(json["school"]);
@@ -127,6 +131,10 @@ class Data {
     if(json["bus_in_route"] is Map) {
       busInRoute = json["bus_in_route"] == null ? null : BusInRoute.fromJson(json["bus_in_route"]);
     }
+  }
+
+  static List<Data> fromList(List<Map<String, dynamic>> list) {
+    return list.map((map) => Data.fromJson(map)).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -182,6 +190,10 @@ class BusInRoute {
     }
   }
 
+  static List<BusInRoute> fromList(List<Map<String, dynamic>> list) {
+    return list.map((map) => BusInRoute.fromJson(map)).toList();
+  }
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> _data = <String, dynamic>{};
     if(busInfo != null) {
@@ -222,8 +234,8 @@ class RouteInfo {
     if(json["gender"] is String) {
       gender = json["gender"];
     }
-    if(json["status"] is num) {
-      status = (json["status"] as num).toInt();
+    if(json["status"] is int) {
+      status = json["status"];
     }
     if(json["createdAt"] is String) {
       createdAt = json["createdAt"];
@@ -231,8 +243,8 @@ class RouteInfo {
     if(json["updatedAt"] is String) {
       updatedAt = json["updatedAt"];
     }
-    if(json["is_two_way"] is num) {
-      isTwoWay = (json["is_two_way"] as num).toInt();
+    if(json["is_two_way"] is int) {
+      isTwoWay = json["is_two_way"];
     }
     if(json["route_name"] is String) {
       routeName = json["route_name"];
@@ -240,23 +252,23 @@ class RouteInfo {
     if(json["ending_point"] is String) {
       endingPoint = json["ending_point"];
     }
-    if(json["fare_for_route"] is num) {
-      fareForRoute = (json["fare_for_route"] as num).toInt();
+    if(json["fare_for_route"] is int) {
+      fareForRoute = json["fare_for_route"];
     }
     if(json["starting_point"] is String) {
       startingPoint = json["starting_point"];
     }
-    if(json["ending_latitude"] is num) {
-      endingLatitude = (json["ending_latitude"] as num).toInt();
+    if(json["ending_latitude"] is int) {
+      endingLatitude = json["ending_latitude"];
     }
-    if(json["ending_longitude"] is num) {
-      endingLongitude = (json["ending_longitude"] as num).toInt();
+    if(json["ending_longitude"] is int) {
+      endingLongitude = json["ending_longitude"];
     }
-    if(json["starting_latitude"] is num) {
-      startingLatitude = (json["starting_latitude"] as num).toInt();
+    if(json["starting_latitude"] is int) {
+      startingLatitude = json["starting_latitude"];
     }
-    if(json["starting_longitude"] is num) {
-      startingLongitude = (json["starting_longitude"] as num).toInt();
+    if(json["starting_longitude"] is int) {
+      startingLongitude = json["starting_longitude"];
     }
     if(json["morning_starting_time"] is String) {
       morningStartingTime = json["morning_starting_time"];
@@ -264,6 +276,10 @@ class RouteInfo {
     if(json["afternoon_starting_time"] is String) {
       afternoonStartingTime = json["afternoon_starting_time"];
     }
+  }
+
+  static List<RouteInfo> fromList(List<Map<String, dynamic>> list) {
+    return list.map((map) => RouteInfo.fromJson(map)).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -290,6 +306,7 @@ class RouteInfo {
 
 class BusInfo {
   String? id;
+  String? img;
   String? busNo;
   String? gpsId;
   String? busModel;
@@ -297,11 +314,14 @@ class BusInfo {
   String? driverPhone;
   int? studentCapacity;
 
-  BusInfo({this.id, this.busNo, this.gpsId, this.busModel, this.driverName, this.driverPhone, this.studentCapacity});
+  BusInfo({this.id, this.img, this.busNo, this.gpsId, this.busModel, this.driverName, this.driverPhone, this.studentCapacity});
 
   BusInfo.fromJson(Map<String, dynamic> json) {
     if(json["id"] is String) {
       id = json["id"];
+    }
+    if(json["img"] is String) {
+      img = json["img"];
     }
     if(json["bus_no"] is String) {
       busNo = json["bus_no"];
@@ -318,14 +338,19 @@ class BusInfo {
     if(json["driver_phone"] is String) {
       driverPhone = json["driver_phone"];
     }
-    if(json["student_capacity"] is num) {
-      studentCapacity = (json["student_capacity"] as num).toInt();
+    if(json["student_capacity"] is int) {
+      studentCapacity = json["student_capacity"];
     }
+  }
+
+  static List<BusInfo> fromList(List<Map<String, dynamic>> list) {
+    return list.map((map) => BusInfo.fromJson(map)).toList();
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> _data = <String, dynamic>{};
     _data["id"] = id;
+    _data["img"] = img;
     _data["bus_no"] = busNo;
     _data["gps_id"] = gpsId;
     _data["bus_model"] = busModel;
@@ -349,8 +374,8 @@ class PickUp {
     if(json["id"] is String) {
       id = json["id"];
     }
-    if(json["status"] is num) {
-      status = (json["status"] as num).toInt();
+    if(json["status"] is int) {
+      status = json["status"];
     }
     if(json["createdAt"] is String) {
       createdAt = json["createdAt"];
@@ -361,6 +386,10 @@ class PickUp {
     if(json["pick_up_name"] is String) {
       pickUpName = json["pick_up_name"];
     }
+  }
+
+  static List<PickUp> fromList(List<Map<String, dynamic>> list) {
+    return list.map((map) => PickUp.fromJson(map)).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -400,20 +429,20 @@ class School {
     if(json["phone"] is String) {
       phone = json["phone"];
     }
-    if(json["status"] is num) {
-      status = (json["status"] as num).toInt();
+    if(json["status"] is int) {
+      status = json["status"];
     }
     if(json["address"] is String) {
       address = json["address"];
     }
-    if(json["latitude"] is num) {
-      latitude = (json["latitude"] as num).toDouble();
+    if(json["latitude"] is double) {
+      latitude = json["latitude"];
     }
     if(json["createdAt"] is String) {
       createdAt = json["createdAt"];
     }
-    if(json["longitude"] is num) {
-      longitude = (json["longitude"] as num).toDouble();
+    if(json["longitude"] is double) {
+      longitude = json["longitude"];
     }
     if(json["updatedAt"] is String) {
       updatedAt = json["updatedAt"];
@@ -421,12 +450,16 @@ class School {
     if(json["school_name"] is String) {
       schoolName = json["school_name"];
     }
-    if(json["is_super_admin"] is num) {
-      isSuperAdmin = (json["is_super_admin"] as num).toInt();
+    if(json["is_super_admin"] is int) {
+      isSuperAdmin = json["is_super_admin"];
     }
-    if(json["student_capacity"] is num) {
-      studentCapacity = (json["student_capacity"] as num).toInt();
+    if(json["student_capacity"] is int) {
+      studentCapacity = json["student_capacity"];
     }
+  }
+
+  static List<School> fromList(List<Map<String, dynamic>> list) {
+    return list.map((map) => School.fromJson(map)).toList();
   }
 
   Map<String, dynamic> toJson() {

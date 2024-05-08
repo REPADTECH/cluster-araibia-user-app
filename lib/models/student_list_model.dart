@@ -1,4 +1,6 @@
 
+import 'package:flutter_custom_utils/flutter_custom_utils.dart';
+
 class StudentModelList {
   bool? success;
   String? message;
@@ -20,6 +22,10 @@ class StudentModelList {
     if(json["data"] is Map) {
       data = json["data"] == null ? null : Data.fromJson(json["data"]);
     }
+  }
+
+  static List<StudentModelList> fromList(List<Map<String, dynamic>> list) {
+    return list.map((map) => StudentModelList.fromJson(map)).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -45,14 +51,17 @@ class Data {
     if(json["dataList"] is List) {
       dataList = json["dataList"] == null ? null : (json["dataList"] as List).map((e) => DataList.fromJson(e)).toList();
     }
-    if(json["page_per_count"] is num) {
-      pagePerCount = (json["page_per_count"] as num).toInt();
+    if(json["page_per_count"] is int) {
+      pagePerCount = json["page_per_count"];
     }
-    if(json["total_count"] is num) {
-      totalCount = (json["total_count"] as num).toInt();
+    if(json["total_count"] is int) {
+      totalCount = json["total_count"];
     }
   }
 
+  static List<Data> fromList(List<Map<String, dynamic>> list) {
+    return list.map((map) => Data.fromJson(map)).toList();
+  }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> _data = <String, dynamic>{};
@@ -75,11 +84,11 @@ class DataList {
   String? state;
   String? std;
   String? division;
-  String? serviceStartedOn;
-  String? serviceEndedOn;
-  String? cancellationReason;
+  dynamic serviceStartedOn;
+  dynamic serviceEndedOn;
+  dynamic cancellationReason;
   String? address;
-  int? status;
+  bool? status;
   String? createdAt;
   String? updatedAt;
   String? img;
@@ -90,11 +99,6 @@ class DataList {
   BusInRoute? busInRoute;
 
   DataList({this.id, this.studentName, this.admissionNo, this.gender, this.parentType, this.country, this.state, this.std, this.division, this.serviceStartedOn, this.serviceEndedOn, this.cancellationReason, this.address, this.status, this.createdAt, this.updatedAt, this.img, this.studentLatitude, this.studentLongitude, this.school, this.pickUp, this.busInRoute});
-
-  @override
-  String toString(){
-    return '$studentName ($std $division)';
-  }
 
   DataList.fromJson(Map<String, dynamic> json) {
     if(json["id"] is String) {
@@ -124,21 +128,15 @@ class DataList {
     if(json["division"] is String) {
       division = json["division"];
     }
-    if(json["service_started_on"] is String) {
-      serviceStartedOn = json["service_started_on"];
-    }
-    if(json["service_ended_on"] is String) {
-      serviceEndedOn = json["service_ended_on"];
-    }
-    if(json["cancellation_reason"] is String) {
-      cancellationReason = json["cancellation_reason"];
-    }
+    serviceStartedOn = json["service_started_on"];
+    serviceEndedOn = json["service_ended_on"];
+    cancellationReason = json["cancellation_reason"];
     if(json["address"] is String) {
       address = json["address"];
     }
-    if(json["status"] is num) {
-      status = (json["status"] as num).toInt();
-    }
+    // if(json["status"] is int) {
+      status = json["status"].toString().cToBoolean;
+    // }
     if(json["createdAt"] is String) {
       createdAt = json["createdAt"];
     }
@@ -148,11 +146,11 @@ class DataList {
     if(json["img"] is String) {
       img = json["img"];
     }
-    if(json["student_latitude"] is num) {
-      studentLatitude = (json["student_latitude"] as num).toDouble();
+    if(json["student_latitude"] is double) {
+      studentLatitude = json["student_latitude"];
     }
-    if(json["student_longitude"] is num) {
-      studentLongitude = (json["student_longitude"] as num).toDouble();
+    if(json["student_longitude"] is double) {
+      studentLongitude = json["student_longitude"];
     }
     if(json["school"] is Map) {
       school = json["school"] == null ? null : School.fromJson(json["school"]);
@@ -163,6 +161,10 @@ class DataList {
     if(json["bus_in_route"] is Map) {
       busInRoute = json["bus_in_route"] == null ? null : BusInRoute.fromJson(json["bus_in_route"]);
     }
+  }
+
+  static List<DataList> fromList(List<Map<String, dynamic>> list) {
+    return list.map((map) => DataList.fromJson(map)).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -218,6 +220,10 @@ class BusInRoute {
     }
   }
 
+  static List<BusInRoute> fromList(List<Map<String, dynamic>> list) {
+    return list.map((map) => BusInRoute.fromJson(map)).toList();
+  }
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> _data = <String, dynamic>{};
     if(busInfo != null) {
@@ -231,7 +237,6 @@ class BusInRoute {
   }
 }
 
-
 class RouteInfo {
   String? id;
   String? gender;
@@ -243,10 +248,10 @@ class RouteInfo {
   String? endingPoint;
   int? fareForRoute;
   String? startingPoint;
-  int? endingLatitude;
-  int? endingLongitude;
-  int? startingLatitude;
-  int? startingLongitude;
+  double? endingLatitude;
+  double? endingLongitude;
+  double? startingLatitude;
+  double? startingLongitude;
   String? morningStartingTime;
   String? afternoonStartingTime;
 
@@ -259,8 +264,8 @@ class RouteInfo {
     if(json["gender"] is String) {
       gender = json["gender"];
     }
-    if(json["status"] is num) {
-      status = (json["status"] as num).toInt();
+    if(json["status"] is int) {
+      status = json["status"];
     }
     if(json["createdAt"] is String) {
       createdAt = json["createdAt"];
@@ -268,8 +273,8 @@ class RouteInfo {
     if(json["updatedAt"] is String) {
       updatedAt = json["updatedAt"];
     }
-    if(json["is_two_way"] is num) {
-      isTwoWay = (json["is_two_way"] as num).toInt();
+    if(json["is_two_way"] is int) {
+      isTwoWay = json["is_two_way"];
     }
     if(json["route_name"] is String) {
       routeName = json["route_name"];
@@ -277,23 +282,23 @@ class RouteInfo {
     if(json["ending_point"] is String) {
       endingPoint = json["ending_point"];
     }
-    if(json["fare_for_route"] is num) {
-      fareForRoute = (json["fare_for_route"] as num).toInt();
+    if(json["fare_for_route"] is int) {
+      fareForRoute = json["fare_for_route"];
     }
     if(json["starting_point"] is String) {
       startingPoint = json["starting_point"];
     }
-    if(json["ending_latitude"] is num) {
-      endingLatitude = (json["ending_latitude"] as num).toInt();
+    if(json["ending_latitude"] is double) {
+      endingLatitude = json["ending_latitude"];
     }
-    if(json["ending_longitude"] is num) {
-      endingLongitude = (json["ending_longitude"] as num).toInt();
+    if(json["ending_longitude"] is double) {
+      endingLongitude = json["ending_longitude"];
     }
-    if(json["starting_latitude"] is num) {
-      startingLatitude = (json["starting_latitude"] as num).toInt();
+    if(json["starting_latitude"] is double) {
+      startingLatitude = json["starting_latitude"];
     }
-    if(json["starting_longitude"] is num) {
-      startingLongitude = (json["starting_longitude"] as num).toInt();
+    if(json["starting_longitude"] is double) {
+      startingLongitude = json["starting_longitude"];
     }
     if(json["morning_starting_time"] is String) {
       morningStartingTime = json["morning_starting_time"];
@@ -301,6 +306,10 @@ class RouteInfo {
     if(json["afternoon_starting_time"] is String) {
       afternoonStartingTime = json["afternoon_starting_time"];
     }
+  }
+
+  static List<RouteInfo> fromList(List<Map<String, dynamic>> list) {
+    return list.map((map) => RouteInfo.fromJson(map)).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -355,9 +364,13 @@ class BusInfo {
     if(json["driver_phone"] is String) {
       driverPhone = json["driver_phone"];
     }
-    if(json["student_capacity"] is num) {
-      studentCapacity = (json["student_capacity"] as num).toInt();
+    if(json["student_capacity"] is int) {
+      studentCapacity = json["student_capacity"];
     }
+  }
+
+  static List<BusInfo> fromList(List<Map<String, dynamic>> list) {
+    return list.map((map) => BusInfo.fromJson(map)).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -386,8 +399,8 @@ class PickUp {
     if(json["id"] is String) {
       id = json["id"];
     }
-    if(json["status"] is num) {
-      status = (json["status"] as num).toInt();
+    if(json["status"] is int) {
+      status = json["status"];
     }
     if(json["createdAt"] is String) {
       createdAt = json["createdAt"];
@@ -398,6 +411,10 @@ class PickUp {
     if(json["pick_up_name"] is String) {
       pickUpName = json["pick_up_name"];
     }
+  }
+
+  static List<PickUp> fromList(List<Map<String, dynamic>> list) {
+    return list.map((map) => PickUp.fromJson(map)).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -437,20 +454,20 @@ class School {
     if(json["phone"] is String) {
       phone = json["phone"];
     }
-    if(json["status"] is num) {
-      status = (json["status"] as num).toInt();
+    if(json["status"] is int) {
+      status = json["status"];
     }
     if(json["address"] is String) {
       address = json["address"];
     }
-    if(json["latitude"] is num) {
-      latitude = (json["latitude"] as num).toDouble();
+    if(json["latitude"] is double) {
+      latitude = json["latitude"];
     }
     if(json["createdAt"] is String) {
       createdAt = json["createdAt"];
     }
-    if(json["longitude"] is num) {
-      longitude = (json["longitude"] as num).toDouble();
+    if(json["longitude"] is double) {
+      longitude = json["longitude"];
     }
     if(json["updatedAt"] is String) {
       updatedAt = json["updatedAt"];
@@ -458,12 +475,16 @@ class School {
     if(json["school_name"] is String) {
       schoolName = json["school_name"];
     }
-    if(json["is_super_admin"] is num) {
-      isSuperAdmin = (json["is_super_admin"] as num).toInt();
+    if(json["is_super_admin"] is int) {
+      isSuperAdmin = json["is_super_admin"];
     }
-    if(json["student_capacity"] is num) {
-      studentCapacity = (json["student_capacity"] as num).toInt();
+    if(json["student_capacity"] is int) {
+      studentCapacity = json["student_capacity"];
     }
+  }
+
+  static List<School> fromList(List<Map<String, dynamic>> list) {
+    return list.map((map) => School.fromJson(map)).toList();
   }
 
   Map<String, dynamic> toJson() {

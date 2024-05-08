@@ -10,4 +10,5 @@ abstract class Routes {
   static const contactUs = '/contactUs';
   static const aboutUs = '/aboutUs';
   static const privacyPolicy = '/privacyPolicy';
+  static const coupon = '/coupon';
 }

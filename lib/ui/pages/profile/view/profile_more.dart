@@ -114,6 +114,13 @@ class ListTilePart extends StatelessWidget {
           },
         ).cPadSymmetric(h: 8),
         ListTileItemProfile(
+          name: 'Coupon',
+          icon: coupon_fill_icon,
+          onTap: () {
+            Get.toNamed(Routes.coupon);
+          },
+        ).cPadSymmetric(h: 8),
+        ListTileItemProfile(
           name: 'Contact Us',
           icon: contactUs,
           onTap: () {
@@ -135,7 +142,7 @@ class ListTilePart extends StatelessWidget {
           },
         ).cPadSymmetric(h: 8),
       ],
-    ).cPadOnly(t: 30, l: 15);
+    ).cPadOnly(t: 20, l: 15);
   }
 }
 
@@ -174,7 +181,7 @@ class ListTileItemProfile extends StatelessWidget {
         size: 15,
       ),
       onTap: () => onTap(),
-    ).cPadOnly(b: 15, r: 10);
+    ).cPadOnly(b: 10, r: 10);
   }
 }
 
@@ -227,7 +234,7 @@ class AddressSection extends StatelessWidget {
             ],
           ).cPadOnly(t: 10, l: 10)
         ],
-      ).cPadOnly(l: 20, t: 20);
+      ).cPadOnly(l: 20, t: 10);
     });
   }
 }

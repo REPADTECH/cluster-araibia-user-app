@@ -178,11 +178,16 @@ class HomeDrawer extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        Image.network(
-                          logic.profileModel?.data?.img??'',
-                          height: 45,
-                          width: 45,
+                        CircleAvatar(
+                          radius: 25, // Image radius
+                          backgroundImage:
+                          NetworkImage(logic.profileModel?.data?.img ?? ''),
                         ),
+                        // Image.network(
+                        //   logic.profileModel?.data?.img??'',
+                        //   height: 45,
+                        //   width: 45,
+                        // ),
                         SizedBox(
                           width: 15,
                         ),
@@ -235,6 +240,14 @@ class HomeDrawer extends StatelessWidget {
                       onTap: () {
                         Get.back();
                         HomeStackDashboardController.to.changeTabIndex(2);
+                      },
+                    ).cPadSymmetric(h: 8),
+                    ListTileItem(
+                      name: 'Coupon',
+                      icon: coupon_fill_icon,
+                      onTap: () {
+                        Get.toNamed(Routes.coupon);
+                        // HomeStackDashboardController.to.changeTabIndex(2);
                       },
                     ).cPadSymmetric(h: 8),
                     const SizedBox(

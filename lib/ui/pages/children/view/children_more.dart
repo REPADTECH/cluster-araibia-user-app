@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cluster_arabia/res/colors.dart';
 import 'package:cluster_arabia/res/images.dart';
 import 'package:cluster_arabia/res/style.dart';
@@ -16,226 +17,258 @@ class SearchPart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ChildrenController>(
-      builder: (logic) {
-        return Container(
-          width: context.cWidth,
-          height: 40,
-          decoration: BoxDecoration(
-              border: Border.all(color: primaryColorPurple),
-              borderRadius: BorderRadius.circular(18)),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(
-                  width: 270,
-                  child: TextFormField(
-                    controller: logic.searchChildrenController,
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.only(left: 15, bottom: 13),
-                        hintText: 'Search...'),
-                    onFieldSubmitted: (val) {
+    return GetBuilder<ChildrenController>(builder: (logic) {
+      return Container(
+        width: context.cWidth,
+        height: 40,
+        decoration: BoxDecoration(
+            border: Border.all(color: primaryColorPurple),
+            borderRadius: BorderRadius.circular(18)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+                width: 270,
+                child: TextFormField(
+                  controller: logic.searchChildrenController,
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.only(left: 15, bottom: 13),
+                      hintText: 'Search...'),
+                  onFieldSubmitted: (val) {
+                    logic.studentList.clear();
+                    logic.pageNO = 1;
+                    logic.getStudentList();
+                  },
+                  onChanged: (v) {
+                    if (v.isEmpty) {
                       logic.studentList.clear();
                       logic.pageNO = 1;
                       logic.getStudentList();
-                    },
-                    onChanged: (v) {
-                      if (v.isEmpty) {
-                        logic.studentList.clear();
-                        logic.pageNO = 1;
-                        logic.getStudentList();
-                      }
-                    },
-                  )),
-              Icon(
+                    }
+                  },
+                )),
+            (logic.searchChildrenController.text=='')
+            ?InkWell(
+              onTap: (){},
+              child: Icon(
                 Icons.search,
                 size: 20,
-              )
-            ],
-          ).cPadOnly(r: 10),
-        );
-      }
-    );
+              ),
+            )
+                :InkWell(
+              onTap: () {
+                logic.searchChildrenController
+                    .text = '';
+                logic.studentList.clear();
+                logic.pageNO=1;
+                logic.getStudentList();
+              },
+              child: const Icon(
+                Icons.close_outlined,
+                color: Colors.black,
+                size: 20,
+              ),
+            )
+          ],
+        ).cPadOnly(r: 10),
+      );
+    });
   }
 }
 
 class ListPart extends StatelessWidget {
-
-
-  const ListPart(
-      {super.key,
-     });
+  const ListPart({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ChildrenController>(
-      builder: (logic) {
-        return ListView.builder(
+    return GetBuilder<ChildrenController>(builder: (logic) {
+      return ListView.builder(
           physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: logic.studentModelList?.data?.dataList?.length??0,
-            controller: logic.scrollController,
-            itemBuilder: (context, i) {
-            var data=logic.studentList?[i];
-            // var data=logic.studentModelList?.data?.dataList?[i];
-              return InkWell(
-                onTap: (){
-                  Get.toNamed(Routes.childrenInnerPage,arguments: [data?.id??'']);
-                },
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-                  // height: 135,
-                  width: context.cWidth,
-                  decoration: BoxDecoration(
-                    color: Color.fromRGBO(255, 255, 255, 1),
-                    // color: Color.fromRGBO(240, 243, 253, 1),
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: const [
-                      BoxShadow(
-                        blurRadius: 6,
-                        spreadRadius: 1,
-                        color: Color.fromRGBO(0, 0, 0, 0.25),
-                      ),
-                    ],
-                    // border: Border.all(color: Colors.black54, width: 0.2),
-                  ),
-                  child: Stack(
-                    children: [
-                      Column(
-                        children: [
-                          Row(
-                            children: [
-                              Image.network(
-                                data?.img??'',
-                                height: 25,
-                                width: 25,
-                              ),
-                              SizedBox(
-                                width: 8,
-                              ),
-                              Text(data?.studentName??'',
+          shrinkWrap: true,
+          itemCount: logic.studentList?.length ?? 0,
+          controller: logic.scrollController,
+          itemBuilder: (context, i) {
+            var data = logic.studentList?[i];
+            return InkWell(
+              onTap: () {
+                Get.toNamed(Routes.childrenInnerPage,
+                    arguments: [data?.id ?? '']);
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+                // height: 135,
+                width: context.cWidth,
+                decoration: BoxDecoration(
+                  color: Color.fromRGBO(255, 255, 255, 1),
+                  // color: Color.fromRGBO(240, 243, 253, 1),
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: const [
+                    BoxShadow(
+                      blurRadius: 6,
+                      spreadRadius: 1,
+                      color: Color.fromRGBO(0, 0, 0, 0.25),
+                    ),
+                  ],
+                  // border: Border.all(color: Colors.black54, width: 0.2),
+                ),
+                child: Stack(
+                  children: [
+                    Column(
+                      children: [
+                        Row(
+                          children: [
+                            CachedNetworkImage(
+                              imageUrl: (data?.img ?? ''),
+                              placeholder: (context, url) =>
+                                  CircularProgressIndicator(),
+                              width: 25,
+                              height: 25,
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error),
+                            ),
+                            // Image.network(
+                            //   data?.img??'',
+                            //   height: 25,
+                            //   width: 25,
+                            // ),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Text(data?.studentName ?? '',
+                                style: customStyle(
+                                    15.0, Colors.black, FontWeight.bold)),
+                            Text(' (${data?.gender ?? ''})',
+                                style: customStyle(
+                                    13.0,
+                                    Color.fromRGBO(99, 99, 99, 1),
+                                    FontWeight.normal)),
+                          ],
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Icon(
+                              Icons.location_pin,
+                              size: 15,
+                            ),
+                            SizedBox(
+                                width: 270,
+                                child: Text(
+                                  data?.address ?? '',
+                                  // 'Suite 875 579 Cole Club, Chaunceymouth, MI 04708-1942 ',
                                   style: customStyle(
-                                      15.0, Colors.black, FontWeight.bold)),
-                              Text(' (${data?.gender??''})',
-                                  style: customStyle(
-                                      13.0,
-                                      Color.fromRGBO(99, 99, 99, 1),
-                                      FontWeight.normal)),
-                            ],
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Icon(
-                                Icons.location_pin,
-                                size: 15,
-                              ),
-                              SizedBox(
-                                  width: 270,
-                                  child: Text(
-                                    data?.address??'',
-                                    // 'Suite 875 579 Cole Club, Chaunceymouth, MI 04708-1942 ',
-                                    style: customStyle(
-                                        11.0, Colors.black, FontWeight.normal),
-                                  ))
-                            ],
-                          ).cPadOnly(t: 8),
-                          Row(
-                            children: [
-                              SvgPicture.asset(
-                                schoolcap,
-                                height: 12,
-                                width: 12,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                  // 'TEST SCHOOL ABCD',
-                                  data?.school?.schoolName??'',
-                                  style: customStyle(
-                                      12.0, Colors.black, FontWeight.normal)),
-                              Text(
-                                  // ' (ABC1234)',
-                                  ' (${data?.admissionNo??''})',
-                                  style: customStyle(
-                                      12.0,
-                                      Color.fromRGBO(99, 99, 99, 1),
-                                      FontWeight.normal)),
-                            ],
-                          ).cPadOnly(t: 6,b: 10),
-                          Row(
-                            children: [
-                              SvgPicture.asset(
-                                routeIcon,
-                                height: 12,
-                                width: 12,
-                              ),
-                              SizedBox(
-                                width: 7,
-                              ),
-                              Text(
-                                  // 'Route name',
-                                  data?.busInRoute?.routeInfo?.routeName??'',
-                                  style: customStyle(
-                                      11.0, Colors.black, FontWeight.normal)),
-                              Text(
-                                  // ' (pickup point name)',
-                                  ' (${data?.pickUp?.pickUpName??''})',
-                                  style: customStyle(
-                                      11.0,
-                                      Color.fromRGBO(99, 99, 99, 1),
-                                      FontWeight.normal)),
-                            ],
-                          ).cPadOnly(t: 6),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          CustomButtonWidget(
-                              backgroundColor: Color.fromRGBO(255, 255, 255, 1),
-                              borderColor: Colors.black54,
-                              vPadding: 4,
-                              width: (context.cWidth>=800)?55:45,
-                              radius: 13,
-                              // buttonTitle: '4(B)',
-                              buttonTitle: '${data?.std??' '}(${data?.division??''})',
-                              titleStyle:
-                                  customStyle(11.0, Colors.black, FontWeight.normal)),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          CustomButtonWidget(
-                              backgroundColor: Color.fromRGBO(3, 159, 0, 1),
-                              vPadding: 5,
-                              width: (context.cWidth>=800)?65:55,
-                              radius: 13,
-                              buttonTitle: 'Active',
-                              titleStyle:
-                                  customStyle(11.0, Colors.white, FontWeight.bold)),
-                        ],
-                      ).cPosition(r: 0),
-                      // Icon(Icons.location_on_rounded).cPosition(r: 0, t: 35),
-                      SvgPicture.asset(locationIcon,color: primaryColorPurple,width: 30,height: 30,).cPosition(r: 0,t: 35),
-                      CustomButtonWidget(
-                              backgroundColor: Color.fromRGBO(255, 255, 255, 1),
-                              borderColor: Colors.black54,
-                              vPadding: 4,
-                              // width: 85,
-                              radius: 13,
-                              // buttonTitle: 'SAR 100.50',
-                          buttonTitle: '${double.parse('${data?.busInRoute?.routeInfo?.fareForRoute??' '}')*.01}',
-                              titleStyle:
-                                  customStyle(11.0, Colors.black, FontWeight.normal))
-                          .cPosition(r: 0, b: 0),
-                    ],
-                  ),
-                ).cPadOnly(t: (i==0)?5:13),
-              );
-            });
-      }
-    );
+                                      11.0, Colors.black, FontWeight.normal),
+                                ))
+                          ],
+                        ).cPadOnly(t: 8),
+                        Row(
+                          children: [
+                            SvgPicture.asset(
+                              schoolcap,
+                              height: 12,
+                              width: 12,
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                                // 'TEST SCHOOL ABCD',
+                                data?.school?.schoolName ?? '',
+                                style: customStyle(
+                                    12.0, Colors.black, FontWeight.normal)),
+                            Text(
+                                // ' (ABC1234)',
+                                ' (${data?.admissionNo ?? ''})',
+                                style: customStyle(
+                                    12.0,
+                                    Color.fromRGBO(99, 99, 99, 1),
+                                    FontWeight.normal)),
+                          ],
+                        ).cPadOnly(t: 6, b: 10),
+                        Row(
+                          children: [
+                            SvgPicture.asset(
+                              routeIcon,
+                              height: 12,
+                              width: 12,
+                            ),
+                            SizedBox(
+                              width: 7,
+                            ),
+                            Text(
+                                // 'Route name',
+                                data?.busInRoute?.routeInfo?.routeName ?? '',
+                                style: customStyle(
+                                    11.0, Colors.black, FontWeight.normal)),
+                            Text(
+                                // ' (pickup point name)',
+                                ' (${data?.pickUp?.pickUpName ?? ''})',
+                                style: customStyle(
+                                    11.0,
+                                    Color.fromRGBO(99, 99, 99, 1),
+                                    FontWeight.normal)),
+                          ],
+                        ).cPadOnly(t: 6),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        CustomButtonWidget(
+                            backgroundColor: Color.fromRGBO(255, 255, 255, 1),
+                            borderColor: Colors.black54,
+                            vPadding: 4,
+                            width: (context.cWidth >= 800) ? 55 : 45,
+                            radius: 13,
+                            // buttonTitle: '4(B)',
+                            buttonTitle:
+                                '${data?.std ?? ' '}(${data?.division ?? ''})',
+                            titleStyle: customStyle(
+                                11.0, Colors.black, FontWeight.normal)),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        CustomButtonWidget(
+                            backgroundColor: (data?.status ??true)
+                                ? Color.fromRGBO(3, 159, 0, 1)
+                                : Colors.redAccent,
+                            vPadding: 5,
+                            width: (context.cWidth >= 800) ? 70 : 65,
+                            radius: 13,
+                            // buttonTitle: (data?.status==1)?'${(data?.status)}':'${(data?.status)}',
+                            // buttonTitle: "${data?.status ?? '--'}",
+                            buttonTitle: (data?.status ??true)?'Active':'Inactive',
+                            titleStyle: customStyle(
+                                11.0, Colors.white, FontWeight.bold)),
+                      ],
+                    ).cPosition(r: 0),
+                    // Icon(Icons.location_on_rounded).cPosition(r: 0, t: 35),
+                    SvgPicture.asset(
+                      locationIcon,
+                      color: primaryColorPurple,
+                      width: 30,
+                      height: 30,
+                    ).cPosition(r: 0, t: 35),
+                    CustomButtonWidget(
+                            backgroundColor: Color.fromRGBO(255, 255, 255, 1),
+                            borderColor: Colors.black54,
+                            vPadding: 4,
+                            // width: 85,
+                            radius: 13,
+                            // buttonTitle: 'SAR 100.50',
+                            buttonTitle:
+                                '${double.parse('${data?.busInRoute?.routeInfo?.fareForRoute ?? ' '}') * .01}',
+                            titleStyle: customStyle(
+                                11.0, Colors.black, FontWeight.normal))
+                        .cPosition(r: 0, b: 0),
+                  ],
+                ),
+              ).cPadOnly(t: (i == 0) ? 5 : 13),
+            );
+          });
+    });
   }
 }
 
@@ -259,14 +292,26 @@ class SelectionButton extends StatelessWidget {
                     color:
                         (logic.isSelected == 0) ? Colors.white : Colors.black,
                     fontSize: 11.0),
-                label: Text('All',style: customStyle(10.0, (logic.isSelected == 0) ? Colors.white : primaryColorPurple, FontWeight.normal),),
-                shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.circular(20),
-                    side: BorderSide(color: primaryColorPurple)// Set the border radius here
+                label: Text(
+                  'All',
+                  style: customStyle(
+                      10.0,
+                      (logic.isSelected == 0)
+                          ? Colors.white
+                          : primaryColorPurple,
+                      FontWeight.normal),
                 ),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    side: BorderSide(
+                        color: primaryColorPurple) // Set the border radius here
+                    ),
                 onPressed: () {
                   logic.isSelected = 0;
+                  logic.statusIsSelected = '';
+                  logic.studentList.clear();
+                  logic.pageNO=1;
+                  logic.getStudentList();
                   logic.update();
                 },
               ),
@@ -284,14 +329,26 @@ class SelectionButton extends StatelessWidget {
                     color:
                         (logic.isSelected == 1) ? Colors.white : Colors.black,
                     fontSize: 11.0),
-                label: Text('Active',style: customStyle(10.0, (logic.isSelected == 1) ? Colors.white : primaryColorPurple, FontWeight.normal),),
-                shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.circular(20),
-                  side: BorderSide(color: primaryColorPurple)// Set the border radius here
+                label: Text(
+                  'Active',
+                  style: customStyle(
+                      10.0,
+                      (logic.isSelected == 1)
+                          ? Colors.white
+                          : primaryColorPurple,
+                      FontWeight.normal),
                 ),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    side: BorderSide(
+                        color: primaryColorPurple) // Set the border radius here
+                    ),
                 onPressed: () {
                   logic.isSelected = 1;
+                  logic.statusIsSelected = 'true';
+                  logic.studentList.clear();
+                  logic.pageNO=1;
+                  logic.getStudentList();
                   logic.update();
                 },
               ),
@@ -309,21 +366,33 @@ class SelectionButton extends StatelessWidget {
                     color:
                         (logic.isSelected == 2) ? Colors.white : Colors.black,
                     fontSize: 11.0),
-                label: Text('Inactive',style: customStyle(10.0, (logic.isSelected == 2) ? Colors.white : primaryColorPurple, FontWeight.normal),),
-                shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.circular(20),
-                    side: BorderSide(color: primaryColorPurple)// Set the border radius here
+                label: Text(
+                  'Inactive',
+                  style: customStyle(
+                      10.0,
+                      (logic.isSelected == 2)
+                          ? Colors.white
+                          : primaryColorPurple,
+                      FontWeight.normal),
                 ),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    side: BorderSide(
+                        color: primaryColorPurple) // Set the border radius here
+                    ),
                 onPressed: () {
                   logic.isSelected = 2;
+                  logic.statusIsSelected = 'false';
+                  logic.studentList.clear();
+                  logic.pageNO=1;
+                  logic.getStudentList();
                   logic.update();
                 },
               ),
             ],
           ),
         ],
-      ).cPadOnly(t: 10,b: 10);
+      ).cPadOnly(t: 10, b: 10);
     });
   }
 }

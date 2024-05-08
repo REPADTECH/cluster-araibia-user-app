@@ -10,6 +10,7 @@ import 'package:cluster_arabia/utilities/com_binding.dart';
 import 'package:cluster_arabia/utilities/dio.dart';
 import 'package:cluster_arabia/utilities/strings.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class Api extends GetConnect {
 //------------------------------- oms -------------------------------
@@ -78,6 +79,7 @@ class Api extends GetConnect {
     required var status,
     required var page,
   }) {
+    print('Url : -- p/student/list/$page?search=$search&route_id=$routeId&pickup_id=$pickUpId&country=$country&state=$state&school_id=$schoolId&status=$status');
     return get(
             'p/student/list/$page?search=$search&route_id=$routeId&pickup_id=$pickUpId&country=$country&state=$state&school_id=$schoolId&status=$status')
         .then((value) {
