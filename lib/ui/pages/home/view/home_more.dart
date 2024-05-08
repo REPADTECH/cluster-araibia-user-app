@@ -21,80 +21,99 @@ class FirstPart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HomeController>(
-      builder: (logic) {
-        return Stack(
-          children: [
-            Container(
-              height: 118,
-              width: context.cWidth,
-              decoration: BoxDecoration(
-                  color: primaryColorPurple,
-                  borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(25),
-                      bottomRight: Radius.circular(25))),
-              child: Stack(
-                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                // crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'SAR ${logic.homeBillAmount?.data?.totalPayableAmount??'0.0'}',
-                        style: customStyle(25.0, Colors.white, FontWeight.bold),
-                      ),
-                      Text(
-                        'Total payable amount',
-                        style: customStyle(10.0, Color.fromRGBO(206, 207, 237, 1),
-                            FontWeight.normal),
-                      ),
-                    ],
-                  ),
-                  Positioned(
-                      right: 60,
-                      child: Image.asset(
-                        profilePic,
-                        height: 40,
-                        width: 40,
-                      )),
-                  Positioned(
-                      right: 35,
-                      child: Image.asset(
-                        profilePic,
-                        height: 40,
-                        width: 40,
-                      )),
-                  Positioned(
-                      right: 10,
-                      child: Image.asset(
-                        profilePic,
-                        height: 40,
-                        width: 40,
-                      )),
-                ],
-              ).cPadOnly(t: 10, l: 40, r: 15),
-            ),
-            ListView.builder(itemBuilder: (cnt,i){
-              return Container();
-            })
-            // Row(
-            //   children: [
-            //     ChildBox(
-            //       no: '1',
-            //     ),
-            //     SizedBox(
-            //       width: 15,
-            //     ),
-            //     ChildBox(
-            //       no: '2',
-            //     ),
-            //   ],
-            // ).cPadOnly(t: 72, l: 30),
-          ],
-        );
-      }
-    );
+    return GetBuilder<HomeController>(builder: (logic) {
+      return Stack(
+        children: [
+          Container(
+            height: 118,
+            width: context.cWidth,
+            decoration: BoxDecoration(
+                color: primaryColorPurple,
+                borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(25),
+                    bottomRight: Radius.circular(25))),
+            child: Stack(
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'SAR ${logic.homeBillAmount?.data?.totalPayableAmount ?? '0.0'}',
+                      style: customStyle(25.0, Colors.white, FontWeight.bold),
+                    ),
+                    Text(
+                      'Total payable amount',
+                      style: customStyle(10.0, Color.fromRGBO(206, 207, 237, 1),
+                          FontWeight.normal),
+                    ),
+                  ],
+                ),
+                Positioned(
+                    right: 60,
+                    child: Image.asset(
+                      profilePic,
+                      height: 40,
+                      width: 40,
+                    )),
+                Positioned(
+                    right: 35,
+                    child: Image.asset(
+                      profilePic,
+                      height: 40,
+                      width: 40,
+                    )),
+                Positioned(
+                    right: 10,
+                    child: Image.asset(
+                      profilePic,
+                      height: 40,
+                      width: 40,
+                    )),
+              ],
+            ).cPadOnly(t: 10, l: 40, r: 15),
+          ),
+          SizedBox(
+            width: context.cWidth,
+            height: 70,
+            child: ListView.builder(
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemCount: logic.homeBillAmount?.data?.monthlyCharge?.cFirst
+                        ?.students?.length ??
+                    0,
+                itemBuilder: (cnt, i) {
+                  var data = logic.homeBillAmount?.data?.monthlyCharge?.cFirst
+                      ?.students?[i];
+                  var monthlyCharge =
+                      logic.homeBillAmount?.data?.monthlyCharge?.cFirst;
+                  return ChildBox(
+                    no: '1',
+                    price: ((double.parse('${data?.amount ?? '0'}') +
+                            double.parse('${data?.tax ?? '0'}')) /
+                        100),
+                    month:
+                        '${monthlyCharge?.monthName ?? ''} ${monthlyCharge?.year ?? ''}',
+                  );
+                }),
+          )
+          // Row(
+          //   children: [
+          //     ChildBox(
+          //       no: '1',
+          //     ),
+          //     SizedBox(
+          //       width: 15,
+          //     ),
+          //     ChildBox(
+          //       no: '2',
+          //     ),
+          //   ],
+          // ).cPadOnly(t: 72, l: 30),
+        ],
+      );
+    });
   }
 }
 
@@ -102,10 +121,9 @@ class ChildBox extends StatelessWidget {
   final String no;
   var price;
   var month;
-   ChildBox({super.key, required this.no,
-  required this.price,
-    required this.month
-  });
+
+  ChildBox(
+      {super.key, required this.no, required this.price, required this.month});
 
   @override
   Widget build(BuildContext context) {
@@ -144,7 +162,9 @@ class ChildBox extends StatelessWidget {
                   )
                 ],
               ),
-              SizedBox(width: 4,),
+              SizedBox(
+                width: 4,
+              ),
               Image.asset(
                 child_sticker,
                 height: 30,
@@ -152,8 +172,7 @@ class ChildBox extends StatelessWidget {
               )
             ],
           ),
-          Text(month,
-                  style: customStyle(12.0, Colors.black, FontWeight.bold))
+          Text(month, style: customStyle(12.0, Colors.black, FontWeight.bold))
               .cPadOnly(t: 5)
         ],
       ).cPadOnly(r: 8, l: 8, t: 5, b: 5),
@@ -166,72 +185,72 @@ class BannerSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HomeController>(
-      builder: (logic) {
-        return Stack(
-          children: [
-            SizedBox(
-              height: 190,
-              child: PageView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 4,
-                itemBuilder: (context, index) {
-                  return SvgPicture.asset(racoBanner);
-                },
-                onPageChanged: (v){
-                  logic.currentPage.value = v;
-                  logic.update();
-                },
-              ),
+    return GetBuilder<HomeController>(builder: (logic) {
+      return Stack(
+        children: [
+          SizedBox(
+            height: 190,
+            child: PageView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: 4,
+              itemBuilder: (context, index) {
+                return SvgPicture.asset(racoBanner);
+              },
+              onPageChanged: (v) {
+                logic.currentPage.value = v;
+                logic.update();
+              },
             ),
-            DotsIndicator(
-              dotsCount: 4,
-              position: logic.currentPage.value,
-              decorator: DotsDecorator(
-                spacing: EdgeInsets.all(3),
-                color: Colors.white, // Inactive dot color
-                activeColor: primaryColorPurple,
-                // activeSize: const Size.square(12.0), // Size of the active dot
-                shape: RoundedRectangleBorder(
+          ),
+          DotsIndicator(
+            dotsCount: 4,
+            position: logic.currentPage.value,
+            decorator: DotsDecorator(
+              spacing: EdgeInsets.all(3),
+              color: Colors.white,
+              // Inactive dot color
+              activeColor: primaryColorPurple,
+              // activeSize: const Size.square(12.0), // Size of the active dot
+              shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
-                  side: BorderSide(color: primaryColorPurple,width: 0.5)// Border radius of active dot
-                ),
-
-              ),
-            ).cPosition(b: 10,l: 0,r: 0),
-            // AspectRatio(
-            //   // aspectRatio: 392 / 200,
-            //   aspectRatio: 1.96,
-            //   child: CarouselSlider.builder(
-            //     itemCount: 4,
-            //     // itemCount: logic.bannerListModel?.data?.banners?.length ?? 0,
-            //     itemBuilder: (BuildContext context, int index, int realIndex) {
-            //       return GestureDetector(
-            //           child: SvgPicture.asset(racoBanner));
-            //     },
-            //     options:
-            //     CarouselOptions(
-            //       autoPlay: true,
-            //       height: context.cWidth,
-            //       viewportFraction: 1.0,
-            //       enlargeCenterPage: false,
-            //     ),
-            //
-            //   ),
-            //   //.cPadSymmetric(h: 0).cPadOnly(t: 8),
-            // ).cPadOnly(t: 10),
-            // DotsIndicator(
-            //   dotsCount: 4,
-            //   position: index,
-            //   decorator: DotsDecorator(
-            //     color: Colors.black87, // Inactive color
-            //     activeColor: Colors.redAccent,
-            //   ),
-            // )
-          ],
-        ).cPadOnly(t: 4);
-      }
-    );
+                  side: BorderSide(
+                      color: primaryColorPurple,
+                      width: 0.5) // Border radius of active dot
+                  ),
+            ),
+          ).cPosition(b: 10, l: 0, r: 0),
+          // AspectRatio(
+          //   // aspectRatio: 392 / 200,
+          //   aspectRatio: 1.96,
+          //   child: CarouselSlider.builder(
+          //     itemCount: 4,
+          //     // itemCount: logic.bannerListModel?.data?.banners?.length ?? 0,
+          //     itemBuilder: (BuildContext context, int index, int realIndex) {
+          //       return GestureDetector(
+          //           child: SvgPicture.asset(racoBanner));
+          //     },
+          //     options:
+          //     CarouselOptions(
+          //       autoPlay: true,
+          //       height: context.cWidth,
+          //       viewportFraction: 1.0,
+          //       enlargeCenterPage: false,
+          //     ),
+          //
+          //   ),
+          //   //.cPadSymmetric(h: 0).cPadOnly(t: 8),
+          // ).cPadOnly(t: 10),
+          // DotsIndicator(
+          //   dotsCount: 4,
+          //   position: index,
+          //   decorator: DotsDecorator(
+          //     color: Colors.black87, // Inactive color
+          //     activeColor: Colors.redAccent,
+          //   ),
+          // )
+        ],
+      ).cPadOnly(t: 4);
+    });
   }
 }
 
@@ -240,95 +259,114 @@ class BillOverView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HomeController>(
-      builder: (logic) {
-        return Container(
-          padding: EdgeInsets.symmetric(vertical: 5),
-          // height: 135,
-          width: context.cWidth,
-          decoration: BoxDecoration(
-              color: Color.fromRGBO(255, 255, 255, 1),
-              // color: Color.fromRGBO(240, 243, 253, 1),
-              borderRadius: BorderRadius.circular(15),
-            boxShadow: const [
-              BoxShadow(
-                blurRadius: 2,
-                spreadRadius: 0,
-                color: Color.fromRGBO(0, 0, 0, 0.25),
-              ),
-            ],
-              // border: Border.all(color: Colors.black54, width: 0.2),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Overview of Billing for ${(logic.startDatePass.cGetFormattedDate(format: 'MMM-yyyy'))}',
-                      style: customStyle(11.0, Colors.black, FontWeight.bold)),
-                  Container(
-                    width: 90,
-                    height: 30,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(
-                          color: primaryColorPurple,
-                        ),
-                        borderRadius: BorderRadius.circular(8)),
-                    child: Text('Pay Bill',
-                            style: customStyle(
-                                13.0, primaryColorPurple, FontWeight.normal))
-                        .cToCenter,
-                  )
-                ],
-              ),
-              SizedBox(height: 8,),
-              DottedLine(dashColor: Color.fromRGBO(159, 159, 159, 1),lineThickness: 0.5,),
-              SizedBox(height: 8,),
-              // Divider(
-              //   color: Color.fromRGBO(159, 159, 159, 1),
-              //   thickness: 0.5,
-              // ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Bill Date',
-                          style: customStyle(11.0, Colors.black, FontWeight.normal))
-                      .cExpanded(1),
-                  Text('Student Name',
-                          style: customStyle(11.0, Colors.black, FontWeight.normal))
-                      .cExpanded(1),
-                  Text('Class',
-                          style: customStyle(11.0, Colors.black, FontWeight.normal))
-                      .cExpanded(1),
-                  Text('Amount to pay',
-                          style: customStyle(11.0, Colors.black, FontWeight.normal))
-                      .cExpanded(1),
-                ],
-              ),
-              SizedBox(height: 5,),
-              DottedLine(dashColor: Color.fromRGBO(159, 159, 159, 1),lineThickness: 0.5,),
-              SizedBox(height: 5,),
-              // Divider(
-              //   color: Color.fromRGBO(159, 159, 159, 1),
-              //   thickness: 0.5,
-              // ),
-              ListView.builder(
-                itemCount: logic.homeBillAmount?.data?.students?.length??0,
+    return GetBuilder<HomeController>(builder: (logic) {
+      return Container(
+        padding: EdgeInsets.symmetric(vertical: 5),
+        // height: 135,
+        width: context.cWidth,
+        decoration: BoxDecoration(
+          color: Color.fromRGBO(255, 255, 255, 1),
+          // color: Color.fromRGBO(240, 243, 253, 1),
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: const [
+            BoxShadow(
+              blurRadius: 2,
+              spreadRadius: 0,
+              color: Color.fromRGBO(0, 0, 0, 0.25),
+            ),
+          ],
+          // border: Border.all(color: Colors.black54, width: 0.2),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                    'Overview of Billing for ${(logic.startDatePass.cGetFormattedDate(format: 'MMM-yyyy'))}',
+                    style: customStyle(11.0, Colors.black, FontWeight.bold)),
+                Container(
+                  width: 90,
+                  height: 30,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(
+                        color: primaryColorPurple,
+                      ),
+                      borderRadius: BorderRadius.circular(8)),
+                  child: Text('Pay Bill',
+                          style: customStyle(
+                              13.0, primaryColorPurple, FontWeight.normal))
+                      .cToCenter,
+                )
+              ],
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            DottedLine(
+              dashColor: Color.fromRGBO(159, 159, 159, 1),
+              lineThickness: 0.5,
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            // Divider(
+            //   color: Color.fromRGBO(159, 159, 159, 1),
+            //   thickness: 0.5,
+            // ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Bill Date',
+                        style:
+                            customStyle(11.0, Colors.black, FontWeight.normal))
+                    .cExpanded(1),
+                Text('Student Name',
+                        style:
+                            customStyle(11.0, Colors.black, FontWeight.normal))
+                    .cExpanded(1),
+                Text('Class',
+                        style:
+                            customStyle(11.0, Colors.black, FontWeight.normal))
+                    .cExpanded(1),
+                Text('Amount to pay',
+                        style:
+                            customStyle(11.0, Colors.black, FontWeight.normal))
+                    .cExpanded(1),
+              ],
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            DottedLine(
+              dashColor: Color.fromRGBO(159, 159, 159, 1),
+              lineThickness: 0.5,
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            // Divider(
+            //   color: Color.fromRGBO(159, 159, 159, 1),
+            //   thickness: 0.5,
+            // ),
+            ListView.builder(
+                itemCount: logic.homeBillAmount?.data?.students?.length ?? 0,
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (context,i) {
-                  var monthCharge=logic.homeBillAmount?.data?.monthlyCharge?.cFirst;
-                  var students=logic.homeBillAmount?.data?.students?[i];
+                itemBuilder: (context, i) {
+                  var monthCharge =
+                      logic.homeBillAmount?.data?.monthlyCharge?.cFirst;
+                  var students = logic.homeBillAmount?.data?.students?[i];
 
                   return Row(
                     children: [
-                      Text('${monthCharge?.monthName??' '}-${monthCharge?.year??''}',
+                      Text('${monthCharge?.monthName ?? ' '}-${monthCharge?.year ?? ''}',
                               style: customStyle(
                                   11.0, primaryColorPurple, FontWeight.normal))
                           .cExpanded(1),
-                      Text(students?.studentName??'',
+                      Text(students?.studentName ?? '',
                               style: customStyle(
                                   11.0, primaryColorPurple, FontWeight.normal))
                           .cExpanded(1),
@@ -336,47 +374,57 @@ class BillOverView extends StatelessWidget {
                               style: customStyle(
                                   11.0, primaryColorPurple, FontWeight.normal))
                           .cExpanded(1),
-                      Text('SAR ${(double.parse('${monthCharge?.students?[i]?.amount??0}')+double.parse('${monthCharge?.students?[i]?.tax??0}'))/100}',
+                      Text('SAR ${(double.parse('${monthCharge?.students?[i]?.amount ?? 0}') + double.parse('${monthCharge?.students?[i]?.tax ?? 0}')) / 100}',
                               style: customStyle(
                                   11.0, primaryColorPurple, FontWeight.normal))
                           .cExpanded(1),
                     ],
                   );
-                }
-              ),
-              SizedBox(height: 8,),
-              DottedLine(dashColor: Color.fromRGBO(159, 159, 159, 1),lineThickness: 0.5,),
-              SizedBox(height: 8,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text('',
-                      ).cExpanded(1),
-                  Text('',
-                      ).cExpanded(1),
-                  Text('',
-                   ).cExpanded(1),
-                  Text('SAR ${(double.parse('${logic.homeBillAmount?.data?.totalPayableAmount??0}')/100)}',
-                      style: customStyle(
-                          11.0, primaryColorPurple, FontWeight.normal)).cExpanded(1),
-              ],)
-              // Row(
-              //   children: [
-              //     Image.asset(invoice_inquiry),
-              //     SizedBox(
-              //       width: 5,
-              //     ),
-              //     Text(
-              //         'This invoice is system-generated. For inquiries, please contact us.',
-              //         style: customStyle(8.0, Color.fromRGBO(159, 159, 159, 1),
-              //             FontWeight.normal)),
-              //   ],
-              // )
-            ],
-          ).cPadOnly(l: 10, r: 10, t: 10),
-        ).cPadAll(10);
-      }
-    );
+                }),
+            SizedBox(
+              height: 8,
+            ),
+            DottedLine(
+              dashColor: Color.fromRGBO(159, 159, 159, 1),
+              lineThickness: 0.5,
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  '',
+                ).cExpanded(1),
+                Text(
+                  '',
+                ).cExpanded(1),
+                Text(
+                  '',
+                ).cExpanded(1),
+                Text('SAR ${(double.parse('${logic.homeBillAmount?.data?.totalPayableAmount ?? 0}') / 100)}',
+                        style: customStyle(
+                            11.0, primaryColorPurple, FontWeight.normal))
+                    .cExpanded(1),
+              ],
+            )
+            // Row(
+            //   children: [
+            //     Image.asset(invoice_inquiry),
+            //     SizedBox(
+            //       width: 5,
+            //     ),
+            //     Text(
+            //         'This invoice is system-generated. For inquiries, please contact us.',
+            //         style: customStyle(8.0, Color.fromRGBO(159, 159, 159, 1),
+            //             FontWeight.normal)),
+            //   ],
+            // )
+          ],
+        ).cPadOnly(l: 10, r: 10, t: 10),
+      ).cPadAll(10);
+    });
   }
 }
 
@@ -395,7 +443,7 @@ class MainMenu extends StatelessWidget {
         Row(
           children: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 Get.toNamed(Routes.children);
               },
               child: MenuBox(
@@ -407,7 +455,7 @@ class MainMenu extends StatelessWidget {
               width: 10,
             ),
             InkWell(
-              onTap: (){
+              onTap: () {
                 Get.toNamed(Routes.invoice);
               },
               child: MenuBox(
@@ -419,7 +467,7 @@ class MainMenu extends StatelessWidget {
               width: 10,
             ),
             InkWell(
-              onTap: (){
+              onTap: () {
                 Get.toNamed(Routes.profile);
               },
               child: MenuBox(
@@ -437,6 +485,7 @@ class MainMenu extends StatelessWidget {
 class MenuBox extends StatelessWidget {
   final String text;
   final String img;
+
   const MenuBox({super.key, required this.text, required this.img});
 
   @override
@@ -473,14 +522,13 @@ class BottomImageList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 1,
-      shrinkWrap: true,
-      itemBuilder: (context,i) {
-        return Container(
-          child: Image.asset(bottomBanner),
-        );
-      }
-    ).cPadOnly(t: 10,b: 10);
+        itemCount: 1,
+        shrinkWrap: true,
+        itemBuilder: (context, i) {
+          return Container(
+            child: Image.asset(bottomBanner),
+          );
+        }).cPadOnly(t: 10, b: 10);
   }
 }
 
@@ -503,7 +551,7 @@ void dateSelectPopupHome({
           child: GetBuilder<HomeController>(builder: (logic) {
             return SizedBox(
               height: 300,
-              width: context.cWidth/2,
+              width: context.cWidth / 2,
               child: SfDateRangePicker(
                 confirmText: 'SELECT',
                 showNavigationArrow: true,
@@ -511,10 +559,14 @@ void dateSelectPopupHome({
                   if (v is PickerDateRange) {
                     final DateTime? rangeStartDate = v.startDate;
                     final DateTime? rangeEndDate = v.endDate;
-                    logic.startMonth=rangeStartDate;
-                    logic.endMonth=rangeEndDate;
-                    logic.startDatePass=rangeStartDate.toString().cGetFormattedDate(format: 'yyyy-MM-dd');
-                    logic.endDatePass=rangeStartDate.toString().cGetFormattedDate(format: 'yyyy-MM-dd');
+                    logic.startMonth = rangeStartDate;
+                    logic.endMonth = rangeEndDate;
+                    logic.startDatePass = rangeStartDate
+                        .toString()
+                        .cGetFormattedDate(format: 'yyyy-MM-dd');
+                    logic.endDatePass = rangeStartDate
+                        .toString()
+                        .cGetFormattedDate(format: 'yyyy-MM-dd');
                     logic.getHomeAmount();
                     logic.update();
                     print(rangeStartDate);
@@ -538,9 +590,3 @@ void dateSelectPopupHome({
     },
   );
 }
-
-
-
-
-
-
