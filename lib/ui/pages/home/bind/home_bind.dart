@@ -26,6 +26,7 @@ class HomeController extends GetxController {
   DateTime? startMonth;
   DateTime? endMonth;
   HomeBillAmount? homeBillAmount;
+  var totWidth=60;
 
   @override
   void onInit() {

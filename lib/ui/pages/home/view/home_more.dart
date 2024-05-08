@@ -10,6 +10,7 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_custom_utils/flutter_custom_utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
@@ -40,10 +41,7 @@ class FirstPart extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'SAR ${double.parse('${
-                            logic.homeBillAmount?.data?.totalPayableAmount ??
-                                '0.0'
-                          }')/100}',
+                      'SAR ${double.parse('${logic.homeBillAmount?.data?.totalPayableAmount ?? '0.0'}') / 100}',
                       style: customStyle(25.0, Colors.white, FontWeight.bold),
                     ),
                     Text(
@@ -53,27 +51,55 @@ class FirstPart extends StatelessWidget {
                     ),
                   ],
                 ),
-                Positioned(
-                    right: 60,
-                    child: Image.asset(
-                      profilePic,
-                      height: 40,
-                      width: 40,
-                    )),
-                Positioned(
-                    right: 35,
-                    child: Image.asset(
-                      profilePic,
-                      height: 40,
-                      width: 40,
-                    )),
-                Positioned(
-                    right: 10,
-                    child: Image.asset(
-                      profilePic,
-                      height: 40,
-                      width: 40,
-                    )),
+                Expanded(
+                  child: ListView.builder(
+                      itemCount:
+                          ((logic.homeBillAmount?.data?.students?.length ?? 0) <
+                                  3)
+                              ? logic.homeBillAmount?.data?.students?.length ??
+                                  0
+                              : 3,
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      itemBuilder: (cnt, i) {
+                        var positiond = logic.totWidth;
+                        positiond =
+                            (i == 0) ? logic.totWidth : logic.totWidth - 25;
+                        return Positioned(
+                          right: positiond.toDouble(),
+                          child: CachedNetworkImage(
+                            imageUrl: profilePic,
+                            height: 40,
+                            width: 40,
+                            placeholder: (context, url) =>
+                                CircularProgressIndicator(),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                          ),
+                        );
+                      }),
+                )
+                // Positioned(
+                //     right: 60,
+                //     child: Image.asset(
+                //       profilePic,
+                //       height: 40,
+                //       width: 40,
+                //     )),
+                // Positioned(
+                //     right: 35,
+                //     child: Image.asset(
+                //       profilePic,
+                //       height: 40,
+                //       width: 40,
+                //     )),
+                // Positioned(
+                //     right: 10,
+                //     child: Image.asset(
+                //       profilePic,
+                //       height: 40,
+                //       width: 40,
+                //     )),
               ],
             ).cPadOnly(t: 10, l: 40, r: 15),
           ),
@@ -199,7 +225,8 @@ class BannerSection extends StatelessWidget {
                 return CachedNetworkImage(
                   imageUrl: data?.img ?? '',
                   progressIndicatorBuilder: (context, url, downloadProgress) =>
-                      CircularProgressIndicator(value: downloadProgress.progress),
+                      CircularProgressIndicator(
+                          value: downloadProgress.progress),
                   errorWidget: (context, url, error) => Icon(Icons.error),
                 );
               },
@@ -528,24 +555,22 @@ class BottomImageList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HomeController>(
-      builder: (logic) {
-        return ListView.builder(
-            itemCount: logic.bannerListModel?.data?.length??0,
-            shrinkWrap: true,
-            itemBuilder: (context, i) {
-              var data=logic.bannerListModel?.data?[i];
-              return Container(
-                child: CachedNetworkImage(
-                  imageUrl: data?.img ?? '',
-                  progressIndicatorBuilder: (context, url, downloadProgress) =>
-                      CircularProgressIndicator(value: downloadProgress.progress),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
-                ),
-              );
-            }).cPadOnly(t: 10, b: 10);
-      }
-    );
+    return GetBuilder<HomeController>(builder: (logic) {
+      return ListView.builder(
+          itemCount: logic.bannerListModel?.data?.length ?? 0,
+          shrinkWrap: true,
+          itemBuilder: (context, i) {
+            var data = logic.bannerListModel?.data?[i];
+            return Container(
+              child: CachedNetworkImage(
+                imageUrl: data?.img ?? '',
+                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                    CircularProgressIndicator(value: downloadProgress.progress),
+                errorWidget: (context, url, error) => Icon(Icons.error),
+              ),
+            );
+          }).cPadOnly(t: 10, b: 10);
+    });
   }
 }
 
