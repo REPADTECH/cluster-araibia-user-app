@@ -369,15 +369,14 @@ class ListPart extends StatelessWidget {
                         SizedBox(
                           width: 10,
                         ),
-                        Text(data?.student?.name ?? '',
-                            style: customStyle(
-                                13.0, Colors.black, FontWeight.bold)),
-                        Text(
-                            '(${data?.student?.std ?? ''} ${data?.student?.division ?? ''})',
-                            style: customStyle(
-                                13.0,
-                                Color.fromRGBO(99, 99, 99, 1),
-                                FontWeight.bold)),
+                        SizedBox(
+                          width: 200,
+                          child: Text('${data?.student?.name ?? ' '} (${data?.student?.std ?? ''} ${data?.student?.division ?? ''})',
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: customStyle(
+                                  13.0, Colors.black, FontWeight.bold)),
+                        ),
                       ],
                     ),
                     Row(
@@ -387,7 +386,7 @@ class ListPart extends StatelessWidget {
                           height: 12,
                           width: 12,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
                         Text(data?.school?.name ?? '',
@@ -414,17 +413,21 @@ class ListPart extends StatelessWidget {
                               width: 7,
                             ),
                             Text(
-                                data?.student?.busInRoute?.routeInfo
-                                        ?.routeName ??
-                                    '',
+                                data?.student?.busInRoute?.routeInfo?.routeName ?? '',
                                 style: customStyle(
                                     11.0, Colors.black, FontWeight.normal)),
-                            Text(
-                                ' (${data?.student?.busInRoute?.routeInfo?.startingPoint ?? ''})',
-                                style: customStyle(
-                                    10.0,
-                                    Color.fromRGBO(99, 99, 99, 1),
-                                    FontWeight.normal)),
+                            const SizedBox(width: 5,),
+                            SizedBox(
+                              width: 115,
+                              child: Text(
+                                maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  data?.student?.busInRoute?.routeInfo?.startingPoint ?? '',
+                                  style: customStyle(
+                                      10.0,
+                                      const Color.fromRGBO(99, 99, 99, 1),
+                                      FontWeight.normal)),
+                            ),
                           ],
                         ).cPadOnly(t: 5),
                         Row(

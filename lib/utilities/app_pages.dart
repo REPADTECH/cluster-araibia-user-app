@@ -44,7 +44,7 @@ abstract class AppPages {
     ),
     GetPage(
       name: Routes.homeStackDashboard,
-      page: () => const HomeStackDashboard(),
+      page: () =>  HomeStackDashboard(),
       binding: HomeStackDashboardBinding(),
     ),
     GetPage(
