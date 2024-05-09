@@ -1,4 +1,5 @@
 import 'package:cluster_arabia/models/banner_list_model.dart';
+import 'package:cluster_arabia/models/coupon_list_model.dart';
 import 'package:cluster_arabia/models/home_page_models.dart';
 import 'package:cluster_arabia/models/invoice_list_model.dart';
 import 'package:cluster_arabia/models/login_model.dart';
@@ -130,4 +131,13 @@ class Api extends GetConnect {
       return HomeBillAmount.fromJson(value.body ?? err);
     });
   }
+
+  Future<CouponModelList> getCouponList({
+    required var page,
+  }) {
+    return get('p/coupon/list/$page').then((value) {
+      return CouponModelList.fromJson(value.body ?? err);
+    });
+  }
+
 }
