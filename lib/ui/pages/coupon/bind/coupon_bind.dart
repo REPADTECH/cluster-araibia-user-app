@@ -18,8 +18,18 @@ class CouponController extends GetxController {
   static CouponController get to => Get.find();
 
   couponList.CouponModelList? couponModelList;
-  // List<invoice.DataList> invoiceList = [];
+  List<couponList.Coupons> couponLists = [];
   late BuildContext context;
+  bool hasNextPage = false;
+  var pageNO = 1;
+
+
+  @override
+  void onInit() {
+    couponLists.clear();
+    getCouponList();
+    super.onInit();
+  }
 
   void copyToClipboard(String value) {
     Clipboard.setData(ClipboardData(text: value));
@@ -28,16 +38,16 @@ class CouponController extends GetxController {
 
   void getCouponList() async {
     try {
-      // showLoading();
-      // couponModelList = await Api.to.getCouponList(page: pageNO,
-      // );
+      showLoading();
+      couponModelList = await Api.to.getCouponList(page: pageNO,
+      );
       dismissLoading();
       if (!(couponModelList?.success ?? true)) {
         showToast(context: context, message: couponModelList?.message ?? '');
       } else {
-        // hasNextPage =
-        // ((couponModelList?.data?.coupons ?? []).length == 20) ? true : false;
-        // invoiceList.addAll((couponModelList?.data?.coupons ?? []));
+        hasNextPage =
+        ((couponModelList?.data?.coupons ?? []).length == 20) ? true : false;
+        couponLists.addAll((couponModelList?.data?.coupons ?? []));
       }
     } catch (e) {
       showToast(context: context, message: e.toString());
