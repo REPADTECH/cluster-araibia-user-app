@@ -7,6 +7,7 @@ import 'package:cluster_arabia/utilities/app_routes.dart';
 import 'package:cluster_arabia/utilities/common_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_custom_utils/flutter_custom_utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
@@ -86,7 +87,7 @@ class ListPart extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<ChildrenController>(builder: (logic) {
       return ListView.builder(
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemCount: logic.studentList?.length ?? 0,
           controller: logic.scrollController,
@@ -98,11 +99,11 @@ class ListPart extends StatelessWidget {
                     arguments: [data?.id ?? '']);
               },
               child: Container(
-                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
                 // height: 135,
                 width: context.cWidth,
                 decoration: BoxDecoration(
-                  color: Color.fromRGBO(255, 255, 255, 1),
+                  color: const Color.fromRGBO(255, 255, 255, 1),
                   // color: Color.fromRGBO(240, 243, 253, 1),
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: const [
@@ -123,28 +124,35 @@ class ListPart extends StatelessWidget {
                             CachedNetworkImage(
                               imageUrl: (data?.img ?? ''),
                               placeholder: (context, url) =>
-                                  CircularProgressIndicator(),
+                                  const CircularProgressIndicator(),
                               width: 25,
                               height: 25,
                               errorWidget: (context, url, error) =>
-                                  Icon(Icons.error),
+                                  const Icon(Icons.error),
                             ),
                             // Image.network(
                             //   data?.img??'',
                             //   height: 25,
                             //   width: 25,
                             // ),
-                            SizedBox(
+                            const SizedBox(
                               width: 8,
                             ),
-                            Text(data?.studentName ?? '',
-                                style: customStyle(
-                                    15.0, Colors.black, FontWeight.bold)),
-                            Text(' (${data?.gender ?? ''})',
-                                style: customStyle(
-                                    13.0,
-                                    Color.fromRGBO(99, 99, 99, 1),
-                                    FontWeight.normal)),
+                            SizedBox(
+                              width: 140,
+                              child: Text(
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  data?.studentName ?? '',
+                                  textAlign: TextAlign.start,
+                                  style: customStyle(
+                                      15.0, Colors.black, FontWeight.bold)),
+                            ),
+                            // Text(' (${data?.gender ?? ''})',
+                            //     style: customStyle(
+                            //         13.0,
+                            //         Color.fromRGBO(99, 99, 99, 1),
+                            //         FontWeight.normal)),
                           ],
                         ),
                         Row(

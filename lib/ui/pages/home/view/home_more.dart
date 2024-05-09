@@ -501,7 +501,8 @@ class MainMenu extends StatelessWidget {
           children: [
             InkWell(
               onTap: () {
-                Get.toNamed(Routes.children);
+               // Get.toNamed(Routes.children);
+                HomeStackDashboardController.to.changeTabIndex(2);
               },
               child: MenuBox(
                 text: 'Children',
@@ -513,7 +514,7 @@ class MainMenu extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                Get.toNamed(Routes.invoice);
+                HomeStackDashboardController.to.changeTabIndex(1);
               },
               child: MenuBox(
                 text: 'Invoice',
@@ -525,7 +526,7 @@ class MainMenu extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                Get.toNamed(Routes.profile);
+                HomeStackDashboardController.to.changeTabIndex(3);
               },
               child: MenuBox(
                 text: 'Profile',
