@@ -3,6 +3,7 @@ import 'package:cluster_arabia/res/images.dart';
 import 'package:cluster_arabia/res/style.dart';
 import 'package:cluster_arabia/ui/pages/Invoice/bind/invoice_bind.dart';
 import 'package:cluster_arabia/ui/pages/Invoice/view/invoice_more.dart';
+import 'package:cluster_arabia/ui/pages/home_stack_dashboard/bind/home_stack_dashboard_bind.dart';
 import 'package:cluster_arabia/utilities/common_widget.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
@@ -14,21 +15,20 @@ class InvoicePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    InvoiceController.to.context=context;
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: commonAppBarBack(
-        'Invoices',
-        primaryColorPurple,
-          (){
+    InvoiceController.to.context = context;
+    return WillPopScope(
+      onWillPop: () async {
+        HomeStackDashboardController.to.changeTabIndex(0);
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: commonAppBarBack('Invoices', primaryColorPurple, () {
           InvoiceController.to.onInit();
-          }
-      ),
-      body: Column(
-        children: [
-          FirstPart(),
-          ListPart()
-        ],
+        }),
+        body: Column(
+          children: [FirstPart(), ListPart()],
+        ),
       ),
     );
   }

@@ -64,13 +64,23 @@ class ProfileImagePart extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  logic.profileModel?.data?.name ?? '',
-                  style: customStyle(20.0, Colors.black, FontWeight.bold),
+                SizedBox(
+                  width: 140,
+                  child: Text(
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    logic.profileModel?.data?.name ?? '',
+                    style: customStyle(20.0, Colors.black, FontWeight.bold),
+                  ),
                 ),
-                Text(
-                  logic.profileModel?.data?.address ?? '',
-                  style: customStyle(12.0, Colors.black87, FontWeight.normal),
+                SizedBox(
+                  width: 140,
+                  child: Text(
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    logic.profileModel?.data?.address ?? '',
+                    style: customStyle(12.0, Colors.black87, FontWeight.normal),
+                  ),
                 ),
                 // Container(
                 //   height: 30,

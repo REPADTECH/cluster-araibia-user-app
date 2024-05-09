@@ -54,25 +54,6 @@ class LoginController extends GetxController {
     super.dispose();
   }
 
-  String? validateMobileNumbers(String? value) {
-    final RegExp mobileRegex = RegExp(r'^\d{10}$');
-    if (value == null || value.isEmpty) {
-      validatorNumber.value = true;
-      errorMessage = 'Enter Mobile Number';
-      update();
-      // return 'enterMobileNumber'.tr;
-    } else if (!(mobileRegex.hasMatch(value))) {
-      validatorNumber.value = true;
-      errorMessage = 'Please enter valid mobile number';
-      update();
-    } else {
-      errorMessage = '';
-      validatorNumber.value = false;
-      update();
-    }
-    return null;
-    return null;
-  }
 
   void checkLogin({required BuildContext context}) async {
     if (loginPageView.currentState?.validate() ?? false) {
