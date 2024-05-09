@@ -83,11 +83,6 @@ class FirstPart extends StatelessWidget {
                 // )
                 Positioned(
                   right: 60,
-                  // child: Image.network(
-                  //   (logic.homeBillAmount?.data?.students?.cFirst)?.img??'',
-                  //   height: 40,
-                  //   width: 40,
-                  // ).cClipAll(40),
                   child: CachedNetworkImage(
                     imageUrl:
                         (logic.homeBillAmount?.data?.students?.cFirst)?.img ??
@@ -97,13 +92,13 @@ class FirstPart extends StatelessWidget {
                     height: 40,
                     errorWidget: (context, url, error) => Icon(Icons.error),
                   ).cClipAll(40),
-                ),
+                ).cVisible((((logic.homeBillAmount?.data?.students?.cFirst)?.img ?? '')).isNotEmpty),
                 Positioned(
                   right: 35,
                   child: CachedNetworkImage(
                     imageUrl: ((logic.homeBillAmount?.data?.students?.length ??
                                 0) >
-                            2)
+                            1)
                         ? ((logic.homeBillAmount?.data?.students?[1])?.img ??
                             '')
                         : '',
@@ -112,7 +107,7 @@ class FirstPart extends StatelessWidget {
                     height: 40,
                     errorWidget: (context, url, error) => Icon(Icons.error),
                   ).cClipAll(40),
-                ),
+                ).cVisible((((logic.homeBillAmount?.data?.students?.length ?? 0) >= 2)?((logic.homeBillAmount?.data?.students?[1])?.img ?? ''):'').isNotEmpty),
                 Positioned(
                   right: 10,
                   child: CachedNetworkImage(
@@ -127,7 +122,7 @@ class FirstPart extends StatelessWidget {
                     height: 40,
                     errorWidget: (context, url, error) => Icon(Icons.error),
                   ).cClipAll(40),
-                ),
+                ).cVisible((((logic.homeBillAmount?.data?.students?.length ?? 0) >= 3)?((logic.homeBillAmount?.data?.students?[2])?.img ?? ''):'').isNotEmpty),
               ],
             ).cPadOnly(t: 10, l: 40, r: 15),
           ),
@@ -147,7 +142,7 @@ class FirstPart extends StatelessWidget {
                   var monthlyCharge =
                       logic.homeBillAmount?.data?.monthlyCharge?.cFirst;
                   return ChildBox(
-                    no: '1',
+                    no: '${i + 1}',
                     price: ((double.parse('${data?.amount ?? '0'}') +
                             double.parse('${data?.tax ?? '0'}')) /
                         100),
@@ -501,7 +496,7 @@ class MainMenu extends StatelessWidget {
         Text(
           'Main Menu',
           style: customStyle(15.0, Colors.black, FontWeight.normal),
-        ).cPadOnly(l: 10),
+        ).cPadOnly(l: 10,t: 10),
         Row(
           children: [
             InkWell(
