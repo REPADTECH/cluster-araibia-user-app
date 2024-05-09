@@ -315,11 +315,18 @@ class HomeDrawer extends StatelessWidget {
                                 Color.fromRGBO(83, 97, 107, 1),
                                 FontWeight.normal))
                         .cPadOnly(l: 10),
+                    // ListTileItem(
+                    //   name: 'Contact Us',
+                    //   icon: contactUs,
+                    //   onTap: () {
+                    //     Get.toNamed(Routes.contactUs);
+                    //   },
+                    // ).cPadSymmetric(h: 8),
                     ListTileItem(
-                      name: 'Contact Us',
+                      name: 'Help&Support',
                       icon: contactUs,
                       onTap: () {
-                        Get.toNamed(Routes.contactUs);
+                        Get.toNamed(Routes.helpAndSupport);
                       },
                     ).cPadSymmetric(h: 8),
                     ListTileItem(

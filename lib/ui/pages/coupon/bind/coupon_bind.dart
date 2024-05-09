@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:toastification/toastification.dart';
 
 class CouponBinding implements Bindings {
   @override
@@ -34,6 +35,7 @@ class CouponController extends GetxController {
   void copyToClipboard(String value) {
     Clipboard.setData(ClipboardData(text: value));
     EasyLoading.showToast('Copied');
+    // showToast(context: context, message: 'Copied');
   }
 
   void getCouponList() async {

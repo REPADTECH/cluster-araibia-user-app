@@ -10,6 +10,8 @@ import 'package:cluster_arabia/ui/pages/contact_us/bind/contact_us_bind.dart';
 import 'package:cluster_arabia/ui/pages/contact_us/view/contact_us_view.dart';
 import 'package:cluster_arabia/ui/pages/coupon/bind/coupon_bind.dart';
 import 'package:cluster_arabia/ui/pages/coupon/view/coupon_view.dart';
+import 'package:cluster_arabia/ui/pages/help&support/bind/help&support_bind.dart';
+import 'package:cluster_arabia/ui/pages/help&support/view/help&support_view.dart';
 import 'package:cluster_arabia/ui/pages/home/bind/home_bind.dart';
 import 'package:cluster_arabia/ui/pages/home/view/home_view.dart';
 import 'package:cluster_arabia/ui/pages/home_stack_dashboard/bind/home_stack_dashboard_bind.dart';
@@ -86,6 +88,11 @@ abstract class AppPages {
       name: Routes.coupon,
       page: () => const CouponPage(),
       binding: CouponBinding(),
+    ),
+    GetPage(
+      name: Routes.helpAndSupport,
+      page: () => const HelpAndSupport(),
+      binding: HelpAndSupportBinding(),
     ),
   ];
 }

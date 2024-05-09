@@ -83,6 +83,7 @@ class Coupons {
   int? noMinimumChildren;
   int? status;
   int? visibleToAll;
+  int? isUsed;
   String? createdAt;
   String? updatedAt;
 
@@ -119,6 +120,9 @@ class Coupons {
     if(json["visible_to_all"] is int) {
       visibleToAll = json["visible_to_all"];
     }
+    if(json["is_used"] is int) {
+      isUsed = json["is_used"];
+    }
     if(json["createdAt"] is String) {
       createdAt = json["createdAt"];
     }
@@ -143,6 +147,7 @@ class Coupons {
     _data["no_minimum_children"] = noMinimumChildren;
     _data["status"] = status;
     _data["visible_to_all"] = visibleToAll;
+    _data["is_used"] = isUsed;
     _data["createdAt"] = createdAt;
     _data["updatedAt"] = updatedAt;
     return _data;

@@ -419,13 +419,15 @@ class BillOverView extends StatelessWidget {
 
                   return Row(
                     children: [
-                      Text('${monthCharge?.monthName ?? ' '}-${monthCharge?.year ?? ''}',
+                      Text(
+                          '${logic.getShortMonthText(int.parse(monthCharge?.monthNumber??'0'))}-${monthCharge?.year ?? ''}',
+                          // '${monthCharge?.monthName ?? ' '}-${monthCharge?.year ?? ''}',
                               style: customStyle(
                                   11.0, primaryColorPurple, FontWeight.normal))
                           .cExpanded(1),
                       Text(students?.studentName ?? '',
                               style: customStyle(
-                                  11.0, primaryColorPurple, FontWeight.normal))
+                                  11.0, primaryColorPurple, FontWeight.normal),overflow: TextOverflow.ellipsis,)
                           .cExpanded(1),
                       Text('${students?.classNo}',
                               style: customStyle(
