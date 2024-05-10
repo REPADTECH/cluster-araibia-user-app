@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:intl/intl.dart';
 import 'package:toastification/toastification.dart';
 
 showLoading() {
@@ -17,6 +19,19 @@ showToast({required BuildContext context, required var message}) {
     title: Text(message),
     autoCloseDuration: const Duration(seconds: 5),
   );
+}
+
+void copyToClipboard(String value) {
+  Clipboard.setData(ClipboardData(text: value));
+  EasyLoading.showToast('Copied');
+  // showToast(context: context, message: 'Copied');
+}
+
+String getShortMonthText(int monthNumber) {
+  // Create a new date with the month number
+  DateTime date = DateTime(2020, monthNumber); // The year can be any year
+  // Format the date to get the short month name
+  return DateFormat.MMM().format(date); // 'MMM' gives the short month name
 }
 
 validateLoginPage({var value}) {
@@ -40,4 +55,31 @@ validateLoginPage({var value}) {
     }
   }
   return null;
+}
+
+String? valRequired(text, ) {
+  if ((text ?? '').isEmpty) {
+    return 'Please enter the subject of your complaint here';
+  }
+  return null;
+}
+String? disvalRequired(text,) {
+  if ((text ?? '').isEmpty) {
+    return 'Please enter your complaints here';
+  }
+  return null;
+}
+
+String? validateMobNumber(String value) {
+  // Remove any non-digit characters
+  String mobileNumber = value.replaceAll(RegExp(r'[^0-9]'), '');
+
+  if (mobileNumber.length == 10 || mobileNumber.length == 14) {
+    return null; // Validation passed
+    // ignore: unnecessary_null_comparison
+  } else if (value == null || value.isEmpty) {
+    return 'Please enter mobile number';
+  } else {
+    return 'Mobile number must be 10 or 14 digits long';
+  }
 }

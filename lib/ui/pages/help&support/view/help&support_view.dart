@@ -1,5 +1,7 @@
 import 'package:cluster_arabia/res/colors.dart';
 import 'package:cluster_arabia/res/style.dart';
+import 'package:cluster_arabia/ui/pages/help&support/bind/help&support_bind.dart';
+import 'package:cluster_arabia/ui/pages/help&support/view/help&support_more.dart';
 import 'package:cluster_arabia/utilities/app_routes.dart';
 import 'package:cluster_arabia/utilities/common_widget.dart';
 import 'package:flutter/material.dart';
@@ -12,53 +14,30 @@ class HelpAndSupport extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBarBack('Help&Support', primaryColorPurple, () { }),
+      appBar: commonAppBarBack('Help and Support', primaryColorPurple, () {
+        HelpAndSupportController.to.onInit();
+      }),
       body: Column(children: [
-        Container(
-          height: 148,
-          width: context.cWidth,
-          decoration:
-           BoxDecoration(color: primaryColorPurple),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Get.toNamed(Routes.contactUs);
-                    },
-                    child: Container(
-                      height: 25,
-                      width: 70,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              color: Colors.blue),
-                          borderRadius:
-                          BorderRadius.circular(
-                              4)),
-                      child: Center(
-                          child: Text(
-                            'Contact Us',
-                            style: TextStyle(
-                                color: Colors.blue,
-                                fontSize: 12),
-                          )),
-                    ),
-                  )
-                ],
-              ).cPadOnly(r: 10,l: 10,t: 10),
-
-              Text(
-                'How can we help you today?',
-                style: customStyle(24.0, Colors.white, FontWeight.bold),
-              ).cPadOnly(t: 15, b: 18),
-              
-            ],
+      Container(
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+      height: 135,
+      width: context.cWidth,
+      decoration: BoxDecoration(
+        color: const Color.fromRGBO(255, 255, 255, 1),
+        // color: Color.fromRGBO(240, 243, 253, 1),
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: const [
+          BoxShadow(
+            blurRadius: 6,
+            spreadRadius: 1,
+            color: Color.fromRGBO(0, 0, 0, 0.25),
           ),
-        ),
-      ],),
+        ],
+        // border: Border.all(color: Colors.black54, width: 0.2),
+      ),)
+        // FirstPart(),
+        // BottomPart()
+      ],).cPadAll(15),
     );
   }
 }

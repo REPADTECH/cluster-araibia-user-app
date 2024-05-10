@@ -6,7 +6,6 @@ import 'package:cluster_arabia/utilities/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_utils/flutter_custom_utils.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 
 class HomeBinding implements Bindings {
@@ -86,12 +85,5 @@ class HomeController extends GetxController {
     }
   }
 
-
-  String getShortMonthText(int monthNumber) {
-    // Create a new date with the month number
-    DateTime date = DateTime(2020, monthNumber); // The year can be any year
-    // Format the date to get the short month name
-    return DateFormat.MMM().format(date); // 'MMM' gives the short month name
-  }
 
 }

@@ -6,6 +6,7 @@ import 'package:cluster_arabia/res/style.dart';
 import 'package:cluster_arabia/ui/pages/home/bind/home_bind.dart';
 import 'package:cluster_arabia/ui/pages/home_stack_dashboard/bind/home_stack_dashboard_bind.dart';
 import 'package:cluster_arabia/utilities/app_routes.dart';
+import 'package:cluster_arabia/utilities/utils.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/cupertino.dart';
@@ -420,7 +421,7 @@ class BillOverView extends StatelessWidget {
                   return Row(
                     children: [
                       Text(
-                          '${logic.getShortMonthText(int.parse(monthCharge?.monthNumber??'0'))}-${monthCharge?.year ?? ''}',
+                          '${getShortMonthText(int.parse(monthCharge?.monthNumber??'0'))}-${monthCharge?.year ?? ''}',
                           // '${monthCharge?.monthName ?? ' '}-${monthCharge?.year ?? ''}',
                               style: customStyle(
                                   11.0, primaryColorPurple, FontWeight.normal))

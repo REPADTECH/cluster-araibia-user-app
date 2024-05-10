@@ -3,6 +3,7 @@ import 'package:cluster_arabia/res/images.dart';
 import 'package:cluster_arabia/res/style.dart';
 import 'package:cluster_arabia/ui/pages/home_stack_dashboard/bind/home_stack_dashboard_bind.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_custom_utils/flutter_custom_utils.dart';
 import 'package:flutter_date_range_picker/flutter_date_range_picker.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -120,6 +121,66 @@ class CustomButtonWidget extends StatelessWidget {
                 child: Icon(icon, size: iconSize, color: iconColor))
         ],
       ),
+    );
+  }
+}
+
+class CustomTextField extends StatelessWidget {
+  final int? minLines;
+  final int? maxLines;
+  final double? height;
+  void Function()? onTap;
+  TextEditingController? controller;
+  Widget? suffixIcon;
+  TextInputType? textInputType;
+  List<TextInputFormatter>? textInputFormatter;
+  String hintText;
+  String? Function(String?)? validator;
+  String? orderid;
+  void Function(String)? onChanged; // Add onChanged callback
+
+  CustomTextField({
+    Key? key,
+    this.minLines = 1,
+    this.maxLines = 1,
+    this.height = 52,
+    this.onTap,
+    this.controller,
+    this.textInputType,
+    this.textInputFormatter,
+    this.suffixIcon,
+    this.validator,
+    this.hintText = '',
+    this.orderid,
+    this.onChanged, // Initialize the onChanged callback
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: height,
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(23),
+      ),
+      child: TextFormField(
+        // minLines: 1,
+        // maxLines: 5,
+        // maxLength: 500,
+        validator: validator,
+        controller: controller,
+        keyboardType: textInputType,
+        inputFormatters: textInputFormatter,
+        onChanged: onChanged, // Set the onChanged callback here
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.only(bottom: 10),
+          suffixIcon: suffixIcon,
+          border: InputBorder.none,
+          hintText: hintText,
+          hintStyle: customStyle(
+              15.0, Colors.black.withOpacity(0.4), FontWeight.normal),
+        ),
+      ).cPadOnly(b: 5),
     );
   }
 }

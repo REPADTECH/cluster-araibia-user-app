@@ -56,6 +56,8 @@ dependencies:
   get_storage: ^2.1.1
   toastification: ^2.0.0
   lottie: ^2.0.0
+  expansion_tile_card: ^3.0.0
+
 
 
   #custom_date_range_picker: ^1.0.10
