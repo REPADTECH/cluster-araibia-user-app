@@ -24,7 +24,7 @@ class ContactUs extends StatelessWidget {
               builder: (logic) {
                 return SingleChildScrollView(
                   child: Form(
-                    key: logic.helpAndSupportFormKey,
+                    // key: logic.helpAndSupportFormKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -114,11 +114,11 @@ class ContactUs extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(23)),
                             child: Row(
                               children: [
-                                Text(
-                                  '+974',
-                                  style: customStyle(15.0, Colors.black.withOpacity(0.38),
-                                      FontWeight.normal),
-                                ).cPadOnly(t: 5),
+                                // Text(
+                                //   '+974',
+                                //   style: customStyle(15.0, Colors.black.withOpacity(0.38),
+                                //       FontWeight.normal),
+                                // ).cPadOnly(t: 5),
                                 SizedBox(width: 8),
                                 Expanded(
                                   child: TextFormField(
@@ -153,7 +153,7 @@ class ContactUs extends StatelessWidget {
                         ),
                         InkWell(
                           onTap: () {
-                            // logic.postHelpandsupport();
+                            logic.postHelpAndSupport();
                             // logic.complaint.clear();
                             // logic.subject.clear();
                           },

@@ -77,9 +77,11 @@ class HelpAndSupportList {
   String? subject;
   String? content;
   dynamic replay;
+  String? createdAt;
+  String? updatedAt;
   Parent? parent;
 
-  HelpAndSupportList({this.id, this.subject, this.content, this.replay, this.parent});
+  HelpAndSupportList({this.id, this.subject, this.content, this.replay, this.createdAt, this.updatedAt, this.parent});
 
   HelpAndSupportList.fromJson(Map<String, dynamic> json) {
     if(json["id"] is String) {
@@ -92,6 +94,12 @@ class HelpAndSupportList {
       content = json["content"];
     }
     replay = json["replay"];
+    if(json["createdAt"] is String) {
+      createdAt = json["createdAt"];
+    }
+    if(json["updatedAt"] is String) {
+      updatedAt = json["updatedAt"];
+    }
     if(json["parent"] is Map) {
       parent = json["parent"] == null ? null : Parent.fromJson(json["parent"]);
     }
@@ -107,6 +115,8 @@ class HelpAndSupportList {
     _data["subject"] = subject;
     _data["content"] = content;
     _data["replay"] = replay;
+    _data["createdAt"] = createdAt;
+    _data["updatedAt"] = updatedAt;
     if(parent != null) {
       _data["parent"] = parent?.toJson();
     }

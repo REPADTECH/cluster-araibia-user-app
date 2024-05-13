@@ -1,5 +1,6 @@
 import 'package:cluster_arabia/models/banner_list_model.dart';
 import 'package:cluster_arabia/models/coupon_list_model.dart';
+import 'package:cluster_arabia/models/help&support_create_model.dart';
 import 'package:cluster_arabia/models/help&support_list_model.dart';
 import 'package:cluster_arabia/models/home_page_models.dart';
 import 'package:cluster_arabia/models/invoice_list_model.dart';
@@ -11,6 +12,7 @@ import 'package:cluster_arabia/models/student_list_model.dart';
 import 'package:cluster_arabia/utilities/com_binding.dart';
 import 'package:cluster_arabia/utilities/dio.dart';
 import 'package:cluster_arabia/utilities/strings.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -146,6 +148,27 @@ class Api extends GetConnect {
   }) {
     return get('p/help/list/$page').then((value) {
       return HelpAndSupportModelList.fromJson(value.body ?? err);
+    });
+  }
+
+
+  Future<HelpAndSupportCreateModel> postHelpAndSupport(
+      {required var subject,
+        required var content,
+        required var contactNumber}) {
+    return post(
+      'p/help/create',
+      FormData(
+        {
+          'subject': subject,
+          'content': content,
+        },
+      ),
+    ).then((value) {
+      if (kDebugMode) {
+        print('Help And Support => ${value.body}');
+      }
+      return HelpAndSupportCreateModel.fromJson(value.body ?? err);
     });
   }
 

@@ -17,16 +17,40 @@ class HelpAndSupportController extends GetxController {
   help.HelpAndSupportModelList? helpAndSupportModelList;
   late BuildContext context;
   List<help.HelpAndSupportList> helpAndSupportLists = [];
+  late ScrollController scrollController;
   bool hasNextPage = false;
   var pageNO = 1;
+  var subject;
+  var complaint;
+  var reply;
 
 
 
 
   @override
   void onInit() {
+    helpAndSupportLists.clear();
+    scrollController = ScrollController();
+    scrollController.addListener(() {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        loadMore();
+      }
+    });
     getHelpList();
     super.onInit();
+  }
+
+
+  void loadMore() async {
+    if (hasNextPage) {
+      pageNO = pageNO + 1;
+      print('////${pageNO}');
+      getHelpList();
+      // isLoadMoreRunning = false;
+    } else {
+      debugPrint('');
+    }
   }
 
   void getHelpList() async {

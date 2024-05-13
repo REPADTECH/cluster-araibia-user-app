@@ -131,10 +131,10 @@ class ListTilePart extends StatelessWidget {
           },
         ).cPadSymmetric(h: 8),
         ListTileItemProfile(
-          name: 'Contact Us',
+          name: 'Help&Support',
           icon: contactUs,
           onTap: () {
-            Get.toNamed(Routes.contactUs);
+            Get.toNamed(Routes.helpAndSupport);
           },
         ).cPadSymmetric(h: 8),
         ListTileItemProfile(
