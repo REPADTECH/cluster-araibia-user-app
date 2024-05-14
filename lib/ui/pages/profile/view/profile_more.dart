@@ -2,9 +2,7 @@ import 'package:cluster_arabia/res/images.dart';
 import 'package:cluster_arabia/res/style.dart';
 import 'package:cluster_arabia/ui/pages/profile/bind/profile_bind.dart';
 import 'package:cluster_arabia/utilities/app_routes.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter_custom_utils/flutter_custom_utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -18,7 +16,7 @@ class ProfileImagePart extends StatelessWidget {
       return Container(
         height: 200,
         width: context.cWidth,
-        color: Color.fromRGBO(242, 250, 251, 1),
+        color: const Color.fromRGBO(242, 250, 251, 1),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -40,7 +38,7 @@ class ProfileImagePart extends StatelessWidget {
                         color: Colors.grey.shade300,
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(5),
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             color: Color.fromRGBO(0, 0, 0, 0.25),
                             offset: Offset(1, 1),
@@ -57,7 +55,7 @@ class ProfileImagePart extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               width: 20,
             ),
             Column(
@@ -163,17 +161,17 @@ class ListTileItemProfile extends StatelessWidget {
   final Color textColor;
 
   ListTileItemProfile({
-    Key? key,
+    super.key,
     required this.icon,
     required this.name,
     required this.onTap,
     this.textColor = Colors.black,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      visualDensity: VisualDensity(vertical: -3),
+      visualDensity: const VisualDensity(vertical: -3),
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(8))),
       leading: SvgPicture.asset(
@@ -186,7 +184,7 @@ class ListTileItemProfile extends StatelessWidget {
         style: TextStyle(
             fontSize: 13, color: textColor, fontWeight: FontWeight.normal),
       ),
-      trailing: Icon(
+      trailing: const Icon(
         Icons.arrow_forward_ios,
         size: 15,
       ),

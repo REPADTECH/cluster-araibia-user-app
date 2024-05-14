@@ -32,6 +32,12 @@ class ChildrenInnerPageController extends GetxController {
     super.onInit();
   }
 
+  @override
+  void dispose() {
+    ChildrenInnerPageController.to.dispose();
+    super.dispose();
+  }
+
   void getStudentById() async {
     try {
       showLoading();

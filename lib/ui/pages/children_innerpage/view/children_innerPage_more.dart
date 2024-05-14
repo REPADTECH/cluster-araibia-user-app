@@ -3,7 +3,6 @@ import 'package:cluster_arabia/res/colors.dart';
 import 'package:cluster_arabia/res/images.dart';
 import 'package:cluster_arabia/res/style.dart';
 import 'package:cluster_arabia/ui/pages/children_innerpage/bind/children_innerpage_bind.dart';
-import 'package:cluster_arabia/utilities/common_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_utils/flutter_custom_utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -24,21 +23,19 @@ class ProfilePart extends StatelessWidget {
           children: [
             CachedNetworkImage(
               imageUrl: (logic.studentViewById?.data?.img??''),
-              placeholder: (context, url) => CircularProgressIndicator(),
+              placeholder: (context, url) => const CircularProgressIndicator(),
               width: 80,
               height: 80,
-              errorWidget: (context, url, error) => Icon(Icons.error),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
-            // Image.network(logic.studentViewById?.data?.img??'',height: 80,width: 80,),
-            // Image.asset(childrenProfile,height: 80,width: 80,),
-            SizedBox(width: 15,),
+            const SizedBox(width: 15,),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(logic.studentViewById?.data?.studentName??'',style: customStyle(20.0, Colors.black, FontWeight.bold),),
-                SizedBox(height: 5,),
+                const SizedBox(height: 5,),
                 Text('${logic.studentViewById?.data?.std??''} ${logic.studentViewById?.data?.division??''}',style: customStyle(11.0, Colors.black, FontWeight.normal),),
-                SizedBox(height: 3,),
+                const SizedBox(height: 3,),
                 Text(logic.studentViewById?.data?.school?.schoolName??'',style: customStyle(10.0, Colors.black, FontWeight.normal),),
               ],)
           ],);
@@ -59,8 +56,7 @@ class AddressPart extends StatelessWidget {
           children: [
           Text('Address',style: customStyle(15.0, Colors.black, FontWeight.bold),),
           Text(logic.studentViewById?.data?.address??'',style: customStyle(12.0, Colors.black, FontWeight.normal),).cPadOnly(t: 5),
-          // Text('House No: 62/6693, Mohan Villa,, Justice Chandrasekhara Menon Road (layam Road), Eranakulam P O, Kochi, Kerala 682011, India',style: customStyle(12.0, Colors.black, FontWeight.normal),).cPadOnly(t: 5),
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
             Row(
               children: [
                 InkWell(
@@ -80,7 +76,7 @@ class AddressPart extends StatelessWidget {
                   ],),
                   ),
                 ).cExpanded(1),
-                SizedBox(width: 5,),
+                const SizedBox(width: 5,),
                 InkWell(
                   onTap: (){
 
@@ -118,17 +114,17 @@ class SchoolDetails extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
           Text('School',style: customStyle(15.0, Colors.black, FontWeight.bold),),
-          SizedBox(height: 8,),
+          const SizedBox(height: 8,),
           Container(
-            padding: EdgeInsets.all(15),
-           decoration: BoxDecoration(color: Color.fromRGBO(232, 231, 233, 1),borderRadius: BorderRadius.circular(10)),
+            padding: const EdgeInsets.all(15),
+           decoration: BoxDecoration(color: const Color.fromRGBO(232, 231, 233, 1),borderRadius: BorderRadius.circular(10)),
           child: Stack(
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                 SvgPicture.asset(schoolImage,height: 80,width: 80,),
-                SizedBox(width: 15,),
+                const SizedBox(width: 15,),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -136,15 +132,15 @@ class SchoolDetails extends StatelessWidget {
                     SizedBox(
                         width: 200,
                         child: Text(logic.studentViewById?.data?.school?.schoolName??'',style: customStyle(14.0, Colors.black, FontWeight.bold),)),
-                    SizedBox(height: 5,),
-                    Text('${logic?.studentViewById?.data?.std??''} (${logic?.studentViewById?.data?.division??''})',style: customStyle(12.0, Colors.black, FontWeight.normal),),
-                    SizedBox(height: 3,),
-                    Text(logic?.studentViewById?.data?.admissionNo??'',style: customStyle(12.0, Colors.black, FontWeight.normal),),
-                    SizedBox(height: 3,),
-                    Text(logic?.studentViewById?.data?.school?.phone??'',style: customStyle(12.0, Colors.black, FontWeight.normal),),
+                    const SizedBox(height: 5,),
+                    Text('${logic.studentViewById?.data?.std??''} (${logic.studentViewById?.data?.division??''})',style: customStyle(12.0, Colors.black, FontWeight.normal),),
+                    const SizedBox(height: 3,),
+                    Text(logic.studentViewById?.data?.admissionNo??'',style: customStyle(12.0, Colors.black, FontWeight.normal),),
+                    const SizedBox(height: 3,),
+                    Text(logic.studentViewById?.data?.school?.phone??'',style: customStyle(12.0, Colors.black, FontWeight.normal),),
                   ],)
               ],),
-              IconButton(onPressed: (){}, icon: Icon(Icons.call,size: 18,))
+              IconButton(onPressed: (){}, icon: const Icon(Icons.call,size: 18,))
               .cPosition(b: -10,r: -10)
             ],
           ),
@@ -167,10 +163,10 @@ class BusDetails extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Bus Info',style: customStyle(15.0, Colors.black, FontWeight.bold),),
-            SizedBox(height: 8,),
+            const SizedBox(height: 8,),
             Container(
-              padding: EdgeInsets.all(15),
-              decoration: BoxDecoration(color: Color.fromRGBO(232, 231, 233, 1),borderRadius: BorderRadius.circular(10)),
+              padding: const EdgeInsets.all(15),
+              decoration: BoxDecoration(color: const Color.fromRGBO(232, 231, 233, 1),borderRadius: BorderRadius.circular(10)),
               child: Stack(
                 children: [
                   Row(
@@ -178,27 +174,27 @@ class BusDetails extends StatelessWidget {
                     children: [
                       CachedNetworkImage(
                         imageUrl: (logic.studentViewById?.data?.busInRoute?.busInfo?.img??busImage),
-                        placeholder: (context, url) => CircularProgressIndicator(),
+                        placeholder: (context, url) => const CircularProgressIndicator(),
                         width: 80,
                         height: 80,
-                        errorWidget: (context, url, error) => Icon(Icons.error),
+                        errorWidget: (context, url, error) => const Icon(Icons.error),
                       ),
                       // Image.network(logic.studentViewById?.data?.busInRoute?.busInfo?.img??busImage,height: 80,width: 80,),
-                      SizedBox(width: 15,),
+                      const SizedBox(width: 15,),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(logic?.studentViewById?.data?.busInRoute?.busInfo?.driverName??'',style: customStyle(14.0, Colors.black, FontWeight.bold),),
-                          SizedBox(height: 3,),
+                          Text(logic.studentViewById?.data?.busInRoute?.busInfo?.driverName??'',style: customStyle(14.0, Colors.black, FontWeight.bold),),
+                          const SizedBox(height: 3,),
                           Text(logic.studentViewById?.data?.busInRoute?.busInfo?.busModel??'',style: customStyle(12.0, Colors.black, FontWeight.normal),),
-                          SizedBox(height: 3,),
+                          const SizedBox(height: 3,),
                           Text(logic.studentViewById?.data?.busInRoute?.busInfo?.busNo??'',style: customStyle(12.0, Colors.black, FontWeight.normal),),
-                          SizedBox(height: 3,),
+                          const SizedBox(height: 3,),
                           Text(logic.studentViewById?.data?.busInRoute?.busInfo?.driverPhone??'',style: customStyle(12.0, Colors.black, FontWeight.normal),),
                         ],)
                     ],),
-                  IconButton(onPressed: (){}, icon: Icon(Icons.call,size: 18,))
+                  IconButton(onPressed: (){}, icon: const Icon(Icons.call,size: 18,))
                       .cPosition(b: -10,r: -10)
                 ],
               ),
@@ -220,21 +216,21 @@ class PickupPointSection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
           Text('Pickup Point',style: customStyle(15.0, Colors.black, FontWeight.bold),),
-          SizedBox(height: 7,),
+          const SizedBox(height: 7,),
           Container(
             width: context.cWidth,
             // height: 110,
-            decoration: BoxDecoration(color: Color.fromRGBO(232, 231, 233, 1),borderRadius: BorderRadius.circular(11)),
+            decoration: BoxDecoration(color: const Color.fromRGBO(232, 231, 233, 1),borderRadius: BorderRadius.circular(11)),
             child:
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Pickup point Name : ',style: customStyle(11.0, Colors.black, FontWeight.normal),),
                 Text(logic.studentViewById?.data?.pickUp?.pickUpName??'',style: customStyle(11.0, Colors.black, FontWeight.bold),),
-                SizedBox(height: 5,),
+                const SizedBox(height: 5,),
                 Text('Dropping point Name : ',style: customStyle(11.0, Colors.black, FontWeight.normal),),
                 Text(logic.studentViewById?.data?.school?.schoolName??'',style: customStyle(11.0, Colors.black, FontWeight.bold),),
-                SizedBox(height: 5,),
+                const SizedBox(height: 5,),
                 Text('Route Name : ',style: customStyle(11.0, Colors.black, FontWeight.normal),),
                 Text(logic.studentViewById?.data?.busInRoute?.routeInfo?.routeName??'',style: customStyle(11.0, Colors.black, FontWeight.bold),),
               ],
@@ -257,11 +253,11 @@ class MapSection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Student Location',style: customStyle(15.0, Colors.black, FontWeight.bold),),
-            SizedBox(height: 7,),
+            const SizedBox(height: 7,),
             Container(
               width: context.cWidth,
               height: 110,
-              decoration: BoxDecoration(color: Color.fromRGBO(232, 231, 233, 1),borderRadius: BorderRadius.circular(11)),
+              decoration: BoxDecoration(color: const Color.fromRGBO(232, 231, 233, 1),borderRadius: BorderRadius.circular(11)),
               child: GoogleMap(
                 // markers: logic.markersSet,
                 mapType: MapType.normal,
@@ -291,16 +287,16 @@ class OtherInfo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
       Text('Other Info',style: customStyle(15.0, Colors.black, FontWeight.bold),),
-    SizedBox(height: 8,),
+    const SizedBox(height: 8,),
     Container(
       // height: 115,
-    padding: EdgeInsets.all(15),
-    decoration: BoxDecoration(color: Color.fromRGBO(232, 231, 233, 1),borderRadius: BorderRadius.circular(10)),
+    padding: const EdgeInsets.all(15),
+    decoration: BoxDecoration(color: const Color.fromRGBO(232, 231, 233, 1),borderRadius: BorderRadius.circular(10)),
       child: GetBuilder<ChildrenInnerPageController>(
         builder: (logic) {
           return Column(
             children: [
-              OtherInfoType(head: 'Route', info: logic?.studentViewById?.data?.busInRoute?.routeInfo?.routeName??'',),
+              OtherInfoType(head: 'Route', info: logic.studentViewById?.data?.busInRoute?.routeInfo?.routeName??'',),
               OtherInfoType(head: 'City', info: logic.studentViewById?.data?.country??'',),
               OtherInfoType(head: 'Region', info: logic.studentViewById?.data?.state??'',),
               OtherInfoType(head: 'Service Start Date', info: (logic.studentViewById?.data?.serviceStartedOn??'').cGetFormattedDate(format: 'dd MMM yyyy'),),

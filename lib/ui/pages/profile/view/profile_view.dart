@@ -1,4 +1,3 @@
-import 'package:cluster_arabia/res/images.dart';
 import 'package:cluster_arabia/ui/pages/home_stack_dashboard/bind/home_stack_dashboard_bind.dart';
 import 'package:cluster_arabia/ui/pages/profile/view/profile_more.dart';
 import 'package:flutter/material.dart';
@@ -17,17 +16,17 @@ class ProfileView extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Color.fromRGBO(242, 250, 251, 1),
+          backgroundColor: const Color.fromRGBO(242, 250, 251, 1),
           leading: InkWell(
               onTap: () {
                 HomeStackDashboardController.to.changeTabIndex(0);
                 Get.back();
               },
-              child: Icon(
+              child: const Icon(
                 Icons.arrow_back_ios,
               )),
         ),
-        body: SingleChildScrollView(
+        body: const SingleChildScrollView(
           child: Column(
             children: [ProfileImagePart(), ListTilePart(), AddressSection()],
           ),

@@ -15,7 +15,7 @@ class PrivacyPolicy extends StatelessWidget {
             itemCount: 3,
             shrinkWrap: true,
             itemBuilder: (context,i) {
-              return Text('"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."',textAlign: TextAlign.justify,).cPadOnly(t: 10,l: 15,r: 15);
+              return const Text('"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."',textAlign: TextAlign.justify,).cPadOnly(t: 10,l: 15,r: 15);
             }
         )
       ],),

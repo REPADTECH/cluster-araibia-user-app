@@ -1,6 +1,5 @@
 import 'package:cluster_arabia/res/colors.dart';
 import 'package:cluster_arabia/utilities/common_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_utils/flutter_custom_utils.dart';
 
@@ -17,7 +16,7 @@ class AboutUsPage extends StatelessWidget {
           itemCount: 3,
           shrinkWrap: true,
           itemBuilder: (context,i) {
-            return Text('"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."',textAlign: TextAlign.justify,).cPadOnly(t: 10,l: 15,r: 15);
+            return const Text('"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."',textAlign: TextAlign.justify,).cPadOnly(t: 10,l: 15,r: 15);
           }
         )
       ],),

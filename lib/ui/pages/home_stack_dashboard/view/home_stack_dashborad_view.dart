@@ -9,6 +9,7 @@ import 'package:cluster_arabia/ui/pages/home_stack_dashboard/bind/home_stack_das
 import 'package:cluster_arabia/ui/pages/profile/view/profile_view.dart';
 import 'package:cluster_arabia/utilities/app_routes.dart';
 import 'package:cluster_arabia/utilities/com_binding.dart';
+import 'package:cluster_arabia/utilities/common_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_utils/flutter_custom_utils.dart';
@@ -23,7 +24,7 @@ class HomeStackDashboard extends StatelessWidget {
     if (HomeStackDashboardController.to.indexedStack.value == 0) {
       final now = DateTime.now();
       if (lastPressed == null ||
-          now.difference(lastPressed!) > Duration(seconds: 2)) {
+          now.difference(lastPressed!) > const Duration(seconds: 2)) {
         Get.snackbar(
           'Exit',
           'Double Press to exit app',
@@ -90,7 +91,7 @@ class HomeStackDashboard extends StatelessWidget {
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: SvgPicture.asset(
                     // AssetImage(homeBottomIcon),
                     // homeIcon,
@@ -100,7 +101,7 @@ class HomeStackDashboard extends StatelessWidget {
                   ),
                 ),
                 activeIcon: Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: SvgPicture.asset(
                     // AssetImage(homeBottomIcon),
                     // homeIcon,
@@ -114,7 +115,7 @@ class HomeStackDashboard extends StatelessWidget {
               ),
               BottomNavigationBarItem(
                 icon: Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: SvgPicture.asset(
                     // transactionIcon,
                     invoice_narrow_Icon,
@@ -123,7 +124,7 @@ class HomeStackDashboard extends StatelessWidget {
                   ),
                 ),
                 activeIcon: Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: SvgPicture.asset(
                     // transactionIcon,
                     invoice_fill_Icon,
@@ -136,7 +137,7 @@ class HomeStackDashboard extends StatelessWidget {
               ),
               BottomNavigationBarItem(
                 icon: Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: SvgPicture.asset(
                     // studentsIcon,
                     children_unfill_Icon,
@@ -145,7 +146,7 @@ class HomeStackDashboard extends StatelessWidget {
                   ),
                 ),
                 activeIcon: Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: SvgPicture.asset(
                     children_fill_Icon,
                     height: 25,
@@ -157,7 +158,7 @@ class HomeStackDashboard extends StatelessWidget {
               ),
               BottomNavigationBarItem(
                 icon: Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: SvgPicture.asset(
                     // profileIcon,
                     profile_unfill_Icon,
@@ -166,7 +167,7 @@ class HomeStackDashboard extends StatelessWidget {
                   ),
                 ),
                 activeIcon: Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: SvgPicture.asset(
                     profile_fill_Icon,
                     height: 25,
@@ -201,7 +202,7 @@ class HomeStackDashboard extends StatelessWidget {
 }
 
 class HomeDrawer extends StatelessWidget {
-  const HomeDrawer({Key? key}) : super(key: key);
+  const HomeDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -268,7 +269,7 @@ class HomeDrawer extends StatelessWidget {
                     Text('Account',
                             style: customStyle(
                                 17.0,
-                                Color.fromRGBO(83, 97, 107, 1),
+                                const Color.fromRGBO(83, 97, 107, 1),
                                 FontWeight.normal))
                         .cPadOnly(l: 10),
                     // const SizedBox(
@@ -312,16 +313,9 @@ class HomeDrawer extends StatelessWidget {
                     Text('Policy',
                             style: customStyle(
                                 17.0,
-                                Color.fromRGBO(83, 97, 107, 1),
+                                const Color.fromRGBO(83, 97, 107, 1),
                                 FontWeight.normal))
                         .cPadOnly(l: 10),
-                    // ListTileItem(
-                    //   name: 'Contact Us',
-                    //   icon: contactUs,
-                    //   onTap: () {
-                    //     Get.toNamed(Routes.contactUs);
-                    //   },
-                    // ).cPadSymmetric(h: 8),
                     ListTileItem(
                       name: 'Help&Support',
                       icon: contactUs,
@@ -349,15 +343,23 @@ class HomeDrawer extends StatelessWidget {
                     Text('Other',
                             style: customStyle(
                                 17.0,
-                                Color.fromRGBO(83, 97, 107, 1),
+                                const Color.fromRGBO(83, 97, 107, 1),
                                 FontWeight.normal))
                         .cPadOnly(l: 10),
                     ListTileItem(
                       name: 'Sign out',
                       icon: signOutIcon,
-                      textColor: Color.fromRGBO(238, 36, 86, 1),
+                      textColor: const Color.fromRGBO(238, 36, 86, 1),
                       onTap: () {
-                        AppSession.to.logout();
+                        showAlertPopup(context, onTapYes: () {
+                          Get.back();
+                          AppSession.to.logout();
+                        }, onTapNo: () {
+                          Get.back();
+                        },
+                            alertMessage:
+                            'Are you sure you want to logout?');
+                        // AppSession.to.logout();
                       },
                     ).cPadSymmetric(h: 8),
                   ],
@@ -378,17 +380,17 @@ class ListTileItem extends StatelessWidget {
   final Color textColor;
 
   ListTileItem({
-    Key? key,
+    super.key,
     required this.icon,
     required this.name,
     required this.onTap,
     this.textColor = Colors.black,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      visualDensity: VisualDensity(vertical: -3),
+      visualDensity: const VisualDensity(vertical: -3),
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(8))),
       leading: SvgPicture.asset(
@@ -405,3 +407,6 @@ class ListTileItem extends StatelessWidget {
     ).cPadOnly(b: 2, r: 10);
   }
 }
+
+
+

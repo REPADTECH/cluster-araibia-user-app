@@ -3,10 +3,8 @@ import 'package:cluster_arabia/models/profile_model.dart';
 import 'package:cluster_arabia/utilities/api_provider.dart';
 import 'package:cluster_arabia/utilities/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_custom_utils/flutter_custom_utils.dart';
 import 'package:flutter_date_range_picker/flutter_date_range_picker.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:cluster_arabia/models/student_list_model.dart' as student;
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
@@ -71,6 +69,7 @@ class InvoiceController extends GetxController {
   @override
   void onInit() {
     clearData();
+    pageNO = 1;
     getProfile();
     scrollController = ScrollController();
     scrollController.addListener(() {

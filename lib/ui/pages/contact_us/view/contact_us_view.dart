@@ -24,7 +24,7 @@ class ContactUs extends StatelessWidget {
               builder: (logic) {
                 return SingleChildScrollView(
                   child: Form(
-                    // key: logic.helpAndSupportFormKey,
+                    key: logic.helpAndSupportFormKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -40,11 +40,11 @@ class ContactUs extends StatelessWidget {
                           height: 18,
                         ),
                         Container(
-                          padding: EdgeInsets.only(bottom: 5),
+                          padding: const EdgeInsets.only(bottom: 5),
                           // width: 395,
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: Color.fromRGBO(112, 112, 112, .22),
+                              color: const Color.fromRGBO(112, 112, 112, .22),
                             ),
                             borderRadius: BorderRadius.circular(7),
                           ),
@@ -55,7 +55,6 @@ class ContactUs extends StatelessWidget {
                                   logic.helpAndSupportFormKey.currentState
                                       ?.validate();
                                 },
-                                // contentpadding: const EdgeInsets.only(left: 18),
                                 hintText: 'Subject',
                                 controller: logic.subject,
                                 validator: (text) => valRequired(text!),
@@ -66,10 +65,10 @@ class ContactUs extends StatelessWidget {
                           height: 11,
                         ),
                         Container(
-                          padding: EdgeInsets.only(top: 5, bottom: 5),
+                          padding: const EdgeInsets.only(top: 5, bottom: 5),
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: Color.fromRGBO(112, 112, 112, .22),
+                              color: const Color.fromRGBO(112, 112, 112, .22),
                             ),
                             borderRadius: BorderRadius.circular(7),
                           ),
@@ -84,7 +83,6 @@ class ContactUs extends StatelessWidget {
                             hintText:
                             'Type your Complaints & Feedbacks & Enquiry',
                             // minLines: 5,
-                            // contentpadding: const EdgeInsets.only(left: 18),
                             controller: logic.complaint,
                             validator: (text) => disvalRequired(text!),
                           ),
@@ -98,10 +96,10 @@ class ContactUs extends StatelessWidget {
                           ),
                         ).cPadOnly(b: 11),
                         Container(
-                          padding: EdgeInsets.only(bottom: 5),
+                          padding: const EdgeInsets.only(bottom: 5),
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: Color.fromRGBO(112, 112, 112, .22),
+                              color: const Color.fromRGBO(112, 112, 112, .22),
                             ),
                             borderRadius: BorderRadius.circular(7),
                           ),
@@ -119,7 +117,7 @@ class ContactUs extends StatelessWidget {
                                 //   style: customStyle(15.0, Colors.black.withOpacity(0.38),
                                 //       FontWeight.normal),
                                 // ).cPadOnly(t: 5),
-                                SizedBox(width: 8),
+                                const SizedBox(width: 8),
                                 Expanded(
                                   child: TextFormField(
                                       enabled: false,
@@ -129,7 +127,7 @@ class ContactUs extends StatelessWidget {
                                       // keyboardType: textInputType,
                                       // inputFormatters: textInputFormatter,
                                       decoration: InputDecoration(
-                                          contentPadding: EdgeInsets.only(
+                                          contentPadding: const EdgeInsets.only(
                                               top:
                                               // (AppSession.to.prefs.getString(SessionKeys.LANG_TYPE)
                                               //     == ''

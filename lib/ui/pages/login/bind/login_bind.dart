@@ -1,12 +1,11 @@
-import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cluster_arabia/models/login_model.dart';
 import 'package:cluster_arabia/models/otp_verify_model.dart';
-import 'package:cluster_arabia/res/images.dart';
 import 'package:cluster_arabia/utilities/api_provider.dart';
 import 'package:cluster_arabia/utilities/app_routes.dart';
 import 'package:cluster_arabia/utilities/com_binding.dart';
 import 'package:cluster_arabia/utilities/strings.dart';
 import 'package:cluster_arabia/utilities/utils.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_utils/flutter_custom_utils.dart';
@@ -76,7 +75,9 @@ class LoginController extends GetxController {
           showToast(context: context, message: loginModel?.message ?? '');
         }
       } catch (e) {
-        print('Exception : $e');
+        if (kDebugMode) {
+          print('Exception : $e');
+        }
       } finally {
         update();
       }
@@ -99,7 +100,9 @@ class LoginController extends GetxController {
         showToast(context: context, message: otpModelClass?.message ?? '');
       }
     } catch (e) {
-      print('Exception : $e');
+      if (kDebugMode) {
+        print('Exception : $e');
+      }
     } finally {
       update();
     }

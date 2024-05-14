@@ -3,12 +3,8 @@ import 'package:cluster_arabia/res/images.dart';
 import 'package:cluster_arabia/res/style.dart';
 import 'package:cluster_arabia/ui/pages/login/bind/login_bind.dart';
 import 'package:cluster_arabia/utilities/utils.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_custom_utils/flutter_custom_utils.dart';
-import 'package:flutter_custom_utils/util/widget_utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:otp_text_field/otp_text_field.dart';
@@ -83,11 +79,11 @@ class LoginPage extends StatelessWidget {
                             'The perfect solution in Saudi Arabia for\n Effortless Mobility and Seamless Journeys.',
                             style: customStyle(
                                 12.0,
-                                Color.fromRGBO(255, 255, 255, 0.8),
+                                const Color.fromRGBO(255, 255, 255, 0.8),
                                 FontWeight.normal),
                             textAlign: TextAlign.center,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 25,
                           ),
                           if (logic.otpDesign.value == true)
@@ -173,13 +169,13 @@ class LoginPage extends StatelessWidget {
                                 children: [
                                   // logic.validator: (text) => validateMobileNumber(text!),
                                   Text(
-                                    '${logic.errorMessage}',
+                                    logic.errorMessage,
                                     style: customStyle(
                                         12.0, Colors.red, FontWeight.normal),
                                   ).cPadOnly(t: 4, r: 10),
                                 ],
                               ).cVisible((logic.validatorNumber.value)),
-                              SizedBox(
+                              const SizedBox(
                                 height: 20,
                               ),
                               InkWell(
@@ -216,7 +212,6 @@ class LoginPage extends StatelessWidget {
                                 contentPadding:
                                     const EdgeInsets.symmetric(vertical: 8),
                                 spaceBetween: 10,
-      
                                 otpFieldStyle: OtpFieldStyle(
                                   backgroundColor: Colors.transparent,
                                   enabledBorderColor: Colors.white,

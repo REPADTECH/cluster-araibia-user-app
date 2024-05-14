@@ -26,7 +26,7 @@ class InvoicePage extends StatelessWidget {
         appBar: commonAppBarBack('Invoices', primaryColorPurple, () {
           InvoiceController.to.onInit();
         }),
-        body: Column(
+        body: const Column(
           children: [FirstPart(), ListPart()],
         ),
       ),

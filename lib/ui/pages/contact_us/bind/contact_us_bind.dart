@@ -63,7 +63,7 @@ class ContactUsController extends GetxController {
         }
       }
     } catch (ex) {
-      EasyLoading.dismiss();
+      dismissLoading();
       EasyLoading.showToast('Error occurred $ex');
     }
   }

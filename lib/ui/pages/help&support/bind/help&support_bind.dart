@@ -2,6 +2,7 @@
 import 'package:cluster_arabia/models/help&support_list_model.dart' as help;
 import 'package:cluster_arabia/utilities/api_provider.dart';
 import 'package:cluster_arabia/utilities/utils.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -30,6 +31,7 @@ class HelpAndSupportController extends GetxController {
   @override
   void onInit() {
     helpAndSupportLists.clear();
+    pageNO = 1;
     scrollController = ScrollController();
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
@@ -45,7 +47,9 @@ class HelpAndSupportController extends GetxController {
   void loadMore() async {
     if (hasNextPage) {
       pageNO = pageNO + 1;
-      print('////${pageNO}');
+      if (kDebugMode) {
+        print('////$pageNO');
+      }
       getHelpList();
       // isLoadMoreRunning = false;
     } else {

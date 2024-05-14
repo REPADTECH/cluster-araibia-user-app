@@ -1,8 +1,8 @@
 import 'dart:convert';
-
 import 'package:cluster_arabia/models/student_list_model.dart' as student;
 import 'package:cluster_arabia/utilities/api_provider.dart';
 import 'package:cluster_arabia/utilities/utils.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -28,6 +28,7 @@ class ChildrenController extends GetxController {
   @override
   void onInit() {
     clearData();
+    pageNO = 1;
     scrollController = ScrollController();
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
@@ -62,7 +63,9 @@ class ChildrenController extends GetxController {
         page: pageNO,
         search: searchChildrenController.text,
       );
-      print(studentModelList?.toJson());
+      if (kDebugMode) {
+        print(studentModelList?.toJson());
+      }
       dismissLoading();
       if (!(studentModelList?.success ?? true)) {
         showToast(context: context, message: studentModelList?.message ?? '');
@@ -79,9 +82,15 @@ class ChildrenController extends GetxController {
         // }
          studentList.addAll(studentModelList?.data?.dataList ?? []);
       }
-      print('///////////////////////////');
-      print(jsonEncode(studentList));
-      print('///////${statusIsSelected}');
+      if (kDebugMode) {
+        print('///////////////////////////');
+      }
+      if (kDebugMode) {
+        print(jsonEncode(studentList));
+      }
+      if (kDebugMode) {
+        print('///////$statusIsSelected');
+      }
     } catch (e) {
       showToast(context: context, message: e.toString());
     } finally {

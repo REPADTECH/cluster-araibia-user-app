@@ -1,7 +1,6 @@
 
 import 'package:cluster_arabia/utilities/api_provider.dart';
 import 'package:cluster_arabia/utilities/app_routes.dart';
-import 'package:cluster_arabia/utilities/strings.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 

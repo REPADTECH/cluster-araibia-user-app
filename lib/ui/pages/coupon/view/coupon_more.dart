@@ -15,6 +15,7 @@ class CouponList extends StatelessWidget {
     return GetBuilder<CouponController>(
         builder: (logic) {
           return SingleChildScrollView(
+            controller: logic.scrollController,
             child: Column(
               children: [
                 GridView.builder(
@@ -34,16 +35,16 @@ class CouponList extends StatelessWidget {
                       crossAxisSpacing: 5,
                       mainAxisSpacing: 5,
                     ),
-                    itemBuilder: (cnxt, index) {
+                    itemBuilder: (context, index) {
                       var data= logic.couponLists[index];
                       return   Container(
-                          padding: EdgeInsets.all(5),
+                          padding: const EdgeInsets.all(5),
                           width: double.maxFinite,
                           // width: (context.cWidth < 700) ? 140 : 160,
                           height: double.maxFinite,
                           decoration: BoxDecoration(
                               color: Colors.white,
-                              boxShadow:  [
+                              boxShadow:  const [
                                 BoxShadow(
                                   blurRadius: 6,
                                   spreadRadius: 1,
@@ -84,9 +85,9 @@ class CouponList extends StatelessWidget {
                                 //     ?
                                 //     :
                                 // Colors.white,
-                                 (data.isUsed==1)?Color.fromRGBO(255,255,255,.4):Colors.white,
+                                 (data.isUsed==1)?const Color.fromRGBO(255,255,255,.4):Colors.white,
 
-                              boxShadow:  [
+                              boxShadow:  const [
                                   BoxShadow(
                                     blurRadius: 6,
                                     spreadRadius: 1,
@@ -99,7 +100,7 @@ class CouponList extends StatelessWidget {
                               children: [
                                 Expanded(
                                   flex: 1,
-                                  child: Container(
+                                  child: SizedBox(
                                       width: 180,
                                       // color: Colors.green,
                                       child: Align(
@@ -123,12 +124,12 @@ class CouponList extends StatelessWidget {
                                           .cPadOnly(t: 18),
                                       Text('${data.value??' '}'.cToCurrencyIND,
                                         // '${'qrText'.tr}: ${textToCopy}',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 15,color: Colors.black,fontWeight: FontWeight.bold),
                                       ).cPadOnly(t: 3),
                                       Container(
                                         padding:
-                                        EdgeInsets.only(
+                                        const EdgeInsets.only(
                                             left: 10,
                                             right: 10),
                                         height: 35,
@@ -153,7 +154,7 @@ class CouponList extends StatelessWidget {
                                                 child: Text(
                                                   // 'h67ui9kjg9',
                                                   '${data.couponCode}',
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       fontSize:
                                                       15,color: Colors.black87),
                                                 )
@@ -163,10 +164,9 @@ class CouponList extends StatelessWidget {
                                             InkWell(
                                               onTap: (){
                                                 copyToClipboard(
-                                                  // 'Helooo...');
                                                     '${data.couponCode}');
                                               },
-                                              child: Icon(
+                                              child: const Icon(
                                                 Icons.copy,
                                                 size: 20,
                                                 color: Colors.black87,

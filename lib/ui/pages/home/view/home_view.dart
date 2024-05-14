@@ -1,6 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cluster_arabia/res/colors.dart';
-import 'package:cluster_arabia/res/images.dart';
 import 'package:cluster_arabia/res/style.dart';
 import 'package:cluster_arabia/ui/pages/home/bind/home_bind.dart';
 import 'package:cluster_arabia/ui/pages/home/view/home_more.dart';
@@ -54,12 +52,12 @@ class HomePage extends StatelessWidget {
                 height: 30,
                 width: 100,
                 decoration: BoxDecoration(
-                    color: Color.fromRGBO(113, 99, 198, 1),
+                    color: const Color.fromRGBO(113, 99, 198, 1),
                     borderRadius: BorderRadius.circular(20)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.arrow_back_ios_new_outlined,
                       color: Colors.white,
                       size: 15,
@@ -71,7 +69,7 @@ class HomePage extends StatelessWidget {
                       style: customStyle(10.0, Colors.white, FontWeight.normal),
                     ),
                     // Text('August 2024',style: customStyle(10.0, Colors.white, FontWeight.normal),),
-                    Icon(
+                    const Icon(
                       Icons.arrow_forward_ios_outlined,
                       color: Colors.white,
                       size: 15,
@@ -89,12 +87,12 @@ class HomePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              FirstPart(),
-              BannerSection(),
-              BillOverView().cVisible(
+              const FirstPart(),
+              const BannerSection(),
+              const BillOverView().cVisible(
                   (logic.homeBillAmount?.data?.monthlyCharge ?? []).isNotEmpty),
-              MainMenu(),
-              BottomImageList()
+              const MainMenu(),
+              const BottomImageList()
             ],
           ),
         ),

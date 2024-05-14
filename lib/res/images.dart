@@ -35,4 +35,5 @@ const String disableRequestIcon = 'assets/icons/disableRequestIcon.svg';
 const String schoolImage = 'assets/images/schoollmages.svg';
 const String busImage = 'assets/images/busImage.svg';
 const String coupon_fill_icon = 'assets/icons/coupon_fill_icon.svg';
+const String emoji = 'assets/images/emoji.png';
 

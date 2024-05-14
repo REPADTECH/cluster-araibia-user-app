@@ -1,13 +1,8 @@
 import 'package:cluster_arabia/res/colors.dart';
-import 'package:cluster_arabia/res/style.dart';
 import 'package:cluster_arabia/ui/pages/help&support/bind/help&support_bind.dart';
 import 'package:cluster_arabia/ui/pages/help&support/view/help&support_more.dart';
-import 'package:cluster_arabia/utilities/app_routes.dart';
 import 'package:cluster_arabia/utilities/common_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_custom_utils/flutter_custom_utils.dart';
-import 'package:get/get.dart';
 
 class HelpAndSupport extends StatelessWidget {
   const HelpAndSupport({super.key});
@@ -15,12 +10,11 @@ class HelpAndSupport extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton:  Contact(),
+      floatingActionButton:  const Contact(),
       appBar: commonAppBarBack('Help and Support', primaryColorPurple, () {
-        HelpAndSupportController.to.pageNO=1;
         HelpAndSupportController.to.onInit();
       }),
-      body: HelpList()
+      body: const HelpList()
     );
   }
 }

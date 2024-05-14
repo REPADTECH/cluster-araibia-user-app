@@ -5,7 +5,6 @@ import 'package:cluster_arabia/ui/pages/home_stack_dashboard/bind/home_stack_das
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_utils/flutter_custom_utils.dart';
-import 'package:flutter_date_range_picker/flutter_date_range_picker.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
@@ -136,11 +135,10 @@ class CustomTextField extends StatelessWidget {
   List<TextInputFormatter>? textInputFormatter;
   String hintText;
   String? Function(String?)? validator;
-  String? orderid;
   void Function(String)? onChanged; // Add onChanged callback
 
   CustomTextField({
-    Key? key,
+    super.key,
     this.minLines = 1,
     this.maxLines = 1,
     this.height = 52,
@@ -151,9 +149,8 @@ class CustomTextField extends StatelessWidget {
     this.suffixIcon,
     this.validator,
     this.hintText = '',
-    this.orderid,
     this.onChanged, // Initialize the onChanged callback
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -173,7 +170,7 @@ class CustomTextField extends StatelessWidget {
         inputFormatters: textInputFormatter,
         onChanged: onChanged, // Set the onChanged callback here
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.only(bottom: 10),
+          contentPadding: const EdgeInsets.only(bottom: 10),
           suffixIcon: suffixIcon,
           border: InputBorder.none,
           hintText: hintText,
@@ -183,5 +180,91 @@ class CustomTextField extends StatelessWidget {
       ).cPadOnly(b: 5),
     );
   }
+}
+
+
+showAlertPopup(context,
+    {void Function()? onTapYes,
+      void Function()? onTapNo,
+      var alertMessage = 'message',
+      // var alertImage = emoji
+      var alertImage = emoji
+    }) async {
+  return await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Container(
+            height: 170,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2), //color of shadow
+                    spreadRadius: 10, //spread radius
+                    blurRadius: 18, // blur radius
+                    offset: const Offset(0, 2), // changes position of shadow
+                    //first parameter of offset is left-right
+                    //second parameter is top to down
+                  )
+                ]),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image.asset(
+                  alertImage,
+                  height: 50,
+                  width: 50,
+                ),
+                const SizedBox(height: 26),
+                Text(alertMessage),
+                const SizedBox(height: 26),
+                Row(
+                  children: [
+                    Expanded(
+                      child: InkWell(
+                        onTap: onTapNo,
+                        child: Container(
+                            height: 32,
+                            width: 140,
+                            decoration: BoxDecoration(
+                                color: const Color.fromRGBO(188, 188, 188, 1),
+                                borderRadius: BorderRadius.circular(32)),
+                            child: Center(
+                              child: Text(
+                                "No",
+                                style: customStyle(
+                                    14.0, Colors.white, FontWeight.normal),
+                              ),
+                            )),
+                      ),
+                    ),
+                    const SizedBox(width: 15),
+                    Expanded(
+                      child: InkWell(
+                        onTap: onTapYes,
+                        child: Container(
+                            height: 32,
+                            width: 140,
+                            decoration: BoxDecoration(
+                                color: primaryColorPurple,
+                                borderRadius: BorderRadius.circular(32)),
+                            child: Center(
+                              child: Text(
+                                "Yes",
+                                style: customStyle(
+                                    14.0, Colors.white, FontWeight.normal),
+                              ),
+                            )),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        );
+      });
 }
 

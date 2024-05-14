@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cluster_arabia/res/colors.dart';
@@ -8,12 +7,12 @@ import 'package:cluster_arabia/ui/pages/Invoice/bind/invoice_bind.dart';
 import 'package:cluster_arabia/utilities/common_widget.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_utils/flutter_custom_utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:cluster_arabia/models/student_list_model.dart' as student;
-
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class FirstPart extends StatelessWidget {
@@ -34,18 +33,18 @@ class FirstPart extends StatelessWidget {
                 children: [
                   CachedNetworkImage(
                     imageUrl: logic.profileModel?.data?.img??'',
-                    placeholder: (context, url) => CircularProgressIndicator(),
+                    placeholder: (context, url) => const CircularProgressIndicator(),
                     width: 25,
                     height: 25,
-                    errorWidget: (context, url, error) => Icon(Icons.error),
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
                   ).cPadOnly(l: 5),
-                  SizedBox(
+                  const SizedBox(
                     width: 15,
                   ),
                   SizedBox(
                     width: 150,
                     child: DropdownSearch<student.DataList>(
-                      dropdownDecoratorProps: DropDownDecoratorProps(
+                      dropdownDecoratorProps: const DropDownDecoratorProps(
                           dropdownSearchDecoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(vertical: 8),
                               disabledBorder: InputBorder.none,
@@ -70,7 +69,7 @@ class FirstPart extends StatelessWidget {
                   ),
                 ],
               )),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
           InkWell(
@@ -78,7 +77,7 @@ class FirstPart extends StatelessWidget {
               dateSelectPopup(context: context);
             },
             child: Container(
-              padding: EdgeInsets.all(5),
+              padding: const EdgeInsets.all(5),
               height: 40,
               // width: 120,
               decoration: BoxDecoration(
@@ -92,94 +91,13 @@ class FirstPart extends StatelessWidget {
               ).cToCenter,
             ),
           )
-          // Column(
-          //   children: [
-          //     InkWell(
-          //       onTap: (){
-          //         showMonthPicker(context: context, isStartMonth: true);
-          //       },
-          //       child: Container(
-          //       height: 20,
-          //       width: 120,
-          //       decoration: BoxDecoration(
-          //           border: Border.all(color: Colors.black, width: 0.5),
-          //           borderRadius: BorderRadius.circular(5)),
-          //         child:
-          //         Text(
-          //             (logic.startMonth!=null)? '${logic.startMonth}':'Start date').cPadOnly(l: 20).cToCenter ,
-          //         // Text("Select Start Month") ,
-          //       ),
-          //     ),
-          //     InkWell(
-          //       onTap: (){
-          //         showMonthPicker(context: context, isStartMonth: false);
-          //       },
-          //       child: Container(
-          //         height: 20,
-          //         width: 120,
-          //         decoration: BoxDecoration(
-          //             border: Border.all(color: Colors.black, width: 0.5),
-          //             borderRadius: BorderRadius.circular(5)),
-          //         child:
-          //         Text((logic.endMonth!=null)?'${logic.endMonth}':'End date').cPadOnly(l: 20).cToCenter,
-          //         // Text("Select End Month"),
-          //       ).cPadOnly(t: 3),
-          //     ),            ],
-          // ),
 
-          // InkWell(
-          //   onTap: () {
-          //     dateRangePickerDialog(context,
-          //         isForward: true,
-          //         minDate: DateTime.now(),
-          //         initialDateRange:
-          //         DateRange(DateTime.now(), DateTime.now()),
-          //         initialDisplayedDate:
-          //         logic.selectedDateRange?.start ??
-          //             DateTime.now(), onDateRangeChanged: (v) {
-          //           logic.selectedDateRange = v;
-          //           logic.startDatePass = v!.start
-          //               .cGetFormattedDate(format: 'yyyy-MM-dd');
-          //           logic.endDatePass =
-          //               v.end.cGetFormattedDate(format: 'yyyy-MM-dd');
-          //           logic.update();
-          //           print(
-          //               'selectedDateRange${logic.selectedDateRange}');
-          //         }, onTapCancel: () {
-          //           logic.selectedDateRange = null;
-          //           logic.startDatePass = '';
-          //           logic.endDatePass = '';
-          //           logic.update();
-          //           Get.back();
-          //         }, onTapConfirm: () {
-          //           cLog('${logic.startDatePass}-${logic.endDatePass}');
-          //           // logic.getCouponList();
-          //           Get.back();
-          //         });
-          //   },
-          //   child: Container(
-          //     height: 40,
-          //     width: 120,
-          //     decoration: BoxDecoration(
-          //         border: Border.all(color: Colors.black, width: 0.5),
-          //         borderRadius: BorderRadius.circular(5)),
-          //     child:    Text(
-          //       // logic.selectedDateRange == null
-          //       ((logic.startDatePass) == '' &&
-          //           logic.endDatePass == '')
-          //           ? 'Select Date Range'
-          //       // : '${logic.selectedDateRange}',
-          //           : '${(logic.startDatePass).cGetFormattedDate(format: 'dd/MM/yyyy')} — ${(logic.endDatePass).cGetFormattedDate(format: 'dd/MM/yyyy')}',
-          //       style: customStyle(
-          //           13.0, Colors.black, FontWeight.bold),
-          //     ).cToCenter.cExpanded(1),
-          //   ),
-          // ),
         ],
       ).cPadOnly(t: 15, l: 15);
     });
   }
 }
+
 
 void dateSelectPopup({
   required BuildContext context,
@@ -198,7 +116,7 @@ void dateSelectPopup({
         ),
         content: SingleChildScrollView(
           child: GetBuilder<InvoiceController>(builder: (logic) {
-            return Container(
+            return SizedBox(
               height: 300,
               width: context.cWidth / 2,
               child: SfDateRangePicker(
@@ -217,9 +135,15 @@ void dateSelectPopup({
                     logic.invoiceList.clear();
                     logic.getInvoiceList();
 
-                    print(rangeStartDate);
-                    print('//////${logic.startMonth}');
-                    print(rangeEndDate);
+                    if (kDebugMode) {
+                      print(rangeStartDate);
+                    }
+                    if (kDebugMode) {
+                      print('//////${logic.startMonth}');
+                    }
+                    if (kDebugMode) {
+                      print(rangeEndDate);
+                    }
                   }
                   Get.back();
                 },
@@ -249,18 +173,18 @@ class ListPart extends StatelessWidget {
     return GetBuilder<InvoiceController>(builder: (logic) {
       return Expanded(
         child: ListView.builder(
-            itemCount: logic.invoiceList?.length ?? 0,
+            itemCount: logic.invoiceList.length ??0,
             shrinkWrap: true,
             controller: logic.scrollController,
-            physics: AlwaysScrollableScrollPhysics(),
+            physics: const AlwaysScrollableScrollPhysics(),
             itemBuilder: (context, i) {
-              var data = logic.invoiceList?[i];
+              var data = logic.invoiceList[i];
               return Container(
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                 // height: 135,
                 width: context.cWidth,
                 decoration: BoxDecoration(
-                  color: Color.fromRGBO(255, 255, 255, 1),
+                  color: const Color.fromRGBO(255, 255, 255, 1),
                   // color: Color.fromRGBO(240, 243, 253, 1),
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: const [
@@ -279,14 +203,14 @@ class ListPart extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.access_time_filled_rounded,
                               size: 18,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
-                            Text((data?.billedOn ?? '')
+                            Text((data.billedOn ?? '')
                                 .cGetFormattedDate(format: 'MMM yyyy'))
                           ],
                         ),
@@ -294,13 +218,13 @@ class ListPart extends StatelessWidget {
                           width: 60,
                           height: 25,
                           decoration: BoxDecoration(
-                              color: ((data?.paidOn ?? '').isEmpty)
-                                  ? Color.fromRGBO(255, 243, 235, 1)
-                                  : Color.fromRGBO(221, 252, 243, 1),
+                              color: ((data.paidOn ?? '').isEmpty)
+                                  ? const Color.fromRGBO(255, 243, 235, 1)
+                                  : const Color.fromRGBO(221, 252, 243, 1),
                               border: Border.all(
-                                  color: ((data?.paidOn ?? '').isEmpty)
-                                      ? Color.fromRGBO(249, 122, 30, 1)
-                                      : Color.fromRGBO(33, 196, 141, 1)),
+                                  color: ((data.paidOn ?? '').isEmpty)
+                                      ? const Color.fromRGBO(249, 122, 30, 1)
+                                      : const Color.fromRGBO(33, 196, 141, 1)),
                               borderRadius: BorderRadius.circular(20)),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -310,22 +234,22 @@ class ListPart extends StatelessWidget {
                                   width: 8,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    color: ((data?.paidOn ?? '').isEmpty)
-                                        ? Color.fromRGBO(249, 122, 30, 1)
-                                        : Color.fromRGBO(33, 196, 141, 1),
+                                    color: ((data.paidOn ?? '').isEmpty)
+                                        ? const Color.fromRGBO(249, 122, 30, 1)
+                                        : const Color.fromRGBO(33, 196, 141, 1),
                                   )),
-                              SizedBox(
+                              const SizedBox(
                                 width: 8,
                               ),
                               Text(
-                                ((data?.paidOn ?? '').isEmpty)
+                                ((data.paidOn ?? '').isEmpty)
                                     ? 'Open'
                                     : 'Paid',
                                 style: customStyle(
                                     13.0,
-                                    ((data?.paidOn ?? '').isEmpty)
-                                        ? Color.fromRGBO(249, 122, 30, 1)
-                                        : Color.fromRGBO(33, 196, 141, 1),
+                                    ((data.paidOn ?? '').isEmpty)
+                                        ? const Color.fromRGBO(249, 122, 30, 1)
+                                        : const Color.fromRGBO(33, 196, 141, 1),
                                     FontWeight.normal),
                               )
                             ],
@@ -339,9 +263,9 @@ class ListPart extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Invoice no ${data?.id ?? ''}'),
+                        Text('Invoice no ${data.id ?? ''}'),
                         Text(
-                          'SAR ${(double.parse('${data?.amount ?? 0}') + double.parse('${data?.tax ?? 0}')) / 100}',
+                          'SAR ${(double.parse('${data.amount ?? 0}') + double.parse('${data.tax ?? 0}')) / 100}',
                           style:
                               customStyle(12.0, Colors.black, FontWeight.bold),
                         ),
@@ -360,18 +284,18 @@ class ListPart extends StatelessWidget {
                     Row(
                       children: [
                         CachedNetworkImage(
-                          imageUrl: data?.img ?? '',
+                          imageUrl: data.img ?? '',
                           height: 25,
                           width: 25,
-                          placeholder: (context, url) => CircularProgressIndicator(),
-                          errorWidget: (context, url, error) => Icon(Icons.error),
+                          placeholder: (context, url) => const CircularProgressIndicator(),
+                          errorWidget: (context, url, error) => const Icon(Icons.error),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         SizedBox(
                           width: 200,
-                          child: Text('${data?.student?.name ?? ' '} (${data?.student?.std ?? ''} ${data?.student?.division ?? ''})',
+                          child: Text('${data.student?.name ?? ' '} (${data.student?.std ?? ''} ${data.student?.division ?? ''})',
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: customStyle(
@@ -389,13 +313,13 @@ class ListPart extends StatelessWidget {
                         const SizedBox(
                           width: 5,
                         ),
-                        Text(data?.school?.name ?? '',
+                        Text(data.school?.name ?? '',
                             style: customStyle(
                                 12.0, Colors.black, FontWeight.normal)),
-                        Text(' (${data?.school?.id ?? ''})',
+                        Text(' (${data.school?.id ?? ''})',
                             style: customStyle(
                                 12.0,
-                                Color.fromRGBO(99, 99, 99, 1),
+                                const Color.fromRGBO(99, 99, 99, 1),
                                 FontWeight.normal)),
                       ],
                     ).cPadOnly(t: 5),
@@ -409,11 +333,11 @@ class ListPart extends StatelessWidget {
                               height: 12,
                               width: 12,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 7,
                             ),
                             Text(
-                                data?.student?.busInRoute?.routeInfo?.routeName ?? '',
+                                data.student?.busInRoute?.routeInfo?.routeName ?? '',
                                 style: customStyle(
                                     11.0, Colors.black, FontWeight.normal)),
                             const SizedBox(width: 5,),
@@ -422,7 +346,7 @@ class ListPart extends StatelessWidget {
                               child: Text(
                                 maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
-                                  data?.student?.busInRoute?.routeInfo?.startingPoint ?? '',
+                                  data.student?.busInRoute?.routeInfo?.startingPoint ?? '',
                                   style: customStyle(
                                       10.0,
                                       const Color.fromRGBO(99, 99, 99, 1),
@@ -472,42 +396,4 @@ class ListPart extends StatelessWidget {
   }
 }
 
-Future<void> showMonthPicker({
-  required BuildContext context,
-  // required InvoiceController controller,
-  bool isStartMonth = true,
-}) async {
-  final DateTime? picked = await showDatePicker(
-    context: context,
-    initialDate: DateTime.now(),
-    firstDate: DateTime(2000),
-    lastDate: DateTime(2100),
-    helpText: isStartMonth ? 'SELECT START MONTH' : 'SELECT END MONTH',
-    // Can change the help text accordingly
-    fieldLabelText: 'Month',
-    fieldHintText: 'Month/Year',
-    builder: (context, child) {
-      return Theme(
-        data: Theme.of(context).copyWith(
-          colorScheme: ColorScheme.light(
-            primary: Colors.blue, // header background color
-            onPrimary: Colors.white, // header text color
-            onSurface: Colors.black, // body text color
-          ),
-        ),
-        child: child!,
-      );
-    },
-  );
 
-  if (picked != null) {
-    final DateTime selectedMonth =
-        DateTime(picked.year, picked.month, picked.day);
-    // final DateTime selectedMonth = DateTime(picked.year, picked.month);
-    if (isStartMonth) {
-      InvoiceController.to.setStartMonth(selectedMonth);
-    } else {
-      InvoiceController.to.setEndMonth(selectedMonth);
-    }
-  }
-}

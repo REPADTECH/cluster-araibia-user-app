@@ -5,9 +5,7 @@ import 'package:cluster_arabia/res/style.dart';
 import 'package:cluster_arabia/ui/pages/children/bind/children_bind.dart';
 import 'package:cluster_arabia/utilities/app_routes.dart';
 import 'package:cluster_arabia/utilities/common_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_custom_utils/flutter_custom_utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
@@ -32,7 +30,7 @@ class SearchPart extends StatelessWidget {
                 width: 270,
                 child: TextFormField(
                   controller: logic.searchChildrenController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       border: InputBorder.none,
                       contentPadding: EdgeInsets.only(left: 15, bottom: 13),
                       hintText: 'Search...'),
@@ -52,7 +50,7 @@ class SearchPart extends StatelessWidget {
             (logic.searchChildrenController.text=='')
             ?InkWell(
               onTap: (){},
-              child: Icon(
+              child: const Icon(
                 Icons.search,
                 size: 20,
               ),
@@ -89,14 +87,13 @@ class ListPart extends StatelessWidget {
       return ListView.builder(
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          itemCount: logic.studentList?.length ?? 0,
-          controller: logic.scrollController,
+          itemCount: logic.studentList.length ?? 0,
           itemBuilder: (context, i) {
-            var data = logic.studentList?[i];
+            var data = logic.studentList[i];
             return InkWell(
               onTap: () {
                 Get.toNamed(Routes.childrenInnerPage,
-                    arguments: [data?.id ?? '']);
+                    arguments: [data.id ?? '']);
               },
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
@@ -122,7 +119,7 @@ class ListPart extends StatelessWidget {
                         Row(
                           children: [
                             CachedNetworkImage(
-                              imageUrl: (data?.img ?? ''),
+                              imageUrl: (data.img ?? ''),
                               placeholder: (context, url) =>
                                   const CircularProgressIndicator(),
                               width: 25,
@@ -143,7 +140,7 @@ class ListPart extends StatelessWidget {
                               child: Text(
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
-                                  data?.studentName ?? '',
+                                  data.studentName ?? '',
                                   textAlign: TextAlign.start,
                                   style: customStyle(
                                       15.0, Colors.black, FontWeight.bold)),
@@ -158,15 +155,14 @@ class ListPart extends StatelessWidget {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.location_pin,
                               size: 15,
                             ),
                             SizedBox(
                                 width: 270,
                                 child: Text(
-                                  data?.address ?? '',
-                                  // 'Suite 875 579 Cole Club, Chaunceymouth, MI 04708-1942 ',
+                                  data.address ?? '',
                                   style: customStyle(
                                       11.0, Colors.black, FontWeight.normal),
                                 ))
@@ -179,20 +175,19 @@ class ListPart extends StatelessWidget {
                               height: 12,
                               width: 12,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
                             Text(
-                                // 'TEST SCHOOL ABCD',
-                                data?.school?.schoolName ?? '',
+                                data.school?.schoolName ?? '',
                                 style: customStyle(
                                     12.0, Colors.black, FontWeight.normal)),
                             Text(
                                 // ' (ABC1234)',
-                                ' (${data?.admissionNo ?? ''})',
+                                ' (${data.admissionNo ?? ''})',
                                 style: customStyle(
                                     12.0,
-                                    Color.fromRGBO(99, 99, 99, 1),
+                                    const Color.fromRGBO(99, 99, 99, 1),
                                     FontWeight.normal)),
                           ],
                         ).cPadOnly(t: 6, b: 10),
@@ -203,20 +198,20 @@ class ListPart extends StatelessWidget {
                               height: 12,
                               width: 12,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 7,
                             ),
                             Text(
                                 // 'Route name',
-                                data?.busInRoute?.routeInfo?.routeName ?? '',
+                                data.busInRoute?.routeInfo?.routeName ?? '',
                                 style: customStyle(
                                     11.0, Colors.black, FontWeight.normal)),
                             Text(
                                 // ' (pickup point name)',
-                                ' (${data?.pickUp?.pickUpName ?? ''})',
+                                ' (${data.pickUp?.pickUpName ?? ''})',
                                 style: customStyle(
                                     11.0,
-                                    Color.fromRGBO(99, 99, 99, 1),
+                                    const Color.fromRGBO(99, 99, 99, 1),
                                     FontWeight.normal)),
                           ],
                         ).cPadOnly(t: 6),
@@ -225,29 +220,29 @@ class ListPart extends StatelessWidget {
                     Row(
                       children: [
                         CustomButtonWidget(
-                            backgroundColor: Color.fromRGBO(255, 255, 255, 1),
+                            backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
                             borderColor: Colors.black54,
                             vPadding: 4,
-                            width: (context.cWidth >= 800) ? 55 : 45,
+                            width: (context.cWidth >= 800) ? 55 : 55,
                             radius: 13,
                             // buttonTitle: '4(B)',
                             buttonTitle:
-                                '${data?.std ?? ' '}(${data?.division ?? ''})',
+                                '${data.std ?? ' '}(${data.division ?? ''})',
                             titleStyle: customStyle(
                                 11.0, Colors.black, FontWeight.normal)),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
                         CustomButtonWidget(
-                            backgroundColor: (data?.status ??true)
-                                ? Color.fromRGBO(3, 159, 0, 1)
+                            backgroundColor: (data.status ??true)
+                                ? const Color.fromRGBO(3, 159, 0, 1)
                                 : Colors.redAccent,
                             vPadding: 5,
                             width: (context.cWidth >= 800) ? 70 : 65,
                             radius: 13,
                             // buttonTitle: (data?.status==1)?'${(data?.status)}':'${(data?.status)}',
                             // buttonTitle: "${data?.status ?? '--'}",
-                            buttonTitle: (data?.status ??true)?'Active':'Inactive',
+                            buttonTitle: (data.status ??true)?'Active':'Inactive',
                             titleStyle: customStyle(
                                 11.0, Colors.white, FontWeight.bold)),
                       ],
@@ -260,14 +255,14 @@ class ListPart extends StatelessWidget {
                       height: 30,
                     ).cPosition(r: 0, t: 35),
                     CustomButtonWidget(
-                            backgroundColor: Color.fromRGBO(255, 255, 255, 1),
+                            backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
                             borderColor: Colors.black54,
                             vPadding: 4,
                             // width: 85,
                             radius: 13,
                             // buttonTitle: 'SAR 100.50',
                             buttonTitle:
-                                '${double.parse('${data?.busInRoute?.routeInfo?.fareForRoute ?? ' '}') * .01}',
+                                '${double.parse('${data.busInRoute?.routeInfo?.fareForRoute ?? ' '}') * .01}',
                             titleStyle: customStyle(
                                 11.0, Colors.black, FontWeight.normal))
                         .cPosition(r: 0, b: 0),
@@ -291,10 +286,10 @@ class SelectionButton extends StatelessWidget {
           Wrap(
             children: [
               ActionChip(
-                visualDensity: VisualDensity(vertical: -3),
+                visualDensity: const VisualDensity(vertical: -3),
                 // avatar: Icon(Icons.remove),
                 backgroundColor: (logic.isSelected == 0)
-                    ? Color.fromRGBO(65, 54, 133, 1)
+                    ? const Color.fromRGBO(65, 54, 133, 1)
                     : Colors.white,
                 labelStyle: TextStyle(
                     color:
@@ -323,15 +318,15 @@ class SelectionButton extends StatelessWidget {
                   logic.update();
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 width: 8,
               ),
               ActionChip(
-                visualDensity: VisualDensity(vertical: -3),
+                visualDensity: const VisualDensity(vertical: -3),
 
                 // avatar: Icon(Icons.remove),
                 backgroundColor: (logic.isSelected == 1)
-                    ? Color.fromRGBO(65, 54, 133, 1)
+                    ? const Color.fromRGBO(65, 54, 133, 1)
                     : Colors.white,
                 labelStyle: TextStyle(
                     color:
@@ -360,15 +355,15 @@ class SelectionButton extends StatelessWidget {
                   logic.update();
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 width: 8,
               ),
               ActionChip(
-                visualDensity: VisualDensity(vertical: -3),
+                visualDensity: const VisualDensity(vertical: -3),
 
                 // avatar: Icon(Icons.remove),
                 backgroundColor: (logic.isSelected == 2)
-                    ? Color.fromRGBO(65, 54, 133, 1)
+                    ? const Color.fromRGBO(65, 54, 133, 1)
                     : Colors.white,
                 labelStyle: TextStyle(
                     color:

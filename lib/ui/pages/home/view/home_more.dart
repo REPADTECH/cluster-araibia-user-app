@@ -1,18 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cluster_arabia/res/colors.dart';
 import 'package:cluster_arabia/res/images.dart';
 import 'package:cluster_arabia/res/style.dart';
 import 'package:cluster_arabia/ui/pages/home/bind/home_bind.dart';
 import 'package:cluster_arabia/ui/pages/home_stack_dashboard/bind/home_stack_dashboard_bind.dart';
-import 'package:cluster_arabia/utilities/app_routes.dart';
 import 'package:cluster_arabia/utilities/utils.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:dotted_line/dotted_line.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_custom_utils/flutter_custom_utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
@@ -48,7 +44,7 @@ class FirstPart extends StatelessWidget {
                     ),
                     Text(
                       'Total payable amount',
-                      style: customStyle(10.0, Color.fromRGBO(206, 207, 237, 1),
+                      style: customStyle(10.0, const Color.fromRGBO(206, 207, 237, 1),
                           FontWeight.normal),
                     ),
                   ],
@@ -88,10 +84,10 @@ class FirstPart extends StatelessWidget {
                     imageUrl:
                         (logic.homeBillAmount?.data?.students?.cFirst)?.img ??
                             '',
-                    placeholder: (context, url) => CircularProgressIndicator(),
+                    placeholder: (context, url) => const CircularProgressIndicator(),
                     width: 40,
                     height: 40,
-                    errorWidget: (context, url, error) => Icon(Icons.error),
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
                   ).cClipAll(40),
                 ).cVisible((((logic.homeBillAmount?.data?.students?.cFirst)?.img ?? '')).isNotEmpty),
                 Positioned(
@@ -103,10 +99,10 @@ class FirstPart extends StatelessWidget {
                         ? ((logic.homeBillAmount?.data?.students?[1])?.img ??
                             '')
                         : '',
-                    placeholder: (context, url) => CircularProgressIndicator(),
+                    placeholder: (context, url) => const CircularProgressIndicator(),
                     width: 40,
                     height: 40,
-                    errorWidget: (context, url, error) => Icon(Icons.error),
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
                   ).cClipAll(40),
                 ).cVisible((((logic.homeBillAmount?.data?.students?.length ?? 0) >= 2)?((logic.homeBillAmount?.data?.students?[1])?.img ?? ''):'').isNotEmpty),
                 Positioned(
@@ -118,10 +114,10 @@ class FirstPart extends StatelessWidget {
                         ? ((logic.homeBillAmount?.data?.students?[2])?.img ??
                             '')
                         : '',
-                    placeholder: (context, url) => CircularProgressIndicator(),
+                    placeholder: (context, url) => const CircularProgressIndicator(),
                     width: 40,
                     height: 40,
-                    errorWidget: (context, url, error) => Icon(Icons.error),
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
                   ).cClipAll(40),
                 ).cVisible((((logic.homeBillAmount?.data?.students?.length ?? 0) >= 3)?((logic.homeBillAmount?.data?.students?[2])?.img ?? ''):'').isNotEmpty),
               ],
@@ -178,7 +174,7 @@ class ChildBox extends StatelessWidget {
       // width: 120,
       height: 70,
       decoration: BoxDecoration(
-          color: Color.fromRGBO(246, 246, 246, 1),
+          color: const Color.fromRGBO(246, 246, 246, 1),
           borderRadius: BorderRadius.circular(15),
           boxShadow: const [
             BoxShadow(
@@ -199,17 +195,17 @@ class ChildBox extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'SAR ${price}',
+                    'SAR $price',
                     style: customStyle(11.0, Colors.black, FontWeight.bold),
                   ),
                   Text(
-                    'Child ${no}',
-                    style: customStyle(9.0, Color.fromRGBO(83, 100, 133, 1),
+                    'Child $no',
+                    style: customStyle(9.0, const Color.fromRGBO(83, 100, 133, 1),
                         FontWeight.normal),
                   )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 width: 4,
               ),
               CachedNetworkImage(
@@ -218,7 +214,7 @@ class ChildBox extends StatelessWidget {
                 height: 30,
                 progressIndicatorBuilder: (context, url, downloadProgress) =>
                     CircularProgressIndicator(value: downloadProgress.progress),
-                errorWidget: (context, url, error) => Icon(Icons.error),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
               )
             ],
           ),
@@ -251,7 +247,7 @@ class BannerSection extends StatelessWidget {
                   progressIndicatorBuilder: (context, url, downloadProgress) =>
                       CircularProgressIndicator(
                           value: downloadProgress.progress),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
                 );
               },
               onPageChanged: (v) {
@@ -264,7 +260,7 @@ class BannerSection extends StatelessWidget {
             dotsCount: logic.sliderModel?.data?.length ?? 1,
             position: logic.currentPage.value,
             decorator: DotsDecorator(
-              spacing: EdgeInsets.all(3),
+              spacing: const EdgeInsets.all(3),
               color: Colors.white,
               // Inactive dot color
               activeColor: primaryColorPurple,
@@ -319,11 +315,11 @@ class BillOverView extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(builder: (logic) {
       return Container(
-        padding: EdgeInsets.symmetric(vertical: 5),
+        padding: const EdgeInsets.symmetric(vertical: 5),
         // height: 135,
         width: context.cWidth,
         decoration: BoxDecoration(
-          color: Color.fromRGBO(255, 255, 255, 1),
+          color: const Color.fromRGBO(255, 255, 255, 1),
           // color: Color.fromRGBO(240, 243, 253, 1),
           borderRadius: BorderRadius.circular(15),
           boxShadow: const [
@@ -344,30 +340,35 @@ class BillOverView extends StatelessWidget {
                 Text(
                     'Overview of Billing for ${(logic.startDatePass.cGetFormattedDate(format: 'MMM-yyyy'))}',
                     style: customStyle(11.0, Colors.black, FontWeight.bold)),
-                Container(
-                  width: 90,
-                  height: 30,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(
-                        color: primaryColorPurple,
-                      ),
-                      borderRadius: BorderRadius.circular(8)),
-                  child: Text('Pay Bill',
-                          style: customStyle(
-                              13.0, primaryColorPurple, FontWeight.normal))
-                      .cToCenter,
+                InkWell(
+                  onTap: (){
+                    payBillPopup(context: context);
+                  },
+                  child: Container(
+                    width: 90,
+                    height: 30,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(
+                          color: primaryColorPurple,
+                        ),
+                        borderRadius: BorderRadius.circular(8)),
+                    child: Text('Pay Bill',
+                            style: customStyle(
+                                13.0, primaryColorPurple, FontWeight.normal))
+                        .cToCenter,
+                  ),
                 )
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 8,
             ),
-            DottedLine(
+            const DottedLine(
               dashColor: Color.fromRGBO(159, 159, 159, 1),
               lineThickness: 0.5,
             ),
-            SizedBox(
+            const SizedBox(
               height: 8,
             ),
             // Divider(
@@ -395,14 +396,14 @@ class BillOverView extends StatelessWidget {
                     .cExpanded(1),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
-            DottedLine(
+            const DottedLine(
               dashColor: Color.fromRGBO(159, 159, 159, 1),
               lineThickness: 0.5,
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             // Divider(
@@ -412,7 +413,7 @@ class BillOverView extends StatelessWidget {
             ListView.builder(
                 itemCount: logic.homeBillAmount?.data?.students?.length ?? 0,
                 shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, i) {
                   var monthCharge =
                       logic.homeBillAmount?.data?.monthlyCharge?.cFirst;
@@ -434,33 +435,33 @@ class BillOverView extends StatelessWidget {
                               style: customStyle(
                                   11.0, primaryColorPurple, FontWeight.normal))
                           .cExpanded(1),
-                      Text('SAR ${(double.parse('${monthCharge?.students?[i]?.amount ?? 0}') + double.parse('${monthCharge?.students?[i]?.tax ?? 0}')) / 100}',
+                      Text('SAR ${(double.parse('${monthCharge?.students?[i].amount ?? 0}') + double.parse('${monthCharge?.students?[i].tax ?? 0}')) / 100}',
                               style: customStyle(
                                   11.0, primaryColorPurple, FontWeight.normal))
                           .cExpanded(1),
                     ],
                   );
                 }),
-            SizedBox(
+            const SizedBox(
               height: 8,
             ),
-            DottedLine(
+            const DottedLine(
               dashColor: Color.fromRGBO(159, 159, 159, 1),
               lineThickness: 0.5,
             ),
-            SizedBox(
+            const SizedBox(
               height: 8,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(
+                const Text(
                   '',
                 ).cExpanded(1),
-                Text(
+                const Text(
                   '',
                 ).cExpanded(1),
-                Text(
+                const Text(
                   '',
                 ).cExpanded(1),
                 Text('SAR ${(double.parse('${logic.homeBillAmount?.data?.totalPayableAmount ?? 0}') / 100)}',
@@ -488,6 +489,8 @@ class BillOverView extends StatelessWidget {
   }
 }
 
+
+
 class MainMenu extends StatelessWidget {
   const MainMenu({super.key});
 
@@ -507,31 +510,31 @@ class MainMenu extends StatelessWidget {
                // Get.toNamed(Routes.children);
                 HomeStackDashboardController.to.changeTabIndex(2);
               },
-              child: MenuBox(
+              child: const MenuBox(
                 text: 'Children',
                 img: studentsIcon,
               ),
             ).cExpanded(1),
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
             InkWell(
               onTap: () {
                 HomeStackDashboardController.to.changeTabIndex(1);
               },
-              child: MenuBox(
+              child: const MenuBox(
                 text: 'Invoice',
                 img: transactionIcon,
               ),
             ).cExpanded(1),
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
             InkWell(
               onTap: () {
                 HomeStackDashboardController.to.changeTabIndex(3);
               },
-              child: MenuBox(
+              child: const MenuBox(
                 text: 'Profile',
                 img: profileIcon,
               ),
@@ -541,6 +544,60 @@ class MainMenu extends StatelessWidget {
       ],
     );
   }
+}
+
+void payBillPopup({
+  required BuildContext context,
+}) {
+  showDialog<void>(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        scrollable: true,
+        // alignment: Alignment.topRight,
+        // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+        contentPadding: EdgeInsets.zero,
+        content: SingleChildScrollView(
+          child: GetBuilder<HomeController>(builder: (logic) {
+            return Container(
+              height: 200,
+              // width: 330,
+              padding: const EdgeInsets.only(top: 1, bottom: 10),
+              decoration: BoxDecoration(
+                  color: const Color.fromRGBO(255, 255, 255, 1),
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color.fromRGBO(0, 0, 0, 0.25), //color of shadow
+                      spreadRadius: 1, //spread radius
+                      blurRadius: 1, // blur radius
+                      offset: Offset(0, 4),
+                    )
+                  ]),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          // logic.clearVariable();
+                          Get.back();
+                        },
+                        iconSize: 20,
+                        icon: const Icon(
+                          Icons.close,
+                          color: Colors.black,
+                        )).cAlignment(Alignment.topRight),
+
+                  ]).cPadAll(10),
+            );
+          }),
+        ),
+      );
+      // .cPadOnly(r: 50, t: 50);
+    },
+  );
 }
 
 class MenuBox extends StatelessWidget {
@@ -555,7 +612,7 @@ class MenuBox extends StatelessWidget {
       height: 55,
       width: 100,
       decoration: BoxDecoration(
-          color: Color.fromRGBO(240, 243, 253, 1),
+          color: const Color.fromRGBO(240, 243, 253, 1),
           borderRadius: BorderRadius.circular(15),
           border: Border.all(color: Colors.black54, width: 0.2)),
       child: Row(
@@ -566,7 +623,7 @@ class MenuBox extends StatelessWidget {
             height: 25,
             width: 25,
           ),
-          SizedBox(
+          const SizedBox(
             width: 2,
           ),
           Text(text,
@@ -590,13 +647,13 @@ class BottomImageList extends StatelessWidget {
             var data = logic.bannerListModel?.data?[i];
             return AspectRatio(
               aspectRatio: 2.01,
-              child: Container(
+              child: SizedBox(
                 child: CachedNetworkImage(
                   imageUrl: data?.img ?? '',
                   progressIndicatorBuilder: (context, url, downloadProgress) =>
                       CircularProgressIndicator(
                           value: downloadProgress.progress),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
             );
@@ -642,9 +699,15 @@ void dateSelectPopupHome({
                         .cGetFormattedDate(format: 'yyyy-MM-dd');
                     logic.getHomeAmount();
                     logic.update();
-                    print(rangeStartDate);
-                    print('//////${logic.startMonth}');
-                    print(rangeEndDate);
+                    if (kDebugMode) {
+                      print(rangeStartDate);
+                    }
+                    if (kDebugMode) {
+                      print('//////${logic.startMonth}');
+                    }
+                    if (kDebugMode) {
+                      print(rangeEndDate);
+                    }
                   }
                   Get.back();
                 },
