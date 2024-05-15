@@ -269,7 +269,7 @@ class ListPart extends StatelessWidget {
                       children: [
                         Text('Invoice no ${data.id ?? ''}'),
                         Text(
-                          'SAR ${(double.parse('${data.amount ?? 0}') + double.parse('${data.tax ?? 0}')) / 100}',
+                          'SAR ${(double.parse('${data.amount ?? 0}') + double.parse('${data.taxAmount ?? 0}')) / 100}',
                           style:
                               customStyle(12.0, Colors.black, FontWeight.bold),
                         ),
@@ -369,7 +369,7 @@ class ListPart extends StatelessWidget {
                         ).cPadOnly(t: 5),
                         Row(
                           children: [
-                            if (data?.paidOn != null)
+                            if (data.paidOn != null)
                               InkWell(
                                 onTap: () {
                                   // logic.setWebViewController(
@@ -378,7 +378,7 @@ class ListPart extends StatelessWidget {
                                   //     context: context,
                                   //     billId:
                                   //         data?.totalBillAmountData?.id ?? '');
-                                  logic.openBillInBrowser(billId:data?.totalBillAmountData?.id ?? '');
+                                  logic.openBillInBrowser(billId:data.totalBillAmountData?.id ?? '');
                                 },
                                 child: CustomButtonWidget(
                                   backgroundColor: Colors.white,
@@ -390,9 +390,14 @@ class ListPart extends StatelessWidget {
                                       primaryColorPurple, FontWeight.bold),
                                 ),
                               ),
-                            if (data?.paidOn == null)
+                            if (data.paidOn == null)
                               InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  logic.stdName = data.student?.name ?? '';
+                                  logic.tax = data.taxAmount ?? 0;
+                                  logic.amount = data.amount ?? 0;
+                                  payBillPopupInVoice(context: context);
+                                },
                                 child: CustomButtonWidget(
                                   backgroundColor: primaryColorPurple,
                                   vPadding: 4,
@@ -449,3 +454,147 @@ class ListPart extends StatelessWidget {
   //   );
   // }
 }
+
+
+void payBillPopupInVoice({
+  required BuildContext context,
+}) {
+  showDialog<void>(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        backgroundColor: Colors.transparent,
+        scrollable: true,
+        // alignment: Alignment.topRight,
+        // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+        contentPadding: EdgeInsets.zero,
+        content: SingleChildScrollView(
+          child: GetBuilder<InvoiceController>(builder: (logic) {
+            return Container(
+              // height: 200,
+              // width: 330,
+              padding: const EdgeInsets.only(top: 1, bottom: 10),
+              decoration: BoxDecoration(
+                // color: Colors.transparent,
+                  color: const Color.fromRGBO(255, 255, 255, 1),
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color.fromRGBO(0, 0, 0, 0.25), //color of shadow
+                      spreadRadius: 1, //spread radius
+                      blurRadius: 1, // blur radius
+                      offset: Offset(0, 4),
+                    )
+                  ]),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Bill Overview',style: customStyle(18.0, Colors.black, FontWeight.bold),).cPadOnly(t: 10),
+                    SizedBox(height: 8,),
+                    Row(
+                      children: [
+                        Text('Time period : ',style: customStyle(12.0, Colors.black, FontWeight.normal),),
+                        Text('${(logic.startMonth)?.cGetFormattedDate(format: 'dd-MM-yyyy')}  -  ${(logic.endMonth)?.cGetFormattedDate(format: 'dd-MM-yyyy')}',style: customStyle(12.0, Colors.black, FontWeight.normal),),
+                      ],
+                    ),
+                    SizedBox(height: 3,),
+                    Row(
+                      children: [
+                        Text('Students Name : ',style: customStyle(14.0, Colors.black, FontWeight.normal),),
+                        SizedBox(width: 3,),
+                        Text(logic.stdName,style: customStyle(14.0, Colors.black, FontWeight.normal),),
+
+                      ],
+                    ),
+                    // Text(InvoiceController.to.studentsName(),style: customStyle(12.0, Colors.black, FontWeight.normal),),
+                    SizedBox(height: 10,),
+                    KeyValueField(titleKey: 'Subtotal : ',value: 'SAR  ${(double.parse('${logic.amount}') / 100)}',fontSize: 12.0,),
+                    KeyValueField(titleKey: 'Tax : ',value: 'SAR  ${(double.parse('${logic.tax}') / 100)}',fontSize: 12.0,),
+                    Divider(),
+                    KeyValueField(titleKey: 'Total : ',value: 'SAR  ${(double.parse('${logic.amount}') + double.parse('${logic.tax}')) / 100}',fontSize: 12.0,),
+                    SizedBox(height: 20,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Get.back();
+                          },
+                          child: CustomButtonWidget(
+                            backgroundColor: Colors.white,
+                            borderColor: primaryColorPurple,
+                            vPadding: 8,
+                            width: (context.cWidth >= 800) ? 80 : 80,
+                            buttonTitle: 'Cancel',
+                            titleStyle: customStyle(10.0,
+                                primaryColorPurple, FontWeight.bold),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {},
+                          child: CustomButtonWidget(
+                            backgroundColor: primaryColorPurple,
+                            vPadding: 8,
+                            width: (context.cWidth >= 800) ? 60 : 80,
+                            buttonTitle: 'Pay',
+                            titleStyle: customStyle(
+                                10.0, Colors.white, FontWeight.bold),
+                          ).cPadOnly(l: 7),
+                        ),
+                      ],
+                    ),
+
+                  ]).cPadAll(15),
+            );
+          }),
+        ),
+      );
+      // .cPadOnly(r: 50, t: 50);
+    },
+  );
+}
+
+class KeyValueField extends StatelessWidget {
+  final String titleKey;
+  final String value;
+  var fontSize;
+
+  KeyValueField({
+    super.key,
+    required this.titleKey,
+    required this.value,
+    this.fontSize = 17.0,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<InvoiceController>(
+        builder: (logic) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(titleKey,
+                  style: customStyle(fontSize, const Color.fromRGBO(0, 0, 0, 0.58),
+                      FontWeight.bold)),
+              RichText(
+                textScaleFactor: 1,
+                text: TextSpan(children: [
+                  TextSpan(
+                      text: '',
+                      style: customStyle(fontSize,
+                          const Color.fromRGBO(0, 0, 0, 0.65), FontWeight.normal)),
+                  TextSpan(
+                      text: value,
+                      style: customStyle(fontSize, const Color.fromRGBO(0, 0, 0, 1),
+                          FontWeight.bold)),
+                ]),
+              ),
+            ],
+          );
+        }
+    );
+  }
+}
+

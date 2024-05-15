@@ -582,30 +582,58 @@ void payBillPopup({
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    IconButton(
-                        onPressed: () {
-                          // logic.clearVariable();
-                          Get.back();
-                        },
-                        iconSize: 20,
-                        icon: const Icon(
-                          Icons.close,
-                          color: Colors.black,
-                        )).cAlignment(Alignment.topRight),
-                    Text('Bill Overview',style: customStyle(18.0, Colors.black, FontWeight.bold),),
+                    Text('Bill Overview',style: customStyle(18.0, Colors.black, FontWeight.bold),).cPadOnly(t: 10),
                     SizedBox(height: 8,),
                     Row(
                       children: [
                         Text('Time period : ',style: customStyle(12.0, Colors.black, FontWeight.normal),),
-                        Text('11-11-2024 - 12-12-2024 ',style: customStyle(12.0, Colors.black, FontWeight.normal),),
+                        Text('${(logic.startMonth)?.cGetFormattedDate(format: 'dd-MM-yyyy')}  -  ${(logic.endMonth)?.cGetFormattedDate(format: 'dd-MM-yyyy')}',style: customStyle(12.0, Colors.black, FontWeight.normal),),
                       ],
                     ),
                     SizedBox(height: 3,),
                     Text('Students : ',style: customStyle(14.0, Colors.black, FontWeight.bold),),
-                    SizedBox(height: 2,),
+                    SizedBox(height: 3,),
                     Text(HomeController.to.studentsName(),style: customStyle(12.0, Colors.black, FontWeight.normal),),
+                    SizedBox(height: 5,),
+                    Text('Combine the bill totals for these students. ',style: customStyle(13.0, Colors.black, FontWeight.bold),),
+                    SizedBox(height: 5,),
+                    KeyValueField(titleKey: 'Subtotal : ',value: 'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalAmount ?? 0}') / 100)}',fontSize: 12.0,),
+                    KeyValueField(titleKey: 'Tax : ',value: 'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalTax ?? 0}') / 100)}',fontSize: 12.0,),
+                    Divider(),
+                    KeyValueField(titleKey: 'Total : ',value: 'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalPayableAmount ?? 0}') / 100)}',fontSize: 12.0,),
+                    SizedBox(height: 20,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                          InkWell(
+                            onTap: () {
+                          Get.back();
+                            },
+                            child: CustomButtonWidget(
+                              backgroundColor: Colors.white,
+                              borderColor: primaryColorPurple,
+                              vPadding: 8,
+                              width: (context.cWidth >= 800) ? 80 : 80,
+                              buttonTitle: 'Cancel',
+                              titleStyle: customStyle(10.0,
+                                  primaryColorPurple, FontWeight.bold),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {},
+                            child: CustomButtonWidget(
+                              backgroundColor: primaryColorPurple,
+                              vPadding: 8,
+                              width: (context.cWidth >= 800) ? 60 : 80,
+                              buttonTitle: 'Pay',
+                              titleStyle: customStyle(
+                                  10.0, Colors.white, FontWeight.bold),
+                            ).cPadOnly(l: 7),
+                          ),
+                      ],
+                    ),
 
-                  ]).cPadAll(10),
+                  ]).cPadAll(15),
             );
           }),
         ),

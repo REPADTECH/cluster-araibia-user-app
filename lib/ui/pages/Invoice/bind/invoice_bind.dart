@@ -27,6 +27,9 @@ class InvoiceController extends GetxController {
   ProfileModel? profileModel;
   student.DataList? billFilterdStudentChoosed;
   var filterChoosed = '';
+  var stdName;
+  var tax;
+  var amount;
 
   // Controller TO The Web View
   // late final WebViewController webViewController;
@@ -102,6 +105,10 @@ class InvoiceController extends GetxController {
     } else {
       debugPrint('');
     }
+  }
+
+  String studentsName(){
+    return (studentModelList?.data?.dataList??[]).map((item) =>item.studentName.toString()).join(', ');
   }
 
   void getInvoiceList() async {
