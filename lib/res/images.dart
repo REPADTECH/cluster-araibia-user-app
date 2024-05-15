@@ -36,4 +36,6 @@ const String schoolImage = 'assets/images/schoollmages.svg';
 const String busImage = 'assets/images/busImage.svg';
 const String coupon_fill_icon = 'assets/icons/coupon_fill_icon.svg';
 const String emoji = 'assets/images/emoji.png';
+const String offerBg = 'assets/icons/offer_bg.png';
+const String offerIcon = 'assets/icons/offer_icon.png';
 

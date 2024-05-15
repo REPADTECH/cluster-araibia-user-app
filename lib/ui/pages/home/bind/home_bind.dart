@@ -1,5 +1,5 @@
 import 'package:cluster_arabia/models/banner_list_model.dart';
-import 'package:cluster_arabia/models/home_page_models.dart';
+import 'package:cluster_arabia/models/home_page_models.dart' as student;
 import 'package:cluster_arabia/models/profile_model.dart';
 import 'package:cluster_arabia/utilities/api_provider.dart';
 import 'package:cluster_arabia/utilities/utils.dart';
@@ -20,14 +20,26 @@ class HomeController extends GetxController {
   var startDatePass = DateTime.now().cGetFormattedDate(format: 'yyyy-MM-dd'),
       endDatePass = DateTime.now().cGetFormattedDate(format: 'yyyy-MM-dd');
   final currentPage = 0.obs;
+
+  TextEditingController couponCode = TextEditingController();
+
+
   ProfileModel? profileModel;
   BannerListModel?bannerListModel;
   BannerListModel?sliderModel;
+  student.HomeBillAmount? homeBillAmount;
+
   late BuildContext context;
   DateTime? startMonth;
   DateTime? endMonth;
-  HomeBillAmount? homeBillAmount;
   var totWidth=60;
+  var isAddMore = false.obs;
+  bool cartCouponIsValid = false;
+  var validCouponText = '';
+  var paymentType = 'pay_at_shop'.obs;
+  var singleLineText;
+
+
 
   @override
   void onInit() {
@@ -52,6 +64,8 @@ class HomeController extends GetxController {
     }
   }
 
+
+
   void getHomeAmount() async {
     try {
       showLoading();
@@ -66,6 +80,17 @@ class HomeController extends GetxController {
     } finally {
       update();
     }
+  }
+
+  // void main() {
+  //   List<student.Students1> items = homeBillAmount?.data?.students??[];
+  //   // List<dynamic> items = ['apple', 123, true];
+  //    singleLineText = (items).map((item) => item.studentName.toString()).join(', ');
+  //   print('**********${singleLineText}');
+  // }
+
+  String studentsName(){
+    return (homeBillAmount?.data?.students??[]).map((item) =>item.studentName.toString()).join(', ');
   }
 
   void getBannerData() async{

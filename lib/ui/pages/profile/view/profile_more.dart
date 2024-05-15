@@ -1,5 +1,6 @@
 import 'package:cluster_arabia/res/images.dart';
 import 'package:cluster_arabia/res/style.dart';
+import 'package:cluster_arabia/ui/pages/home_stack_dashboard/bind/home_stack_dashboard_bind.dart';
 import 'package:cluster_arabia/ui/pages/profile/bind/profile_bind.dart';
 import 'package:cluster_arabia/utilities/app_routes.dart';
 import 'package:flutter/material.dart';
@@ -111,14 +112,16 @@ class ListTilePart extends StatelessWidget {
           name: 'Invoice',
           icon: transactionIcon,
           onTap: () {
-            Get.toNamed(Routes.invoice);
+            // Get.toNamed(Routes.invoice);
+            HomeStackDashboardController.to.changeTabIndex(1);
           },
         ).cPadSymmetric(h: 8),
         ListTileItemProfile(
           name: 'Children',
           icon: studentsIcon,
           onTap: () {
-            Get.toNamed(Routes.children);
+            // Get.toNamed(Routes.children);
+            HomeStackDashboardController.to.changeTabIndex(2);
           },
         ).cPadSymmetric(h: 8),
         ListTileItemProfile(

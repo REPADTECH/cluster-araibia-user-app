@@ -182,6 +182,43 @@ class CustomTextField extends StatelessWidget {
   }
 }
 
+class CustomRoundedCheckBox extends StatelessWidget {
+  void Function()? onTap;
+  final v;
+
+  CustomRoundedCheckBox({super.key, this.onTap, this.v});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        width: 15.0,
+        height: 15.0,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: v ? primaryColorPurple : Colors.white,
+          border: Border.all(
+            color: v
+                ? primaryColorPurple
+                : Colors.grey.withOpacity(0.8), // White border color
+            width: 1.5,
+          ),
+          // borderRadius:
+          //     BorderRadius.circular(4.0), // Adjust the border radius as needed
+        ),
+        child: v
+            ? const Icon(
+          Icons.check,
+          color: Colors.white,
+          size: 13.0,
+        )
+            : const SizedBox(), // Empty SizedBox when not checked
+      ),
+    );
+  }
+}
+
 
 showAlertPopup(context,
     {void Function()? onTapYes,

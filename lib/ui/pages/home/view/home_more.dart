@@ -4,6 +4,7 @@ import 'package:cluster_arabia/res/images.dart';
 import 'package:cluster_arabia/res/style.dart';
 import 'package:cluster_arabia/ui/pages/home/bind/home_bind.dart';
 import 'package:cluster_arabia/ui/pages/home_stack_dashboard/bind/home_stack_dashboard_bind.dart';
+import 'package:cluster_arabia/utilities/common_widget.dart';
 import 'package:cluster_arabia/utilities/utils.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:dotted_line/dotted_line.dart';
@@ -554,6 +555,7 @@ void payBillPopup({
     barrierDismissible: false,
     builder: (BuildContext context) {
       return AlertDialog(
+        backgroundColor: Colors.transparent,
         scrollable: true,
         // alignment: Alignment.topRight,
         // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
@@ -561,10 +563,11 @@ void payBillPopup({
         content: SingleChildScrollView(
           child: GetBuilder<HomeController>(builder: (logic) {
             return Container(
-              height: 200,
+              // height: 200,
               // width: 330,
               padding: const EdgeInsets.only(top: 1, bottom: 10),
               decoration: BoxDecoration(
+                  // color: Colors.transparent,
                   color: const Color.fromRGBO(255, 255, 255, 1),
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: const [
@@ -589,6 +592,18 @@ void payBillPopup({
                           Icons.close,
                           color: Colors.black,
                         )).cAlignment(Alignment.topRight),
+                    Text('Bill Overview',style: customStyle(18.0, Colors.black, FontWeight.bold),),
+                    SizedBox(height: 8,),
+                    Row(
+                      children: [
+                        Text('Time period : ',style: customStyle(12.0, Colors.black, FontWeight.normal),),
+                        Text('11-11-2024 - 12-12-2024 ',style: customStyle(12.0, Colors.black, FontWeight.normal),),
+                      ],
+                    ),
+                    SizedBox(height: 3,),
+                    Text('Students : ',style: customStyle(14.0, Colors.black, FontWeight.bold),),
+                    SizedBox(height: 2,),
+                    Text(HomeController.to.studentsName(),style: customStyle(12.0, Colors.black, FontWeight.normal),),
 
                   ]).cPadAll(10),
             );
@@ -598,6 +613,48 @@ void payBillPopup({
       // .cPadOnly(r: 50, t: 50);
     },
   );
+}
+
+class KeyValueField extends StatelessWidget {
+  final String titleKey;
+  final String value;
+  var fontSize;
+
+  KeyValueField({
+    super.key,
+    required this.titleKey,
+    required this.value,
+    this.fontSize = 17.0,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<HomeController>(
+        builder: (logic) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(titleKey,
+                  style: customStyle(fontSize, const Color.fromRGBO(0, 0, 0, 0.58),
+                      FontWeight.bold)),
+              RichText(
+                textScaleFactor: 1,
+                text: TextSpan(children: [
+                  TextSpan(
+                      text: '',
+                      style: customStyle(fontSize,
+                          const Color.fromRGBO(0, 0, 0, 0.65), FontWeight.normal)),
+                  TextSpan(
+                      text: value,
+                      style: customStyle(fontSize, const Color.fromRGBO(0, 0, 0, 1),
+                          FontWeight.bold)),
+                ]),
+              ),
+            ],
+          );
+        }
+    );
+  }
 }
 
 class MenuBox extends StatelessWidget {
