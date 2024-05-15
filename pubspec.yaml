@@ -57,6 +57,8 @@ dependencies:
   toastification: ^2.0.0
   lottie: ^2.0.0
   expansion_tile_card: ^3.0.0
+#  webview_flutter: ^4.7.0
+  url_launcher: ^6.2.6
 
 
 

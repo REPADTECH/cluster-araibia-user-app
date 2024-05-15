@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/intl.dart';
 import 'package:toastification/toastification.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 showLoading() {
   EasyLoading.show();
@@ -81,5 +82,14 @@ String? validateMobNumber(String value) {
     return 'Please enter mobile number';
   } else {
     return 'Mobile number must be 10 or 14 digits long';
+  }
+}
+
+void makePhoneCall({required String phoneNumber}) async {
+  final String url = 'tel:$phoneNumber';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
   }
 }

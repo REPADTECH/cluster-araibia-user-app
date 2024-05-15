@@ -1,4 +1,3 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cluster_arabia/res/colors.dart';
 import 'package:cluster_arabia/res/images.dart';
@@ -14,6 +13,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:cluster_arabia/models/student_list_model.dart' as student;
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+// import 'package:webview_flutter/webview_flutter.dart';
 
 class FirstPart extends StatelessWidget {
   const FirstPart({super.key});
@@ -32,11 +32,13 @@ class FirstPart extends StatelessWidget {
               child: Row(
                 children: [
                   CachedNetworkImage(
-                    imageUrl: logic.profileModel?.data?.img??'',
-                    placeholder: (context, url) => const CircularProgressIndicator(),
+                    imageUrl: logic.profileModel?.data?.img ?? '',
+                    placeholder: (context, url) =>
+                        const CircularProgressIndicator(),
                     width: 25,
                     height: 25,
-                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
                   ).cPadOnly(l: 5),
                   const SizedBox(
                     width: 15,
@@ -53,18 +55,19 @@ class FirstPart extends StatelessWidget {
                       popupProps: PopupProps.menu(
                         showSearchBox: false,
                         showSelectedItems: false,
-
-                        disabledItemFn: (student.DataList s) => (s.gender??'').startsWith('I'),
+                        disabledItemFn: (student.DataList s) =>
+                            (s.gender ?? '').startsWith('I'),
                       ),
-                      items: logic.studentModelList?.data?.dataList??[],
+                      items: logic.studentModelList?.data?.dataList ?? [],
                       enabled: true,
-                      onChanged: ( value) {
+                      onChanged: (value) {
                         logic.invoiceList.clear();
-                        logic.billFilterdStudentChoosed=value;
-                        logic.filterChoosed=value?.id??'';
+                        logic.billFilterdStudentChoosed = value;
+                        logic.filterChoosed = value?.id ?? '';
                         logic.getInvoiceList();
                       },
-                      selectedItem:  logic.studentModelList?.data?.dataList?.cFirst  ,
+                      selectedItem:
+                          logic.studentModelList?.data?.dataList?.cFirst,
                     ),
                   ),
                 ],
@@ -91,13 +94,11 @@ class FirstPart extends StatelessWidget {
               ).cToCenter,
             ),
           )
-
         ],
       ).cPadOnly(t: 15, l: 15);
     });
   }
 }
-
 
 void dateSelectPopup({
   required BuildContext context,
@@ -129,8 +130,12 @@ void dateSelectPopup({
                     final DateTime? rangeEndDate = v.endDate;
                     logic.startMonth = rangeStartDate;
                     logic.endMonth = rangeEndDate;
-                    logic.endDatePass=rangeEndDate.toString().cGetFormattedDate(format: 'yyyy-MM-dd');
-                    logic.startDatePass=rangeStartDate.toString().cGetFormattedDate(format: 'yyyy-MM-dd');
+                    logic.endDatePass = rangeEndDate
+                        .toString()
+                        .cGetFormattedDate(format: 'yyyy-MM-dd');
+                    logic.startDatePass = rangeStartDate
+                        .toString()
+                        .cGetFormattedDate(format: 'yyyy-MM-dd');
                     logic.update();
                     logic.invoiceList.clear();
                     logic.getInvoiceList();
@@ -173,14 +178,15 @@ class ListPart extends StatelessWidget {
     return GetBuilder<InvoiceController>(builder: (logic) {
       return Expanded(
         child: ListView.builder(
-            itemCount: logic.invoiceList.length ??0,
+            itemCount: logic.invoiceList.length ?? 0,
             shrinkWrap: true,
             controller: logic.scrollController,
             physics: const AlwaysScrollableScrollPhysics(),
             itemBuilder: (context, i) {
               var data = logic.invoiceList[i];
               return Container(
-                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                 // height: 135,
                 width: context.cWidth,
                 decoration: BoxDecoration(
@@ -242,9 +248,7 @@ class ListPart extends StatelessWidget {
                                 width: 8,
                               ),
                               Text(
-                                ((data.paidOn ?? '').isEmpty)
-                                    ? 'Open'
-                                    : 'Paid',
+                                ((data.paidOn) == null) ? 'Open' : 'Paid',
                                 style: customStyle(
                                     13.0,
                                     ((data.paidOn ?? '').isEmpty)
@@ -287,15 +291,18 @@ class ListPart extends StatelessWidget {
                           imageUrl: data.img ?? '',
                           height: 25,
                           width: 25,
-                          placeholder: (context, url) => const CircularProgressIndicator(),
-                          errorWidget: (context, url, error) => const Icon(Icons.error),
+                          placeholder: (context, url) =>
+                              const CircularProgressIndicator(),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
                         ),
                         const SizedBox(
                           width: 10,
                         ),
                         SizedBox(
                           width: 200,
-                          child: Text('${data.student?.name ?? ' '} (${data.student?.std ?? ''} ${data.student?.division ?? ''})',
+                          child: Text(
+                              '${data.student?.name ?? ' '} (${data.student?.std ?? ''} ${data.student?.division ?? ''})',
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: customStyle(
@@ -337,16 +344,22 @@ class ListPart extends StatelessWidget {
                               width: 7,
                             ),
                             Text(
-                                data.student?.busInRoute?.routeInfo?.routeName ?? '',
+                                data.student?.busInRoute?.routeInfo
+                                        ?.routeName ??
+                                    '',
                                 style: customStyle(
                                     11.0, Colors.black, FontWeight.normal)),
-                            const SizedBox(width: 5,),
+                            const SizedBox(
+                              width: 5,
+                            ),
                             SizedBox(
                               width: 115,
                               child: Text(
-                                maxLines: 2,
+                                  maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
-                                  data.student?.busInRoute?.routeInfo?.startingPoint ?? '',
+                                  data.student?.busInRoute?.routeInfo
+                                          ?.startingPoint ??
+                                      '',
                                   style: customStyle(
                                       10.0,
                                       const Color.fromRGBO(99, 99, 99, 1),
@@ -356,19 +369,28 @@ class ListPart extends StatelessWidget {
                         ).cPadOnly(t: 5),
                         Row(
                           children: [
-                            InkWell(
-                              onTap: () {},
-                              child: CustomButtonWidget(
-                                backgroundColor: Colors.white,
-                                borderColor: primaryColorPurple,
-                                vPadding: 4,
-                                width: (context.cWidth >= 800) ? 80 : 60,
-                                buttonTitle: 'View Bill',
-                                titleStyle: customStyle(
-                                    10.0, primaryColorPurple, FontWeight.bold),
+                            if (data?.paidOn != null)
+                              InkWell(
+                                onTap: () {
+                                  // logic.setWebViewController(
+                                  //     id: data?.totalBillAmountData?.id ?? '');
+                                  // showBillPopUp(
+                                  //     context: context,
+                                  //     billId:
+                                  //         data?.totalBillAmountData?.id ?? '');
+                                  logic.openBillInBrowser(billId:data?.totalBillAmountData?.id ?? '');
+                                },
+                                child: CustomButtonWidget(
+                                  backgroundColor: Colors.white,
+                                  borderColor: primaryColorPurple,
+                                  vPadding: 4,
+                                  width: (context.cWidth >= 800) ? 80 : 60,
+                                  buttonTitle: 'View Bill',
+                                  titleStyle: customStyle(10.0,
+                                      primaryColorPurple, FontWeight.bold),
+                                ),
                               ),
-                            ),
-                            if (i == 0)
+                            if (data?.paidOn == null)
                               InkWell(
                                 onTap: () {},
                                 child: CustomButtonWidget(
@@ -389,11 +411,41 @@ class ListPart extends StatelessWidget {
                     // )
                   ],
                 ),
-              ).cMargOnly(t: 5, l: 15, r: 15,b: 10);
+              ).cMargOnly(t: 5, l: 15, r: 15, b: 10);
             }),
       );
     });
   }
+
+  // void showBillPopUp({
+  //   required BuildContext context,
+  //   required var billId,
+  // }) async {
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       // Get the screen height
+  //       final double screenHeight = MediaQuery.of(context).size.height;
+  //
+  //       return Dialog(
+  //         shape: RoundedRectangleBorder(
+  //           borderRadius: BorderRadius.circular(12.0),
+  //         ),
+  //         child: GetBuilder<InvoiceController>(builder: (logic) {
+  //           return Container(
+  //             width: screenHeight,
+  //             height: 500,
+  //             padding: const EdgeInsets.all(20.0),
+  //             decoration: const BoxDecoration(
+  //                 color: Colors.white,
+  //                 borderRadius: BorderRadius.all(Radius.circular(12.0))),
+  //             child: WebViewWidget(
+  //               controller: logic.webViewController,
+  //             ),
+  //           );
+  //         }),
+  //       );
+  //     },
+  //   );
+  // }
 }
-
-

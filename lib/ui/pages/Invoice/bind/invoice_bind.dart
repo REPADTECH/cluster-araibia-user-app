@@ -1,12 +1,15 @@
 import 'package:cluster_arabia/models/invoice_list_model.dart' as invoice;
 import 'package:cluster_arabia/models/profile_model.dart';
 import 'package:cluster_arabia/utilities/api_provider.dart';
+import 'package:cluster_arabia/utilities/dio.dart';
 import 'package:cluster_arabia/utilities/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_date_range_picker/flutter_date_range_picker.dart';
 import 'package:get/get.dart';
 import 'package:cluster_arabia/models/student_list_model.dart' as student;
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:url_launcher/url_launcher.dart';
+// import 'package:webview_flutter/webview_flutter.dart';
 
 class InvoiceBinding implements Bindings {
   @override
@@ -22,8 +25,11 @@ class InvoiceController extends GetxController {
   invoice.InvoiceListModel? invoiceListModel;
   student.StudentModelList? studentModelList;
   ProfileModel? profileModel;
-  student.DataList?billFilterdStudentChoosed;
-  var filterChoosed='';
+  student.DataList? billFilterdStudentChoosed;
+  var filterChoosed = '';
+
+  // Controller TO The Web View
+  // late final WebViewController webViewController;
 
   List<invoice.DataList> invoiceList = [];
   var pageNO = 1;
@@ -39,7 +45,8 @@ class InvoiceController extends GetxController {
   ];
 
   DateRange? selectedDateRange;
-  var startDatePass ;
+  var startDatePass;
+
   var endDatePass;
   late ScrollController scrollController;
   bool hasNextPage = false;
@@ -56,19 +63,22 @@ class InvoiceController extends GetxController {
     endMonth = month;
     update(); // This triggers the UI updates
   }
-  clearData(){
+
+  clearData() {
     invoiceList.clear();
-    filterChoosed='';
-    startDatePass=null;
-    endDatePass=null;
-    billFilterdStudentChoosed=null;
-    dateRangeController.selectedRanges=[];
-    dateRangeController.selectedRanges=[];
+    filterChoosed = '';
+    startDatePass = null;
+    endDatePass = null;
+    billFilterdStudentChoosed = null;
+    dateRangeController.selectedRanges = [];
+    dateRangeController.selectedRanges = [];
     update();
   }
+
   @override
   void onInit() {
     clearData();
+    // webViewController = WebViewController();
     pageNO = 1;
     getProfile();
     scrollController = ScrollController();
@@ -97,8 +107,9 @@ class InvoiceController extends GetxController {
   void getInvoiceList() async {
     try {
       showLoading();
-      invoiceListModel = await Api.to.getInvoiceList(page: pageNO,
-      studentId: filterChoosed,
+      invoiceListModel = await Api.to.getInvoiceList(
+        page: pageNO,
+        studentId: filterChoosed,
         startDate: startDatePass,
         endDate: endDatePass,
       );
@@ -106,8 +117,9 @@ class InvoiceController extends GetxController {
       if (!(invoiceListModel?.success ?? true)) {
         showToast(context: context, message: invoiceListModel?.message ?? '');
       } else {
-        hasNextPage =
-            ((invoiceListModel?.data?.dataList ?? []).length == 20) ? true : false;
+        hasNextPage = ((invoiceListModel?.data?.dataList ?? []).length == 20)
+            ? true
+            : false;
         invoiceList.addAll((invoiceListModel?.data?.dataList ?? []));
       }
     } catch (e) {
@@ -144,6 +156,38 @@ class InvoiceController extends GetxController {
       showToast(context: context, message: e.toString());
     } finally {
       update();
+    }
+  }
+
+  // void setWebViewController({required String id}) async {
+  //   var url = '${baseURL}view_bill/$id';
+  //   webViewController
+  //     ..setJavaScriptMode(JavaScriptMode.unrestricted)
+  //     ..setBackgroundColor(const Color(0x00000000))
+  //     ..setNavigationDelegate(
+  //       NavigationDelegate(
+  //         onProgress: (int progress) {
+  //           // Update loading bar.
+  //         },
+  //         onPageStarted: (String url) {},
+  //         onPageFinished: (String url) {},
+  //         onWebResourceError: (WebResourceError error) {},
+  //         onNavigationRequest: (NavigationRequest request) {
+  //           // if (request.url.startsWith(url)) {
+  //           //   return NavigationDecision.prevent;
+  //           // }
+  //           return NavigationDecision.navigate;
+  //         },
+  //       ),
+  //     )
+  //     ..loadRequest(Uri.parse(url));
+  //   update();
+  // }
+
+  void openBillInBrowser({required String billId}) async {
+    var url = '${baseURL}view_bill/$billId';
+    if (!await launchUrl(Uri.parse(url))) {
+      throw Exception('Could not launch $url');
     }
   }
 }

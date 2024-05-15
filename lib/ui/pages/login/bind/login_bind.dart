@@ -53,7 +53,6 @@ class LoginController extends GetxController {
     super.dispose();
   }
 
-
   void checkLogin({required BuildContext context}) async {
     if (loginPageView.currentState?.validate() ?? false) {
       try {
@@ -62,13 +61,13 @@ class LoginController extends GetxController {
         dismissLoading();
         if (loginModel?.success ?? true) {
           otpDesign.value = !otpDesign.value;
-          otp.value=loginModel?.data?.otp ?? '';
-          1.cDelay((){
+          otp.value = loginModel?.data?.otp ?? '';
+          1.cDelay(() {
             var otpValue = loginModel?.data?.otp ?? '';
-            otpFieldController.setValue(otpValue[0],0);
-            otpFieldController.setValue(otpValue[1],1);
-            otpFieldController.setValue(otpValue[2],2);
-            otpFieldController.setValue(otpValue[3],3);
+            otpFieldController.setValue(otpValue[0], 0);
+            otpFieldController.setValue(otpValue[1], 1);
+            otpFieldController.setValue(otpValue[2], 2);
+            otpFieldController.setValue(otpValue[3], 3);
             update();
           });
         } else {
