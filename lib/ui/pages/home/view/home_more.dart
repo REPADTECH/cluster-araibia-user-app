@@ -595,7 +595,7 @@ void payBillPopup({
                     SizedBox(height: 3,),
                     Text(HomeController.to.studentsName(),style: customStyle(12.0, Colors.black, FontWeight.normal),),
                     SizedBox(height: 5,),
-                    Text('Combine the bill totals for these students. ',style: customStyle(13.0, Colors.black, FontWeight.bold),),
+                    Text('Combine the bill totals for ${(logic.homeBillAmount?.data?.students?.length==1)?'the student.':'these students.'}  ',style: customStyle(13.0, Colors.black, FontWeight.bold),),
                     SizedBox(height: 5,),
                     KeyValueField(titleKey: 'Subtotal : ',value: 'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalAmount ?? 0}') / 100)}',fontSize: 12.0,),
                     KeyValueField(titleKey: 'Tax : ',value: 'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalTax ?? 0}') / 100)}',fontSize: 12.0,),
