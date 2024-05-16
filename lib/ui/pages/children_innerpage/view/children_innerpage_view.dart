@@ -11,32 +11,34 @@ class ChildrenInnerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ChildrenInnerPageController.to.context=context;
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        leading: InkWell(
-          onTap: (){
-            Get.back();
-          },
-            child: const Icon(Icons.arrow_back_ios_new_outlined)),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-          const ProfilePart(),
-          const AddressPart(),
-            const SchoolDetails(),
-            Row(
-              children: [
-                const PickupPointSection().cExpanded(1),
-                const SizedBox(width: 15,),
-                const MapSection().cExpanded(1),
-              ],
-            ),
-            const BusDetails(),
-            const OtherInfo()
-        ],).cPadOnly(l: 15,r: 15,t: 10,b: 10),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          leading: InkWell(
+            onTap: (){
+              Get.back();
+            },
+              child: const Icon(Icons.arrow_back_ios_new_outlined)),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+            const ProfilePart(),
+            const AddressPart(),
+              const SchoolDetails(),
+              Row(
+                children: [
+                  const PickupPointSection().cExpanded(1),
+                  const SizedBox(width: 15,),
+                  const MapSection().cExpanded(1),
+                ],
+              ),
+              const BusDetails(),
+              const OtherInfo()
+          ],).cPadOnly(l: 15,r: 15,t: 10,b: 10),
+        ),
       ),
     );
   }

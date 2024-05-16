@@ -1,5 +1,6 @@
 import 'package:cluster_arabia/models/banner_list_model.dart';
 import 'package:cluster_arabia/models/coupon_list_model.dart';
+import 'package:cluster_arabia/models/disable_childran_model.dart';
 import 'package:cluster_arabia/models/help&support_create_model.dart';
 import 'package:cluster_arabia/models/help&support_list_model.dart';
 import 'package:cluster_arabia/models/home_page_models.dart';
@@ -46,6 +47,25 @@ class Api extends GetConnect {
       ),
     ).then((value) {
       return LoginModel.fromJson(value.body ?? err);
+    });
+  }
+
+  Future<DisableChildModel> disableChild({
+    required String studentId,
+    required String reason,
+    required String serviceEndedDate,
+  }) {
+    return post(
+      'p/disable/create',
+      FormData(
+        {
+          'student_id': studentId,
+          'reason': reason,
+          'service_end_requested': serviceEndedDate,
+        },
+      ),
+    ).then((value) {
+      return DisableChildModel.fromJson(value.body ?? err);
     });
   }
 

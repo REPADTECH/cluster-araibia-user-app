@@ -3,13 +3,16 @@ import 'package:cluster_arabia/res/colors.dart';
 import 'package:cluster_arabia/res/images.dart';
 import 'package:cluster_arabia/res/style.dart';
 import 'package:cluster_arabia/ui/pages/children_innerpage/bind/children_innerpage_bind.dart';
+import 'package:cluster_arabia/utilities/common_widget.dart';
 import 'package:cluster_arabia/utilities/utils.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_utils/flutter_custom_utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class ProfilePart extends StatelessWidget {
   const ProfilePart({
@@ -84,7 +87,10 @@ class AddressPart extends StatelessWidget {
           Row(
             children: [
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  logic.clearVariable();
+                  showDisableDialog(context: context);
+                },
                 child: Container(
                   // width: 150,
                   height: 40,
@@ -143,6 +149,134 @@ class AddressPart extends StatelessWidget {
     });
   }
 }
+
+//Show Dialog
+void showDisableDialog({required BuildContext context}) async {
+  showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+            backgroundColor: Colors.white,
+            scrollable: true,
+            // alignment: Alignment.topRight,
+            // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+            contentPadding: EdgeInsets.zero,
+            content: GetBuilder<ChildrenInnerPageController>(builder: (logic) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Text(
+                    'Request to Disable The Student',
+                    style: customStyle(13.0, Colors.black, FontWeight.bold),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Text(
+                    'Select Date',
+                    style: customStyle(13.0, Colors.black, FontWeight.normal),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      logic.selectDate(context: context);
+                    },
+                    child: Container(
+                      width: context.cWidth,
+                      margin: const EdgeInsets.only(left: 13, right: 13),
+                      height: 40,
+                      decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(10.0))),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          logic.dateTimeChoose,
+                          style: customStyle(
+                              13.0, Colors.black, FontWeight?.normal),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    'Reason',
+                    style: customStyle(13.0, Colors.black, FontWeight.normal),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    width: context.cWidth,
+                    margin: const EdgeInsets.only(left: 13, right: 13),
+                    height: 70,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10.0)),
+                        border: Border.all(
+                          color: Colors.black,
+                          width: 1,
+                        )),
+                    child: TextFormField(
+                      controller: logic.reasonTextFormField,
+                      maxLines: 4,
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Enter The Reason',
+                          hintStyle: customStyle(
+                              13.0, Colors.black26, FontWeight.normal)),
+                    ).cPadOnly(l: 10),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: CustomButtonWidget(
+                          backgroundColor: Colors.white,
+                          borderColor: primaryColorPurple,
+                          vPadding: 8,
+                          width: (context.cWidth >= 800) ? 80 : 80,
+                          buttonTitle: 'Cancel',
+                          titleStyle: customStyle(
+                              10.0, primaryColorPurple, FontWeight.bold),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          logic.raiseRequest();
+                        },
+                        child: CustomButtonWidget(
+                          backgroundColor: primaryColorPurple,
+                          vPadding: 8,
+                          width: (context.cWidth >= 800) ? 60 : 80,
+                          buttonTitle: 'Confirm',
+                          titleStyle:
+                              customStyle(10.0, Colors.white, FontWeight.bold),
+                        ).cPadOnly(l: 7),
+                      ),
+                    ],
+                  ),
+                ],
+              ).cPadAll(20);
+            }));
+      });
+}
+//End Dialog
 
 class SchoolDetails extends StatelessWidget {
   const SchoolDetails({
