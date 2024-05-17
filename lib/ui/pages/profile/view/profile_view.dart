@@ -28,7 +28,8 @@ class ProfileView extends StatelessWidget {
         ),
         body: const SingleChildScrollView(
           child: Column(
-            children: [ProfileImagePart(), ListTilePart(), AddressSection()],
+            children: [ProfileImagePart(), ListTilePart(), AddressSection(),
+              DeleteAccount()],
           ),
         ),
       ),

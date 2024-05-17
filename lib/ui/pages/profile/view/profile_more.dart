@@ -249,3 +249,59 @@ class AddressSection extends StatelessWidget {
     });
   }
 }
+
+class DeleteAccount extends StatelessWidget {
+  const DeleteAccount({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        ProfileController.to.deleteAccount();
+      },
+      child: Container(
+        margin: EdgeInsets.only(left: 13, right: 15, top: 22),
+        width: context.cWidth,
+        height: 50,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: Color.fromRGBO(203, 6, 6, 1.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 3,
+              blurRadius: 6,
+              offset: Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Center(
+          child: Row(
+            children: [
+              SizedBox(
+                width: 18,
+              ),
+              Image.asset(
+                deleteIcon,
+                width: 20,
+                height: 20,
+                color: Colors.white,
+              ),
+              SizedBox(
+                width: 18,
+              ),
+              Text(
+                'Delete Account',
+                style: customStyle(
+                  15.0,
+                  Color.fromRGBO(255, 255, 255, 1.0),
+                  FontWeight.normal,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ).cPadOnly(b: 10),
+    );
+  }
+}

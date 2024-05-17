@@ -1,5 +1,8 @@
 import 'package:cluster_arabia/models/login_model.dart';
 import 'package:cluster_arabia/models/otp_verify_model.dart';
+import 'package:cluster_arabia/res/animation.dart';
+import 'package:cluster_arabia/res/colors.dart';
+import 'package:cluster_arabia/res/style.dart';
 import 'package:cluster_arabia/utilities/api_provider.dart';
 import 'package:cluster_arabia/utilities/app_routes.dart';
 import 'package:cluster_arabia/utilities/com_binding.dart';
@@ -10,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_utils/flutter_custom_utils.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:otp_text_field/otp_text_field.dart';
 
 class LoginBinding implements Bindings {
@@ -71,7 +75,11 @@ class LoginController extends GetxController {
             update();
           });
         } else {
-          showToast(context: context, message: loginModel?.message ?? '');
+          if ((loginModel?.message ?? '').contains('not found')) {
+            showExitPopup(context);
+          } else {
+            showToast(context: context, message: loginModel?.message ?? '');
+          }
         }
       } catch (e) {
         if (kDebugMode) {
@@ -107,3 +115,103 @@ class LoginController extends GetxController {
     }
   }
 }
+
+showExitPopup(context) async {
+  return await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Container(
+            height: 200,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2), //color of shadow
+                    spreadRadius: 10, //spread radius
+                    blurRadius: 18, // blur radius
+                    offset: const Offset(0, 2), // changes position of shadow
+                    //first parameter of offset is left-right
+                    //second parameter is top to down
+                  )
+                ]),
+            child: GetBuilder<LoginController>(builder: (logic) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Image.asset(
+                  //   searchemoji,
+                  //   height: 66,
+                  //   width: 66,
+                  // ),
+                   Lottie.asset(
+                     exclamation,
+                    height: 106,
+                    width: 106,
+                  ),
+                  // const SizedBox(height: 26),
+                  Text('Please ensure your number is valid. Invalid numbers are not allowed here.',style: customStyle(13.0, Colors.black, FontWeight.normal),).cPadOnly(l: 10),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Get.back();
+                          // Get.toNamed(Routes.signUp,
+                          //     arguments: [logic.mob.text]);
+                        },
+                        child: Container(
+                            height: 32,
+                            width: 80,
+                            decoration: BoxDecoration(
+                                // color: const Color.fromRGBO(188, 188, 188, 1),
+                                color: primaryColorPurple,
+                                borderRadius: BorderRadius.circular(32)),
+                            child: Center(
+                              child: Text(
+                                'Ok',
+                                style: customStyle(
+                                    14.0, Colors.white, FontWeight.normal),
+                              ),
+                            )),
+                      ),
+                      // SizedBox(
+                      //   width: 15,
+                      // ),
+                      // Expanded(
+                      //   child: InkWell(
+                      //     onTap: () {
+                      //       Get.back();
+                      //       // Get.toNamed(Routes.signUp,
+                      //       //     arguments: [logic.mob.text]);
+                      //     },
+                      //     child: Container(
+                      //         height: 32,
+                      //         width: 140,
+                      //         decoration: BoxDecoration(
+                      //           // color: const Color.fromRGBO(188, 188, 188, 1),
+                      //             color: Colors.blue,
+                      //             borderRadius: BorderRadius.circular(32)),
+                      //         child: Center(
+                      //           child: Text(
+                      //             "yes".tr,
+                      //             style: customStyle(
+                      //                 14.0, Colors.white, FontWeight.normal),
+                      //           ),
+                      //         )),
+                      //   ),
+                      // ),
+                    ],
+                  ),
+                ],
+              );
+            }),
+          ),
+        );
+      });
+}
+
+
+
