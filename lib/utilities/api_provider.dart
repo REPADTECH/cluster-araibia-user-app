@@ -1,5 +1,6 @@
 import 'package:cluster_arabia/models/banner_list_model.dart';
 import 'package:cluster_arabia/models/coupon_list_model.dart';
+import 'package:cluster_arabia/models/coupon_validation_model.dart';
 import 'package:cluster_arabia/models/disable_childran_model.dart';
 import 'package:cluster_arabia/models/help&support_create_model.dart';
 import 'package:cluster_arabia/models/help&support_list_model.dart';
@@ -196,4 +197,17 @@ class Api extends GetConnect {
     });
   }
 
+  Future<CouponModel> couponValidate({
+    required var couponId,
+    required var studentId,
+  }) {
+    return get(
+      'coupon/validate?student=$studentId&coupon=$couponId',
+    ).then((value) {
+      if (kDebugMode) {
+        print('validate coupon: ${value.body}');
+      }
+      return CouponModel.fromJson(value.body ?? err);
+    });
+  }
 }

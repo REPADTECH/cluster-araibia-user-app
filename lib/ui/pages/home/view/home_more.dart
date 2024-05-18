@@ -45,7 +45,9 @@ class FirstPart extends StatelessWidget {
                     ),
                     Text(
                       'Total payable amount',
-                      style: customStyle(10.0, const Color.fromRGBO(206, 207, 237, 1),
+                      style: customStyle(
+                          10.0,
+                          const Color.fromRGBO(206, 207, 237, 1),
                           FontWeight.normal),
                     ),
                   ],
@@ -85,12 +87,17 @@ class FirstPart extends StatelessWidget {
                     imageUrl:
                         (logic.homeBillAmount?.data?.students?.cFirst)?.img ??
                             '',
-                    placeholder: (context, url) => const CircularProgressIndicator(),
+                    placeholder: (context, url) =>
+                        const CircularProgressIndicator(),
                     width: 40,
                     height: 40,
-                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
                   ).cClipAll(40),
-                ).cVisible((((logic.homeBillAmount?.data?.students?.cFirst)?.img ?? '')).isNotEmpty),
+                ).cVisible(
+                    (((logic.homeBillAmount?.data?.students?.cFirst)?.img ??
+                            ''))
+                        .isNotEmpty),
                 Positioned(
                   right: 35,
                   child: CachedNetworkImage(
@@ -100,12 +107,20 @@ class FirstPart extends StatelessWidget {
                         ? ((logic.homeBillAmount?.data?.students?[1])?.img ??
                             '')
                         : '',
-                    placeholder: (context, url) => const CircularProgressIndicator(),
+                    placeholder: (context, url) =>
+                        const CircularProgressIndicator(),
                     width: 40,
                     height: 40,
-                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
                   ).cClipAll(40),
-                ).cVisible((((logic.homeBillAmount?.data?.students?.length ?? 0) >= 2)?((logic.homeBillAmount?.data?.students?[1])?.img ?? ''):'').isNotEmpty),
+                ).cVisible(
+                    (((logic.homeBillAmount?.data?.students?.length ?? 0) >= 2)
+                            ? ((logic.homeBillAmount?.data?.students?[1])
+                                    ?.img ??
+                                '')
+                            : '')
+                        .isNotEmpty),
                 Positioned(
                   right: 10,
                   child: CachedNetworkImage(
@@ -115,12 +130,20 @@ class FirstPart extends StatelessWidget {
                         ? ((logic.homeBillAmount?.data?.students?[2])?.img ??
                             '')
                         : '',
-                    placeholder: (context, url) => const CircularProgressIndicator(),
+                    placeholder: (context, url) =>
+                        const CircularProgressIndicator(),
                     width: 40,
                     height: 40,
-                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
                   ).cClipAll(40),
-                ).cVisible((((logic.homeBillAmount?.data?.students?.length ?? 0) >= 3)?((logic.homeBillAmount?.data?.students?[2])?.img ?? ''):'').isNotEmpty),
+                ).cVisible(
+                    (((logic.homeBillAmount?.data?.students?.length ?? 0) >= 3)
+                            ? ((logic.homeBillAmount?.data?.students?[2])
+                                    ?.img ??
+                                '')
+                            : '')
+                        .isNotEmpty),
               ],
             ).cPadOnly(t: 10, l: 40, r: 15),
           ),
@@ -201,7 +224,9 @@ class ChildBox extends StatelessWidget {
                   ),
                   Text(
                     'Child $no',
-                    style: customStyle(9.0, const Color.fromRGBO(83, 100, 133, 1),
+                    style: customStyle(
+                        9.0,
+                        const Color.fromRGBO(83, 100, 133, 1),
                         FontWeight.normal),
                   )
                 ],
@@ -342,7 +367,7 @@ class BillOverView extends StatelessWidget {
                     'Overview of Billing for ${(logic.startDatePass.cGetFormattedDate(format: 'MMM-yyyy'))}',
                     style: customStyle(11.0, Colors.black, FontWeight.bold)),
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     payBillPopup(context: context);
                   },
                   child: Container(
@@ -423,15 +448,17 @@ class BillOverView extends StatelessWidget {
                   return Row(
                     children: [
                       Text(
-                          '${getShortMonthText(int.parse(monthCharge?.monthNumber??'0'))}-${monthCharge?.year ?? ''}',
-                          // '${monthCharge?.monthName ?? ' '}-${monthCharge?.year ?? ''}',
+                              '${getShortMonthText(int.parse(monthCharge?.monthNumber ?? '0'))}-${monthCharge?.year ?? ''}',
+                              // '${monthCharge?.monthName ?? ' '}-${monthCharge?.year ?? ''}',
                               style: customStyle(
                                   11.0, primaryColorPurple, FontWeight.normal))
                           .cExpanded(1),
-                      Text(students?.studentName ?? '',
-                              style: customStyle(
-                                  11.0, primaryColorPurple, FontWeight.normal),overflow: TextOverflow.ellipsis,)
-                          .cExpanded(1),
+                      Text(
+                        students?.studentName ?? '',
+                        style: customStyle(
+                            11.0, primaryColorPurple, FontWeight.normal),
+                        overflow: TextOverflow.ellipsis,
+                      ).cExpanded(1),
                       Text('${students?.classNo}',
                               style: customStyle(
                                   11.0, primaryColorPurple, FontWeight.normal))
@@ -490,8 +517,6 @@ class BillOverView extends StatelessWidget {
   }
 }
 
-
-
 class MainMenu extends StatelessWidget {
   const MainMenu({super.key});
 
@@ -503,12 +528,12 @@ class MainMenu extends StatelessWidget {
         Text(
           'Main Menu',
           style: customStyle(15.0, Colors.black, FontWeight.normal),
-        ).cPadOnly(l: 10,t: 10),
+        ).cPadOnly(l: 10, t: 10),
         Row(
           children: [
             InkWell(
               onTap: () {
-               // Get.toNamed(Routes.children);
+                // Get.toNamed(Routes.children);
                 HomeStackDashboardController.to.changeTabIndex(2);
               },
               child: const MenuBox(
@@ -582,57 +607,192 @@ void payBillPopup({
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Bill Overview',style: customStyle(18.0, Colors.black, FontWeight.bold),).cPadOnly(t: 10),
-                    SizedBox(height: 8,),
+                    Text(
+                      'Bill Overview',
+                      style: customStyle(18.0, Colors.black, FontWeight.bold),
+                    ).cPadOnly(t: 10),
+                    SizedBox(
+                      height: 8,
+                    ),
                     Row(
                       children: [
-                        Text('Time period : ',style: customStyle(12.0, Colors.black, FontWeight.normal),),
-                        Text('${(logic.startMonth)?.cGetFormattedDate(format: 'dd-MM-yyyy')}  -  ${(logic.endMonth)?.cGetFormattedDate(format: 'dd-MM-yyyy')}',style: customStyle(12.0, Colors.black, FontWeight.normal),),
+                        Text(
+                          'Time period : ',
+                          style: customStyle(
+                              12.0, Colors.black, FontWeight.normal),
+                        ),
+                        Text(
+                          '${(logic.startMonth)?.cGetFormattedDate(format: 'dd-MM-yyyy')}  -  ${(logic.endMonth)?.cGetFormattedDate(format: 'dd-MM-yyyy')}',
+                          style: customStyle(
+                              12.0, Colors.black, FontWeight.normal),
+                        ),
                       ],
                     ),
-                    SizedBox(height: 3,),
-                    Text('Students : ',style: customStyle(14.0, Colors.black, FontWeight.bold),),
-                    SizedBox(height: 3,),
-                    Text(HomeController.to.studentsName(),style: customStyle(12.0, Colors.black, FontWeight.normal),),
-                    SizedBox(height: 5,),
-                    Text('Combine the bill totals for ${(logic.homeBillAmount?.data?.students?.length==1)?'the student.':'these students.'}  ',style: customStyle(13.0, Colors.black, FontWeight.bold),),
-                    SizedBox(height: 5,),
-                    KeyValueField(titleKey: 'Subtotal : ',value: 'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalAmount ?? 0}') / 100)}',fontSize: 12.0,),
-                    KeyValueField(titleKey: 'Tax : ',value: 'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalTax ?? 0}') / 100)}',fontSize: 12.0,),
+                    SizedBox(
+                      height: 3,
+                    ),
+                    Text(
+                      'Students : ',
+                      style: customStyle(14.0, Colors.black, FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 3,
+                    ),
+                    Text(
+                      HomeController.to.studentsName(),
+                      style: customStyle(12.0, Colors.black, FontWeight.normal),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+
+                    ///
+                    Container(
+                        height: 40,
+                        width: context.cWidth,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black12),
+                            borderRadius: BorderRadius.circular(6)),
+                        child: Center(
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: context.cWidth - 200,
+                                child: Center(
+                                  child: TextFormField(
+                                    controller: logic.couponCode,
+                                    onChanged: (val) {
+                                      if (val.isEmpty) {
+                                        logic.validCouponText = '';
+                                        logic.cartCouponIsValid = false;
+                                        logic.update();
+                                      }
+                                    },
+                                    decoration: const InputDecoration(
+                                      contentPadding:
+                                          EdgeInsets.only(bottom: 17),
+                                      border: InputBorder.none,
+                                      hintText: 'Coupon Code',
+                                      hintStyle:
+                                          TextStyle(color: Colors.black26),
+                                    ),
+                                  ).cPadOnly(
+                                    l: 5,
+                                    r: 5,
+                                  ),
+                                ),
+                              ).cPadOnly(t: 13),
+                              InkWell(
+                                // onTap: () {
+                                //   if (logic.cartCouponIsValid) {
+                                //     logic.couponCode.clear();
+                                //     // logic.coinRedeem.clear();
+                                //     logic.couponModel = null;
+                                //     logic.cartCouponIsValid = false;
+                                //     logic.validCouponText = '';
+                                //     logic.update();
+                                //   } else {
+                                //     logic.couponIsValid();
+                                //   }
+                                // },
+                                onTap: (){
+                                  logic.validateCoupon();
+                                },
+                                child: Container(
+                                  height: 28,
+                                  width: 55,
+                                  decoration: BoxDecoration(
+                                    color: logic.cartCouponIsValid
+                                        ? Colors
+                                            .red // Change to a color you prefer for removal
+                                        : const Color.fromRGBO(51, 58, 157,
+                                            1), // Original color for applying
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      logic.cartCouponIsValid
+                                          ? '${'removeText'}'
+                                          : ' ${'apply'}',
+                                      // child: Text(logic.cartCouponIsValid ? 'Remove' : 'Apply',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ),
+                                ).cPadOnly(r: 5, l: 5),
+                              ),
+                            ],
+                          ),
+                        )),
+
+                    ///
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      'Combine the bill totals for ${(logic.homeBillAmount?.data?.students?.length == 1) ? 'the student.' : 'these students.'}  ',
+                      style: customStyle(13.0, Colors.black, FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    KeyValueField(
+                      titleKey: 'Subtotal : ',
+                      value:
+                          'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalAmount ?? 0}') / 100)}',
+                      fontSize: 12.0,
+                    ),
+                    KeyValueField(
+                      titleKey: 'Tax : ',
+                      value:
+                          'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalTax ?? 0}') / 100)}',
+                      fontSize: 12.0,
+                    ),
                     Divider(),
-                    KeyValueField(titleKey: 'Total : ',value: 'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalPayableAmount ?? 0}') / 100)}',fontSize: 12.0,),
-                    SizedBox(height: 20,),
+                    KeyValueField(
+                      titleKey: 'Total : ',
+                      value:
+                          'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalPayableAmount ?? 0}') / 100)}',
+                      fontSize: 12.0,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                          InkWell(
-                            onTap: () {
-                          Get.back();
-                            },
-                            child: CustomButtonWidget(
-                              backgroundColor: Colors.white,
-                              borderColor: primaryColorPurple,
-                              vPadding: 8,
-                              width: (context.cWidth >= 800) ? 80 : 80,
-                              buttonTitle: 'Cancel',
-                              titleStyle: customStyle(10.0,
-                                  primaryColorPurple, FontWeight.bold),
-                            ),
+                        InkWell(
+                          onTap: () {
+                            logic.couponCode.clear();
+                            Get.back();
+                          },
+                          child: CustomButtonWidget(
+                            backgroundColor: Colors.white,
+                            borderColor: primaryColorPurple,
+                            vPadding: 8,
+                            width: (context.cWidth >= 800) ? 80 : 80,
+                            buttonTitle: 'Cancel',
+                            titleStyle: customStyle(
+                                10.0, primaryColorPurple, FontWeight.bold),
                           ),
-                          InkWell(
-                            onTap: () {},
-                            child: CustomButtonWidget(
-                              backgroundColor: primaryColorPurple,
-                              vPadding: 8,
-                              width: (context.cWidth >= 800) ? 60 : 80,
-                              buttonTitle: 'Pay',
-                              titleStyle: customStyle(
-                                  10.0, Colors.white, FontWeight.bold),
-                            ).cPadOnly(l: 7),
-                          ),
+                        ),
+                        InkWell(
+                          onTap: () {},
+                          child: CustomButtonWidget(
+                            backgroundColor: primaryColorPurple,
+                            vPadding: 8,
+                            width: (context.cWidth >= 800) ? 60 : 80,
+                            buttonTitle: 'Pay',
+                            titleStyle: customStyle(
+                                10.0, Colors.white, FontWeight.bold),
+                          ).cPadOnly(l: 7),
+                        ),
                       ],
                     ),
-
                   ]).cPadAll(15),
             );
           }),
@@ -657,31 +817,29 @@ class KeyValueField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HomeController>(
-        builder: (logic) {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(titleKey,
-                  style: customStyle(fontSize, const Color.fromRGBO(0, 0, 0, 0.58),
+    return GetBuilder<HomeController>(builder: (logic) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(titleKey,
+              style: customStyle(fontSize, const Color.fromRGBO(0, 0, 0, 0.58),
+                  FontWeight.bold)),
+          RichText(
+            textScaleFactor: 1,
+            text: TextSpan(children: [
+              TextSpan(
+                  text: '',
+                  style: customStyle(fontSize,
+                      const Color.fromRGBO(0, 0, 0, 0.65), FontWeight.normal)),
+              TextSpan(
+                  text: value,
+                  style: customStyle(fontSize, const Color.fromRGBO(0, 0, 0, 1),
                       FontWeight.bold)),
-              RichText(
-                textScaleFactor: 1,
-                text: TextSpan(children: [
-                  TextSpan(
-                      text: '',
-                      style: customStyle(fontSize,
-                          const Color.fromRGBO(0, 0, 0, 0.65), FontWeight.normal)),
-                  TextSpan(
-                      text: value,
-                      style: customStyle(fontSize, const Color.fromRGBO(0, 0, 0, 1),
-                          FontWeight.bold)),
-                ]),
-              ),
-            ],
-          );
-        }
-    );
+            ]),
+          ),
+        ],
+      );
+    });
   }
 }
 
