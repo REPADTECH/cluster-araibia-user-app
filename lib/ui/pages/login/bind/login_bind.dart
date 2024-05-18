@@ -14,6 +14,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_custom_utils/flutter_custom_utils.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:otp_autofill/otp_autofill.dart';
 import 'package:otp_text_field/otp_text_field.dart';
 
 class LoginBinding implements Bindings {
@@ -27,6 +28,7 @@ class LoginController extends GetxController {
   static LoginController get to => Get.find();
 
   var loginPageView = GlobalKey<FormState>();
+  late BuildContext context;
   LoginModel? loginModel;
   OtpModelClass? otpModelClass;
   var otp = ''.obs;
@@ -34,8 +36,13 @@ class LoginController extends GetxController {
   var keyBoardIsVisible = false.obs;
   var validatorNumber = false.obs;
   var errorMessage = '';
+   var otpInteractor;
+
+
+
 
   OtpFieldController otpFieldController = OtpFieldController();
+  late OTPTextEditController controller;
   var mob = TextEditingController();
 
   @override
@@ -43,6 +50,29 @@ class LoginController extends GetxController {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
+    otpInteractor = OTPInteractor();
+    otpInteractor.getAppSignature().then((value) {
+      // if (kDebugMode) {
+      //   // print('signature - $value');
+      // }
+    });
+    controller = OTPTextEditController(
+      codeLength: 5,
+      //ignore: avoid_print
+      onCodeReceive: (code) =>  print('Your Application receive code - $code'),
+      otpInteractor: otpInteractor,
+    )..startListenUserConsent(
+          (code) {
+        var otpIs = code?.replaceAll(RegExp('[a-zA-Z , .:\s]'), "").trim();
+        otp.value = otpIs ?? '';
+        otpFieldController.setValue((otpIs??'')[0], 0);
+        otpFieldController.setValue((otpIs??'')[1], 1);
+        otpFieldController.setValue((otpIs??'')[2], 2);
+        otpFieldController.setValue((otpIs??'')[3], 3);
+        verifyOtp(context: context);
+        return code ?? '';
+      },
+    );
     super.onInit();
   }
 
