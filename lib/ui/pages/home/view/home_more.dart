@@ -283,7 +283,8 @@ class BannerSection extends StatelessWidget {
             ),
           ),
           DotsIndicator(
-            dotsCount: logic.sliderModel?.data?.length ?? 1,
+            // dotsCount: 3,
+            dotsCount: (logic.sliderModel?.data?.length ?? 0)==0?1:(logic.sliderModel?.data?.length??0),
             position: logic.currentPage.value,
             decorator: DotsDecorator(
               spacing: const EdgeInsets.all(3),
