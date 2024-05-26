@@ -4,6 +4,7 @@ import 'package:cluster_arabia/models/banner_list_model.dart';
 import 'package:cluster_arabia/models/coupon_validation_model.dart';
 import 'package:cluster_arabia/models/home_page_models.dart' as student;
 import 'package:cluster_arabia/models/profile_model.dart';
+import 'package:cluster_arabia/models/student_list_model.dart';
 import 'package:cluster_arabia/utilities/api_provider.dart';
 import 'package:cluster_arabia/utilities/utils.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,7 @@ class HomeController extends GetxController {
   BannerListModel? bannerListModel;
   BannerListModel? sliderModel;
   student.HomeBillAmount? homeBillAmount;
+  StudentModelList? studentModelList;
   CouponModel? couponModel;
 
   late BuildContext context;
@@ -47,22 +49,48 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
-    getProfile();
-    getHomeAmount();
-    getBannerData();
+    fetchDataOnInit();
     super.onInit();
+  }
+
+  Future<void> fetchDataOnInit() async {
+    showLoading();
+    await Future.wait([
+      getProfile(),
+      getHomeAmount(),
+      getBannerData(),
+      getSliderData(),
+      getStudentList()
+    ]);
+    dismissLoading();
   }
 
   clearVariable() {
     sId.clear();
     pId.value = '';
   }
-
-  void getProfile() async {
+  Future<void> getStudentList() async {
     try {
       showLoading();
-      profileModel = await Api.to.getProfile();
+      studentModelList = await Api.to.getStudentsList(
+        status: "true",
+        page: 1,
+        search: '',
+      );
       dismissLoading();
+      if (!(studentModelList?.success ?? true)) {
+        showToast(context: context, message: studentModelList?.message ?? '');
+      }
+    } catch (e) {
+      showToast(context: context, message: e.toString());
+    } finally {
+      update();
+    }
+  }
+  Future<void> getProfile() async {
+    try {
+      profileModel = await Api.to.getProfile();
+      update();
       if (!(profileModel?.success ?? true)) {
         showToast(context: context, message: profileModel?.message ?? '');
       }
@@ -73,12 +101,10 @@ class HomeController extends GetxController {
     }
   }
 
-  void getHomeAmount() async {
+  Future<void> getHomeAmount() async {
     try {
-      showLoading();
       homeBillAmount = await Api.to.getHomePageBillAmount(
           startDate: startDatePass, endDate: endDatePass);
-      dismissLoading();
       if (!(homeBillAmount?.success ?? true)) {
         showToast(context: context, message: homeBillAmount?.message ?? '');
       }
@@ -101,20 +127,26 @@ class HomeController extends GetxController {
         .map((item) => item.studentName.toString())
         .join(', ');
   }
+
   // String studentsId() {
   //   return (homeBillAmount?.data?.students ?? [])
   //       .map((item) => item.id.toString())
   //       .join('');
   // }
 
-  void getBannerData() async {
+  Future<void> getBannerData() async {
     try {
-      showLoading();
       bannerListModel = await Api.to.getBannerList(bannerTYpe: 'banner');
-      dismissLoading();
-      showLoading();
+    } catch (e) {
+      showToast(context: context, message: e.toString());
+    } finally {
+      update();
+    }
+  }
+
+  Future<void> getSliderData() async {
+    try {
       sliderModel = await Api.to.getBannerList(bannerTYpe: 'slider');
-      dismissLoading();
     } catch (e) {
       showToast(context: context, message: e.toString());
     } finally {
@@ -160,7 +192,7 @@ class HomeController extends GetxController {
   //   }
   // }
 
-  void validateCoupon() async {
+  Future<void> validateCoupon() async {
     if (studentsId().isEmpty && pId.isEmpty) {
       EasyLoading.showToast('Please Choose Student Or Parent');
       return;
@@ -180,8 +212,8 @@ class HomeController extends GetxController {
       });
       couponModel = await Api.to.couponValidate(
         couponId: couponCode.text,
-        studentId:  jsonEncode(studentsId())
-        , // Call the function directly (no need for jsonEncode)
+        studentId: jsonEncode(
+            studentsId()), // Call the function directly (no need for jsonEncode)
       );
       EasyLoading.dismiss();
       if (couponModel?.success ?? false) {
@@ -256,8 +288,7 @@ class HomeController extends GetxController {
       }
       EasyLoading.show(status: 'loading...');
       couponModel = await Api.to.couponValidate(
-          couponId: couponCode.text, studentId: jsonEncode(sId)
-      );
+          couponId: couponCode.text, studentId: jsonEncode(sId));
       EasyLoading.dismiss();
 
       if (couponModel?.success ?? true) {

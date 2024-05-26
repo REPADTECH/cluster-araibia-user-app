@@ -85,7 +85,7 @@ class FirstPart extends StatelessWidget {
                   right: 60,
                   child: CachedNetworkImage(
                     imageUrl:
-                        (logic.homeBillAmount?.data?.students?.cFirst)?.img ??
+                        (logic.studentModelList?.data?.dataList?.cFirst)?.img ??
                             '',
                     placeholder: (context, url) =>
                         const CircularProgressIndicator(),
@@ -95,16 +95,16 @@ class FirstPart extends StatelessWidget {
                         const Icon(Icons.error),
                   ).cClipAll(40),
                 ).cVisible(
-                    (((logic.homeBillAmount?.data?.students?.cFirst)?.img ??
+                    (((logic.studentModelList?.data?.dataList?.cFirst)?.img ??
                             ''))
                         .isNotEmpty),
                 Positioned(
                   right: 35,
                   child: CachedNetworkImage(
-                    imageUrl: ((logic.homeBillAmount?.data?.students?.length ??
+                    imageUrl: ((logic.studentModelList?.data?.dataList?.length ??
                                 0) >
                             1)
-                        ? ((logic.homeBillAmount?.data?.students?[1])?.img ??
+                        ? ((logic.studentModelList?.data?.dataList?[1])?.img ??
                             '')
                         : '',
                     placeholder: (context, url) =>
@@ -115,8 +115,8 @@ class FirstPart extends StatelessWidget {
                         const Icon(Icons.error),
                   ).cClipAll(40),
                 ).cVisible(
-                    (((logic.homeBillAmount?.data?.students?.length ?? 0) >= 2)
-                            ? ((logic.homeBillAmount?.data?.students?[1])
+                    (((logic.studentModelList?.data?.dataList?.length ?? 0) >= 2)
+                            ? ((logic.studentModelList?.data?.dataList?[1])
                                     ?.img ??
                                 '')
                             : '')
@@ -124,10 +124,10 @@ class FirstPart extends StatelessWidget {
                 Positioned(
                   right: 10,
                   child: CachedNetworkImage(
-                    imageUrl: ((logic.homeBillAmount?.data?.students?.length ??
+                    imageUrl: ((logic.studentModelList?.data?.dataList?.length ??
                                 0) >
                             3)
-                        ? ((logic.homeBillAmount?.data?.students?[2])?.img ??
+                        ? ((logic.studentModelList?.data?.dataList?[2])?.img ??
                             '')
                         : '',
                     placeholder: (context, url) =>
@@ -138,8 +138,8 @@ class FirstPart extends StatelessWidget {
                         const Icon(Icons.error),
                   ).cClipAll(40),
                 ).cVisible(
-                    (((logic.homeBillAmount?.data?.students?.length ?? 0) >= 3)
-                            ? ((logic.homeBillAmount?.data?.students?[2])
+                    (((logic.studentModelList?.data?.dataList?.length ?? 0) >= 3)
+                            ? ((logic.studentModelList?.data?.dataList?[2])
                                     ?.img ??
                                 '')
                             : '')
@@ -270,9 +270,9 @@ class BannerSection extends StatelessWidget {
                 //return Image.network(data?.img ?? '');
                 return CachedNetworkImage(
                   imageUrl: data?.img ?? '',
-                  progressIndicatorBuilder: (context, url, downloadProgress) =>
-                      CircularProgressIndicator(
-                          value: downloadProgress.progress),
+                  // progressIndicatorBuilder: (context, url, downloadProgress) =>
+                  //     CircularProgressIndicator(
+                  //         value: downloadProgress.progress),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 );
               },
