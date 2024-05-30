@@ -44,40 +44,40 @@ class HomePage extends StatelessWidget {
             ],
           ),
           actions: [
-            InkWell(
-              onTap: () {
-                dateSelectPopupHome(context: context);
-              },
-              child: Container(
-                height: 30,
-                width: 100,
-                decoration: BoxDecoration(
-                    color: const Color.fromRGBO(113, 99, 198, 1),
-                    borderRadius: BorderRadius.circular(20)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.arrow_back_ios_new_outlined,
-                      color: Colors.white,
-                      size: 15,
-                    ),
-                    Text(
-                      (logic.startMonth == null)
-                          ? 'Select Date '
-                          : '${(logic.startMonth)?.cGetFormattedDate(format: 'MMM yyyy')}',
-                      style: customStyle(10.0, Colors.white, FontWeight.normal),
-                    ),
-                    // Text('August 2024',style: customStyle(10.0, Colors.white, FontWeight.normal),),
-                    const Icon(
-                      Icons.arrow_forward_ios_outlined,
-                      color: Colors.white,
-                      size: 15,
-                    ),
-                  ],
-                ),
-              ).cPadOnly(r: 10),
-            )
+            // InkWell(
+            //   onTap: () {
+            //     dateSelectPopupHome(context: context);
+            //   },
+            //   child: Container(
+            //     height: 30,
+            //     width: 100,
+            //     decoration: BoxDecoration(
+            //         color: const Color.fromRGBO(113, 99, 198, 1),
+            //         borderRadius: BorderRadius.circular(20)),
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.center,
+            //       children: [
+            //         const Icon(
+            //           Icons.arrow_back_ios_new_outlined,
+            //           color: Colors.white,
+            //           size: 15,
+            //         ),
+            //         Text(
+            //           (logic.startMonth == null)
+            //               ? 'Select Date '
+            //               : '${(logic.startMonth)?.cGetFormattedDate(format: 'MMM yyyy')}',
+            //           style: customStyle(10.0, Colors.white, FontWeight.normal),
+            //         ),
+            //         // Text('August 2024',style: customStyle(10.0, Colors.white, FontWeight.normal),),
+            //         const Icon(
+            //           Icons.arrow_forward_ios_outlined,
+            //           color: Colors.white,
+            //           size: 15,
+            //         ),
+            //       ],
+            //     ),
+            //   ).cPadOnly(r: 10),
+            // )
           ],
         ),
         backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
@@ -88,9 +88,10 @@ class HomePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const FirstPart(),
+              if ((logic.sliderModel?.data ?? []).isNotEmpty)
               const BannerSection(),
-              const BillOverView().cVisible(
-                  (logic.homeBillAmount?.data?.monthlyCharge ?? []).isNotEmpty),
+              // if ((logic.homeBillAmount?.data?.monthlyCharge ?? []).isNotEmpty)
+              const BillOverView(),
               const MainMenu(),
               const BottomImageList()
             ],

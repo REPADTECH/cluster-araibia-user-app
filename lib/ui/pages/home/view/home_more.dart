@@ -39,8 +39,8 @@ class FirstPart extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'SAR ${double.parse('${logic.homeBillAmount?.data?.totalPayableAmount ?? '0.0'}') / 100}',
+                    Text('${logic.totalAmount/100}',
+                      // 'SAR ${double.parse('${logic.homeBillAmount?.data?.totalPayableAmount ?? '0.0'}') / 100}',
                       style: customStyle(25.0, Colors.white, FontWeight.bold),
                     ),
                     Text(
@@ -87,8 +87,8 @@ class FirstPart extends StatelessWidget {
                     imageUrl:
                         (logic.studentModelList?.data?.dataList?.cFirst)?.img ??
                             '',
-                    placeholder: (context, url) =>
-                        const CircularProgressIndicator(),
+                    // placeholder: (context, url) =>
+                    //     const CircularProgressIndicator(),
                     width: 40,
                     height: 40,
                     errorWidget: (context, url, error) =>
@@ -107,8 +107,8 @@ class FirstPart extends StatelessWidget {
                         ? ((logic.studentModelList?.data?.dataList?[1])?.img ??
                             '')
                         : '',
-                    placeholder: (context, url) =>
-                        const CircularProgressIndicator(),
+                    // placeholder: (context, url) =>
+                    //     const CircularProgressIndicator(),
                     width: 40,
                     height: 40,
                     errorWidget: (context, url, error) =>
@@ -130,8 +130,8 @@ class FirstPart extends StatelessWidget {
                         ? ((logic.studentModelList?.data?.dataList?[2])?.img ??
                             '')
                         : '',
-                    placeholder: (context, url) =>
-                        const CircularProgressIndicator(),
+                    // placeholder: (context, url) =>
+                    //     const CircularProgressIndicator(),
                     width: 40,
                     height: 40,
                     errorWidget: (context, url, error) =>
@@ -153,23 +153,21 @@ class FirstPart extends StatelessWidget {
             child: ListView.builder(
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
-                itemCount: logic.homeBillAmount?.data?.monthlyCharge?.cFirst
-                        ?.students?.length ??
+                itemCount: logic.invoiceListModel?.data?.dataList?.length ??
                     0,
                 itemBuilder: (cnt, i) {
-                  var data = logic.homeBillAmount?.data?.monthlyCharge?.cFirst
-                      ?.students?[i];
+                  var data = logic.invoiceListModel?.data?.dataList?[i];
                   var student = logic.homeBillAmount?.data?.students?[i];
-                  var monthlyCharge =
-                      logic.homeBillAmount?.data?.monthlyCharge?.cFirst;
+                  // var monthlyCharge =
+                  //     logic.homeBillAmount?.data?.monthlyCharge?.cFirst;
                   return ChildBox(
                     no: '${i + 1}',
                     price: ((double.parse('${data?.amount ?? '0'}') +
-                            double.parse('${data?.tax ?? '0'}')) /
+                            double.parse('${data?.taxAmount ?? '0'}')) /
                         100),
-                    month:
-                        '${monthlyCharge?.monthName ?? ''} ${monthlyCharge?.year ?? ''}',
-                    profileImg: student?.img ?? '',
+                    month:(data?.billedOn??'').cGetFormattedDate(format: 'MMM yyyy'),
+                        // '${monthlyCharge?.monthName ?? ''} ${monthlyCharge?.year ?? ''}',
+                    profileImg: data?.img ?? '',
                   ).cPadOnly(l: (i == 0) ? 0 : 15);
                 }),
           ).cPadOnly(t: 72, l: 30),
@@ -258,7 +256,7 @@ class BannerSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(builder: (logic) {
-      return Stack(
+       return Stack(
         children: [
           AspectRatio(
             aspectRatio: 2.01,
@@ -269,7 +267,7 @@ class BannerSection extends StatelessWidget {
                 var data = logic.sliderModel?.data?[index];
                 //return Image.network(data?.img ?? '');
                 return CachedNetworkImage(
-                  imageUrl: data?.img ?? '',
+                  imageUrl: data?.img ?? 'https://pleased-uniquely-bat.ngrok-free.app/assets/default_image.jpeg',
                   // progressIndicatorBuilder: (context, url, downloadProgress) =>
                   //     CircularProgressIndicator(
                   //         value: downloadProgress.progress),
@@ -365,7 +363,8 @@ class BillOverView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                    'Overview of Billing for ${(logic.startDatePass.cGetFormattedDate(format: 'MMM-yyyy'))}',
+                    'Overview of Billing for you',
+                    // 'Overview of Billing for ${(logic.startDatePass.cGetFormattedDate(format: 'MMM-yyyy'))}',
                     style: customStyle(11.0, Colors.black, FontWeight.bold)),
                 InkWell(
                   onTap: () {
@@ -413,6 +412,7 @@ class BillOverView extends StatelessWidget {
                         style:
                             customStyle(11.0, Colors.black, FontWeight.normal))
                     .cExpanded(1),
+                SizedBox(width: 15,),
                 Text('Class',
                         style:
                             customStyle(11.0, Colors.black, FontWeight.normal))
@@ -438,33 +438,44 @@ class BillOverView extends StatelessWidget {
             //   thickness: 0.5,
             // ),
             ListView.builder(
-                itemCount: logic.homeBillAmount?.data?.students?.length ?? 0,
+                itemCount: logic.invoiceList.length ?? 0,
+                // itemCount: logic.homeBillAmount?.data?.students?.length ?? 0,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, i) {
-                  var monthCharge =
-                      logic.homeBillAmount?.data?.monthlyCharge?.cFirst;
-                  var students = logic.homeBillAmount?.data?.students?[i];
-
+                  // var monthCharge =
+                  //     logic.homeBillAmount?.data?.monthlyCharge?.cFirst;
+                  // var students = logic.homeBillAmount?.data?.students?[i];
+                  var data= logic.invoiceList[i];
+print('length.....${logic.invoiceList.length}');
+print('hhhhhhh.....');
                   return Row(
                     children: [
                       Text(
-                              '${getShortMonthText(int.parse(monthCharge?.monthNumber ?? '0'))}-${monthCharge?.year ?? ''}',
+                      (data.billedOn??'').cGetFormattedDate(format: 'MMM yyyy'),
+                              // '${getShortMonthText(int.parse(monthCharge?.monthNumber ?? '0'))}-${monthCharge?.year ?? ''}',
                               // '${monthCharge?.monthName ?? ' '}-${monthCharge?.year ?? ''}',
                               style: customStyle(
                                   11.0, primaryColorPurple, FontWeight.normal))
                           .cExpanded(1),
                       Text(
-                        students?.studentName ?? '',
+                        data.student?.name ?? '',
+                        // students?.studentName ?? '',
                         style: customStyle(
                             11.0, primaryColorPurple, FontWeight.normal),
                         overflow: TextOverflow.ellipsis,
                       ).cExpanded(1),
-                      Text('${students?.classNo}',
+                      SizedBox(width: 15,),
+
+                      Text(
+                          '${data.student?.std??''} (${data.student?.division??''})',
+                          // '${students?.classNo}',
                               style: customStyle(
                                   11.0, primaryColorPurple, FontWeight.normal))
                           .cExpanded(1),
-                      Text('SAR ${(double.parse('${monthCharge?.students?[i].amount ?? 0}') + double.parse('${monthCharge?.students?[i].tax ?? 0}')) / 100}',
+                      Text(
+                          'SAR ${(double.parse('${data.amount ?? 0}') + double.parse('${data.taxAmount ?? 0}')) / 100}',
+                          // 'SAR ${(double.parse('${monthCharge?.students?[i].amount ?? 0}') + double.parse('${monthCharge?.students?[i].tax ?? 0}')) / 100}',
                               style: customStyle(
                                   11.0, primaryColorPurple, FontWeight.normal))
                           .cExpanded(1),
@@ -493,7 +504,9 @@ class BillOverView extends StatelessWidget {
                 const Text(
                   '',
                 ).cExpanded(1),
-                Text('SAR ${(double.parse('${logic.homeBillAmount?.data?.totalPayableAmount ?? 0}') / 100)}',
+                Text('SAR ${logic.totalAmount/100}',
+                    // 'SAR ${(double.parse('${data.amount ?? 0}') + double.parse('${data.taxAmount ?? 0}') / 100)}',
+                    // 'SAR ${(double.parse('${logic.homeBillAmount?.data?.totalPayableAmount ?? 0}') / 100)}',
                         style: customStyle(
                             11.0, primaryColorPurple, FontWeight.normal))
                     .cExpanded(1),
@@ -615,20 +628,20 @@ void payBillPopup({
                     SizedBox(
                       height: 8,
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          'Time period : ',
-                          style: customStyle(
-                              12.0, Colors.black, FontWeight.normal),
-                        ),
-                        Text(
-                          '${(logic.startMonth)?.cGetFormattedDate(format: 'dd-MM-yyyy')}  -  ${(logic.endMonth)?.cGetFormattedDate(format: 'dd-MM-yyyy')}',
-                          style: customStyle(
-                              12.0, Colors.black, FontWeight.normal),
-                        ),
-                      ],
-                    ),
+                    // Row(
+                    //   children: [
+                    //     Text(
+                    //       'Time period : ',
+                    //       style: customStyle(
+                    //           12.0, Colors.black, FontWeight.normal),
+                    //     ),
+                    //     Text(
+                    //       '${(logic.startMonth)?.cGetFormattedDate(format: 'dd-MM-yyyy')}  -  ${(logic.endMonth)?.cGetFormattedDate(format: 'dd-MM-yyyy')}',
+                    //       style: customStyle(
+                    //           12.0, Colors.black, FontWeight.normal),
+                    //     ),
+                    //   ],
+                    // ),
                     SizedBox(
                       height: 3,
                     ),
@@ -715,8 +728,8 @@ void payBillPopup({
                                   child: Center(
                                     child: Text(
                                       logic.cartCouponIsValid
-                                          ? '${'removeText'}'
-                                          : ' ${'apply'}',
+                                          ? '${'RemoveText'}'
+                                          : ' ${'Apply'}',
                                       // child: Text(logic.cartCouponIsValid ? 'Remove' : 'Apply',
                                       style: TextStyle(
                                         color: Colors.white,
@@ -744,20 +757,25 @@ void payBillPopup({
                     KeyValueField(
                       titleKey: 'Subtotal : ',
                       value:
-                          'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalAmount ?? 0}') / 100)}',
+                          'SAR  ${(logic.totalAmount-((logic.totalAmount)*0.15))/100}',
+                          // 'SAR  ${logic.totalAmount/100}',
+                          // 'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalAmount ?? 0}') / 100)}',
                       fontSize: 12.0,
                     ),
                     KeyValueField(
                       titleKey: 'Tax : ',
                       value:
-                          'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalTax ?? 0}') / 100)}',
+                          'SAR  ${((logic.totalAmount)*0.15/100)}',
+                          // 'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalTax ?? 0}') / 100)}',
                       fontSize: 12.0,
                     ),
                     Divider(),
                     KeyValueField(
                       titleKey: 'Total : ',
                       value:
-                          'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalPayableAmount ?? 0}') / 100)}',
+                          'SAR  ${logic.totalAmount/100}',
+                          // 'SAR  ${logic.totalAmount/100-((logic.totalAmount/100)*0.15)}',
+                          // 'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalPayableAmount ?? 0}') / 100)}',
                       fontSize: 12.0,
                     ),
                     SizedBox(
@@ -941,7 +959,10 @@ void dateSelectPopupHome({
                     logic.endDatePass = rangeStartDate
                         .toString()
                         .cGetFormattedDate(format: 'yyyy-MM-dd');
-                    logic.getHomeAmount();
+                    // logic.getHomeAmount();
+                    logic.invoiceList.clear();
+                    logic.totalAmount=0.0;
+                    logic.getHomeBill();
                     logic.update();
                     if (kDebugMode) {
                       print(rangeStartDate);

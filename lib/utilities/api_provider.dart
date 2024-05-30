@@ -134,9 +134,13 @@ class Api extends GetConnect {
     var studentId,
     var startDate,
     var endDate,
+    var paidStatus,
   }) {
-    return get('p/bill/list/$page?student_id=$studentId&start_date=$startDate&end_date=$endDate').then((value) {
+    print('Invoice List Url :p/bill/list/$page?student_id=$studentId&start_date=$startDate&end_date=$endDate&paid_status=$paidStatus');
+    return get('p/bill/list/$page?student_id=$studentId&start_date=$startDate&end_date=$endDate&paid_status=$paidStatus').then((value) {
+      print('ooooooo${value.body}');
       return InvoiceListModel.fromJson(value.body ?? err);
+
     });
   }
 

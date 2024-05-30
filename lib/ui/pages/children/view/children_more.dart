@@ -96,7 +96,7 @@ class ListPart extends StatelessWidget {
                     arguments: [data.id ?? '']);
               },
               child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
                 // height: 135,
                 width: context.cWidth,
                 decoration: BoxDecoration(
@@ -178,13 +178,16 @@ class ListPart extends StatelessWidget {
                             const SizedBox(
                               width: 5,
                             ),
-                            Text(
-                                data.school?.schoolName ?? '',
-                                style: customStyle(
-                                    12.0, Colors.black, FontWeight.normal)),
+                            SizedBox(
+                              width: 235,
+                              child: Text(
+                                  data.school?.schoolName ?? '',
+                                  style: customStyle(
+                                      12.0, Colors.black, FontWeight.normal)),
+                            ),
                             Text(
                                 // ' (ABC1234)',
-                                ' (${data.admissionNo ?? ''})',
+                                '(${data.admissionNo ?? ''})',
                                 style: customStyle(
                                     12.0,
                                     const Color.fromRGBO(99, 99, 99, 1),
@@ -253,7 +256,7 @@ class ListPart extends StatelessWidget {
                       color: primaryColorPurple,
                       width: 30,
                       height: 30,
-                    ).cPosition(r: 0, t: 35),
+                    ).cPosition(r: 0, t: 30),
                     CustomButtonWidget(
                             backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
                             borderColor: Colors.black54,

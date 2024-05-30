@@ -343,17 +343,22 @@ class ListPart extends StatelessWidget {
                             const SizedBox(
                               width: 7,
                             ),
-                            Text(
-                                data.student?.busInRoute?.routeInfo
-                                        ?.routeName ??
-                                    '',
-                                style: customStyle(
-                                    11.0, Colors.black, FontWeight.normal)),
+                            SizedBox(
+                              width: 150,
+                              child: Text(
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  data.student?.busInRoute?.routeInfo
+                                          ?.routeName ??
+                                      '',
+                                  style: customStyle(
+                                      11.0, Colors.black, FontWeight.normal)),
+                            ),
                             const SizedBox(
                               width: 5,
                             ),
                             SizedBox(
-                              width: 115,
+                              width: 70,
                               child: Text(
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
@@ -416,7 +421,7 @@ class ListPart extends StatelessWidget {
                     // )
                   ],
                 ),
-              ).cMargOnly(t: 5, l: 15, r: 15, b: 10);
+              ).cMargOnly(t: (i==0)?15:5, l: 15, r: 15, b: 10);
             }),
       );
     });
@@ -502,9 +507,11 @@ void payBillPopupInVoice({
                     const SizedBox(height: 3,),
                     Row(
                       children: [
-                        Text('Students Name : ',style: customStyle(14.0, Colors.black, FontWeight.normal),),
+                        Text('Student Name : ',style: customStyle(13.0, Colors.black, FontWeight.normal),),
                         const SizedBox(width: 3,),
-                        Text(logic.stdName,style: customStyle(14.0, Colors.black, FontWeight.normal),),
+                        SizedBox(
+                          width: 145,
+                            child: Text(logic.stdName,style: customStyle(13.0, Colors.black, FontWeight.normal),)),
 
                       ],
                     ),

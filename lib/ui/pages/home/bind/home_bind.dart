@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:cluster_arabia/models/banner_list_model.dart';
 import 'package:cluster_arabia/models/coupon_validation_model.dart';
 import 'package:cluster_arabia/models/home_page_models.dart' as student;
+import 'package:cluster_arabia/models/invoice_list_model.dart' as invoice;
 import 'package:cluster_arabia/models/profile_model.dart';
 import 'package:cluster_arabia/models/student_list_model.dart';
 import 'package:cluster_arabia/utilities/api_provider.dart';
@@ -21,8 +22,8 @@ class HomeBinding implements Bindings {
 
 class HomeController extends GetxController {
   static HomeController get to => Get.find();
-  var startDatePass = DateTime.now().cGetFormattedDate(format: 'yyyy-MM-dd'),
-      endDatePass = DateTime.now().cGetFormattedDate(format: 'yyyy-MM-dd');
+  var startDatePass='',
+      endDatePass='';
   final currentPage = 0.obs;
 
   TextEditingController couponCode = TextEditingController();
@@ -33,6 +34,11 @@ class HomeController extends GetxController {
   student.HomeBillAmount? homeBillAmount;
   StudentModelList? studentModelList;
   CouponModel? couponModel;
+  invoice.InvoiceListModel? invoiceListModel;
+  List<invoice.DataList> invoiceList = [];
+  bool hasNextPage = false;
+
+
 
   late BuildContext context;
   DateTime? startMonth;
@@ -46,9 +52,14 @@ class HomeController extends GetxController {
   List<String> sId = [''];
   RxString pId = ''.obs;
   RxBool isValidCoupon = false.obs;
+  var pageNO = 1;
+  var totalAmount=0.0;
+
 
   @override
   void onInit() {
+   invoiceList.clear();
+    totalAmount=0.0;
     fetchDataOnInit();
     super.onInit();
   }
@@ -58,9 +69,10 @@ class HomeController extends GetxController {
     await Future.wait([
       getProfile(),
       getHomeAmount(),
+      getHomeBill(),
       getBannerData(),
       getSliderData(),
-      getStudentList()
+      getStudentList(),
     ]);
     dismissLoading();
   }
@@ -114,6 +126,36 @@ class HomeController extends GetxController {
       update();
     }
   }
+  Future<void> getHomeBill() async {
+    try {
+      showLoading();
+      invoiceListModel = await Api.to.getInvoiceList(
+        page: pageNO,
+        // studentId: filterChoosed,
+        startDate: startDatePass,
+        endDate: endDatePass,
+        paidStatus: false
+      );
+      dismissLoading();
+      totalBillAmt();
+      if (!(invoiceListModel?.success ?? true)) {
+        showToast(context: context, message: invoiceListModel?.message ?? '');
+      } else {
+
+        hasNextPage = ((invoiceListModel?.data?.dataList ?? []).length == 20)
+            ? true
+            : false;
+        invoiceList.addAll((invoiceListModel?.data?.dataList ?? []));
+
+        print('jjjjjjjjjj');
+        print('######${invoiceList.length}');
+      }
+    } catch (e) {
+      showToast(context: context, message: e.toString());
+    } finally {
+      update();
+    }
+  }
 
   // void main() {
   //   List<student.Students1> items = homeBillAmount?.data?.students??[];
@@ -122,10 +164,53 @@ class HomeController extends GetxController {
   //   print('**********${singleLineText}');
   // }
 
+  // Future<void> totalBillAmt() async {
+  //   // Create a list of amounts
+  //   List<double> amounts = [(double.parse('${invoiceListModel?.data?.dataList?.cFirst?.amount ?? '0'}') + double.parse('${invoiceListModel?.data?.dataList?.cFirst?.taxAmount ?? '0'}')) / 100];
+  //
+  //   List<double> mappedAmounts = amounts.map((amount) => amount).toList();
+  //
+  //   // Calculate the total amount using reduce
+  //    totalAmount = mappedAmounts.fold(0.0,(sum, element) => sum + element);
+  //
+  //
+  //     // Calculate the total amount
+  //     totalAmount = amounts.fold(0.0, (sum, element) => sum + element);
+  //
+  //
+  //   // Print the total amount
+  //   print("Total amount: \$${totalAmount.toStringAsFixed(2)}");
+  //   update();
+  //
+  // }
+  Future<void> totalBillAmt() async {
+    cLog('THis Worked');
+    List<invoice.DataList> items = invoiceListModel?.data?.dataList??[];
+    // List<dynamic> items = ['apple', 123, true];
+    for (var item in items) {
+      totalAmount += double.parse(('${item.amount??0}'))+ double.parse(('${item.taxAmount??0}'));
+    }
+     // totalAmount += (items).map((item) => item.amount??0.0+(item.taxAmount??0.0));
+    print('**********${totalAmount}');
+    update();
+  }
+
+
+  // String studentsName() {
+  //   return (invoiceListModel?.data?.dataList ?? [])
+  //   // return (homeBillAmount?.data?.students ?? [])
+  //       .map((item) => item.student?.name.toString())
+  //       .join(', ');
+  // }
   String studentsName() {
-    return (homeBillAmount?.data?.students ?? [])
-        .map((item) => item.studentName.toString())
-        .join(', ');
+    // Get the list of student names, filtering out nulls and duplicates
+    final names = (invoiceListModel?.data?.dataList ?? [])
+        .map((item) => item.student?.name?.toString())
+        .where((name) => name != null)
+        .toSet();
+
+    // Convert the set back to a list and join the names with ', '
+    return names.join(', ');
   }
 
   // String studentsId() {

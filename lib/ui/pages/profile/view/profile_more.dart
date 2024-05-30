@@ -15,7 +15,7 @@ class ProfileImagePart extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<ProfileController>(builder: (logic) {
       return Container(
-        height: 200,
+        height: 150,
         width: context.cWidth,
         color: const Color.fromRGBO(242, 250, 251, 1),
         child: Row(
@@ -64,7 +64,7 @@ class ProfileImagePart extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  width: 140,
+                  width: 200,
                   child: Text(
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
@@ -218,32 +218,38 @@ class AddressSection extends StatelessWidget {
                 height: 25,
               ),
               const SizedBox(
-                width: 25,
+                width: 15,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Text(
-                        logic.profileModel?.data?.name ?? '',
-                        style: customStyle(16.0, Colors.black, FontWeight.bold),
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      Text(logic.profileModel?.data?.phone ?? '',
-                          style: customStyle(
-                              12.0, Colors.black54, FontWeight.normal)),
-                    ],
+                  SizedBox(
+                    width: 270,
+                    child: Text(
+                      logic.profileModel?.data?.name ?? '',
+                      style: customStyle(16.0, Colors.black, FontWeight.bold),
+                    ),
                   ),
-                  Text(logic.profileModel?.data?.address ?? '',
-                      style:
-                          customStyle(12.0, Colors.black54, FontWeight.normal))
+                  const SizedBox(
+                    height: 4,
+                  ),
+                  Text(logic.profileModel?.data?.phone ?? '',
+                      style: customStyle(
+                          12.0, Colors.black54, FontWeight.normal)),
+                  const SizedBox(
+                    height: 4,
+                  ),
+                  SizedBox(
+                    width: 270,
+                    child: Text(
+                        logic.profileModel?.data?.address ?? '',
+                        style:
+                            customStyle(12.0, Colors.black54, FontWeight.normal)),
+                  )
                 ],
               ),
             ],
-          ).cPadOnly(t: 10, l: 10)
+          ).cPadOnly(t: 10, l: 5,r: 5)
         ],
       ).cPadOnly(l: 20, t: 10);
     });
@@ -260,7 +266,7 @@ class DeleteAccount extends StatelessWidget {
         ProfileController.to.deleteAccount();
       },
       child: Container(
-        margin: EdgeInsets.only(left: 13, right: 15, top: 22),
+        margin: EdgeInsets.only(left: 13, right: 15, top: 12),
         width: context.cWidth,
         height: 50,
         decoration: BoxDecoration(

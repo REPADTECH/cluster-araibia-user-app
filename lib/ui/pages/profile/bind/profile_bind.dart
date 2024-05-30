@@ -46,7 +46,7 @@ class ProfileController extends GetxController {
       await Future.delayed(const Duration(milliseconds: 500));
       dismissLoading();
       // showToast(context: context,message: 'Your deletion request  submitted successfully');
-      EasyLoading.showToast('Your deletion request  submitted successfully');
+      // EasyLoading.showToast('Your deletion request  submitted successfully');
       AppSession.to.logout();
     } catch (ex) {
       dismissLoading();
