@@ -1,4 +1,5 @@
 import 'package:cluster_arabia/models/banner_list_model.dart';
+import 'package:cluster_arabia/models/base_model_class.dart';
 import 'package:cluster_arabia/models/coupon_list_model.dart';
 import 'package:cluster_arabia/models/coupon_validation_model.dart';
 import 'package:cluster_arabia/models/disable_childran_model.dart';
@@ -67,6 +68,21 @@ class Api extends GetConnect {
       ),
     ).then((value) {
       return DisableChildModel.fromJson(value.body ?? err);
+    });
+  }
+
+  Future<BaseModelClass> postFcmToken({
+    required String fcmToken,
+  }) {
+    return post(
+      'p/fcm/update',
+      FormData(
+        {
+          'fcm_token': fcmToken,
+        },
+      ),
+    ).then((value) {
+      return BaseModelClass.fromJson(value.body ?? err);
     });
   }
 

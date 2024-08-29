@@ -1,17 +1,20 @@
 import 'dart:convert';
 
 import 'package:cluster_arabia/models/banner_list_model.dart';
+import 'package:cluster_arabia/models/base_model_class.dart';
 import 'package:cluster_arabia/models/coupon_validation_model.dart';
 import 'package:cluster_arabia/models/home_page_models.dart' as student;
 import 'package:cluster_arabia/models/invoice_list_model.dart' as invoice;
 import 'package:cluster_arabia/models/profile_model.dart';
 import 'package:cluster_arabia/models/student_list_model.dart';
 import 'package:cluster_arabia/utilities/api_provider.dart';
+import 'package:cluster_arabia/utilities/strings.dart';
 import 'package:cluster_arabia/utilities/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_utils/flutter_custom_utils.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class HomeBinding implements Bindings {
   @override
@@ -22,8 +25,7 @@ class HomeBinding implements Bindings {
 
 class HomeController extends GetxController {
   static HomeController get to => Get.find();
-  var startDatePass='',
-      endDatePass='';
+  var startDatePass = '', endDatePass = '';
   final currentPage = 0.obs;
 
   TextEditingController couponCode = TextEditingController();
@@ -34,11 +36,10 @@ class HomeController extends GetxController {
   student.HomeBillAmount? homeBillAmount;
   StudentModelList? studentModelList;
   CouponModel? couponModel;
+  BaseModelClass? baseModelClass;
   invoice.InvoiceListModel? invoiceListModel;
   List<invoice.DataList> invoiceList = [];
   bool hasNextPage = false;
-
-
 
   late BuildContext context;
   DateTime? startMonth;
@@ -53,13 +54,12 @@ class HomeController extends GetxController {
   RxString pId = ''.obs;
   RxBool isValidCoupon = false.obs;
   var pageNO = 1;
-  var totalAmount=0.0;
-
+  var totalAmount = 0.0;
 
   @override
   void onInit() {
-   invoiceList.clear();
-    totalAmount=0.0;
+    invoiceList.clear();
+    totalAmount = 0.0;
     fetchDataOnInit();
     super.onInit();
   }
@@ -73,6 +73,7 @@ class HomeController extends GetxController {
       getBannerData(),
       getSliderData(),
       getStudentList(),
+      postFcmToken()
     ]);
     dismissLoading();
   }
@@ -81,6 +82,7 @@ class HomeController extends GetxController {
     sId.clear();
     pId.value = '';
   }
+
   Future<void> getStudentList() async {
     try {
       showLoading();
@@ -99,6 +101,7 @@ class HomeController extends GetxController {
       update();
     }
   }
+
   Future<void> getProfile() async {
     try {
       profileModel = await Api.to.getProfile();
@@ -126,22 +129,21 @@ class HomeController extends GetxController {
       update();
     }
   }
+
   Future<void> getHomeBill() async {
     try {
       showLoading();
       invoiceListModel = await Api.to.getInvoiceList(
-        page: pageNO,
-        // studentId: filterChoosed,
-        startDate: startDatePass,
-        endDate: endDatePass,
-        paidStatus: false
-      );
+          page: pageNO,
+          // studentId: filterChoosed,
+          startDate: startDatePass,
+          endDate: endDatePass,
+          paidStatus: false);
       dismissLoading();
       totalBillAmt();
       if (!(invoiceListModel?.success ?? true)) {
         showToast(context: context, message: invoiceListModel?.message ?? '');
       } else {
-
         hasNextPage = ((invoiceListModel?.data?.dataList ?? []).length == 20)
             ? true
             : false;
@@ -185,16 +187,16 @@ class HomeController extends GetxController {
   // }
   Future<void> totalBillAmt() async {
     cLog('THis Worked');
-    List<invoice.DataList> items = invoiceListModel?.data?.dataList??[];
+    List<invoice.DataList> items = invoiceListModel?.data?.dataList ?? [];
     // List<dynamic> items = ['apple', 123, true];
     for (var item in items) {
-      totalAmount += double.parse(('${item.amount??0}'))+ double.parse(('${item.taxAmount??0}'));
+      totalAmount += double.parse(('${item.amount ?? 0}')) +
+          double.parse(('${item.taxAmount ?? 0}'));
     }
-     // totalAmount += (items).map((item) => item.amount??0.0+(item.taxAmount??0.0));
+    // totalAmount += (items).map((item) => item.amount??0.0+(item.taxAmount??0.0));
     print('**********${totalAmount}');
     update();
   }
-
 
   // String studentsName() {
   //   return (invoiceListModel?.data?.dataList ?? [])
@@ -418,6 +420,15 @@ class HomeController extends GetxController {
       // }
     } catch (e) {
       EasyLoading.showToast('Error : $e');
+    }
+  }
+
+  Future<void> postFcmToken() async {
+    try {
+      baseModelClass = await Api.to.postFcmToken(
+          fcmToken: GetStorage('cluster_arabia').read(SessionKeys.FCM_ID));
+    } catch (ex) {
+      print('Exception Is => $ex');
     }
   }
 }
