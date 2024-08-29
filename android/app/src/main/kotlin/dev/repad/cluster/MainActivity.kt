@@ -1,4 +1,4 @@
-package com.repad.cluster.cluster_arabia
+package dev.repad.cluster
 
 import io.flutter.embedding.android.FlutterActivity
 
