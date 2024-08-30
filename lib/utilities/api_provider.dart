@@ -82,6 +82,7 @@ class Api extends GetConnect {
         },
       ),
     ).then((value) {
+      print('Fcm Update : ${value.body}');
       return BaseModelClass.fromJson(value.body ?? err);
     });
   }
@@ -105,6 +106,7 @@ class Api extends GetConnect {
 
   Future<ProfileModel> getProfile() {
     return get('p/auth/profile').then((value) {
+      print('got Profile ====> ${value?.body}');
       return ProfileModel.fromJson(value.body ?? err);
     });
   }
