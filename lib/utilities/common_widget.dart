@@ -46,6 +46,7 @@ class CustomButtonWidget extends StatelessWidget {
   final String buttonTitle;
   final TextStyle? titleStyle;
   final bool showIcon;
+  
   final bool showClear;
   final IconData? icon;
   final double? iconSize;

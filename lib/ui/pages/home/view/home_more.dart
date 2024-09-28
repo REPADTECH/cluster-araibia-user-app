@@ -5,6 +5,7 @@ import 'package:cluster_arabia/res/style.dart';
 import 'package:cluster_arabia/ui/pages/home/bind/home_bind.dart';
 import 'package:cluster_arabia/ui/pages/home_stack_dashboard/bind/home_stack_dashboard_bind.dart';
 import 'package:cluster_arabia/utilities/common_widget.dart';
+import 'package:cluster_arabia/utilities/dio.dart';
 import 'package:cluster_arabia/utilities/utils.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:dotted_line/dotted_line.dart';
@@ -39,7 +40,8 @@ class FirstPart extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('${logic.totalAmount/100}',
+                    Text(
+                      '${logic.totalAmount / 100}',
                       // 'SAR ${double.parse('${logic.homeBillAmount?.data?.totalPayableAmount ?? '0.0'}') / 100}',
                       style: customStyle(25.0, Colors.white, FontWeight.bold),
                     ),
@@ -101,35 +103,13 @@ class FirstPart extends StatelessWidget {
                 Positioned(
                   right: 35,
                   child: CachedNetworkImage(
-                    imageUrl: ((logic.studentModelList?.data?.dataList?.length ??
-                                0) >
-                            1)
-                        ? ((logic.studentModelList?.data?.dataList?[1])?.img ??
-                            '')
-                        : '',
-                    // placeholder: (context, url) =>
-                    //     const CircularProgressIndicator(),
-                    width: 40,
-                    height: 40,
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
-                  ).cClipAll(40),
-                ).cVisible(
-                    (((logic.studentModelList?.data?.dataList?.length ?? 0) >= 2)
+                    imageUrl:
+                        ((logic.studentModelList?.data?.dataList?.length ?? 0) >
+                                1)
                             ? ((logic.studentModelList?.data?.dataList?[1])
                                     ?.img ??
                                 '')
-                            : '')
-                        .isNotEmpty),
-                Positioned(
-                  right: 10,
-                  child: CachedNetworkImage(
-                    imageUrl: ((logic.studentModelList?.data?.dataList?.length ??
-                                0) >
-                            3)
-                        ? ((logic.studentModelList?.data?.dataList?[2])?.img ??
-                            '')
-                        : '',
+                            : '',
                     // placeholder: (context, url) =>
                     //     const CircularProgressIndicator(),
                     width: 40,
@@ -137,13 +117,37 @@ class FirstPart extends StatelessWidget {
                     errorWidget: (context, url, error) =>
                         const Icon(Icons.error),
                   ).cClipAll(40),
-                ).cVisible(
-                    (((logic.studentModelList?.data?.dataList?.length ?? 0) >= 3)
+                ).cVisible((((logic.studentModelList?.data?.dataList?.length ??
+                                0) >=
+                            2)
+                        ? ((logic.studentModelList?.data?.dataList?[1])?.img ??
+                            '')
+                        : '')
+                    .isNotEmpty),
+                Positioned(
+                  right: 10,
+                  child: CachedNetworkImage(
+                    imageUrl:
+                        ((logic.studentModelList?.data?.dataList?.length ?? 0) >
+                                3)
                             ? ((logic.studentModelList?.data?.dataList?[2])
                                     ?.img ??
                                 '')
-                            : '')
-                        .isNotEmpty),
+                            : '',
+                    // placeholder: (context, url) =>
+                    //     const CircularProgressIndicator(),
+                    width: 40,
+                    height: 40,
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                  ).cClipAll(40),
+                ).cVisible((((logic.studentModelList?.data?.dataList?.length ??
+                                0) >=
+                            3)
+                        ? ((logic.studentModelList?.data?.dataList?[2])?.img ??
+                            '')
+                        : '')
+                    .isNotEmpty),
               ],
             ).cPadOnly(t: 10, l: 40, r: 15),
           ),
@@ -153,8 +157,7 @@ class FirstPart extends StatelessWidget {
             child: ListView.builder(
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
-                itemCount: logic.invoiceListModel?.data?.dataList?.length ??
-                    0,
+                itemCount: logic.invoiceListModel?.data?.dataList?.length ?? 0,
                 itemBuilder: (cnt, i) {
                   var data = logic.invoiceListModel?.data?.dataList?[i];
                   var student = logic.homeBillAmount?.data?.students?[i];
@@ -165,8 +168,9 @@ class FirstPart extends StatelessWidget {
                     price: ((double.parse('${data?.amount ?? '0'}') +
                             double.parse('${data?.taxAmount ?? '0'}')) /
                         100),
-                    month:(data?.billedOn??'').cGetFormattedDate(format: 'MMM yyyy'),
-                        // '${monthlyCharge?.monthName ?? ''} ${monthlyCharge?.year ?? ''}',
+                    month: (data?.billedOn ?? '')
+                        .cGetFormattedDate(format: 'MMM yyyy'),
+                    // '${monthlyCharge?.monthName ?? ''} ${monthlyCharge?.year ?? ''}',
                     profileImg: data?.img ?? '',
                   ).cPadOnly(l: (i == 0) ? 0 : 15);
                 }),
@@ -256,7 +260,7 @@ class BannerSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(builder: (logic) {
-       return Stack(
+      return Stack(
         children: [
           AspectRatio(
             aspectRatio: 2.01,
@@ -267,7 +271,8 @@ class BannerSection extends StatelessWidget {
                 var data = logic.sliderModel?.data?[index];
                 //return Image.network(data?.img ?? '');
                 return CachedNetworkImage(
-                  imageUrl: data?.img ?? 'https://pleased-uniquely-bat.ngrok-free.app/assets/default_image.jpeg',
+                  imageUrl: data?.img ??
+                      'https://pleased-uniquely-bat.ngrok-free.app/assets/default_image.jpeg',
                   // progressIndicatorBuilder: (context, url, downloadProgress) =>
                   //     CircularProgressIndicator(
                   //         value: downloadProgress.progress),
@@ -282,7 +287,9 @@ class BannerSection extends StatelessWidget {
           ),
           DotsIndicator(
             // dotsCount: 3,
-            dotsCount: (logic.sliderModel?.data?.length ?? 0)==0?1:(logic.sliderModel?.data?.length??0),
+            dotsCount: (logic.sliderModel?.data?.length ?? 0) == 0
+                ? 1
+                : (logic.sliderModel?.data?.length ?? 0),
             position: logic.currentPage.value,
             decorator: DotsDecorator(
               spacing: const EdgeInsets.all(3),
@@ -359,34 +366,9 @@ class BillOverView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                    'Overview of Billing for you',
-                    // 'Overview of Billing for ${(logic.startDatePass.cGetFormattedDate(format: 'MMM-yyyy'))}',
-                    style: customStyle(11.0, Colors.black, FontWeight.bold)),
-                InkWell(
-                  onTap: () {
-                    payBillPopup(context: context);
-                  },
-                  child: Container(
-                    width: 90,
-                    height: 30,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(
-                          color: primaryColorPurple,
-                        ),
-                        borderRadius: BorderRadius.circular(8)),
-                    child: Text('Pay Bill',
-                            style: customStyle(
-                                13.0, primaryColorPurple, FontWeight.normal))
-                        .cToCenter,
-                  ),
-                )
-              ],
-            ),
+            Text('Overview of Billing for you',
+                // 'Overview of Billing for ${(logic.startDatePass.cGetFormattedDate(format: 'MMM-yyyy'))}',
+                style: customStyle(11.0, Colors.black, FontWeight.bold)),
             const SizedBox(
               height: 8,
             ),
@@ -412,12 +394,18 @@ class BillOverView extends StatelessWidget {
                         style:
                             customStyle(11.0, Colors.black, FontWeight.normal))
                     .cExpanded(1),
-                SizedBox(width: 15,),
+                SizedBox(
+                  width: 15,
+                ),
                 Text('Class',
                         style:
                             customStyle(11.0, Colors.black, FontWeight.normal))
                     .cExpanded(1),
-                Text('Amount to pay',
+                Text('Bill Amount',
+                        style:
+                            customStyle(11.0, Colors.black, FontWeight.normal))
+                    .cExpanded(1),
+                    Text('',
                         style:
                             customStyle(11.0, Colors.black, FontWeight.normal))
                     .cExpanded(1),
@@ -446,13 +434,14 @@ class BillOverView extends StatelessWidget {
                   // var monthCharge =
                   //     logic.homeBillAmount?.data?.monthlyCharge?.cFirst;
                   // var students = logic.homeBillAmount?.data?.students?[i];
-                  var data= logic.invoiceList[i];
-print('length.....${logic.invoiceList.length}');
-print('hhhhhhh.....');
+                  var data = logic.invoiceList[i];
+                  print('length.....${logic.invoiceList.length}');
+                  print('hhhhhhh.....');
                   return Row(
                     children: [
                       Text(
-                      (data.billedOn??'').cGetFormattedDate(format: 'MMM yyyy'),
+                              (data.billedOn ?? '')
+                                  .cGetFormattedDate(format: 'MMM yyyy'),
                               // '${getShortMonthText(int.parse(monthCharge?.monthNumber ?? '0'))}-${monthCharge?.year ?? ''}',
                               // '${monthCharge?.monthName ?? ' '}-${monthCharge?.year ?? ''}',
                               style: customStyle(
@@ -465,20 +454,40 @@ print('hhhhhhh.....');
                             11.0, primaryColorPurple, FontWeight.normal),
                         overflow: TextOverflow.ellipsis,
                       ).cExpanded(1),
-                      SizedBox(width: 15,),
-
+                      SizedBox(
+                        width: 15,
+                      ),
                       Text(
-                          '${data.student?.std??''} (${data.student?.division??''})',
-                          // '${students?.classNo}',
+                              '${data.student?.std ?? ''} (${data.student?.division ?? ''})',
+                              // '${students?.classNo}',
                               style: customStyle(
                                   11.0, primaryColorPurple, FontWeight.normal))
                           .cExpanded(1),
                       Text(
-                          'SAR ${(double.parse('${data.amount ?? 0}') + double.parse('${data.taxAmount ?? 0}')) / 100}',
-                          // 'SAR ${(double.parse('${monthCharge?.students?[i].amount ?? 0}') + double.parse('${monthCharge?.students?[i].tax ?? 0}')) / 100}',
+                              'SAR ${(double.parse('${data.amount ?? 0}') + double.parse('${data.taxAmount ?? 0}')) / 100}',
+                              // 'SAR ${(double.parse('${monthCharge?.students?[i].amount ?? 0}') + double.parse('${monthCharge?.students?[i].tax ?? 0}')) / 100}',
                               style: customStyle(
                                   11.0, primaryColorPurple, FontWeight.normal))
                           .cExpanded(1),
+                      InkWell(
+                        onTap: () {
+                          payBillPopup(context: context, invoiceNo: data.totalBillAmountData?.id??'');
+                        },
+                        child: Container(
+                          width: 40,
+                          height: 30,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(
+                                color: primaryColorPurple,
+                              ),
+                              borderRadius: BorderRadius.circular(8)),
+                          child: Text('Pay',
+                                  style: customStyle(11.0, primaryColorPurple,
+                                      FontWeight.normal))
+                              .cToCenter,
+                        ),
+                      ).cExpanded(1)
                     ],
                   );
                 }),
@@ -504,9 +513,9 @@ print('hhhhhhh.....');
                 const Text(
                   '',
                 ).cExpanded(1),
-                Text('SAR ${logic.totalAmount/100}',
-                    // 'SAR ${(double.parse('${data.amount ?? 0}') + double.parse('${data.taxAmount ?? 0}') / 100)}',
-                    // 'SAR ${(double.parse('${logic.homeBillAmount?.data?.totalPayableAmount ?? 0}') / 100)}',
+                Text('SAR ${logic.totalAmount / 100}',
+                        // 'SAR ${(double.parse('${data.amount ?? 0}') + double.parse('${data.taxAmount ?? 0}') / 100)}',
+                        // 'SAR ${(double.parse('${logic.homeBillAmount?.data?.totalPayableAmount ?? 0}') / 100)}',
                         style: customStyle(
                             11.0, primaryColorPurple, FontWeight.normal))
                     .cExpanded(1),
@@ -588,7 +597,10 @@ class MainMenu extends StatelessWidget {
 
 void payBillPopup({
   required BuildContext context,
+  String invoiceNo = '',
+  
 }) {
+  cLog('body$invoiceNo');
   showDialog<void>(
     context: context,
     barrierDismissible: false,
@@ -711,7 +723,7 @@ void payBillPopup({
                                 //     logic.couponIsValid();
                                 //   }
                                 // },
-                                onTap: (){
+                                onTap: () {
                                   logic.validateCoupon();
                                 },
                                 child: Container(
@@ -757,25 +769,23 @@ void payBillPopup({
                     KeyValueField(
                       titleKey: 'Subtotal : ',
                       value:
-                          'SAR  ${(logic.totalAmount-((logic.totalAmount)*0.15))/100}',
-                          // 'SAR  ${logic.totalAmount/100}',
-                          // 'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalAmount ?? 0}') / 100)}',
+                          'SAR  ${(logic.totalAmount - ((logic.totalAmount) * 0.15)) / 100}',
+                      // 'SAR  ${logic.totalAmount/100}',
+                      // 'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalAmount ?? 0}') / 100)}',
                       fontSize: 12.0,
                     ),
                     KeyValueField(
                       titleKey: 'Tax : ',
-                      value:
-                          'SAR  ${((logic.totalAmount)*0.15/100)}',
-                          // 'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalTax ?? 0}') / 100)}',
+                      value: 'SAR  ${((logic.totalAmount) * 0.15 / 100)}',
+                      // 'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalTax ?? 0}') / 100)}',
                       fontSize: 12.0,
                     ),
                     Divider(),
                     KeyValueField(
                       titleKey: 'Total : ',
-                      value:
-                          'SAR  ${logic.totalAmount/100}',
-                          // 'SAR  ${logic.totalAmount/100-((logic.totalAmount/100)*0.15)}',
-                          // 'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalPayableAmount ?? 0}') / 100)}',
+                      value: 'SAR  ${logic.totalAmount / 100}',
+                      // 'SAR  ${logic.totalAmount/100-((logic.totalAmount/100)*0.15)}',
+                      // 'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalPayableAmount ?? 0}') / 100)}',
                       fontSize: 12.0,
                     ),
                     SizedBox(
@@ -799,17 +809,18 @@ void payBillPopup({
                                 10.0, primaryColorPurple, FontWeight.bold),
                           ),
                         ),
-                        InkWell(
-                          onTap: () {},
-                          child: CustomButtonWidget(
-                            backgroundColor: primaryColorPurple,
-                            vPadding: 8,
-                            width: (context.cWidth >= 800) ? 60 : 80,
-                            buttonTitle: 'Pay',
-                            titleStyle: customStyle(
-                                10.0, Colors.white, FontWeight.bold),
-                          ).cPadOnly(l: 7),
-                        ),
+                        CustomButtonWidget(
+                          onTap: () {
+                            Get.back();
+                            openUrl("${baseURL}pay/${invoiceNo}");
+                          },
+                          backgroundColor: primaryColorPurple,
+                          vPadding: 8,
+                          width: (context.cWidth >= 800) ? 60 : 80,
+                          buttonTitle: 'Pay',
+                          titleStyle:
+                              customStyle(10.0, Colors.white, FontWeight.bold),
+                        ).cPadOnly(l: 7),
                       ],
                     ),
                   ]).cPadAll(15),
@@ -817,7 +828,6 @@ void payBillPopup({
           }),
         ),
       );
-      // .cPadOnly(r: 50, t: 50);
     },
   );
 }
@@ -961,7 +971,7 @@ void dateSelectPopupHome({
                         .cGetFormattedDate(format: 'yyyy-MM-dd');
                     // logic.getHomeAmount();
                     logic.invoiceList.clear();
-                    logic.totalAmount=0.0;
+                    logic.totalAmount = 0.0;
                     logic.getHomeBill();
                     logic.update();
                     if (kDebugMode) {

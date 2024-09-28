@@ -90,7 +90,7 @@ class LoginPage extends StatelessWidget {
                             Column(children: [
                               Container(
                                 width: 250,
-                                height: 40,
+                                height: 45,
                                 decoration: BoxDecoration(
                                     border: Border.all(
                                         color: Colors.white, width: 0.5),
@@ -130,7 +130,7 @@ class LoginPage extends StatelessWidget {
                                         width: 200,
                                         child: TextFormField(
                                                 style: customStyle(
-                                                    18.0,
+                                                    17.0,
                                                     Colors.white,
                                                     FontWeight.normal),
                                                 onChanged: (v) {
@@ -151,8 +151,8 @@ class LoginPage extends StatelessWidget {
                                                     border: InputBorder.none,
                                                     contentPadding:
                                                         const EdgeInsets.only(
-                                                            bottom: 10),
-                                                    hintText: 'Enter Email or Mob',
+                                                            bottom: 5),
+                                                    hintText: 'Enter Email',
                                                     hintStyle: customStyle(
                                                         15.0,
                                                         Colors.white,

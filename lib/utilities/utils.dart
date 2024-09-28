@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_custom_utils/flutter_custom_utils.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/intl.dart';
 import 'package:toastification/toastification.dart';
@@ -40,21 +41,21 @@ validateLoginPage({var value}) {
     return 'Please enter some text';
   }
   // Check if the value contains an '@' symbol which is typical for emails
-  if (value.contains('@')) {
+  // if (value.contains('@')) {
     // Regular expression to validate an email
     String pattern = r'\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b';
     RegExp regex = RegExp(pattern);
     if (!regex.hasMatch(value)) {
       return 'Enter a valid email address';
     }
-  } else {
-    // Regular expression to validate a mobile number
-    String pattern = r'(^[0-9]{10}$)';
-    RegExp regex = RegExp(pattern);
-    if (!regex.hasMatch(value)) {
-      return 'Enter a valid mobile number';
-    }
-  }
+  // } else {
+  //   // Regular expression to validate a mobile number
+  //   String pattern = r'(^[0-9]{10}$)';
+  //   RegExp regex = RegExp(pattern);
+  //   if (!regex.hasMatch(value)) {
+  //     return 'Enter a valid mobile number';
+  //   }
+  // }
   return null;
 }
 
@@ -93,3 +94,10 @@ void makePhoneCall({required String phoneNumber}) async {
     throw 'Could not launch $url';
   }
 }
+openUrl(String urlLink) async {
+    if (await canLaunch(urlLink)) {
+      await launch(urlLink);
+    } else {
+      throw 'Could not launch $urlLink';
+    }
+  }
