@@ -7,5 +7,5 @@ import 'package:flutter/foundation.dart';
 /// ═══════════════════════════════════ ══════════════════════════════
 var baseURL = (kReleaseMode)
     ? "https://app.racotransport.com/" // for release running
-  : "http://192.168.1.8:3001/"; // for debug running
+  : "http://192.168.1.4:3001/"; // for debug running
   //  : "https://pleased-uniquely-bat.ngrok-free.app/"; // for debug running

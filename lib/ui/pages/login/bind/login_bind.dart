@@ -96,14 +96,15 @@ class LoginController extends GetxController {
         if (loginModel?.success ?? true) {
           otpDesign.value = !otpDesign.value;
           otp.value = loginModel?.data?.otp ?? '';
-          1.cDelay(() {
-            var otpValue = loginModel?.data?.otp ?? '';
-            otpFieldController.setValue(otpValue[0], 0);
-            otpFieldController.setValue(otpValue[1], 1);
-            otpFieldController.setValue(otpValue[2], 2);
-            otpFieldController.setValue(otpValue[3], 3);
-            update();
-          });
+      
+          // 1.cDelay(() {
+          //   var otpValue = loginModel?.data?.otp ?? ''; //
+          //   otpFieldController.setValue(otpValue[0], 0);
+          //   otpFieldController.setValue(otpValue[1], 1);
+          //   otpFieldController.setValue(otpValue[2], 2);
+          //   otpFieldController.setValue(otpValue[3], 3);
+          //   update();
+          // });
         } else {
           if ((loginModel?.message ?? '').contains('not found')) {
             showExitPopup(context);
@@ -129,7 +130,7 @@ class LoginController extends GetxController {
         otp: otp.value,
       );
       dismissLoading();
-      if (otpModelClass?.success ?? true) {
+      if (otpModelClass?.success ?? false) {
         AppSession.to.session
             .write(SessionKeys.API_KEY, otpModelClass?.data?.token ?? '');
         Get.offAllNamed(Routes.homeStackDashboard);
