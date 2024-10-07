@@ -121,7 +121,7 @@ class HomeController extends GetxController {
       homeBillAmount = await Api.to.getHomePageBillAmount(
           startDate: startDatePass, endDate: endDatePass);
       if (!(homeBillAmount?.success ?? true)) {
-        showToast(context: context, message: homeBillAmount?.message ?? '');
+        // showToast(context: context, message: homeBillAmount?.message ?? '');
       }
     } catch (e) {
       showToast(context: context, message: e.toString());
@@ -142,7 +142,7 @@ class HomeController extends GetxController {
       dismissLoading();
       totalBillAmt();
       if (!(invoiceListModel?.success ?? true)) {
-        showToast(context: context, message: invoiceListModel?.message ?? '');
+        // showToast(context: context, message: invoiceListModel?.message ?? '');
       } else {
         hasNextPage = ((invoiceListModel?.data?.dataList ?? []).length == 20)
             ? true
@@ -430,5 +430,9 @@ class HomeController extends GetxController {
     } catch (ex) {
       print('Exception Is => $ex');
     }
+  }
+
+  void onClear() {
+    invoiceList.clear();
   }
 }

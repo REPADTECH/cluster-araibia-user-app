@@ -1,7 +1,9 @@
+import 'package:cluster_arabia/utilities/app_routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_utils/flutter_custom_utils.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:toastification/toastification.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -95,9 +97,10 @@ void makePhoneCall({required String phoneNumber}) async {
   }
 }
 openUrl(String urlLink) async {
-    if (await canLaunch(urlLink)) {
-      await launch(urlLink);
-    } else {
-      throw 'Could not launch $urlLink';
-    }
+    // if (await canLaunch(urlLink)) {
+    //   await launch(urlLink);
+    // } else {
+    //   throw 'Could not launch $urlLink';
+    // }
+  Get.toNamed(Routes.toPaymentRoute,arguments: [urlLink]);
   }

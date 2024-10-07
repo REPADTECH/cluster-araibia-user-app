@@ -18,6 +18,8 @@ import 'package:cluster_arabia/ui/pages/home_stack_dashboard/bind/home_stack_das
 import 'package:cluster_arabia/ui/pages/home_stack_dashboard/view/home_stack_dashborad_view.dart';
 import 'package:cluster_arabia/ui/pages/login/bind/login_bind.dart';
 import 'package:cluster_arabia/ui/pages/login/view/login_view.dart';
+import 'package:cluster_arabia/ui/pages/payment_page/bind/payment_bind.dart';
+import 'package:cluster_arabia/ui/pages/payment_page/view/payment_view.dart';
 import 'package:cluster_arabia/ui/pages/privary_policy/bind/privacy_policy_bind.dart';
 import 'package:cluster_arabia/ui/pages/privary_policy/view/privacy_policy_view.dart';
 import 'package:cluster_arabia/ui/pages/profile/bind/profile_bind.dart';
@@ -93,6 +95,11 @@ abstract class AppPages {
       name: Routes.helpAndSupport,
       page: () => const HelpAndSupport(),
       binding: HelpAndSupportBinding(),
+    ),
+    GetPage(
+      name: Routes.toPaymentRoute,
+      page: () => const PaymentPage(),
+      binding: PaymentBind(),
     ),
   ];
 }

@@ -435,8 +435,6 @@ class BillOverView extends StatelessWidget {
                   //     logic.homeBillAmount?.data?.monthlyCharge?.cFirst;
                   // var students = logic.homeBillAmount?.data?.students?[i];
                   var data = logic.invoiceList[i];
-                  print('length.....${logic.invoiceList.length}');
-                  print('hhhhhhh.....');
                   return Row(
                     children: [
                       Text(

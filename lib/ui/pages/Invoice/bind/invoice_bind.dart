@@ -39,13 +39,7 @@ class InvoiceController extends GetxController {
   final RxString selectDropDownValue = 'Student Name'.obs;
 
   // List<String> categoryItems = [];
-  List<String> categoryItems = [
-    'Sharafas',
-    'Sharun',
-    'Rohith',
-    'Ramees',
-    'Salman'
-  ];
+
 
   DateRange? selectedDateRange;
   var startDatePass;

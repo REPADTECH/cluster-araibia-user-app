@@ -23,6 +23,7 @@ class SplashController extends GetxController {
   }
 
   void checkLogin() async {
+    print('Session Keys=>${(AppSession.to.session.read(SessionKeys.API_KEY))}');
     if (AppSession.to.session.read(SessionKeys.API_KEY) != null) {
       Get.offAllNamed(Routes.homeStackDashboard);
     } else {

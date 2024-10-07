@@ -4,7 +4,6 @@ import 'package:cluster_arabia/ui/pages/home/bind/home_bind.dart';
 import 'package:cluster_arabia/ui/pages/home/view/home_more.dart';
 import 'package:cluster_arabia/ui/pages/home_stack_dashboard/bind/home_stack_dashboard_bind.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_custom_utils/flutter_custom_utils.dart';
 import 'package:get/get.dart';
 
 class HomePage extends StatelessWidget {

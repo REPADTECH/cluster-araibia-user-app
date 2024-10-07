@@ -4,6 +4,8 @@ import 'package:cluster_arabia/res/images.dart';
 import 'package:cluster_arabia/res/style.dart';
 import 'package:cluster_arabia/ui/pages/Invoice/bind/invoice_bind.dart';
 import 'package:cluster_arabia/utilities/common_widget.dart';
+import 'package:cluster_arabia/utilities/dio.dart';
+import 'package:cluster_arabia/utilities/utils.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/foundation.dart';
@@ -401,7 +403,9 @@ class ListPart extends StatelessWidget {
                                   logic.stdName = data.student?.name ?? '';
                                   logic.tax = data.taxAmount ?? 0;
                                   logic.amount = data.amount ?? 0;
-                                  payBillPopupInVoice(context: context);
+                                  payBillPopupInVoice(context: context,
+                                      invoiceNo: data.totalBillAmountData?.id??''
+                                  );
                                 },
                                 child: CustomButtonWidget(
                                   backgroundColor: primaryColorPurple,
@@ -462,7 +466,7 @@ class ListPart extends StatelessWidget {
 
 
 void payBillPopupInVoice({
-  required BuildContext context,
+  required BuildContext context, required String invoiceNo,
 }) {
   showDialog<void>(
     context: context,
@@ -540,7 +544,10 @@ void payBillPopupInVoice({
                           ),
                         ),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Get.back();
+                            openUrl("${baseURL}pay/${invoiceNo}");
+                          },
                           child: CustomButtonWidget(
                             backgroundColor: primaryColorPurple,
                             vPadding: 8,
