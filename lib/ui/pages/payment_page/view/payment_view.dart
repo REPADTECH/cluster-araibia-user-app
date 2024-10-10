@@ -21,7 +21,7 @@ class PaymentPage extends StatelessWidget {
           },
         ),
         title: Text(
-          'WebView with Auto Close',
+          'Payment Window',
           style: customStyle(14.0, Colors.white, FontWeight.normal),
         ),
         actions: [
