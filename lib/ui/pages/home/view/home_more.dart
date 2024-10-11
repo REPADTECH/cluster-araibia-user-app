@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cluster_arabia/models/coupon_validation_model.dart';
 import 'package:cluster_arabia/res/colors.dart';
 import 'package:cluster_arabia/res/images.dart';
 import 'package:cluster_arabia/res/style.dart';
@@ -405,7 +406,7 @@ class BillOverView extends StatelessWidget {
                         style:
                             customStyle(11.0, Colors.black, FontWeight.normal))
                     .cExpanded(1),
-                    Text('',
+                Text('',
                         style:
                             customStyle(11.0, Colors.black, FontWeight.normal))
                     .cExpanded(1),
@@ -469,7 +470,19 @@ class BillOverView extends StatelessWidget {
                           .cExpanded(1),
                       InkWell(
                         onTap: () {
-                          payBillPopup(context: context, invoiceNo: data.totalBillAmountData?.id??'');
+                          logic.couponModel = CouponModel();
+                          logic.couponCodePass = '';
+                          logic.couponCode.clear();
+                          payBillPopup(
+                              context: context,
+                              billedOn: (data.billedOn ?? '')
+                                  .cGetFormattedDate(format: 'MMM yyyy'),
+                              studentName: data.student?.name ?? '',
+                              invoiceNo: data.totalBillAmountData?.id ?? '',
+                              totalAmount:
+                                  ((data.amount ?? 0) / 100).toStringAsFixed(2),
+                              tax: ((data.taxAmount ?? 0) / 100)
+                                  .toStringAsFixed(2));
                         },
                         child: Container(
                           width: 40,
@@ -484,7 +497,7 @@ class BillOverView extends StatelessWidget {
                                   style: customStyle(11.0, primaryColorPurple,
                                       FontWeight.normal))
                               .cToCenter,
-                        ),
+                        ).cPadSymmetric(v: 3),
                       ).cExpanded(1)
                     ],
                   );
@@ -596,7 +609,10 @@ class MainMenu extends StatelessWidget {
 void payBillPopup({
   required BuildContext context,
   String invoiceNo = '',
-  
+  String totalAmount = '',
+  String tax = '',
+  String studentName = '',
+  String billedOn = '',
 }) {
   cLog('body$invoiceNo');
   showDialog<void>(
@@ -655,15 +671,25 @@ void payBillPopup({
                     SizedBox(
                       height: 3,
                     ),
-                    Text(
-                      'Students : ',
-                      style: customStyle(14.0, Colors.black, FontWeight.bold),
+                    Row(
+                      children: [
+                        Text(
+                          'Students Name : ',
+                          style:
+                              customStyle(14.0, Colors.black, FontWeight.bold),
+                        ),
+                        Text(
+                          studentName,
+                          style: customStyle(
+                              12.0, Colors.black, FontWeight.normal),
+                        ),
+                      ],
                     ),
                     SizedBox(
                       height: 3,
                     ),
                     Text(
-                      HomeController.to.studentsName(),
+                      'Bill Date :$billedOn',
                       style: customStyle(12.0, Colors.black, FontWeight.normal),
                     ),
                     SizedBox(
@@ -696,7 +722,7 @@ void payBillPopup({
                                     },
                                     decoration: const InputDecoration(
                                       contentPadding:
-                                          EdgeInsets.only(bottom: 17),
+                                          EdgeInsets.only(bottom: 13),
                                       border: InputBorder.none,
                                       hintText: 'Coupon Code',
                                       hintStyle:
@@ -709,26 +735,21 @@ void payBillPopup({
                                 ),
                               ).cPadOnly(t: 13),
                               InkWell(
-                                // onTap: () {
-                                //   if (logic.cartCouponIsValid) {
-                                //     logic.couponCode.clear();
-                                //     // logic.coinRedeem.clear();
-                                //     logic.couponModel = null;
-                                //     logic.cartCouponIsValid = false;
-                                //     logic.validCouponText = '';
-                                //     logic.update();
-                                //   } else {
-                                //     logic.couponIsValid();
-                                //   }
-                                // },
                                 onTap: () {
-                                  logic.validateCoupon();
+                                  if (logic.couponCodePass.isNotEmpty) {
+                                    logic.couponCode.clear();
+                                    logic.couponCodePass = '';
+                                    logic.couponModel = null;
+                                    logic.update();
+                                  } else {
+                                    logic.couponIsValid(invoiceNo);
+                                  }
                                 },
                                 child: Container(
                                   height: 28,
                                   width: 55,
                                   decoration: BoxDecoration(
-                                    color: logic.cartCouponIsValid
+                                    color: (logic.couponCodePass.isNotEmpty)
                                         ? Colors
                                             .red // Change to a color you prefer for removal
                                         : const Color.fromRGBO(51, 58, 157,
@@ -737,10 +758,9 @@ void payBillPopup({
                                   ),
                                   child: Center(
                                     child: Text(
-                                      logic.cartCouponIsValid
-                                          ? '${'RemoveText'}'
-                                          : ' ${'Apply'}',
-                                      // child: Text(logic.cartCouponIsValid ? 'Remove' : 'Apply',
+                                      (logic.couponCodePass.isNotEmpty)
+                                          ? 'Clear'
+                                          : 'Apply',
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 14,
@@ -757,31 +777,37 @@ void payBillPopup({
                     SizedBox(
                       height: 5,
                     ),
-                    Text(
-                      'Combine the bill totals for ${(logic.homeBillAmount?.data?.students?.length == 1) ? 'the student.' : 'these students.'}  ',
-                      style: customStyle(13.0, Colors.black, FontWeight.bold),
-                    ),
+                    // Text(
+                    //   'Combine the bill totals for ${(logic.homeBillAmount?.data?.students?.length == 1) ? 'the student.' : 'these students.'}  ',
+                    //   style: customStyle(13.0, Colors.black, FontWeight.bold),
+                    // ),
                     SizedBox(
                       height: 5,
                     ),
                     KeyValueField(
                       titleKey: 'Subtotal : ',
-                      value:
-                          'SAR  ${(logic.totalAmount - ((logic.totalAmount) * 0.15)) / 100}',
-                      // 'SAR  ${logic.totalAmount/100}',
-                      // 'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalAmount ?? 0}') / 100)}',
+                      value: 'SAR  ${(totalAmount)}',
+                      // 'SAR  ${((logic.totalAmount - ((logic.totalAmount) * 0.15)) / 100).toStringAsFixed(2)}',
                       fontSize: 12.0,
                     ),
                     KeyValueField(
                       titleKey: 'Tax : ',
-                      value: 'SAR  ${((logic.totalAmount) * 0.15 / 100)}',
+                      value: 'SAR  ${(tax)}',
                       // 'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalTax ?? 0}') / 100)}',
                       fontSize: 12.0,
                     ),
+                    if (((logic.couponModel?.data ?? '').toString()).isNotEmpty)
+                      KeyValueField(
+                        titleKey: 'Coupon Discount : ',
+                        value: '- SAR  ${(logic.couponModel?.data)}',
+                        // 'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalTax ?? 0}') / 100)}',
+                        fontSize: 12.0,
+                      ),
                     Divider(),
                     KeyValueField(
                       titleKey: 'Total : ',
-                      value: 'SAR  ${logic.totalAmount / 100}',
+                      value:
+                          'SAR  ${((double.parse(totalAmount) + double.parse(tax)) - (double.parse((logic.couponModel?.data ?? 0).toString()))).toStringAsFixed(2)}',
                       // 'SAR  ${logic.totalAmount/100-((logic.totalAmount/100)*0.15)}',
                       // 'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalPayableAmount ?? 0}') / 100)}',
                       fontSize: 12.0,
@@ -810,7 +836,12 @@ void payBillPopup({
                         CustomButtonWidget(
                           onTap: () {
                             Get.back();
-                            openUrl("${baseURL}pay/${invoiceNo}");
+                            if (logic.couponCodePass.isEmpty) {
+                              openUrl("${baseURL}pay/${invoiceNo}");
+                            } else {
+                              openUrl(
+                                  "${baseURL}pay/${invoiceNo}?couponCode=${logic.couponCodePass}");
+                            }
                           },
                           backgroundColor: primaryColorPurple,
                           vPadding: 8,

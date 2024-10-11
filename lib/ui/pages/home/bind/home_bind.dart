@@ -280,13 +280,12 @@ class HomeController extends GetxController {
   // }
 
   Future<void> validateCoupon() async {
-    if (studentsId().isEmpty && pId.isEmpty) {
-      EasyLoading.showToast('Please Choose Student Or Parent');
-      return;
-    }
-    if (studentsId().isEmpty) {
-      EasyLoading.showToast(
-          'Please confirm that the child of the selected parent is included in the list');
+    // if (studentsId().isEmpty && pId.isEmpty) {
+    //   EasyLoading.showToast('Please Choose Student Or Parent');
+    //   return;
+    // }
+    if ((couponCode.text).isEmpty) {
+      EasyLoading.showToast('Please confirm that the field is not empty');
       return;
     }
     // if (!(billingKey.currentState?.validate() ?? false)) {
@@ -363,8 +362,11 @@ class HomeController extends GetxController {
   //     EasyLoading.showToast('Error occurred $ex');
   //   }
   // }
+  var couponCodePass = '';
 
-  void couponIsValid() async {
+  void couponIsValid(
+    String invoiceNo,
+  ) async {
     try {
       10.cDelay(() {
         EasyLoading.dismiss();
@@ -374,23 +376,15 @@ class HomeController extends GetxController {
         return;
       }
       EasyLoading.show(status: 'loading...');
-      couponModel = await Api.to.couponValidate(
-          couponId: couponCode.text, studentId: jsonEncode(sId));
+      couponModel = await Api.to
+          .validateCoupon(couponId: (couponCode.text).trim(), bilNo: invoiceNo);
       EasyLoading.dismiss();
 
-      if (couponModel?.success ?? true) {
-        EasyLoading.showToast('Valid Coupon');
+      if (((couponModel?.data ?? '').toString()).isEmpty) {
+        EasyLoading.showToast(couponModel?.message ?? '');
       } else {
-        cartCouponIsValid = false;
-        // validCouponText ='';
-        //This coupon is not applicable. Please visit the coupon section for eligible discounts.
-        if ((couponModel?.message ?? '').trim() ==
-            'This coupon is not applicable. Please visit the coupon section for eligible discounts.') {
-          validCouponText = 'invalidCoupon'.tr;
-        } else {
-          validCouponText = 'couponYouRedeemed'.tr;
-          // validCouponText = couponRedeem?.message ?? '';
-        }
+        couponCodePass = (couponCode.text).trim();
+        EasyLoading.showToast('Coupon Applied');
         update();
       }
       // if (couponModel?.success ?? true) {

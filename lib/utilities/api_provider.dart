@@ -122,7 +122,8 @@ class Api extends GetConnect {
     required var page,
   }) {
     if (kDebugMode) {
-      print('Url : -- p/student/list/$page?search=$search&route_id=$routeId&pickup_id=$pickUpId&country=$country&state=$state&school_id=$schoolId&status=$status');
+      print(
+          'Url : -- p/student/list/$page?search=$search&route_id=$routeId&pickup_id=$pickUpId&country=$country&state=$state&school_id=$schoolId&status=$status');
     }
     return get(
             'p/student/list/$page?search=$search&route_id=$routeId&pickup_id=$pickUpId&country=$country&state=$state&school_id=$schoolId&status=$status')
@@ -154,11 +155,13 @@ class Api extends GetConnect {
     var endDate,
     var paidStatus,
   }) {
-    print('Invoice List Url :p/bill/list/$page?student_id=$studentId&start_date=$startDate&end_date=$endDate&paid_status=$paidStatus');
-    return get('p/bill/list/$page?student_id=$studentId&start_date=$startDate&end_date=$endDate&paid_status=$paidStatus').then((value) {
+    print(
+        'Invoice List Url :p/bill/list/$page?student_id=$studentId&start_date=$startDate&end_date=$endDate&paid_status=$paidStatus');
+    return get(
+            'p/bill/list/$page?student_id=$studentId&start_date=$startDate&end_date=$endDate&paid_status=$paidStatus')
+        .then((value) {
       print('ooooooo${value.body}');
       return InvoiceListModel.fromJson(value.body ?? err);
-
     });
   }
 
@@ -198,11 +201,10 @@ class Api extends GetConnect {
     });
   }
 
-
   Future<HelpAndSupportCreateModel> postHelpAndSupport(
       {required var subject,
-        required var content,
-        required var contactNumber}) {
+      required var content,
+      required var contactNumber}) {
     return post(
       'p/help/create',
       FormData(
@@ -216,6 +218,26 @@ class Api extends GetConnect {
         print('Help And Support => ${value.body}');
       }
       return HelpAndSupportCreateModel.fromJson(value.body ?? err);
+    });
+  }
+
+  Future<CouponModel> validateCoupon({
+    required var couponId,
+    required var bilNo,
+  }) {
+    return post(
+      'p/coupon/value',
+      FormData(
+        {
+          'couponCode': couponId,
+          'bill_no': bilNo,
+        },
+      ),
+    ).then((value) {
+      if (kDebugMode) {
+        print('coupon apply => ${value.body}');
+      }
+      return CouponModel.fromJson(value.body ?? err);
     });
   }
 
