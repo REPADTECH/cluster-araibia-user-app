@@ -1,5 +1,6 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cluster_arabia/models/coupon_validation_model.dart';
 import 'package:cluster_arabia/res/colors.dart';
 import 'package:cluster_arabia/res/images.dart';
 import 'package:cluster_arabia/res/style.dart';
@@ -161,7 +162,6 @@ class FirstPart extends StatelessWidget {
                 itemCount: logic.invoiceListModel?.data?.dataList?.length ?? 0,
                 itemBuilder: (cnt, i) {
                   var data = logic.invoiceListModel?.data?.dataList?[i];
-                  var student = logic.homeBillAmount?.data?.students?[i];
                   // var monthlyCharge =
                   //     logic.homeBillAmount?.data?.monthlyCharge?.cFirst;
                   return ChildBox(
@@ -395,7 +395,7 @@ class BillOverView extends StatelessWidget {
                         style:
                             customStyle(11.0, Colors.black, FontWeight.normal))
                     .cExpanded(1),
-                SizedBox(
+                const SizedBox(
                   width: 15,
                 ),
                 Text('Class',
@@ -422,38 +422,27 @@ class BillOverView extends StatelessWidget {
             const SizedBox(
               height: 5,
             ),
-            // Divider(
-            //   color: Color.fromRGBO(159, 159, 159, 1),
-            //   thickness: 0.5,
-            // ),
             ListView.builder(
-                itemCount: logic.invoiceList.length ?? 0,
-                // itemCount: logic.homeBillAmount?.data?.students?.length ?? 0,
+                itemCount: logic.invoiceList.length,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, i) {
-                  // var monthCharge =
-                  //     logic.homeBillAmount?.data?.monthlyCharge?.cFirst;
-                  // var students = logic.homeBillAmount?.data?.students?[i];
                   var data = logic.invoiceList[i];
                   return Row(
                     children: [
                       Text(
                               (data.billedOn ?? '')
                                   .cGetFormattedDate(format: 'MMM yyyy'),
-                              // '${getShortMonthText(int.parse(monthCharge?.monthNumber ?? '0'))}-${monthCharge?.year ?? ''}',
-                              // '${monthCharge?.monthName ?? ' '}-${monthCharge?.year ?? ''}',
                               style: customStyle(
                                   11.0, primaryColorPurple, FontWeight.normal))
                           .cExpanded(1),
                       Text(
                         data.student?.name ?? '',
-                        // students?.studentName ?? '',
                         style: customStyle(
                             11.0, primaryColorPurple, FontWeight.normal),
                         overflow: TextOverflow.ellipsis,
                       ).cExpanded(1),
-                      SizedBox(
+                      const SizedBox(
                         width: 15,
                       ),
                       Text(
@@ -470,7 +459,7 @@ class BillOverView extends StatelessWidget {
                           .cExpanded(1),
                       InkWell(
                         onTap: () {
-                          logic.couponModel = CouponModel();
+                          logic.couponModel = null;
                           logic.couponCodePass = '';
                           logic.couponCode.clear();
                           payBillPopup(
@@ -622,17 +611,12 @@ void payBillPopup({
       return AlertDialog(
         backgroundColor: Colors.transparent,
         scrollable: true,
-        // alignment: Alignment.topRight,
-        // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         contentPadding: EdgeInsets.zero,
         content: SingleChildScrollView(
           child: GetBuilder<HomeController>(builder: (logic) {
             return Container(
-              // height: 200,
-              // width: 330,
               padding: const EdgeInsets.only(top: 1, bottom: 10),
               decoration: BoxDecoration(
-                  // color: Colors.transparent,
                   color: const Color.fromRGBO(255, 255, 255, 1),
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: const [
@@ -651,25 +635,8 @@ void payBillPopup({
                       'Bill Overview',
                       style: customStyle(18.0, Colors.black, FontWeight.bold),
                     ).cPadOnly(t: 10),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    // Row(
-                    //   children: [
-                    //     Text(
-                    //       'Time period : ',
-                    //       style: customStyle(
-                    //           12.0, Colors.black, FontWeight.normal),
-                    //     ),
-                    //     Text(
-                    //       '${(logic.startMonth)?.cGetFormattedDate(format: 'dd-MM-yyyy')}  -  ${(logic.endMonth)?.cGetFormattedDate(format: 'dd-MM-yyyy')}',
-                    //       style: customStyle(
-                    //           12.0, Colors.black, FontWeight.normal),
-                    //     ),
-                    //   ],
-                    // ),
-                    SizedBox(
-                      height: 3,
+                    const SizedBox(
+                      height: 11,
                     ),
                     Row(
                       children: [
@@ -685,14 +652,14 @@ void payBillPopup({
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 3,
                     ),
                     Text(
                       'Bill Date :$billedOn',
                       style: customStyle(12.0, Colors.black, FontWeight.normal),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
 
@@ -713,18 +680,12 @@ void payBillPopup({
                                 child: Center(
                                   child: TextFormField(
                                     controller: logic.couponCode,
-                                    onChanged: (val) {
-                                      if (val.isEmpty) {
-                                        logic.validCouponText = '';
-                                        logic.cartCouponIsValid = false;
-                                        logic.update();
-                                      }
-                                    },
+                                    onChanged: (val) {},
                                     decoration: const InputDecoration(
                                       contentPadding:
                                           EdgeInsets.only(bottom: 13),
                                       border: InputBorder.none,
-                                      hintText: 'Coupon Code',
+                                      hintText: 'Voucher Code',
                                       hintStyle:
                                           TextStyle(color: Colors.black26),
                                     ),
@@ -761,7 +722,7 @@ void payBillPopup({
                                       (logic.couponCodePass.isNotEmpty)
                                           ? 'Clear'
                                           : 'Apply',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 14,
                                       ),
@@ -774,14 +735,14 @@ void payBillPopup({
                         )),
 
                     ///
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     // Text(
                     //   'Combine the bill totals for ${(logic.homeBillAmount?.data?.students?.length == 1) ? 'the student.' : 'these students.'}  ',
                     //   style: customStyle(13.0, Colors.black, FontWeight.bold),
                     // ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     KeyValueField(
@@ -798,21 +759,22 @@ void payBillPopup({
                     ),
                     if (((logic.couponModel?.data ?? '').toString()).isNotEmpty)
                       KeyValueField(
-                        titleKey: 'Coupon Discount : ',
-                        value: '- SAR  ${(logic.couponModel?.data)}',
+                        titleKey: 'Voucher Discount : ',
+                        value:
+                            '- SAR  ${(logic.couponModel?.data?.value ?? 0)}',
                         // 'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalTax ?? 0}') / 100)}',
                         fontSize: 12.0,
                       ),
-                    Divider(),
+                    const Divider(),
                     KeyValueField(
                       titleKey: 'Total : ',
                       value:
-                          'SAR  ${((double.parse(totalAmount) + double.parse(tax)) - (double.parse((logic.couponModel?.data ?? 0).toString()))).toStringAsFixed(2)}',
+                          'SAR  ${((double.parse(totalAmount) + double.parse(tax)) - (double.parse((logic.couponModel?.data?.value ?? 0).toString()))).toStringAsFixed(2)}',
                       // 'SAR  ${logic.totalAmount/100-((logic.totalAmount/100)*0.15)}',
                       // 'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalPayableAmount ?? 0}') / 100)}',
                       fontSize: 12.0,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Row(

@@ -125,7 +125,7 @@ class ListTilePart extends StatelessWidget {
           },
         ).cPadSymmetric(h: 8),
         ListTileItemProfile(
-          name: 'Coupon',
+          name: 'Gift Voucher',
           icon: coupon_fill_icon,
           onTap: () {
             Get.toNamed(Routes.coupon);

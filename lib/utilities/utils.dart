@@ -104,3 +104,14 @@ openUrl(String urlLink) async {
     // }
   Get.toNamed(Routes.toPaymentRoute,arguments: [urlLink]);
   }
+
+  bool isDateExpired(String dateString) {
+  // Parse the string date into a DateTime object
+  DateTime parsedDate = DateTime.parse(dateString);
+
+  // Get the current date and time
+  DateTime currentDate = DateTime.now().toUtc();
+
+  // Compare the parsed date with the current date
+  return parsedDate.isBefore(currentDate);
+}

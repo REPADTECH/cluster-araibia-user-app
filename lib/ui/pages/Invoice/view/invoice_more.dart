@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cluster_arabia/res/colors.dart';
 import 'package:cluster_arabia/res/images.dart';
@@ -15,7 +17,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:cluster_arabia/models/student_list_model.dart' as student;
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
-// import 'package:webview_flutter/webview_flutter.dart';
 
 class FirstPart extends StatelessWidget {
   const FirstPart({super.key});
@@ -180,7 +181,7 @@ class ListPart extends StatelessWidget {
     return GetBuilder<InvoiceController>(builder: (logic) {
       return Expanded(
         child: ListView.builder(
-            itemCount: logic.invoiceList.length ?? 0,
+            itemCount: logic.invoiceList.length,
             shrinkWrap: true,
             controller: logic.scrollController,
             physics: const AlwaysScrollableScrollPhysics(),
@@ -379,13 +380,10 @@ class ListPart extends StatelessWidget {
                             if (data.paidOn != null)
                               InkWell(
                                 onTap: () {
-                                  // logic.setWebViewController(
-                                  //     id: data?.totalBillAmountData?.id ?? '');
-                                  // showBillPopUp(
-                                  //     context: context,
-                                  //     billId:
-                                  //         data?.totalBillAmountData?.id ?? '');
-                                  logic.openBillInBrowser(billId:data.totalBillAmountData?.id ?? '');
+                                  // openUrl('${baseURL}view_bill/${data.totalBillAmountData?.id ?? ''}');
+                                  logic.openBillInBrowser(
+                                      billId:
+                                          data.totalBillAmountData?.id ?? '');
                                 },
                                 child: CustomButtonWidget(
                                   backgroundColor: Colors.white,
@@ -400,12 +398,21 @@ class ListPart extends StatelessWidget {
                             if (data.paidOn == null)
                               InkWell(
                                 onTap: () {
-                                  logic.stdName = data.student?.name ?? '';
-                                  logic.tax = data.taxAmount ?? 0;
-                                  logic.amount = data.amount ?? 0;
-                                  payBillPopupInVoice(context: context,
-                                      invoiceNo: data.totalBillAmountData?.id??''
-                                  );
+                                  logic.couponModel = null;
+                                  logic.couponCodePass = '';
+                                  logic.couponCode.clear();
+                                  payBillPopupInVoice(
+                                      context: context,
+                                      billedOn: (data.billedOn ?? '')
+                                          .cGetFormattedDate(
+                                              format: 'MMM yyyy'),
+                                      studentName: data.student?.name ?? '',
+                                      invoiceNo:
+                                          data.totalBillAmountData?.id ?? '',
+                                      totalAmount: ((data.amount ?? 0) / 100)
+                                          .toStringAsFixed(2),
+                                      tax: ((data.taxAmount ?? 0) / 100)
+                                          .toStringAsFixed(2));
                                 },
                                 child: CustomButtonWidget(
                                   backgroundColor: primaryColorPurple,
@@ -420,54 +427,24 @@ class ListPart extends StatelessWidget {
                         ),
                       ],
                     ),
-                    // SfDateRangePicker(
-                    //   view: DateRangePickerView.year,
-                    // )
                   ],
                 ),
-              ).cMargOnly(t: (i==0)?15:5, l: 15, r: 15, b: 10);
+              ).cMargOnly(t: (i == 0) ? 15 : 5, l: 15, r: 15, b: 10);
             }),
       );
     });
   }
-
-  // void showBillPopUp({
-  //   required BuildContext context,
-  //   required var billId,
-  // }) async {
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       // Get the screen height
-  //       final double screenHeight = MediaQuery.of(context).size.height;
-  //
-  //       return Dialog(
-  //         shape: RoundedRectangleBorder(
-  //           borderRadius: BorderRadius.circular(12.0),
-  //         ),
-  //         child: GetBuilder<InvoiceController>(builder: (logic) {
-  //           return Container(
-  //             width: screenHeight,
-  //             height: 500,
-  //             padding: const EdgeInsets.all(20.0),
-  //             decoration: const BoxDecoration(
-  //                 color: Colors.white,
-  //                 borderRadius: BorderRadius.all(Radius.circular(12.0))),
-  //             child: WebViewWidget(
-  //               controller: logic.webViewController,
-  //             ),
-  //           );
-  //         }),
-  //       );
-  //     },
-  //   );
-  // }
 }
 
-
 void payBillPopupInVoice({
-  required BuildContext context, required String invoiceNo,
+  required BuildContext context,
+  String invoiceNo = '',
+  String totalAmount = '',
+  String tax = '',
+  String studentName = '',
+  String billedOn = '',
 }) {
+  cLog('body$invoiceNo');
   showDialog<void>(
     context: context,
     barrierDismissible: false,
@@ -485,7 +462,7 @@ void payBillPopupInVoice({
               // width: 330,
               padding: const EdgeInsets.only(top: 1, bottom: 10),
               decoration: BoxDecoration(
-                // color: Colors.transparent,
+                  // color: Colors.transparent,
                   color: const Color.fromRGBO(255, 255, 255, 1),
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: const [
@@ -500,37 +477,158 @@ void payBillPopupInVoice({
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Bill Overview',style: customStyle(18.0, Colors.black, FontWeight.bold),).cPadOnly(t: 10),
-                    const SizedBox(height: 8,),
+                    Text(
+                      'Bill Overview',
+                      style: customStyle(18.0, Colors.black, FontWeight.bold),
+                    ).cPadOnly(t: 10),
+                    const SizedBox(
+                      height: 11,
+                    ),
                     Row(
                       children: [
-                        Text('Time period : ',style: customStyle(12.0, Colors.black, FontWeight.normal),),
-                        Text('${(logic.startMonth)?.cGetFormattedDate(format: 'dd-MM-yyyy')}  -  ${(logic.endMonth)?.cGetFormattedDate(format: 'dd-MM-yyyy')}',style: customStyle(12.0, Colors.black, FontWeight.normal),),
+                        Text(
+                          'Students Name : ',
+                          style:
+                              customStyle(14.0, Colors.black, FontWeight.bold),
+                        ),
+                        Text(
+                          studentName,
+                          style: customStyle(
+                              12.0, Colors.black, FontWeight.normal),
+                        ),
                       ],
                     ),
-                    const SizedBox(height: 3,),
-                    Row(
-                      children: [
-                        Text('Student Name : ',style: customStyle(13.0, Colors.black, FontWeight.normal),),
-                        const SizedBox(width: 3,),
-                        SizedBox(
-                          width: 145,
-                            child: Text(logic.stdName,style: customStyle(13.0, Colors.black, FontWeight.normal),)),
+                    const SizedBox(
+                      height: 3,
+                    ),
+                    Text(
+                      'Bill Date :$billedOn',
+                      style: customStyle(12.0, Colors.black, FontWeight.normal),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
 
-                      ],
+                    ///
+                    Container(
+                        height: 40,
+                        width: context.cWidth,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black12),
+                            borderRadius: BorderRadius.circular(6)),
+                        child: Center(
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: context.cWidth - 200,
+                                child: Center(
+                                  child: TextFormField(
+                                    controller: logic.couponCode,
+                                    onChanged: (val) {},
+                                    decoration: const InputDecoration(
+                                      contentPadding:
+                                          EdgeInsets.only(bottom: 13),
+                                      border: InputBorder.none,
+                                      hintText: 'Voucher Code',
+                                      hintStyle:
+                                          TextStyle(color: Colors.black26),
+                                    ),
+                                  ).cPadOnly(
+                                    l: 5,
+                                    r: 5,
+                                  ),
+                                ),
+                              ).cPadOnly(t: 13),
+                              InkWell(
+                                onTap: () {
+                                  if (logic.couponCodePass.isNotEmpty) {
+                                    logic.couponCode.clear();
+                                    logic.couponCodePass = '';
+                                    logic.couponModel = null;
+                                    logic.update();
+                                  } else {
+                                    logic.couponIsValid(invoiceNo);
+                                  }
+                                },
+                                child: Container(
+                                  height: 28,
+                                  width: 55,
+                                  decoration: BoxDecoration(
+                                    color: (logic.couponCodePass.isNotEmpty)
+                                        ? Colors
+                                            .red // Change to a color you prefer for removal
+                                        : const Color.fromRGBO(51, 58, 157,
+                                            1), // Original color for applying
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      (logic.couponCodePass.isNotEmpty)
+                                          ? 'Clear'
+                                          : 'Apply',
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ),
+                                ).cPadOnly(r: 5, l: 5),
+                              ),
+                            ],
+                          ),
+                        )),
+
+                    ///
+                    const SizedBox(
+                      height: 5,
                     ),
-                    // Text(InvoiceController.to.studentsName(),style: customStyle(12.0, Colors.black, FontWeight.normal),),
-                    const SizedBox(height: 10,),
-                    KeyValueField(titleKey: 'Subtotal : ',value: 'SAR  ${(double.parse('${logic.amount}') / 100)}',fontSize: 12.0,),
-                    KeyValueField(titleKey: 'Tax : ',value: 'SAR  ${(double.parse('${logic.tax}') / 100)}',fontSize: 12.0,),
+                    // Text(
+                    //   'Combine the bill totals for ${(logic.homeBillAmount?.data?.students?.length == 1) ? 'the student.' : 'these students.'}  ',
+                    //   style: customStyle(13.0, Colors.black, FontWeight.bold),
+                    // ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    KeyValueField(
+                      titleKey: 'Subtotal : ',
+                      value: 'SAR  ${(totalAmount)}',
+                      // 'SAR  ${((logic.totalAmount - ((logic.totalAmount) * 0.15)) / 100).toStringAsFixed(2)}',
+                      fontSize: 12.0,
+                    ),
+                    KeyValueField(
+                      titleKey: 'Tax : ',
+                      value: 'SAR  ${(tax)}',
+                      // 'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalTax ?? 0}') / 100)}',
+                      fontSize: 12.0,
+                    ),
+                    if (((logic.couponModel?.data ?? '').toString()).isNotEmpty)
+                      KeyValueField(
+                        titleKey: 'Voucher Discount : ',
+                        value:
+                            '- SAR  ${(logic.couponModel?.data?.value ?? 0)}',
+                        // 'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalTax ?? 0}') / 100)}',
+                        fontSize: 12.0,
+                      ),
                     const Divider(),
-                    KeyValueField(titleKey: 'Total : ',value: 'SAR  ${(double.parse('${logic.amount}') + double.parse('${logic.tax}')) / 100}',fontSize: 12.0,),
-                    const SizedBox(height: 20,),
+                    KeyValueField(
+                      titleKey: 'Total : ',
+                      value:
+                          'SAR  ${((double.parse(totalAmount) + double.parse(tax)) - (double.parse((logic.couponModel?.data?.value ?? 0).toString()))).toStringAsFixed(2)}',
+                      // 'SAR  ${logic.totalAmount/100-((logic.totalAmount/100)*0.15)}',
+                      // 'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalPayableAmount ?? 0}') / 100)}',
+                      fontSize: 12.0,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         InkWell(
                           onTap: () {
+                            logic.couponCode.clear();
                             Get.back();
                           },
                           child: CustomButtonWidget(
@@ -539,33 +637,34 @@ void payBillPopupInVoice({
                             vPadding: 8,
                             width: (context.cWidth >= 800) ? 80 : 80,
                             buttonTitle: 'Cancel',
-                            titleStyle: customStyle(10.0,
-                                primaryColorPurple, FontWeight.bold),
+                            titleStyle: customStyle(
+                                10.0, primaryColorPurple, FontWeight.bold),
                           ),
                         ),
-                        InkWell(
+                        CustomButtonWidget(
                           onTap: () {
                             Get.back();
-                            openUrl("${baseURL}pay/${invoiceNo}");
+                            if (logic.couponCodePass.isEmpty) {
+                              openUrl("${baseURL}pay/${invoiceNo}");
+                            } else {
+                              openUrl(
+                                  "${baseURL}pay/${invoiceNo}?couponCode=${logic.couponCodePass}");
+                            }
                           },
-                          child: CustomButtonWidget(
-                            backgroundColor: primaryColorPurple,
-                            vPadding: 8,
-                            width: (context.cWidth >= 800) ? 60 : 80,
-                            buttonTitle: 'Pay',
-                            titleStyle: customStyle(
-                                10.0, Colors.white, FontWeight.bold),
-                          ).cPadOnly(l: 7),
-                        ),
+                          backgroundColor: primaryColorPurple,
+                          vPadding: 8,
+                          width: (context.cWidth >= 800) ? 60 : 80,
+                          buttonTitle: 'Pay',
+                          titleStyle:
+                              customStyle(10.0, Colors.white, FontWeight.bold),
+                        ).cPadOnly(l: 7),
                       ],
                     ),
-
                   ]).cPadAll(15),
             );
           }),
         ),
       );
-      // .cPadOnly(r: 50, t: 50);
     },
   );
 }
@@ -584,31 +683,28 @@ class KeyValueField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<InvoiceController>(
-        builder: (logic) {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(titleKey,
-                  style: customStyle(fontSize, const Color.fromRGBO(0, 0, 0, 0.58),
+    return GetBuilder<InvoiceController>(builder: (logic) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(titleKey,
+              style: customStyle(fontSize, const Color.fromRGBO(0, 0, 0, 0.58),
+                  FontWeight.bold)),
+          RichText(
+            textScaleFactor: 1,
+            text: TextSpan(children: [
+              TextSpan(
+                  text: '',
+                  style: customStyle(fontSize,
+                      const Color.fromRGBO(0, 0, 0, 0.65), FontWeight.normal)),
+              TextSpan(
+                  text: value,
+                  style: customStyle(fontSize, const Color.fromRGBO(0, 0, 0, 1),
                       FontWeight.bold)),
-              RichText(
-                textScaleFactor: 1,
-                text: TextSpan(children: [
-                  TextSpan(
-                      text: '',
-                      style: customStyle(fontSize,
-                          const Color.fromRGBO(0, 0, 0, 0.65), FontWeight.normal)),
-                  TextSpan(
-                      text: value,
-                      style: customStyle(fontSize, const Color.fromRGBO(0, 0, 0, 1),
-                          FontWeight.bold)),
-                ]),
-              ),
-            ],
-          );
-        }
-    );
+            ]),
+          ),
+        ],
+      );
+    });
   }
 }
-

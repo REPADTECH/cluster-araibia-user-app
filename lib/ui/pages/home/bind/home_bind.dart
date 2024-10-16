@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:cluster_arabia/models/banner_list_model.dart';
 import 'package:cluster_arabia/models/base_model_class.dart';
@@ -46,7 +45,6 @@ class HomeController extends GetxController {
   DateTime? endMonth;
   var totWidth = 60;
   var isAddMore = false.obs;
-  bool cartCouponIsValid = false;
   var validCouponText = '';
   var paymentType = 'pay_at_shop'.obs;
   var singleLineText;
@@ -241,127 +239,12 @@ class HomeController extends GetxController {
     }
   }
 
-  // void validateCoupon() async {
-  //   if (studentsId().isEmpty && pId.isEmpty) {
-  //     EasyLoading.showToast('Please Choose Student Or Parent');
-  //     return;
-  //   }
-  //   if (studentsId().isEmpty) {
-  //     EasyLoading.showToast(
-  //         'Please confirm that the child of the selected parent is included in the list');
-  //     return;
-  //   }
-  //   // if (!(billingKey.currentState?.validate() ?? false)) {
-  //   //   return;
-  //   // }
-  //   try {
-  //     EasyLoading.show();
-  //     10.cDelay(() {
-  //       EasyLoading.dismiss();
-  //     });
-  //     couponModel = await Api.to.couponValidate(
-  //         couponId: couponCode.text,
-  //         studentId: jsonEncode(studentsId()),);
-  //     EasyLoading.dismiss();
-  //     if (couponModel?.success ?? false) {
-  //       EasyLoading.showSuccess('This Coupon Is Valid');
-  //       isValidCoupon.value = couponModel?.success ?? false;
-  //       update();
-  //     } else {
-  //       {
-  //         EasyLoading.showError(couponModel?.message ?? '');
-  //         couponCode.clear();
-  //       }
-  //     }
-  //   } catch (ex) {
-  //     EasyLoading.dismiss();
-  //     EasyLoading.showToast('Error occurred $ex');
-  //   }
-  // }
-
-  Future<void> validateCoupon() async {
-    // if (studentsId().isEmpty && pId.isEmpty) {
-    //   EasyLoading.showToast('Please Choose Student Or Parent');
-    //   return;
-    // }
-    if ((couponCode.text).isEmpty) {
-      EasyLoading.showToast('Please confirm that the field is not empty');
-      return;
-    }
-    // if (!(billingKey.currentState?.validate() ?? false)) {
-    //   return;
-    // }
-    try {
-      EasyLoading.show();
-      10.cDelay(() {
-        EasyLoading.dismiss();
-      });
-      couponModel = await Api.to.couponValidate(
-        couponId: couponCode.text,
-        studentId: jsonEncode(
-            studentsId()), // Call the function directly (no need for jsonEncode)
-      );
-      EasyLoading.dismiss();
-      if (couponModel?.success ?? false) {
-        EasyLoading.showSuccess('This Coupon Is Valid');
-        isValidCoupon.value = couponModel?.success ?? false;
-        update();
-      } else {
-        {
-          EasyLoading.showError(couponModel?.message ?? '');
-          couponCode.clear();
-        }
-      }
-    } catch (ex) {
-      EasyLoading.dismiss();
-      EasyLoading.showToast('Error occurred $ex');
-    }
-  }
-
-// Modified studentsId() function to return a list of strings
   List<String> studentsId() {
     return (homeBillAmount?.data?.students ?? [])
         .map((item) => item.id.toString())
         .toList(); // Convert to a list for direct usage
   }
 
-  // void validateCoupon() async {
-  //   if (sId.isEmpty && pId.isEmpty) {
-  //     EasyLoading.showToast('Please Choose Student Or Parent');
-  //     return;
-  //   }
-  //   if (sId.isEmpty) {
-  //     EasyLoading.showToast(
-  //         'Please confirm that the child of the selected parent is included in the list');
-  //     return;
-  //   }
-  //   // if (!(billingKey.currentState?.validate() ?? false)) {
-  //   //   return;
-  //   // }
-  //   try {
-  //     EasyLoading.show();
-  //     10.cDelay(() {
-  //       EasyLoading.dismiss();
-  //     });
-  //     couponModel = await Api.to.couponValidate(
-  //         couponId: couponCode.text,
-  //         studentId: jsonEncode(sId),);
-  //     EasyLoading.dismiss();
-  //     if (couponModel?.success ?? false) {
-  //       EasyLoading.showSuccess('This Coupon Is Valid');
-  //       isValidCoupon.value = couponModel?.success ?? false;
-  //       update();
-  //     } else {
-  //       {
-  //         EasyLoading.showError(couponModel?.message ?? '');
-  //         couponCode.clear();
-  //       }
-  //     }
-  //   } catch (ex) {
-  //     EasyLoading.dismiss();
-  //     EasyLoading.showToast('Error occurred $ex');
-  //   }
-  // }
   var couponCodePass = '';
 
   void couponIsValid(
@@ -372,46 +255,25 @@ class HomeController extends GetxController {
         EasyLoading.dismiss();
       });
       if (couponCode.text.isEmpty) {
-        EasyLoading.showToast('Please enter the coupon code');
+        EasyLoading.showToast('Please enter the Voucher code');
         return;
       }
       EasyLoading.show(status: 'loading...');
       couponModel = await Api.to
           .validateCoupon(couponId: (couponCode.text).trim(), bilNo: invoiceNo);
       EasyLoading.dismiss();
-
-      if (((couponModel?.data ?? '').toString()).isEmpty) {
+      if (!(couponModel?.success ?? true)) {
         EasyLoading.showToast(couponModel?.message ?? '');
+        return;
+      }
+
+      if (((couponModel?.data?.error ?? '').toString()).isNotEmpty) {
+        EasyLoading.showToast(couponModel?.data?.error ?? '');
       } else {
         couponCodePass = (couponCode.text).trim();
-        EasyLoading.showToast('Coupon Applied');
+        EasyLoading.showToast('Voucher Applied');
         update();
       }
-      // if (couponModel?.success ?? true) {
-      //   if ((couponModel?.data?.value ?? 0) <
-      //       (cartproductlist?.data?.totalAmount ?? 0.0)) {
-      //     cartCouponIsValid = true;
-      //     validCouponText = 'validCoupon'.tr;
-      //     update();
-      //   } else {
-      //     cartCouponIsValid = false;
-      //     validCouponText = 'couponAmonountGreater'.tr;
-      //     update();
-      //   }
-      // }
-      // else {
-      //   cartCouponIsValid = false;
-      //   // validCouponText ='';
-      //   //This coupon is not applicable. Please visit the coupon section for eligible discounts.
-      //   if ((couponModel?.message ?? '').trim() ==
-      //       'This coupon is not applicable. Please visit the coupon section for eligible discounts.') {
-      //     validCouponText = 'invalidCoupon'.tr;
-      //   } else {
-      //     validCouponText = 'couponYouRedeemed'.tr;
-      //     // validCouponText = couponRedeem?.message ?? '';
-      //   }
-      //   update();
-      // }
     } catch (e) {
       EasyLoading.showToast('Error : $e');
     }
@@ -422,7 +284,7 @@ class HomeController extends GetxController {
       baseModelClass = await Api.to.postFcmToken(
           fcmToken: GetStorage('cluster_arabia').read(SessionKeys.FCM_ID));
     } catch (ex) {
-      print('Exception Is => $ex');
+      cLog('Exception Is => $ex');
     }
   }
 

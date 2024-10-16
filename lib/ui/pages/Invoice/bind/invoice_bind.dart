@@ -1,15 +1,17 @@
+import 'package:cluster_arabia/models/coupon_validation_model.dart';
 import 'package:cluster_arabia/models/invoice_list_model.dart' as invoice;
 import 'package:cluster_arabia/models/profile_model.dart';
 import 'package:cluster_arabia/utilities/api_provider.dart';
 import 'package:cluster_arabia/utilities/dio.dart';
 import 'package:cluster_arabia/utilities/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_utils/flutter_custom_utils.dart';
 import 'package:flutter_date_range_picker/flutter_date_range_picker.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:cluster_arabia/models/student_list_model.dart' as student;
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:url_launcher/url_launcher.dart';
-// import 'package:webview_flutter/webview_flutter.dart';
 
 class InvoiceBinding implements Bindings {
   @override
@@ -40,7 +42,6 @@ class InvoiceController extends GetxController {
 
   // List<String> categoryItems = [];
 
-
   DateRange? selectedDateRange;
   var startDatePass;
 
@@ -62,6 +63,9 @@ class InvoiceController extends GetxController {
   }
 
   clearData() {
+    startMonth = null;
+    endMonth = null;
+    filterChoosed = '';
     invoiceList.clear();
     filterChoosed = '';
     startDatePass = null;
@@ -101,8 +105,10 @@ class InvoiceController extends GetxController {
     }
   }
 
-  String studentsName(){
-    return (studentModelList?.data?.dataList??[]).map((item) =>item.studentName.toString()).join(', ');
+  String studentsName() {
+    return (studentModelList?.data?.dataList ?? [])
+        .map((item) => item.studentName.toString())
+        .join(', ');
   }
 
   void getInvoiceList() async {
@@ -159,31 +165,40 @@ class InvoiceController extends GetxController {
       update();
     }
   }
+  TextEditingController couponCode = TextEditingController();
+  var couponCodePass = '';
+  CouponModel? couponModel;
+  void couponIsValid(
+    String invoiceNo,
+  ) async {
+    try {
+      10.cDelay(() {
+        EasyLoading.dismiss();
+      });
+      if (couponCode.text.isEmpty) {
+        EasyLoading.showToast('Please enter the Voucher code');
+        return;
+      }
+      EasyLoading.show(status: 'loading...');
+      couponModel = await Api.to
+          .validateCoupon(couponId: (couponCode.text).trim(), bilNo: invoiceNo);
+      EasyLoading.dismiss();
+      if (!(couponModel?.success ?? true)) {
+        EasyLoading.showToast(couponModel?.message ?? '');
+        return;
+      }
 
-  // void setWebViewController({required String id}) async {
-  //   var url = '${baseURL}view_bill/$id';
-  //   webViewController
-  //     ..setJavaScriptMode(JavaScriptMode.unrestricted)
-  //     ..setBackgroundColor(const Color(0x00000000))
-  //     ..setNavigationDelegate(
-  //       NavigationDelegate(
-  //         onProgress: (int progress) {
-  //           // Update loading bar.
-  //         },
-  //         onPageStarted: (String url) {},
-  //         onPageFinished: (String url) {},
-  //         onWebResourceError: (WebResourceError error) {},
-  //         onNavigationRequest: (NavigationRequest request) {
-  //           // if (request.url.startsWith(url)) {
-  //           //   return NavigationDecision.prevent;
-  //           // }
-  //           return NavigationDecision.navigate;
-  //         },
-  //       ),
-  //     )
-  //     ..loadRequest(Uri.parse(url));
-  //   update();
-  // }
+      if (((couponModel?.data?.error ?? '').toString()).isNotEmpty) {
+        EasyLoading.showToast(couponModel?.data?.error ?? '');
+      } else {
+        couponCodePass = (couponCode.text).trim();
+        EasyLoading.showToast('Voucher Applied');
+        update();
+      }
+    } catch (e) {
+      EasyLoading.showToast('Error : $e');
+    }
+  }
 
   void openBillInBrowser({required String billId}) async {
     var url = '${baseURL}view_bill/$billId';

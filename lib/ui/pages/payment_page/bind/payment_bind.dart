@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:cluster_arabia/ui/pages/home/bind/home_bind.dart';
+import 'package:flutter_custom_utils/flutter_custom_utils.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -60,23 +62,37 @@ class PaymentController extends GetxController {
     }
   }
 
-  void openWebView({required url}) {
+  void openWebView({required String url}) {
+    EasyLoading.show();
     webViewController = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
         NavigationDelegate(
-          onProgress: (int progress) {
-            // Update loading bar.
+          onPageStarted: (String newUrl) {
+            // Perform actions when the page starts loading
           },
-          onPageStarted: (String url) {},
-          onPageFinished: (String url) {},
-          onHttpError: (HttpResponseError error) {},
-          onWebResourceError: (WebResourceError error) {},
+          onPageFinished: (String newUrl) async {
+            cLog("Page finished loading: $newUrl");
+            final pageTitle = await webViewController.getTitle();
+            cLog("Current page title: $pageTitle");
+            EasyLoading.dismiss();
+
+            // You can detect screen changes by checking URLs or titles
+            if (newUrl.contains("success")) {
+              timer.value = 5;
+            } else if ((newUrl.contains("failure")) ||
+                newUrl.contains("cancel")) {
+              timer.value = 5;
+            }
+          },
           onNavigationRequest: (NavigationRequest request) {
             if (request.url.startsWith('https://www.youtube.com/')) {
               return NavigationDecision.prevent;
             }
             return NavigationDecision.navigate;
+          },
+          onWebResourceError: (WebResourceError error) {
+            Get.snackbar("Error", "Failed to load page.");
           },
         ),
       )

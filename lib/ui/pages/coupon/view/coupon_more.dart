@@ -12,52 +12,50 @@ class CouponList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<CouponController>(
-        builder: (logic) {
-          return SingleChildScrollView(
-            controller: logic.scrollController,
-            child: Column(
-              children: [
-                GridView.builder(
-                    itemCount: logic.couponLists.length??0,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      childAspectRatio: cGetResGridRatio(
-                        context: context,
-                        height: (context.cWidth < 700) ? 198 : 210,
-                        width: 190,
-                      ),
-                      crossAxisCount: cGetResCrossCountGrid(
-                        context: context,
-                        width: 187,
-                      ),
-                      crossAxisSpacing: 5,
-                      mainAxisSpacing: 5,
-                    ),
-                    itemBuilder: (context, index) {
-                      var data= logic.couponLists[index];
-                      return   Container(
-                          padding: const EdgeInsets.all(5),
-                          width: double.maxFinite,
-                          // width: (context.cWidth < 700) ? 140 : 160,
-                          height: double.maxFinite,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              boxShadow:  const [
-                                BoxShadow(
-                                  blurRadius: 6,
-                                  spreadRadius: 1,
-                                  color: Color.fromRGBO(0, 0, 0, 0.25),
-                                )
-                                // BoxShadow(
-                                //     color: Color.fromRGBO(
-                                //         0, 0, 0, 0.15),
-                                //     blurRadius: 10)
-                              ],
-                              borderRadius:
-                              BorderRadius.circular(7)),
-                          child:
+    return GetBuilder<CouponController>(builder: (logic) {
+      return SingleChildScrollView(
+        controller: logic.scrollController,
+        child: Column(
+          children: [
+            GridView.builder(
+                itemCount: logic.couponLists.length ?? 0,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  childAspectRatio: cGetResGridRatio(
+                    context: context,
+                    height: 210,
+                    width: 190,
+                  ),
+                  crossAxisCount: cGetResCrossCountGrid(
+                    context: context,
+                    width: 187,
+                  ),
+                  crossAxisSpacing: 5,
+                  mainAxisSpacing: 5,
+                ),
+                itemBuilder: (context, index) {
+                  var data = logic.couponLists[index];
+                  return Container(
+                      padding: const EdgeInsets.all(5),
+                      width: double.maxFinite,
+                      // width: (context.cWidth < 700) ? 140 : 160,
+                      height: double.maxFinite,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          boxShadow: const [
+                            BoxShadow(
+                              blurRadius: 6,
+                              spreadRadius: 1,
+                              color: Color.fromRGBO(0, 0, 0, 0.25),
+                            )
+                            // BoxShadow(
+                            //     color: Color.fromRGBO(
+                            //         0, 0, 0, 0.15),
+                            //     blurRadius: 10)
+                          ],
+                          borderRadius: BorderRadius.circular(7)),
+                      child:
                           // (!(couponList.isScratchedByYou ??
                           //     true))
                           //     ?
@@ -74,10 +72,10 @@ class CouponList extends StatelessWidget {
                           // )
                           //     :
                           Container(
-                            width: 130,
-                            height: 135,
-                            decoration: BoxDecoration(
-                                color:
+                        width: 130,
+                        height: 140,
+                        decoration: BoxDecoration(
+                            color:
                                 // (!checkDateBeetWeen(
                                 //     DateTime.parse(
                                 //         '${logic.couponList?[index]?.expDate ?? '10/09/2020'}'),
@@ -85,109 +83,150 @@ class CouponList extends StatelessWidget {
                                 //     ?
                                 //     :
                                 // Colors.white,
-                                 (data.isUsed==1)?const Color.fromRGBO(255,255,255,.4):Colors.white,
-
-                              boxShadow:  const [
-                                  BoxShadow(
-                                    blurRadius: 6,
-                                    spreadRadius: 1,
-                                    color: Color.fromRGBO(0, 0, 0, 0.25),
+                                (data.isCouponUsed ?? false)
+                                    ? const Color.fromRGBO(255, 255, 255, .4)
+                                    : Colors.white,
+                            boxShadow: const [
+                              BoxShadow(
+                                blurRadius: 6,
+                                spreadRadius: 1,
+                                color: Color.fromRGBO(0, 0, 0, 0.25),
+                              )
+                            ],
+                            borderRadius: BorderRadius.circular(7)),
+                        child: Column(
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: SizedBox(
+                                  width: 180,
+                                  // color: Colors.green,
+                                  child: Align(
+                                    child: Lottie.asset(
+                                      couponLottie,
+                                      height: 100,
+                                    ),
                                   )
-                                ],
-                                borderRadius:
-                                BorderRadius.circular(7)),
-                            child: Column(
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: SizedBox(
-                                      width: 180,
-                                      // color: Colors.green,
-                                      child: Align(
-                                        child:
-                                        Lottie.asset(
-                                          couponLottie,
-                                          height: 100,
-                                        ),
-                                      )
-                                    // .cVisible(!checkDateBeetWeen(
-                                    // DateTime.parse(
-                                    //     '${logic.couponList?[index]?.expDate ?? '10/09/2020'}'),
-                                    // DateTime.now())),
+                                  // .cVisible(!checkDateBeetWeen(
+                                  // DateTime.parse(
+                                  //     '${logic.couponList?[index]?.expDate ?? '10/09/2020'}'),
+                                  // DateTime.now())),
                                   ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Column(
-                                    children: [
-                                      Text('You\'ve won',style: customStyle(13.0, Colors.black, FontWeight.normal),)
-                                          .cPadOnly(t: 18),
-                                      Text('${data.value??' '}'.cToCurrencyIND,
-                                        // '${'qrText'.tr}: ${textToCopy}',
-                                        style: const TextStyle(
-                                            fontSize: 15,color: Colors.black,fontWeight: FontWeight.bold),
-                                      ).cPadOnly(t: 3),
-                                      Container(
-                                        padding:
-                                        const EdgeInsets.only(
-                                            left: 10,
-                                            right: 10),
-                                        height: 35,
-                                        decoration:
-                                        BoxDecoration(
-                                          // color: Color.fromRGBO(242, 250, 251, 1)
-                                          color: Colors.grey.shade400
-                                              .withOpacity(
-                                              0.4),
-                                          borderRadius:
-                                          BorderRadius
-                                              .circular(
-                                              10.0),
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment
-                                              .spaceBetween,
-                                          children: [
-                                            SizedBox(
-                                                width: 90,
-                                                child: Text(
-                                                  // 'h67ui9kjg9',
-                                                  '${data.couponCode}',
-                                                  style: const TextStyle(
-                                                      fontSize:
-                                                      15,color: Colors.black87),
-                                                )
-                                              // .cPadOnly(
-                                              // l: 10),
-                                            ),
-                                            InkWell(
-                                              onTap: (){
-                                                copyToClipboard(
-                                                    '${data.couponCode}');
-                                              },
-                                              child: const Icon(
-                                                Icons.copy,
-                                                size: 20,
-                                                color: Colors.black87,
-                                              ),
-                                            )
-                                            // .cPadOnly(r: 10)
-                                          ],
-                                        ),
-                                      ).cPadOnly(
-                                          t: 7, l: 8, r: 8),
-                                    ],
-                                  ),
-                                )
-                              ],
                             ),
-                          )).cClipAll(7);
-                    }).cPadAll(10),
-              ],
-            ),
-          );
-        }
-    );
+                            Expanded(
+                              flex: 2,
+                              child: Column(
+                                children: [
+                                  Text(
+                                    'You\'ve get a gift',
+                                    style: customStyle(
+                                        14.0, Colors.black, FontWeight.normal),
+                                  ).cPadOnly(t: 18),
+                                  Text(
+                                    'Exp: ${(data.endDate ?? '').cGetFormattedDate(format: 'dd-MMM-yyyy')}',
+                                    style: customStyle(
+                                        10.0, Colors.black, FontWeight.normal),
+                                  ),
+                                  Text(
+                                    '${data.value ?? ' '}'.cToCurrencyIND,
+                                    // '${'qrText'.tr}: ${textToCopy}',
+                                    style: const TextStyle(
+                                        fontSize: 15,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                  ).cPadOnly(t: 3),
+                                  ((data.isCouponUsed ?? false))
+                                      ? Container(
+                                          padding: const EdgeInsets.only(
+                                              left: 10, right: 10),
+                                          height: 35,
+                                          decoration: BoxDecoration(
+                                            // color: Color.fromRGBO(242, 250, 251, 1)
+                                            color: Colors.grey.shade400
+                                                .withOpacity(0.4),
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                          ),
+                                          child: const Center(
+                                            child: Text("Gift applied",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    color: Colors.black87)),
+                                          ),
+                                        ).cPadOnly(t: 7, l: 8, r: 8)
+                                      : ((isDateExpired(data.endDate ?? "")))
+                                          ? Container(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10, right: 10),
+                                              height: 35,
+                                              decoration: BoxDecoration(
+                                                // color: Color.fromRGBO(242, 250, 251, 1)
+                                                color: Colors.grey.shade400
+                                                    .withOpacity(0.4),
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
+                                              ),
+                                              child: const Center(
+                                                child: Text("Expired",
+                                                    style: TextStyle(
+                                                        fontSize: 15,
+                                                        color: Colors.black87)),
+                                              ),
+                                            ).cPadOnly(t: 7, l: 8, r: 8)
+                                          : Container(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10, right: 10),
+                                              height: 35,
+                                              decoration: BoxDecoration(
+                                                // color: Color.fromRGBO(242, 250, 251, 1)
+                                                color: Colors.grey.shade400
+                                                    .withOpacity(0.4),
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
+                                              ),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  SizedBox(
+                                                      width: 90,
+                                                      child: Text(
+                                                        // 'h67ui9kjg9',
+                                                        '${data.couponCode}',
+                                                        style: const TextStyle(
+                                                            fontSize: 15,
+                                                            color:
+                                                                Colors.black87),
+                                                      )
+                                                      // .cPadOnly(
+                                                      // l: 10),
+                                                      ),
+                                                  InkWell(
+                                                    onTap: () {
+                                                      copyToClipboard(
+                                                          '${data.couponCode}');
+                                                    },
+                                                    child: const Icon(
+                                                      Icons.copy,
+                                                      size: 20,
+                                                      color: Colors.black87,
+                                                    ),
+                                                  )
+                                                  // .cPadOnly(r: 10)
+                                                ],
+                                              ),
+                                            ).cPadOnly(t: 7, l: 8, r: 8),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      )).cClipAll(7);
+                }).cPadAll(10),
+          ],
+        ),
+      );
+    });
   }
 }
