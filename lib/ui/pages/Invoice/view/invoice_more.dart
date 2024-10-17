@@ -380,10 +380,8 @@ class ListPart extends StatelessWidget {
                             if (data.paidOn != null)
                               InkWell(
                                 onTap: () {
-                                  // openUrl('${baseURL}view_bill/${data.totalBillAmountData?.id ?? ''}');
-                                  logic.openBillInBrowser(
-                                      billId:
-                                          data.totalBillAmountData?.id ?? '');
+                                  openUrl(
+                                      '${baseURL}view_bill/${data.totalBillAmountData?.id ?? ''}',isPay: false);
                                 },
                                 child: CustomButtonWidget(
                                   backgroundColor: Colors.white,

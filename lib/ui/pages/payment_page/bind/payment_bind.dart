@@ -17,14 +17,16 @@ class PaymentController extends GetxController {
   static PaymentController get to => Get.find();
   late final WebViewController webViewController;
   Timer? countdownTimer;
+  bool isPay = true;
   var timer = 600.obs; // 10 minutes (600 seconds)
 
   @override
   void onInit() {
     var arguments = Get.arguments;
     if (arguments != null) {
+      isPay = arguments[1];
       openWebView(url: arguments[0]);
-      startTimer();
+      if (isPay) startTimer();
     }
     super.onInit();
   }
@@ -72,7 +74,7 @@ class PaymentController extends GetxController {
             // Perform actions when the page starts loading
           },
           onPageFinished: (String newUrl) async {
-            cLog("Page finished loading: $newUrl");
+            // cLog("Page finished loading: $newUrl");
             final pageTitle = await webViewController.getTitle();
             cLog("Current page title: $pageTitle");
             EasyLoading.dismiss();

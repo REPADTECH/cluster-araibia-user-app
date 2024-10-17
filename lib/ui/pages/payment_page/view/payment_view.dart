@@ -21,7 +21,7 @@ class PaymentPage extends StatelessWidget {
           },
         ),
         title: Text(
-          'Payment Window',
+          (PaymentController.to.isPay) ? 'Payment Window' : 'View Bill',
           style: customStyle(14.0, Colors.white, FontWeight.normal),
         ),
         actions: [
@@ -38,13 +38,14 @@ class PaymentPage extends StatelessWidget {
         return Column(
           children: [
             Expanded(child: WebViewWidget(controller: logic.webViewController)),
-            Obx(() => Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Closing in: ${logic.timer.value} seconds",
-                    style: TextStyle(fontSize: 16, color: Colors.redAccent),
-                  ),
-                )),
+            if (logic.isPay)
+              Obx(() => Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Closing in: ${logic.timer.value} seconds",
+                      style: TextStyle(fontSize: 16, color: Colors.redAccent),
+                    ),
+                  )),
           ],
         );
       }),

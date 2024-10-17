@@ -18,7 +18,7 @@ class CouponList extends StatelessWidget {
         child: Column(
           children: [
             GridView.builder(
-                itemCount: logic.couponLists.length ?? 0,
+                itemCount: logic.couponLists.length,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -75,17 +75,7 @@ class CouponList extends StatelessWidget {
                         width: 130,
                         height: 140,
                         decoration: BoxDecoration(
-                            color:
-                                // (!checkDateBeetWeen(
-                                //     DateTime.parse(
-                                //         '${logic.couponList?[index]?.expDate ?? '10/09/2020'}'),
-                                //     DateTime.now()))
-                                //     ?
-                                //     :
-                                // Colors.white,
-                                (data.isCouponUsed ?? false)
-                                    ? const Color.fromRGBO(255, 255, 255, .4)
-                                    : Colors.white,
+                            color: Colors.white,
                             boxShadow: const [
                               BoxShadow(
                                 blurRadius: 6,
@@ -106,12 +96,7 @@ class CouponList extends StatelessWidget {
                                       couponLottie,
                                       height: 100,
                                     ),
-                                  )
-                                  // .cVisible(!checkDateBeetWeen(
-                                  // DateTime.parse(
-                                  //     '${logic.couponList?[index]?.expDate ?? '10/09/2020'}'),
-                                  // DateTime.now())),
-                                  ),
+                                  )),
                             ),
                             Expanded(
                               flex: 2,
@@ -141,17 +126,27 @@ class CouponList extends StatelessWidget {
                                               left: 10, right: 10),
                                           height: 35,
                                           decoration: BoxDecoration(
-                                            // color: Color.fromRGBO(242, 250, 251, 1)
-                                            color: Colors.grey.shade400
-                                                .withOpacity(0.4),
+                                            color: Colors.green,
                                             borderRadius:
                                                 BorderRadius.circular(10.0),
                                           ),
-                                          child: const Center(
-                                            child: Text("Gift applied",
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    color: Colors.black87)),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text("Gift applied",
+                                                  style: customStyle(
+                                                      16.0,
+                                                      Colors.white,
+                                                      FontWeight.bold)),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              const Icon(
+                                                Icons.check,
+                                                color: Colors.white,
+                                              )
+                                            ],
                                           ),
                                         ).cPadOnly(t: 7, l: 8, r: 8)
                                       : ((isDateExpired(data.endDate ?? "")))
@@ -222,7 +217,11 @@ class CouponList extends StatelessWidget {
                             )
                           ],
                         ),
-                      )).cClipAll(7);
+                      )).cClipAll(7).cOpacity((isDateExpired(
+                              data.endDate ?? "") &&
+                          !(data.isCouponUsed ?? false))
+                      ? 0.5
+                      : 1);
                 }).cPadAll(10),
           ],
         ),

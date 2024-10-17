@@ -96,13 +96,13 @@ void makePhoneCall({required String phoneNumber}) async {
     throw 'Could not launch $url';
   }
 }
-openUrl(String urlLink) async {
+openUrl(String urlLink,{bool? isPay=true}) async {
     // if (await canLaunch(urlLink)) {
     //   await launch(urlLink);
     // } else {
     //   throw 'Could not launch $urlLink';
     // }
-  Get.toNamed(Routes.toPaymentRoute,arguments: [urlLink]);
+  Get.toNamed(Routes.toPaymentRoute,arguments: [urlLink,isPay]);//Pass `true` to pay the bill and `false` to view the bill.
   }
 
   bool isDateExpired(String dateString) {
