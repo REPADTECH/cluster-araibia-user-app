@@ -36,10 +36,7 @@ class LoginController extends GetxController {
   var keyBoardIsVisible = false.obs;
   var validatorNumber = false.obs;
   var errorMessage = '';
-   var otpInteractor;
-
-
-
+  var otpInteractor;
 
   OtpFieldController otpFieldController = OtpFieldController();
   late OTPTextEditController controller;
@@ -59,20 +56,20 @@ class LoginController extends GetxController {
     controller = OTPTextEditController(
       codeLength: 5,
       //ignore: avoid_print
-      onCodeReceive: (code) =>  print('Your Application receive code - $code'),
+      onCodeReceive: (code) => print('Your Application receive code - $code'),
       otpInteractor: otpInteractor,
     )..startListenUserConsent(
-          (code) {
-        var otpIs = code?.replaceAll(RegExp('[a-zA-Z , .:\s]'), "").trim();
-        otp.value = otpIs ?? '';
-        otpFieldController.setValue((otpIs??'')[0], 0);
-        otpFieldController.setValue((otpIs??'')[1], 1);
-        otpFieldController.setValue((otpIs??'')[2], 2);
-        otpFieldController.setValue((otpIs??'')[3], 3);
-        verifyOtp(context: context);
-        return code ?? '';
-      },
-    );
+        (code) {
+          var otpIs = code?.replaceAll(RegExp('[a-zA-Z , .:\s]'), "").trim();
+          otp.value = otpIs ?? '';
+          otpFieldController.setValue((otpIs ?? '')[0], 0);
+          otpFieldController.setValue((otpIs ?? '')[1], 1);
+          otpFieldController.setValue((otpIs ?? '')[2], 2);
+          otpFieldController.setValue((otpIs ?? '')[3], 3);
+          verifyOtp(context: context);
+          return code ?? '';
+        },
+      );
     super.onInit();
   }
 
@@ -95,8 +92,8 @@ class LoginController extends GetxController {
         dismissLoading();
         if (loginModel?.success ?? true) {
           otpDesign.value = !otpDesign.value;
-          otp.value = loginModel?.data?.otp ?? '';
-      
+          // otp.value = loginModel?.data?.otp ?? '';
+
           // 1.cDelay(() {
           //   var otpValue = loginModel?.data?.otp ?? ''; //
           //   otpFieldController.setValue(otpValue[0], 0);
@@ -176,13 +173,16 @@ showExitPopup(context) async {
                   //   height: 66,
                   //   width: 66,
                   // ),
-                   Lottie.asset(
-                     exclamation,
+                  Lottie.asset(
+                    exclamation,
                     height: 106,
                     width: 106,
                   ),
                   // const SizedBox(height: 26),
-                  Text('Please ensure your number is valid. Invalid numbers are not allowed here.',style: customStyle(13.0, Colors.black, FontWeight.normal),).cPadOnly(l: 10),
+                  Text(
+                    'Please ensure your number is valid. Invalid numbers are not allowed here.',
+                    style: customStyle(13.0, Colors.black, FontWeight.normal),
+                  ).cPadOnly(l: 10),
                   const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -243,6 +243,3 @@ showExitPopup(context) async {
         );
       });
 }
-
-
-

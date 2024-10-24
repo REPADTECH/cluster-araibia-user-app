@@ -56,40 +56,11 @@ class FirstPart extends StatelessWidget {
                     ),
                   ],
                 ),
-                // Expanded(
-                //   child: ListView.builder(
-                //       itemCount:
-                //           ((logic.homeBillAmount?.data?.students?.length ?? 0) <
-                //                   3)
-                //               ? logic.homeBillAmount?.data?.students?.length ??
-                //                   0
-                //               : 3,
-                //       scrollDirection: Axis.horizontal,
-                //       shrinkWrap: true,
-                //       itemBuilder: (cnt, i) {
-                //         var students=(logic.homeBillAmount?.data?.students?[i]);
-                //         var positiond = logic.totWidth;
-                //         positiond =
-                //             (i == 0) ? logic.totWidth : logic.totWidth - 25;
-                //         return Positioned(
-                //           right: positiond.toDouble(),
-                //           child: CachedNetworkImage(
-                //             imageUrl: students?.img??'',
-                //             height: 40,
-                //             width: 40,
-                //             placeholder: (context, url) =>
-                //                 CircularProgressIndicator(),
-                //             errorWidget: (context, url, error) =>
-                //                 Icon(Icons.error),
-                //           ),
-                //         );
-                //       }),
-                // )
                 Positioned(
                   right: 60,
                   child: CachedNetworkImage(
                     imageUrl:
-                        (logic.studentModelList?.data?.dataList?.cFirst)?.img ??
+                        logic.studentModelList?.data?.dataList?.cFirst?.img ??
                             '',
                     // placeholder: (context, url) =>
                     //     const CircularProgressIndicator(),
@@ -99,7 +70,7 @@ class FirstPart extends StatelessWidget {
                         const Icon(Icons.error),
                   ).cClipAll(40),
                 ).cVisible(
-                    (((logic.studentModelList?.data?.dataList?.cFirst)?.img ??
+                    ((logic.studentModelList?.data?.dataList?.cFirst?.img ??
                             ''))
                         .isNotEmpty),
                 Positioned(
@@ -141,7 +112,7 @@ class FirstPart extends StatelessWidget {
                     width: 40,
                     height: 40,
                     errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
+                        const Icon(Icons.account_circle_rounded),
                   ).cClipAll(40),
                 ).cVisible((((logic.studentModelList?.data?.dataList?.length ??
                                 0) >=
@@ -162,8 +133,6 @@ class FirstPart extends StatelessWidget {
                 itemCount: logic.invoiceListModel?.data?.dataList?.length ?? 0,
                 itemBuilder: (cnt, i) {
                   var data = logic.invoiceListModel?.data?.dataList?[i];
-                  // var monthlyCharge =
-                  //     logic.homeBillAmount?.data?.monthlyCharge?.cFirst;
                   return ChildBox(
                     no: '${i + 1}',
                     price: ((double.parse('${data?.amount ?? '0'}') +
@@ -171,8 +140,7 @@ class FirstPart extends StatelessWidget {
                         100),
                     month: (data?.billedOn ?? '')
                         .cGetFormattedDate(format: 'MMM yyyy'),
-                    // '${monthlyCharge?.monthName ?? ''} ${monthlyCharge?.year ?? ''}',
-                    profileImg: data?.img ?? '',
+                    profileImg: data?.img,
                   ).cPadOnly(l: (i == 0) ? 0 : 15);
                 }),
           ).cPadOnly(t: 72, l: 30),
@@ -226,7 +194,7 @@ class ChildBox extends StatelessWidget {
                     style: customStyle(11.0, Colors.black, FontWeight.bold),
                   ),
                   Text(
-                    'Child $no',
+                    'Bill $no',
                     style: customStyle(
                         9.0,
                         const Color.fromRGBO(83, 100, 133, 1),
@@ -243,7 +211,8 @@ class ChildBox extends StatelessWidget {
                 height: 30,
                 progressIndicatorBuilder: (context, url, downloadProgress) =>
                     CircularProgressIndicator(value: downloadProgress.progress),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
+                errorWidget: (context, url, error) =>
+                    const Icon(Icons.account_circle_rounded),
               )
             ],
           ),
@@ -389,26 +358,30 @@ class BillOverView extends StatelessWidget {
               children: [
                 Text('Bill Date',
                         style:
-                            customStyle(11.0, Colors.black, FontWeight.normal))
+                            customStyle(13.0, Colors.black, FontWeight.normal))
+                    .cToCenter
                     .cExpanded(1),
                 Text('Student Name',
                         style:
-                            customStyle(11.0, Colors.black, FontWeight.normal))
-                    .cExpanded(1),
+                            customStyle(13.0, Colors.black, FontWeight.normal))
+                    .cToCenter
+                    .cExpanded(2),
                 const SizedBox(
                   width: 15,
                 ),
                 Text('Class',
                         style:
-                            customStyle(11.0, Colors.black, FontWeight.normal))
+                            customStyle(13.0, Colors.black, FontWeight.normal))
+                    .cToCenter
                     .cExpanded(1),
                 Text('Bill Amount',
                         style:
-                            customStyle(11.0, Colors.black, FontWeight.normal))
+                            customStyle(13.0, Colors.black, FontWeight.normal))
+                    .cToCenter
                     .cExpanded(1),
                 Text('',
                         style:
-                            customStyle(11.0, Colors.black, FontWeight.normal))
+                            customStyle(13.0, Colors.black, FontWeight.normal))
                     .cExpanded(1),
               ],
             ),
@@ -420,7 +393,7 @@ class BillOverView extends StatelessWidget {
               lineThickness: 0.5,
             ),
             const SizedBox(
-              height: 5,
+              height: 10,
             ),
             ListView.builder(
                 itemCount: logic.invoiceList.length,
@@ -434,14 +407,15 @@ class BillOverView extends StatelessWidget {
                               (data.billedOn ?? '')
                                   .cGetFormattedDate(format: 'MMM yyyy'),
                               style: customStyle(
-                                  11.0, primaryColorPurple, FontWeight.normal))
+                                  13.0, primaryColorPurple, FontWeight.normal))
+                          .cToCenter
                           .cExpanded(1),
                       Text(
                         data.student?.name ?? '',
                         style: customStyle(
-                            11.0, primaryColorPurple, FontWeight.normal),
+                            13.0, primaryColorPurple, FontWeight.normal),
                         overflow: TextOverflow.ellipsis,
-                      ).cExpanded(1),
+                      ).cToCenter.cExpanded(2),
                       const SizedBox(
                         width: 15,
                       ),
@@ -449,13 +423,15 @@ class BillOverView extends StatelessWidget {
                               '${data.student?.std ?? ''} (${data.student?.division ?? ''})',
                               // '${students?.classNo}',
                               style: customStyle(
-                                  11.0, primaryColorPurple, FontWeight.normal))
+                                  13.0, primaryColorPurple, FontWeight.normal))
+                          .cToCenter
                           .cExpanded(1),
                       Text(
                               'SAR ${(double.parse('${data.amount ?? 0}') + double.parse('${data.taxAmount ?? 0}')) / 100}',
                               // 'SAR ${(double.parse('${monthCharge?.students?[i].amount ?? 0}') + double.parse('${monthCharge?.students?[i].tax ?? 0}')) / 100}',
                               style: customStyle(
-                                  11.0, primaryColorPurple, FontWeight.normal))
+                                  13.0, primaryColorPurple, FontWeight.normal))
+                          .cToCenter
                           .cExpanded(1),
                       InkWell(
                         onTap: () {
@@ -474,22 +450,22 @@ class BillOverView extends StatelessWidget {
                                   .toStringAsFixed(2));
                         },
                         child: Container(
-                          width: 40,
-                          height: 30,
+                          width: 25,
+                          height: 20,
                           decoration: BoxDecoration(
                               color: Colors.white,
                               border: Border.all(
                                 color: primaryColorPurple,
                               ),
-                              borderRadius: BorderRadius.circular(8)),
+                              borderRadius: BorderRadius.circular(4)),
                           child: Text('Pay',
-                                  style: customStyle(11.0, primaryColorPurple,
+                                  style: customStyle(12.0, primaryColorPurple,
                                       FontWeight.normal))
                               .cToCenter,
-                        ).cPadSymmetric(v: 3),
+                        ).cPadSymmetric(v: 2, h: 15),
                       ).cExpanded(1)
                     ],
-                  );
+                  ).cPadOnly(b: 5);
                 }),
             const SizedBox(
               height: 8,
@@ -504,35 +480,17 @@ class BillOverView extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                const Text(
-                  '',
-                ).cExpanded(1),
-                const Text(
-                  '',
-                ).cExpanded(1),
-                const Text(
-                  '',
-                ).cExpanded(1),
+                Text('TOTAL :',
+                    style:
+                        customStyle(15.0, primaryColorPurple, FontWeight.bold)),
+                const SizedBox(
+                  width: 10,
+                ),
                 Text('SAR ${logic.totalAmount / 100}',
-                        // 'SAR ${(double.parse('${data.amount ?? 0}') + double.parse('${data.taxAmount ?? 0}') / 100)}',
-                        // 'SAR ${(double.parse('${logic.homeBillAmount?.data?.totalPayableAmount ?? 0}') / 100)}',
-                        style: customStyle(
-                            11.0, primaryColorPurple, FontWeight.normal))
-                    .cExpanded(1),
+                    style:
+                        customStyle(13.0, primaryColorPurple, FontWeight.bold)),
               ],
-            )
-            // Row(
-            //   children: [
-            //     Image.asset(invoice_inquiry),
-            //     SizedBox(
-            //       width: 5,
-            //     ),
-            //     Text(
-            //         'This invoice is system-generated. For inquiries, please contact us.',
-            //         style: customStyle(8.0, Color.fromRGBO(159, 159, 159, 1),
-            //             FontWeight.normal)),
-            //   ],
-            // )
+            ).cPadSymmetric(h: 15)
           ],
         ).cPadOnly(l: 10, r: 10, t: 10),
       ).cPadAll(10);
@@ -905,6 +863,7 @@ class BottomImageList extends StatelessWidget {
     return GetBuilder<HomeController>(builder: (logic) {
       return ListView.builder(
           itemCount: logic.bannerListModel?.data?.length ?? 0,
+          physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemBuilder: (context, i) {
             var data = logic.bannerListModel?.data?[i];

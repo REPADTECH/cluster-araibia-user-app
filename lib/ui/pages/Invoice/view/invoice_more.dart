@@ -26,69 +26,19 @@ class FirstPart extends StatelessWidget {
     return GetBuilder<InvoiceController>(builder: (logic) {
       return Row(
         children: [
-          Container(
-              height: 40,
-              width: 200,
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black, width: 0.5),
-                  borderRadius: BorderRadius.circular(5)),
-              child: Row(
-                children: [
-                  CachedNetworkImage(
-                    imageUrl: logic.profileModel?.data?.img ?? '',
-                    placeholder: (context, url) =>
-                        const CircularProgressIndicator(),
-                    width: 25,
-                    height: 25,
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
-                  ).cPadOnly(l: 5),
-                  const SizedBox(
-                    width: 15,
-                  ),
-                  SizedBox(
-                    width: 150,
-                    child: DropdownSearch<student.DataList>(
-                      dropdownDecoratorProps: const DropDownDecoratorProps(
-                          dropdownSearchDecoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(vertical: 8),
-                              disabledBorder: InputBorder.none,
-                              border: InputBorder.none)),
-                      itemAsString: (student.DataList v) => v.studentName ?? '',
-                      popupProps: PopupProps.menu(
-                        showSearchBox: false,
-                        showSelectedItems: false,
-                        disabledItemFn: (student.DataList s) =>
-                            (s.gender ?? '').startsWith('I'),
-                      ),
-                      items: logic.studentModelList?.data?.dataList ?? [],
-                      enabled: true,
-                      onChanged: (value) {
-                        logic.invoiceList.clear();
-                        logic.billFilterdStudentChoosed = value;
-                        logic.filterChoosed = value?.id ?? '';
-                        logic.getInvoiceList();
-                      },
-                      selectedItem:
-                          logic.studentModelList?.data?.dataList?.cFirst,
-                    ),
-                  ),
-                ],
-              )),
-          const SizedBox(
-            width: 10,
-          ),
+          if ((logic.studentModelList?.data?.dataList?.length ?? 0) > 1)
+            const StudentDropDown().cPadOnly(r: 10),
           InkWell(
             onTap: () {
               dateSelectPopup(context: context);
             },
             child: Container(
-              padding: const EdgeInsets.all(5),
-              height: 40,
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              height: 45,
               // width: 120,
               decoration: BoxDecoration(
                   border: Border.all(color: Colors.black, width: 0.5),
-                  borderRadius: BorderRadius.circular(5)),
+                  borderRadius: BorderRadius.circular(10)),
               child: Text(
                 (logic.startMonth == null && logic.endMonth == null)
                     ? 'Select Date Range'
@@ -100,6 +50,80 @@ class FirstPart extends StatelessWidget {
         ],
       ).cPadOnly(t: 15, l: 15);
     });
+  }
+}
+
+class StudentDropDown extends StatelessWidget {
+  const StudentDropDown({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 245,
+      child: GetBuilder<InvoiceController>(
+        builder: (logic) {
+          return DropdownSearch<student.DataList>(
+            dropdownButtonProps: DropdownButtonProps(
+                padding: const EdgeInsets.only(right: 8),
+                constraints: const BoxConstraints(maxWidth: 20),
+                isVisible: logic.billFilterStudentChooses == null),
+            clearButtonProps: ClearButtonProps(
+              constraints: const BoxConstraints(maxWidth: 30),
+              padding: const EdgeInsets.only(right: 10, left: 10),
+              isVisible: logic.billFilterStudentChooses !=
+                  null, // Show clear button only if an item is selected
+              icon: const Icon(Icons.clear, size: 20),
+            ),
+            dropdownDecoratorProps: DropDownDecoratorProps(
+              dropdownSearchDecoration: InputDecoration(
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                disabledBorder: InputBorder.none,
+                focusColor: Colors.black,
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(color: Colors.black),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  gapPadding: 15,
+                ),
+                hintText:
+                    'Filter with child', // Show hint if no selection is made
+              ),
+            ),
+            itemAsString: (student.DataList v) => v.studentName ?? '',
+            popupProps: PopupProps.menu(
+              fit: FlexFit.loose,
+              menuProps: MenuProps(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              showSearchBox: false,
+              showSelectedItems: false,
+              disabledItemFn: (student.DataList s) => (s.gender ?? '')
+                  .startsWith('I'), // Disable items starting with 'I'
+            ),
+            items: logic.studentModelList?.data?.dataList ?? [],
+            enabled: true,
+            onChanged: (value) {
+              logic.invoiceList.clear(); // Clear list on change
+              logic.billFilterStudentChooses = value;
+              logic.filterChooses = value?.id ?? '';
+              logic.getInvoiceList(); // Rebuild the invoice list
+            },
+            selectedItem: logic.studentModelList?.data?.dataList?.firstWhere(
+              (element) => element.id == logic.filterChooses,
+              orElse: () => student.DataList(
+                id: '', // Provide default values
+                studentName: 'Filter with child',
+              ), // Default DataList instance
+            ),
+          ).cToCenter; // Center the widget using your extension
+        },
+      ),
+    );
   }
 }
 
@@ -224,7 +248,7 @@ class ListPart extends StatelessWidget {
                           ],
                         ),
                         Container(
-                          width: 60,
+                          padding: EdgeInsets.symmetric(horizontal: 10),
                           height: 25,
                           decoration: BoxDecoration(
                               color: ((data.paidOn ?? '').isEmpty)
@@ -251,7 +275,7 @@ class ListPart extends StatelessWidget {
                                 width: 8,
                               ),
                               Text(
-                                ((data.paidOn) == null) ? 'Open' : 'Paid',
+                                ((data.paidOn) == null) ? 'UnPaid' : 'Paid',
                                 style: customStyle(
                                     13.0,
                                     ((data.paidOn ?? '').isEmpty)
@@ -296,8 +320,10 @@ class ListPart extends StatelessWidget {
                           width: 25,
                           placeholder: (context, url) =>
                               const CircularProgressIndicator(),
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.error),
+                          errorWidget: (context, url, error) => const Icon(
+                            Icons.account_circle_rounded,
+                            size: 25,
+                          ),
                         ),
                         const SizedBox(
                           width: 10,
@@ -381,7 +407,8 @@ class ListPart extends StatelessWidget {
                               InkWell(
                                 onTap: () {
                                   openUrl(
-                                      '${baseURL}view_bill/${data.totalBillAmountData?.id ?? ''}',isPay: false);
+                                      '${baseURL}view_bill/${data.totalBillAmountData?.id ?? ''}',
+                                      isPay: false);
                                 },
                                 child: CustomButtonWidget(
                                   backgroundColor: Colors.white,

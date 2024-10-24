@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:cluster_arabia/models/coupon_validation_model.dart';
 import 'package:cluster_arabia/models/invoice_list_model.dart' as invoice;
 import 'package:cluster_arabia/models/profile_model.dart';
@@ -27,8 +29,8 @@ class InvoiceController extends GetxController {
   invoice.InvoiceListModel? invoiceListModel;
   student.StudentModelList? studentModelList;
   ProfileModel? profileModel;
-  student.DataList? billFilterdStudentChoosed;
-  var filterChoosed = '';
+  student.DataList? billFilterStudentChooses;
+  var filterChooses = '';
   var stdName;
   var tax;
   var amount;
@@ -65,12 +67,12 @@ class InvoiceController extends GetxController {
   clearData() {
     startMonth = null;
     endMonth = null;
-    filterChoosed = '';
+    filterChooses = '';
     invoiceList.clear();
-    filterChoosed = '';
+    filterChooses = '';
     startDatePass = null;
     endDatePass = null;
-    billFilterdStudentChoosed = null;
+    billFilterStudentChooses = null;
     dateRangeController.selectedRanges = [];
     dateRangeController.selectedRanges = [];
     update();
@@ -116,7 +118,7 @@ class InvoiceController extends GetxController {
       showLoading();
       invoiceListModel = await Api.to.getInvoiceList(
         page: pageNO,
-        studentId: filterChoosed,
+        studentId: filterChooses,
         startDate: startDatePass,
         endDate: endDatePass,
       );
@@ -165,6 +167,7 @@ class InvoiceController extends GetxController {
       update();
     }
   }
+
   TextEditingController couponCode = TextEditingController();
   var couponCodePass = '';
   CouponModel? couponModel;
