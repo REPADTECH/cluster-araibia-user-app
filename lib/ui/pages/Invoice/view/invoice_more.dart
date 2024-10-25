@@ -27,7 +27,7 @@ class FirstPart extends StatelessWidget {
       return Row(
         children: [
           if ((logic.studentModelList?.data?.dataList?.length ?? 0) > 1)
-            const StudentDropDown().cPadOnly(r: 10),
+            const StudentDropDown().cPadOnly(r: 10).cExpanded(1),
           InkWell(
             onTap: () {
               dateSelectPopup(context: context);
@@ -46,9 +46,9 @@ class FirstPart extends StatelessWidget {
                 style: customStyle(12.0, Colors.black, FontWeight.normal),
               ).cToCenter,
             ),
-          )
+          ).cExpanded(1)
         ],
-      ).cPadOnly(t: 15, l: 15);
+      ).cPadOnly(t: 15, l: 15, r: 15);
     });
   }
 }
@@ -398,10 +398,11 @@ class ListPart extends StatelessWidget {
                                       10.0,
                                       const Color.fromRGBO(99, 99, 99, 1),
                                       FontWeight.normal)),
-                            ),
+                            ).cExpanded(1),
                           ],
-                        ).cPadOnly(t: 5),
+                        ).cPadOnly(t: 5).cExpanded(2),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             if (data.paidOn != null)
                               InkWell(
@@ -416,7 +417,7 @@ class ListPart extends StatelessWidget {
                                   vPadding: 8,
                                   // width: (context.cWidth >= 800) ? 80 : 60,
                                   buttonTitle: 'View Bill',
-                                  titleStyle: customStyle(12.0,
+                                  titleStyle: customStyle(10.0,
                                       primaryColorPurple, FontWeight.bold),
                                 ),
                               ),
@@ -445,11 +446,11 @@ class ListPart extends StatelessWidget {
                                   // width: (context.cWidth >= 800) ? 60 : 45,
                                   buttonTitle: 'Pay Now',
                                   titleStyle: customStyle(
-                                      12.0, Colors.white, FontWeight.bold),
-                                ).cPadOnly(l: 7),
+                                      10.0, Colors.white, FontWeight.bold),
+                                ),
                               ),
                           ],
-                        ),
+                        ).cExpanded(1),
                       ],
                     ),
                   ],

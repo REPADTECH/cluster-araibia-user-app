@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
           EasyLoading.init();
           return MediaQuery(
               data: mQuery(context).copyWith(
-                textScaleFactor: context.cIsTablet ? 1.1 : 0.9,
+                textScaleFactor: context.cIsTablet ? 1.0 : 0.8,
               ),
               child:
                   // (logic.isConnection.value)

@@ -433,7 +433,7 @@ class BillOverView extends StatelessWidget {
                                   13.0, primaryColorPurple, FontWeight.normal))
                           .cToCenter
                           .cExpanded(1),
-                      InkWell(
+                      GestureDetector(
                         onTap: () {
                           logic.couponModel = null;
                           logic.couponCodePass = '';
@@ -450,7 +450,6 @@ class BillOverView extends StatelessWidget {
                                   .toStringAsFixed(2));
                         },
                         child: Container(
-                          width: 25,
                           height: 20,
                           decoration: BoxDecoration(
                               color: Colors.white,
@@ -462,7 +461,7 @@ class BillOverView extends StatelessWidget {
                                   style: customStyle(12.0, primaryColorPurple,
                                       FontWeight.normal))
                               .cToCenter,
-                        ).cPadSymmetric(v: 2, h: 15),
+                        ),
                       ).cExpanded(1)
                     ],
                   ).cPadOnly(b: 5);

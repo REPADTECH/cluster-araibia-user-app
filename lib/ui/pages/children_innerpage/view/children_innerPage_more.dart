@@ -57,7 +57,7 @@ class ProfilePart extends StatelessWidget {
                 style: customStyle(10.0, Colors.black, FontWeight.normal),
               ),
             ],
-          )
+          ).cExpanded(1)
         ],
       );
     });

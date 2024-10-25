@@ -32,7 +32,7 @@ class ProfileImagePart extends StatelessWidget {
                       color: Colors.grey.shade300,
                       borderRadius: BorderRadius.circular(15)),
                   child: Image.network(logic.profileModel?.data?.img ?? ''),
-                ).cClipAll(100),
+                ).cClipAll(100).cPadOnly(l: 25),
                 // Positioned(
                 //   right: 1,
                 //   bottom: 1,
@@ -95,7 +95,7 @@ class ProfileImagePart extends StatelessWidget {
                 //   ).cToCenter,
                 // ).cPadOnly(t: 15)
               ],
-            )
+            ).cExpanded(1)
           ],
         ),
       );
