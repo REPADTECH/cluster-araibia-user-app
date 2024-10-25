@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:cluster_arabia/res/images.dart';
 import 'package:cluster_arabia/res/style.dart';
 import 'package:cluster_arabia/ui/pages/home_stack_dashboard/bind/home_stack_dashboard_bind.dart';
@@ -30,41 +32,41 @@ class ProfileImagePart extends StatelessWidget {
                       color: Colors.grey.shade300,
                       borderRadius: BorderRadius.circular(15)),
                   child: Image.network(logic.profileModel?.data?.img ?? ''),
-                ),
-                Positioned(
-                  right: 1,
-                  bottom: 1,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
-                        shape: BoxShape.rectangle,
-                        borderRadius: BorderRadius.circular(5),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color.fromRGBO(0, 0, 0, 0.25),
-                            offset: Offset(1, 1),
-                            blurRadius: 4,
-                          ),
-                        ]),
-                    height: 26,
-                    width: 26,
-                    child: SvgPicture.asset(
-                      cam,
-                      fit: BoxFit.fill,
-                    ).cPadAll(7),
-                  ).cPadOnly(t: 4),
-                ),
+                ).cClipAll(100),
+                // Positioned(
+                //   right: 1,
+                //   bottom: 1,
+                //   child: Container(
+                //     decoration: BoxDecoration(
+                //         color: Colors.grey.shade300,
+                //         shape: BoxShape.rectangle,
+                //         borderRadius: BorderRadius.circular(5),
+                //         boxShadow: const [
+                //           BoxShadow(
+                //             color: Color.fromRGBO(0, 0, 0, 0.25),
+                //             offset: Offset(1, 1),
+                //             blurRadius: 4,
+                //           ),
+                //         ]),
+                //     height: 26,
+                //     width: 26,
+                //     child: SvgPicture.asset(
+                //       cam,
+                //       fit: BoxFit.fill,
+                //     ).cPadAll(7),
+                //   ).cPadOnly(t: 4),
+                // ),
               ],
             ),
             const SizedBox(
-              width: 20,
+              width: 25,
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  width: 200,
+                  width: 250,
                   child: Text(
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
@@ -106,13 +108,14 @@ class ListTilePart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = HomeStackDashboardController.to;
     return Column(
       children: [
         ListTileItemProfile(
           name: 'Invoice',
           icon: transactionIcon,
           onTap: () {
-            // Get.toNamed(Routes.invoice);
+            controller.cameFromProfile = true;
             HomeStackDashboardController.to.changeTabIndex(1);
           },
         ).cPadSymmetric(h: 8),
@@ -120,7 +123,7 @@ class ListTilePart extends StatelessWidget {
           name: 'Children',
           icon: studentsIcon,
           onTap: () {
-            // Get.toNamed(Routes.children);
+            controller.cameFromProfile = true;
             HomeStackDashboardController.to.changeTabIndex(2);
           },
         ).cPadSymmetric(h: 8),
@@ -128,6 +131,7 @@ class ListTilePart extends StatelessWidget {
           name: 'Gift Voucher',
           icon: coupon_fill_icon,
           onTap: () {
+            controller.cameFromProfile = true;
             Get.toNamed(Routes.coupon);
           },
         ).cPadSymmetric(h: 8),
@@ -135,6 +139,7 @@ class ListTilePart extends StatelessWidget {
           name: 'Help&Support',
           icon: contactUs,
           onTap: () {
+            controller.cameFromProfile = true;
             Get.toNamed(Routes.helpAndSupport);
           },
         ).cPadSymmetric(h: 8),
@@ -142,6 +147,7 @@ class ListTilePart extends StatelessWidget {
           name: 'About Us',
           icon: aboutUs,
           onTap: () {
+            controller.cameFromProfile = true;
             Get.toNamed(Routes.aboutUs);
           },
         ).cPadSymmetric(h: 8),
@@ -149,6 +155,7 @@ class ListTilePart extends StatelessWidget {
           name: 'Privacy Policy',
           icon: privacyPolicy,
           onTap: () {
+            controller.cameFromProfile = true;
             Get.toNamed(Routes.privacyPolicy);
           },
         ).cPadSymmetric(h: 8),
@@ -234,22 +241,21 @@ class AddressSection extends StatelessWidget {
                     height: 4,
                   ),
                   Text(logic.profileModel?.data?.phone ?? '',
-                      style: customStyle(
-                          12.0, Colors.black54, FontWeight.normal)),
+                      style:
+                          customStyle(12.0, Colors.black54, FontWeight.normal)),
                   const SizedBox(
                     height: 4,
                   ),
                   SizedBox(
                     width: 270,
-                    child: Text(
-                        logic.profileModel?.data?.address ?? '',
-                        style:
-                            customStyle(12.0, Colors.black54, FontWeight.normal)),
+                    child: Text(logic.profileModel?.data?.address ?? '',
+                        style: customStyle(
+                            12.0, Colors.black54, FontWeight.normal)),
                   )
                 ],
               ),
             ],
-          ).cPadOnly(t: 10, l: 5,r: 5)
+          ).cPadOnly(t: 10, l: 5, r: 5)
         ],
       ).cPadOnly(l: 20, t: 10);
     });

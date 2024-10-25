@@ -100,13 +100,13 @@ class FirstPart extends StatelessWidget {
                 Positioned(
                   right: 10,
                   child: CachedNetworkImage(
-                    imageUrl:
-                        ((logic.studentModelList?.data?.dataList?.length ?? 0) >
-                                3)
-                            ? ((logic.studentModelList?.data?.dataList?[2])
-                                    ?.img ??
-                                '')
-                            : '',
+                    imageUrl: ((logic
+                                    .studentModelList?.data?.dataList?.length ??
+                                0) >=
+                            3)
+                        ? ((logic.studentModelList?.data?.dataList?[2])?.img ??
+                            '')
+                        : '',
                     // placeholder: (context, url) =>
                     //     const CircularProgressIndicator(),
                     width: 40,

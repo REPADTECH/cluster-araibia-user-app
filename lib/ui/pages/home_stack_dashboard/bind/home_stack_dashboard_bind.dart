@@ -21,27 +21,34 @@ class HomeStackDashboardBinding implements Bindings {
 
 class HomeStackDashboardController extends GetxController {
   static HomeStackDashboardController get to => Get.find();
-  ProfileModel?profileModel;
+  ProfileModel? profileModel;
   late BuildContext context;
   var scaffoldKey = GlobalKey<ScaffoldState>();
   var indexedStack = 0.obs;
   var tabIndex = 0.obs;
+  int? previousTabIndex;
 
   @override
   void onInit() {
     getProfile();
     super.onInit();
-  }
+  } // Store previous tab index
 
+  bool cameFromProfile = false; // Track if navigated from Profile
+
+  // Change tab index and track navigation
   void changeTabIndex(int index) {
-    try {
-      tabIndex.value = index;
-      updateControllersOnTabChange(index);
-      indexedStack.value = tabIndex.value;
-      update();
-    } catch (ex) {
-      // Handle the exception
+    tabIndex.value = index;
+    previousTabIndex = indexedStack.value; // Store previous index
+
+    if (previousTabIndex == 3) {
+      cameFromProfile = true; // Set flag if navigated from Profile
+    } else {
+      cameFromProfile = false;
     }
+    updateControllersOnTabChange(index);
+    indexedStack.value = index; // Switch to the new tab
+    update();
   }
 
   void updateControllersOnTabChange(int index) {
@@ -62,24 +69,23 @@ class HomeStackDashboardController extends GetxController {
 
   void handleAccountTab() {
     // if (AppSession.to.session.read(SessionKeys.API_KEY) != null) {
-      // MyAccountController.to.onInit();
+    // MyAccountController.to.onInit();
     // } else {
     //   Get.offNamed(Routes.login);
     // }
   }
 
-  void getProfile() async{
-    try{
+  void getProfile() async {
+    try {
       showLoading();
       profileModel = await Api.to.getProfile();
       dismissLoading();
       if (!(profileModel?.success ?? true)) {
         showToast(context: context, message: profileModel?.message ?? '');
       }
-
-    }catch(e){
+    } catch (e) {
       showToast(context: context, message: e.toString());
-    }finally{
+    } finally {
       update();
     }
   }

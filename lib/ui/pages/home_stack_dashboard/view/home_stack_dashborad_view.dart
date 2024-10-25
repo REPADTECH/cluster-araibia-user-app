@@ -23,7 +23,10 @@ class HomeStackDashboard extends StatelessWidget {
   DateTime? lastPressed = null;
 
   Future<bool> willPopCallback() async {
-    if (HomeStackDashboardController.to.indexedStack.value == 0) {
+    final controller = HomeStackDashboardController.to;
+
+    if (controller.indexedStack.value == 0) {
+      // Exit app logic when on Home (index 0)
       final now = DateTime.now();
       if (lastPressed == null ||
           now.difference(lastPressed!) > const Duration(seconds: 2)) {
@@ -35,36 +38,50 @@ class HomeStackDashboard extends StatelessWidget {
         lastPressed = now;
         return Future.value(false);
       }
-      return await Get.dialog(
-            AlertDialog(
-              title: const Text('Confirm'),
-              content: const Text('Do you want to exit the app?'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Get.back(); // Dismiss dialog with false
-                  },
-                  child: const Text('No'),
-                ),
-                TextButton(
-                  onPressed: () {
-                    if (cIsAndroid) {
-                      SystemNavigator.pop();
-                    } else if (cIsIOS) {
-                      exit(0);
-                    }
-                    // Dismiss dialog with true
-                  },
-                  child: const Text('Yes'),
-                ),
-              ],
-            ),
-          ) ??
-          false;
+      return await showExitDialog();
+    } else if (controller.previousTabIndex == 3) {
+      if (controller.indexedStack.value == controller.previousTabIndex) {
+        cLog(
+            '1 ..${controller.indexedStack.value}>>${controller.previousTabIndex}');
+        // If user was on Profile (index 3) and clicks back, return to Profile
+        controller.changeTabIndex(0);
+      } else {
+        // If user was on Profile (index 3) and clicks back, return to Profile
+        controller.changeTabIndex(3);
+      }
+
+      return false;
     } else {
-      HomeStackDashboardController.to.changeTabIndex(0);
+      // Otherwise, navigate back to Home (index 0)
+      controller.changeTabIndex(0);
       return false;
     }
+  }
+
+  Future<bool> showExitDialog() async {
+    return await Get.dialog(
+          AlertDialog(
+            title: const Text('Confirm'),
+            content: const Text('Do you want to exit the app?'),
+            actions: [
+              TextButton(
+                onPressed: () => Get.back(result: false), // Dismiss with false
+                child: const Text('No'),
+              ),
+              TextButton(
+                onPressed: () {
+                  if (cIsAndroid) {
+                    SystemNavigator.pop();
+                  } else if (cIsIOS) {
+                    exit(0);
+                  }
+                },
+                child: const Text('Yes'),
+              ),
+            ],
+          ),
+        ) ??
+        false;
   }
 
   HomeStackDashboard({super.key});
@@ -281,6 +298,7 @@ class HomeDrawer extends StatelessWidget {
                       name: 'Profile',
                       icon: profileIcon,
                       onTap: () {
+                        HomeStackDashboardController.to.cameFromProfile = false;
                         HomeStackDashboardController.to.changeTabIndex(3);
                         Get.back();
                       },
@@ -289,6 +307,7 @@ class HomeDrawer extends StatelessWidget {
                       name: 'Invoice',
                       icon: transactionIcon,
                       onTap: () {
+                        HomeStackDashboardController.to.cameFromProfile = false;
                         HomeStackDashboardController.to.changeTabIndex(1);
                         Get.back();
                       },
@@ -298,6 +317,7 @@ class HomeDrawer extends StatelessWidget {
                       icon: studentsIcon,
                       onTap: () {
                         Get.back();
+                        HomeStackDashboardController.to.cameFromProfile = false;
                         HomeStackDashboardController.to.changeTabIndex(2);
                       },
                     ).cPadSymmetric(h: 8),
@@ -305,8 +325,9 @@ class HomeDrawer extends StatelessWidget {
                       name: 'Coupon',
                       icon: coupon_fill_icon,
                       onTap: () {
+                        HomeStackDashboardController.to.cameFromProfile = false;
+                        Get.back();
                         Get.toNamed(Routes.coupon);
-                        // HomeStackDashboardController.to.changeTabIndex(2);
                       },
                     ).cPadSymmetric(h: 8),
                     const SizedBox(
@@ -322,6 +343,8 @@ class HomeDrawer extends StatelessWidget {
                       name: 'Help&Support',
                       icon: contactUs,
                       onTap: () {
+                        HomeStackDashboardController.to.cameFromProfile = false;
+                        Get.back();
                         Get.toNamed(Routes.helpAndSupport);
                       },
                     ).cPadSymmetric(h: 8),
@@ -329,6 +352,8 @@ class HomeDrawer extends StatelessWidget {
                       name: 'About Us',
                       icon: aboutUs,
                       onTap: () {
+                        HomeStackDashboardController.to.cameFromProfile = false;
+                        Get.back();
                         Get.toNamed(Routes.aboutUs);
                       },
                     ).cPadSymmetric(h: 8),
@@ -336,6 +361,8 @@ class HomeDrawer extends StatelessWidget {
                       name: 'Privacy Policy',
                       icon: privacyPolicy,
                       onTap: () {
+                        HomeStackDashboardController.to.cameFromProfile = false;
+                        Get.back();
                         Get.toNamed(Routes.privacyPolicy);
                       },
                     ).cPadSymmetric(h: 8),
@@ -358,9 +385,7 @@ class HomeDrawer extends StatelessWidget {
                           AppSession.to.logout();
                         }, onTapNo: () {
                           Get.back();
-                        },
-                            alertMessage:
-                            'Are you sure you want to logout?');
+                        }, alertMessage: 'Are you sure you want to logout?');
                         // AppSession.to.logout();
                       },
                     ).cPadSymmetric(h: 8),
@@ -409,6 +434,3 @@ class ListTileItem extends StatelessWidget {
     ).cPadOnly(b: 2, r: 10);
   }
 }
-
-
-

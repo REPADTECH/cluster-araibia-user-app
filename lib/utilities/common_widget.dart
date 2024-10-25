@@ -8,16 +8,27 @@ import 'package:flutter_custom_utils/flutter_custom_utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-AppBar  commonAppBarBack(String titleName, var bColor,  VoidCallback? onTap) {
+AppBar commonAppBarBack(String titleName, var bColor, VoidCallback? onTap) {
   return AppBar(
     backgroundColor: bColor,
     elevation: 0,
     titleSpacing: 0,
     centerTitle: true,
-    leading: GestureDetector(
+    leading: InkWell(
       onTap: () {
-        HomeStackDashboardController.to.changeTabIndex(0);
-        Get.back();
+        final controller = HomeStackDashboardController.to;
+
+        if (controller.cameFromProfile) {
+          // Navigate back to Profile (index 3) if it came from Profile
+          controller.changeTabIndex(3);
+        } else {
+          // Otherwise, go back to Home (index 0)
+          controller.changeTabIndex(0);
+        }
+
+        controller.cameFromProfile = false;
+
+        Get.back(); // Close the current page or drawer
       },
       child: const Icon(
         Icons.arrow_back_ios_outlined,
@@ -34,8 +45,12 @@ AppBar  commonAppBarBack(String titleName, var bColor,  VoidCallback? onTap) {
     ),
     actions: [
       InkWell(
-        onTap: onTap,
-          child: SvgPicture.asset(clearUpdateIcon,height: 20,width: 20,).cPadOnly(r: 15)),
+          onTap: onTap,
+          child: SvgPicture.asset(
+            clearUpdateIcon,
+            height: 20,
+            width: 20,
+          ).cPadOnly(r: 15)),
     ],
   );
 }
@@ -46,7 +61,7 @@ class CustomButtonWidget extends StatelessWidget {
   final String buttonTitle;
   final TextStyle? titleStyle;
   final bool showIcon;
-  
+
   final bool showClear;
   final IconData? icon;
   final double? iconSize;
@@ -82,7 +97,11 @@ class CustomButtonWidget extends StatelessWidget {
       width: width,
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: vPadding),
       decoration: BoxDecoration(
-          color: backgroundColor, borderRadius: BorderRadius.circular(radius),border: Border.all(color:borderColor, )),
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(radius),
+          border: Border.all(
+            color: borderColor,
+          )),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -95,9 +114,9 @@ class CustomButtonWidget extends StatelessWidget {
               crossAxisAlignment: WrapCrossAlignment
                   .center, // Aligns children in the cross axis in the center
               spacing:
-              0, // Adjust if you want any horizontal space between the children
+                  0, // Adjust if you want any horizontal space between the children
               runSpacing:
-              0, // Adjust if you want any vertical space between the lines
+                  0, // Adjust if you want any vertical space between the lines
               children: [
                 Text(
                   buttonTitle,
@@ -210,24 +229,22 @@ class CustomRoundedCheckBox extends StatelessWidget {
         ),
         child: v
             ? const Icon(
-          Icons.check,
-          color: Colors.white,
-          size: 13.0,
-        )
+                Icons.check,
+                color: Colors.white,
+                size: 13.0,
+              )
             : const SizedBox(), // Empty SizedBox when not checked
       ),
     );
   }
 }
 
-
 showAlertPopup(context,
     {void Function()? onTapYes,
-      void Function()? onTapNo,
-      var alertMessage = 'message',
-      // var alertImage = emoji
-      var alertImage = emoji
-    }) async {
+    void Function()? onTapNo,
+    var alertMessage = 'message',
+    // var alertImage = emoji
+    var alertImage = emoji}) async {
   return await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -305,4 +322,3 @@ showAlertPopup(context,
         );
       });
 }
-
