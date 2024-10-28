@@ -1,9 +1,11 @@
+import 'package:cluster_arabia/main.dart';
 import 'package:cluster_arabia/res/colors.dart';
 import 'package:cluster_arabia/res/style.dart';
 import 'package:cluster_arabia/ui/pages/home/bind/home_bind.dart';
 import 'package:cluster_arabia/ui/pages/home/view/home_more.dart';
 import 'package:cluster_arabia/ui/pages/home_stack_dashboard/bind/home_stack_dashboard_bind.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_utils/flutter_custom_utils.dart';
 import 'package:get/get.dart';
 
 class HomePage extends StatelessWidget {
@@ -38,7 +40,7 @@ class HomePage extends StatelessWidget {
               ),
               Text(
                 logic.profileModel?.data?.email ?? '',
-                style: customStyle(9.0, Colors.white, FontWeight.normal),
+                style: customStyle(15.0, Colors.white, FontWeight.normal),
               ),
             ],
           ),
@@ -89,9 +91,9 @@ class HomePage extends StatelessWidget {
               const FirstPart(),
               if ((logic.sliderModel?.data ?? []).isNotEmpty)
               const BannerSection(),
-              // if ((logic.homeBillAmount?.data?.monthlyCharge ?? []).isNotEmpty)
-              const BillOverView(),
               const MainMenu(),
+               if ((logic.invoiceList ?? []).isNotEmpty)
+               BillOverView().cPadOnly(t:10),
               const BottomImageList()
             ],
           ),

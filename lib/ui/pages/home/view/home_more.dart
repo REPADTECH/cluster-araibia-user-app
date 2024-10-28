@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cluster_arabia/res/colors.dart';
 import 'package:cluster_arabia/res/images.dart';
 import 'package:cluster_arabia/res/style.dart';
@@ -43,16 +44,13 @@ class FirstPart extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
+                      'Total payable amount',
+                      style: customStyle(18.0, Colors.white, FontWeight.normal),
+                    ),
+                    Text(
                       '${logic.totalAmount / 100}',
                       // 'SAR ${double.parse('${logic.homeBillAmount?.data?.totalPayableAmount ?? '0.0'}') / 100}',
                       style: customStyle(25.0, Colors.white, FontWeight.bold),
-                    ),
-                    Text(
-                      'Total payable amount',
-                      style: customStyle(
-                          10.0,
-                          const Color.fromRGBO(206, 207, 237, 1),
-                          FontWeight.normal),
                     ),
                   ],
                 ),
@@ -124,26 +122,29 @@ class FirstPart extends StatelessWidget {
               ],
             ).cPadOnly(t: 10, l: 40, r: 15),
           ),
-          SizedBox(
-            width: context.cWidth,
-            height: 70,
-            child: ListView.builder(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: logic.invoiceListModel?.data?.dataList?.length ?? 0,
-                itemBuilder: (cnt, i) {
-                  var data = logic.invoiceListModel?.data?.dataList?[i];
-                  return ChildBox(
-                    no: '${i + 1}',
-                    price: ((double.parse('${data?.amount ?? '0'}') +
-                            double.parse('${data?.taxAmount ?? '0'}')) /
-                        100),
-                    month: (data?.billedOn ?? '')
-                        .cGetFormattedDate(format: 'MMM yyyy'),
-                    profileImg: data?.img,
-                  ).cPadOnly(l: (i == 0) ? 0 : 15);
-                }),
-          ).cPadOnly(t: 72, l: 30),
+          if ((logic.invoiceListModel?.data?.dataList ?? []).isNotEmpty)
+            SizedBox(
+              width: context.cWidth,
+              height: 70,
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemCount:
+                      logic.invoiceListModel?.data?.dataList?.length ?? 0,
+                  itemBuilder: (cnt, i) {
+                    var data = logic.invoiceListModel?.data?.dataList?[i];
+                    return ChildBox(
+                      no: '${i + 1}',
+                      price: ((double.parse('${data?.amount ?? '0'}') +
+                              double.parse('${data?.taxAmount ?? '0'}')) /
+                          100),
+                      month: (data?.billedOn ?? '')
+                          .cGetFormattedDate(format: 'MMM yyyy'),
+                      profileImg: (data?.img),
+                      name: data?.student?.name ?? '',
+                    ).cPadOnly(l: (i == 0) ? 0 : 15);
+                  }),
+            ).cPadOnly(t: 72, l: 30),
         ],
       );
     });
@@ -155,13 +156,16 @@ class ChildBox extends StatelessWidget {
   var price;
   var month;
   var profileImg;
+  var name;
 
-  ChildBox(
-      {super.key,
-      required this.no,
-      required this.price,
-      required this.month,
-      required this.profileImg});
+  ChildBox({
+    super.key,
+    required this.no,
+    required this.price,
+    required this.month,
+    required this.profileImg,
+    required this.name,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -171,13 +175,13 @@ class ChildBox extends StatelessWidget {
       decoration: BoxDecoration(
           color: const Color.fromRGBO(246, 246, 246, 1),
           borderRadius: BorderRadius.circular(15),
-          boxShadow: const [
-            BoxShadow(
-              blurRadius: 5,
-              spreadRadius: 1,
-              color: Color.fromRGBO(0, 0, 0, 0.25),
-            ),
-          ],
+          // boxShadow: const [
+          //   BoxShadow(
+          //     blurRadius: 5,
+          //     spreadRadius: 1,
+          //     color: Color.fromRGBO(0, 0, 0, 0.25),
+          //   ),
+          // ],
           border: Border.all(color: Colors.black, width: 0.2)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -185,16 +189,22 @@ class ChildBox extends StatelessWidget {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'SAR $price',
-                    style: customStyle(11.0, Colors.black, FontWeight.bold),
+                  SizedBox(
+                    width: 80,
+                    child: Text(
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      name,
+                      style: customStyle(14.0, Colors.black, FontWeight.bold),
+                    ),
                   ),
                   Text(
-                    'Bill $no',
+                    month,
                     style: customStyle(
                         9.0,
                         const Color.fromRGBO(83, 100, 133, 1),
@@ -216,8 +226,19 @@ class ChildBox extends StatelessWidget {
               )
             ],
           ),
-          Text(month, style: customStyle(12.0, Colors.black, FontWeight.bold))
-              .cPadOnly(t: 5)
+          SizedBox(
+            width: 110,
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text('SAR ${price}',
+                        style: customStyle(14.0, Colors.blue, FontWeight.bold))
+                    .cPadOnly(t: 5),
+              ],
+            ),
+          )
         ],
       ).cPadOnly(r: 8, l: 8, t: 5, b: 5),
     );
@@ -232,78 +253,30 @@ class BannerSection extends StatelessWidget {
     return GetBuilder<HomeController>(builder: (logic) {
       return Stack(
         children: [
-          AspectRatio(
-            aspectRatio: 2.01,
-            child: PageView.builder(
+          CarouselSlider.builder(
+            options: CarouselOptions(
+              aspectRatio: 2.01,
+              viewportFraction: 0.8,
+              initialPage: 0,
+              enableInfiniteScroll: true,
+              reverse: false,
+              autoPlay: true,
+              autoPlayInterval: Duration(seconds: 3),
+              autoPlayAnimationDuration: Duration(milliseconds: 800),
+              autoPlayCurve: Curves.fastOutSlowIn,
+              enlargeCenterPage: true,
+              enlargeFactor: 0.3,
               scrollDirection: Axis.horizontal,
-              itemCount: logic.sliderModel?.data?.length ?? 0,
-              itemBuilder: (context, index) {
-                var data = logic.sliderModel?.data?[index];
-                //return Image.network(data?.img ?? '');
-                return CachedNetworkImage(
-                  imageUrl: data?.img ??
-                      'https://pleased-uniquely-bat.ngrok-free.app/assets/default_image.jpeg',
-                  // progressIndicatorBuilder: (context, url, downloadProgress) =>
-                  //     CircularProgressIndicator(
-                  //         value: downloadProgress.progress),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                );
-              },
-              onPageChanged: (v) {
-                logic.currentPage.value = v;
-                logic.update();
-              },
+            ),
+            itemCount: logic.sliderModel?.data?.length ?? 0,
+            itemBuilder:
+                (BuildContext context, int itemIndex, int pageViewIndex) =>
+                    CachedNetworkImage(
+              imageUrl: logic.sliderModel?.data?[itemIndex].img ??
+                  'https://pleased-uniquely-bat.ngrok-free.app/assets/default_image.jpeg',
+              errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
           ),
-          DotsIndicator(
-            // dotsCount: 3,
-            dotsCount: (logic.sliderModel?.data?.length ?? 0) == 0
-                ? 1
-                : (logic.sliderModel?.data?.length ?? 0),
-            position: logic.currentPage.value,
-            decorator: DotsDecorator(
-              spacing: const EdgeInsets.all(3),
-              color: Colors.white,
-              // Inactive dot color
-              activeColor: primaryColorPurple,
-              // activeSize: const Size.square(12.0), // Size of the active dot
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                  side: BorderSide(
-                      color: primaryColorPurple,
-                      width: 0.5) // Border radius of active dot
-                  ),
-            ),
-          ).cPosition(b: 10, l: 0, r: 0),
-          // AspectRatio(
-          //   // aspectRatio: 392 / 200,
-          //   aspectRatio: 1.96,
-          //   child: CarouselSlider.builder(
-          //     itemCount: 4,
-          //     // itemCount: logic.bannerListModel?.data?.banners?.length ?? 0,
-          //     itemBuilder: (BuildContext context, int index, int realIndex) {
-          //       return GestureDetector(
-          //           child: SvgPicture.asset(racoBanner));
-          //     },
-          //     options:
-          //     CarouselOptions(
-          //       autoPlay: true,
-          //       height: context.cWidth,
-          //       viewportFraction: 1.0,
-          //       enlargeCenterPage: false,
-          //     ),
-          //
-          //   ),
-          //   //.cPadSymmetric(h: 0).cPadOnly(t: 8),
-          // ).cPadOnly(t: 10),
-          // DotsIndicator(
-          //   dotsCount: 4,
-          //   position: index,
-          //   decorator: DotsDecorator(
-          //     color: Colors.black87, // Inactive color
-          //     activeColor: Colors.redAccent,
-          //   ),
-          // )
         ],
       ).cPadOnly(t: 4);
     });
@@ -317,81 +290,22 @@ class BillOverView extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(builder: (logic) {
       return Container(
-        padding: const EdgeInsets.symmetric(vertical: 5),
         // height: 135,
         width: context.cWidth,
-        decoration: BoxDecoration(
-          color: const Color.fromRGBO(255, 255, 255, 1),
-          // color: Color.fromRGBO(240, 243, 253, 1),
-          borderRadius: BorderRadius.circular(15),
-          boxShadow: const [
-            BoxShadow(
-              blurRadius: 2,
-              spreadRadius: 0,
-              color: Color.fromRGBO(0, 0, 0, 0.25),
-            ),
-          ],
-          // border: Border.all(color: Colors.black54, width: 0.2),
+        decoration: const BoxDecoration(
+          color: Color.fromRGBO(255, 255, 255, 1),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Overview of Billing for you',
+            Text('Bills Dues',
                 // 'Overview of Billing for ${(logic.startDatePass.cGetFormattedDate(format: 'MMM-yyyy'))}',
-                style: customStyle(11.0, Colors.black, FontWeight.bold)),
+                style: customStyle(19.0, Colors.black, FontWeight.bold)),
+
             const SizedBox(
               height: 8,
             ),
-            const DottedLine(
-              dashColor: Color.fromRGBO(159, 159, 159, 1),
-              lineThickness: 0.5,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            // Divider(
-            //   color: Color.fromRGBO(159, 159, 159, 1),
-            //   thickness: 0.5,
-            // ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Bill Date',
-                        style:
-                            customStyle(13.0, Colors.black, FontWeight.normal))
-                    .cToCenter
-                    .cExpanded(1),
-                Text('Student Name',
-                        style:
-                            customStyle(13.0, Colors.black, FontWeight.normal))
-                    .cToCenter
-                    .cExpanded(2),
-                const SizedBox(
-                  width: 15,
-                ),
-                Text('Class',
-                        style:
-                            customStyle(13.0, Colors.black, FontWeight.normal))
-                    .cToCenter
-                    .cExpanded(1),
-                Text('Bill Amount',
-                        style:
-                            customStyle(13.0, Colors.black, FontWeight.normal))
-                    .cToCenter
-                    .cExpanded(1),
-                Text('',
-                        style:
-                            customStyle(13.0, Colors.black, FontWeight.normal))
-                    .cExpanded(1),
-              ],
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            const DottedLine(
-              dashColor: Color.fromRGBO(159, 159, 159, 1),
-              lineThickness: 0.5,
-            ),
+
             const SizedBox(
               height: 10,
             ),
@@ -401,99 +315,159 @@ class BillOverView extends StatelessWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, i) {
                   var data = logic.invoiceList[i];
-                  return Row(
-                    children: [
-                      Text(
-                              (data.billedOn ?? '')
-                                  .cGetFormattedDate(format: 'MMM yyyy'),
-                              style: customStyle(
-                                  13.0, primaryColorPurple, FontWeight.normal))
-                          .cToCenter
-                          .cExpanded(1),
-                      Text(
-                        data.student?.name ?? '',
-                        style: customStyle(
-                            13.0, primaryColorPurple, FontWeight.normal),
-                        overflow: TextOverflow.ellipsis,
-                      ).cToCenter.cExpanded(2),
-                      const SizedBox(
-                        width: 15,
-                      ),
-                      Text(
-                              '${data.student?.std ?? ''} (${data.student?.division ?? ''})',
-                              // '${students?.classNo}',
-                              style: customStyle(
-                                  13.0, primaryColorPurple, FontWeight.normal))
-                          .cToCenter
-                          .cExpanded(1),
-                      Text(
-                              'SAR ${(double.parse('${data.amount ?? 0}') + double.parse('${data.taxAmount ?? 0}')) / 100}',
-                              // 'SAR ${(double.parse('${monthCharge?.students?[i].amount ?? 0}') + double.parse('${monthCharge?.students?[i].tax ?? 0}')) / 100}',
-                              style: customStyle(
-                                  13.0, primaryColorPurple, FontWeight.normal))
-                          .cToCenter
-                          .cExpanded(1),
-                      GestureDetector(
-                        onTap: () {
-                          logic.couponModel = null;
-                          logic.couponCodePass = '';
-                          logic.couponCode.clear();
-                          payBillPopup(
-                              context: context,
-                              billedOn: (data.billedOn ?? '')
-                                  .cGetFormattedDate(format: 'MMM yyyy'),
-                              studentName: data.student?.name ?? '',
-                              invoiceNo: data.totalBillAmountData?.id ?? '',
-                              totalAmount:
-                                  ((data.amount ?? 0) / 100).toStringAsFixed(2),
-                              tax: ((data.taxAmount ?? 0) / 100)
-                                  .toStringAsFixed(2));
-                        },
-                        child: Container(
-                          height: 20,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(
-                                color: primaryColorPurple,
-                              ),
-                              borderRadius: BorderRadius.circular(4)),
-                          child: Text('Pay',
-                                  style: customStyle(12.0, primaryColorPurple,
-                                      FontWeight.normal))
-                              .cToCenter,
-                        ),
-                      ).cExpanded(1)
-                    ],
-                  ).cPadOnly(b: 5);
+                  return TransactionItem(
+                    studentName: (data.student?.name ?? ''),
+                    studentClass:
+                        ('${data.student?.std ?? ''} (${data.student?.division ?? ''})'),
+                    billMonth: (data.billedOn ?? '')
+                        .cGetFormattedDate(format: 'MMM yyyy'),
+                    amount:
+                        ('SAR ${(double.parse('${data.amount ?? 0}') + double.parse('${data.taxAmount ?? 0}')) / 100}'),
+                    onclick: () {
+                      logic.couponModel = null;
+                      logic.couponCodePass = '';
+                      logic.couponCode.clear();
+                      payBillPopup(
+                          context: context,
+                          billedOn: (data.billedOn ?? '')
+                              .cGetFormattedDate(format: 'MMM yyyy'),
+                          studentName: data.student?.name ?? '',
+                          invoiceNo: data.totalBillAmountData?.id ?? '',
+                          totalAmount:
+                              ((data.amount ?? 0) / 100).toStringAsFixed(2),
+                          tax:
+                              ((data.taxAmount ?? 0) / 100).toStringAsFixed(2));
+                    },
+                  ).cPadOnly(t: (i == 0) ? 0 : 10);
+
                 }),
+
             const SizedBox(
               height: 8,
             ),
-            const DottedLine(
-              dashColor: Color.fromRGBO(159, 159, 159, 1),
-              lineThickness: 0.5,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text('TOTAL :',
-                    style:
-                        customStyle(15.0, primaryColorPurple, FontWeight.bold)),
-                const SizedBox(
-                  width: 10,
-                ),
-                Text('SAR ${logic.totalAmount / 100}',
-                    style:
-                        customStyle(13.0, primaryColorPurple, FontWeight.bold)),
-              ],
-            ).cPadSymmetric(h: 15)
+
           ],
         ).cPadOnly(l: 10, r: 10, t: 10),
-      ).cPadAll(10);
+      );
     });
+  }
+}
+
+class TransactionItem extends StatelessWidget {
+  var studentName;
+
+  var studentClass;
+
+  var billMonth;
+
+  var amount;
+
+  var onclick;
+
+  TransactionItem({
+    super.key,
+    required this.studentName,
+    required this.studentClass,
+    required this.billMonth,
+    required this.amount,
+    required this.onclick,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {},
+      child: Container(
+        width: context.cWidth,
+        height: 90,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey, // shadow color with opacity
+              spreadRadius: 1, // the spread radius of the shadow
+              blurRadius: 10, // how soft the shadow is
+              offset:
+                  Offset(0, 3), // horizontal and vertical offset of the shadow
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                SizedBox(
+                  width: 190,
+                  child: Text(
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    studentName,
+                    style: customStyle(16.0, Colors.black, FontWeight.bold),
+                  ),
+                ),
+                Text(
+                  studentClass,
+                  style: customStyle(14.0, Colors.black, FontWeight.normal),
+                ),
+                Text(
+                  billMonth,
+                  style: customStyle(14.0, Colors.black, FontWeight.normal),
+                )
+              ],
+            ),
+             Row(
+              children: [
+                const VerticalDivider(
+                  width: 1,
+                  color: Colors.grey,
+                ),
+                SizedBox(width: 10,),
+                Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text('SAR',
+                    style: customStyle(14.0, Colors.blue, FontWeight.bold),
+                    ),
+                    SizedBox(height: 5,),
+                    Text('210',
+                    style: customStyle(22.0, Colors.blue, FontWeight.bold),
+                    )
+                  ],
+                ),
+                SizedBox(width: 10,),
+                InkWell(
+                  onTap: onclick,
+                  child: Container(
+                    width: 60,
+                    height: 30,
+                    decoration: BoxDecoration(
+                      color: primaryColorPurple,
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    ),
+                    child: Center(
+                      child: Text('Pay Now',
+                      style: customStyle(12.0, Colors.white, FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            )
+          ],
+        ).cPadAll(10.0),
+      ),
+    );
   }
 }
 
@@ -505,10 +479,6 @@ class MainMenu extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Main Menu',
-          style: customStyle(15.0, Colors.black, FontWeight.normal),
-        ).cPadOnly(l: 10, t: 10),
         Row(
           children: [
             InkWell(
@@ -516,9 +486,10 @@ class MainMenu extends StatelessWidget {
                 // Get.toNamed(Routes.children);
                 HomeStackDashboardController.to.changeTabIndex(2);
               },
-              child: const MenuBox(
+              child: MenuBox(
                 text: 'Children',
                 img: studentsIcon,
+                backgroundColor: Color.fromRGBO(225, 223, 255, 1),
               ),
             ).cExpanded(1),
             const SizedBox(
@@ -528,9 +499,10 @@ class MainMenu extends StatelessWidget {
               onTap: () {
                 HomeStackDashboardController.to.changeTabIndex(1);
               },
-              child: const MenuBox(
+              child: MenuBox(
                 text: 'Invoice',
                 img: transactionIcon,
+                backgroundColor: Color.fromRGBO(208, 255, 231, 1),
               ),
             ).cExpanded(1),
             const SizedBox(
@@ -540,9 +512,10 @@ class MainMenu extends StatelessWidget {
               onTap: () {
                 HomeStackDashboardController.to.changeTabIndex(3);
               },
-              child: const MenuBox(
+              child: MenuBox(
                 text: 'Profile',
                 img: profileIcon,
+                backgroundColor: Color.fromRGBO(255, 233, 229, 1),
               ),
             ).cExpanded(1),
           ],
@@ -560,7 +533,6 @@ void payBillPopup({
   String studentName = '',
   String billedOn = '',
 }) {
-  cLog('body$invoiceNo');
   showDialog<void>(
     context: context,
     barrierDismissible: false,
@@ -605,7 +577,7 @@ void payBillPopup({
                         Text(
                           studentName,
                           style: customStyle(
-                              12.0, Colors.black, FontWeight.normal),
+                              11.0, Colors.black, FontWeight.normal),
                         ),
                       ],
                     ),
@@ -614,7 +586,7 @@ void payBillPopup({
                     ),
                     Text(
                       'Bill Date :$billedOn',
-                      style: customStyle(12.0, Colors.black, FontWeight.normal),
+                      style: customStyle(14.0, Colors.black, FontWeight.normal),
                     ),
                     const SizedBox(
                       height: 5,
@@ -681,7 +653,7 @@ void payBillPopup({
                                           : 'Apply',
                                       style: const TextStyle(
                                         color: Colors.white,
-                                        fontSize: 14,
+                                        fontSize: 14.0,
                                       ),
                                     ),
                                   ),
@@ -706,13 +678,13 @@ void payBillPopup({
                       titleKey: 'Subtotal : ',
                       value: 'SAR  ${(totalAmount)}',
                       // 'SAR  ${((logic.totalAmount - ((logic.totalAmount) * 0.15)) / 100).toStringAsFixed(2)}',
-                      fontSize: 12.0,
+                      fontSize: 13.0,
                     ),
                     KeyValueField(
                       titleKey: 'Tax : ',
                       value: 'SAR  ${(tax)}',
                       // 'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalTax ?? 0}') / 100)}',
-                      fontSize: 12.0,
+                      fontSize: 13.0,
                     ),
                     if (((logic.couponModel?.data ?? '').toString()).isNotEmpty)
                       KeyValueField(
@@ -720,7 +692,7 @@ void payBillPopup({
                         value:
                             '- SAR  ${(logic.couponModel?.data?.value ?? 0)}',
                         // 'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalTax ?? 0}') / 100)}',
-                        fontSize: 12.0,
+                        fontSize: 13.0,
                       ),
                     const Divider(),
                     KeyValueField(
@@ -729,7 +701,7 @@ void payBillPopup({
                           'SAR  ${((double.parse(totalAmount) + double.parse(tax)) - (double.parse((logic.couponModel?.data?.value ?? 0).toString()))).toStringAsFixed(2)}',
                       // 'SAR  ${logic.totalAmount/100-((logic.totalAmount/100)*0.15)}',
                       // 'SAR  ${(double.parse('${logic.homeBillAmount?.data?.totalPayableAmount ?? 0}') / 100)}',
-                      fontSize: 12.0,
+                      fontSize: 13.0,
                     ),
                     const SizedBox(
                       height: 20,
@@ -749,7 +721,7 @@ void payBillPopup({
                             width: (context.cWidth >= 800) ? 80 : 80,
                             buttonTitle: 'Cancel',
                             titleStyle: customStyle(
-                                10.0, primaryColorPurple, FontWeight.bold),
+                                13.0, primaryColorPurple, FontWeight.bold),
                           ),
                         ),
                         CustomButtonWidget(
@@ -823,33 +795,39 @@ class KeyValueField extends StatelessWidget {
 class MenuBox extends StatelessWidget {
   final String text;
   final String img;
+  var backgroundColor;
 
-  const MenuBox({super.key, required this.text, required this.img});
+  MenuBox(
+      {super.key,
+      required this.text,
+      required this.img,
+      required this.backgroundColor});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 55,
+      height: 90,
       width: 100,
       decoration: BoxDecoration(
-          color: const Color.fromRGBO(240, 243, 253, 1),
+          color: backgroundColor,
           borderRadius: BorderRadius.circular(15),
           border: Border.all(color: Colors.black54, width: 0.2)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SvgPicture.asset(
             img,
-            height: 25,
-            width: 25,
+            height: 27,
+            width: 27,
           ),
           const SizedBox(
-            width: 2,
+            height: 10,
           ),
-          Text(text,
-              style: customStyle(10.0, primaryColorPurple, FontWeight.normal))
+          Text(text, style: customStyle(15.0, Colors.black, FontWeight.bold))
         ],
-      ).cPadOnly(l: 10, r: 10),
+      ),
     );
   }
 }
@@ -878,7 +856,7 @@ class BottomImageList extends StatelessWidget {
                 ),
               ),
             );
-          }).cPadOnly(t: 10, b: 10);
+          }).cPadAll(10.0).cClipAll(10.0);
     });
   }
 }
