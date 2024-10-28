@@ -237,7 +237,6 @@ class HomeDrawer extends StatelessWidget {
           child: SafeArea(
             child: SingleChildScrollView(
               child: SizedBox(
-                // margin: const EdgeInsets.only(left: 19, right: 20),
                 width: 346,
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -283,17 +282,27 @@ class HomeDrawer extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 15,
                     ),
-                    Text('Account',
-                            style: customStyle(
-                                17.0,
-                                const Color.fromRGBO(83, 97, 107, 1),
-                                FontWeight.normal))
-                        .cPadOnly(l: 10),
-                    // const SizedBox(
-                    //   height: 10,
-                    // ),
+                    Divider(
+                      color: Color.fromRGBO(101, 101, 101, 1),
+                      height: 1,
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    ListTileItem(
+                      name: 'Home',
+                      icon: homeIconDrawer,
+                      onTap: () {
+                        HomeStackDashboardController.to.cameFromProfile = false;
+                        HomeStackDashboardController.to.changeTabIndex(0);
+                        Get.back();
+                      },
+                      textColor: Color.fromRGBO(71, 42, 138, 1),
+                      iconColor: Color.fromRGBO(71, 42, 138, 1),
+                      choosedColor: Color.fromRGBO(223, 225, 230, 1), selected: true,
+                    ).cPadSymmetric(h: 8),
                     ListTileItem(
                       name: 'Profile',
                       icon: profileIcon,
@@ -302,6 +311,8 @@ class HomeDrawer extends StatelessWidget {
                         HomeStackDashboardController.to.changeTabIndex(3);
                         Get.back();
                       },
+                      iconColor: Color.fromRGBO(101, 101, 101, 1),
+                      choosedColor:Colors.transparent, selected: false,
                     ).cPadSymmetric(h: 8),
                     ListTileItem(
                       name: 'Invoice',
@@ -311,6 +322,9 @@ class HomeDrawer extends StatelessWidget {
                         HomeStackDashboardController.to.changeTabIndex(1);
                         Get.back();
                       },
+                      iconColor: Color.fromRGBO(101, 101, 101, 1),
+                      choosedColor:Colors.transparent,
+                      selected: false,
                     ).cPadSymmetric(h: 8),
                     ListTileItem(
                       name: 'Children',
@@ -320,6 +334,9 @@ class HomeDrawer extends StatelessWidget {
                         HomeStackDashboardController.to.cameFromProfile = false;
                         HomeStackDashboardController.to.changeTabIndex(2);
                       },
+                      iconColor: Color.fromRGBO(101, 101, 101, 1),
+                      choosedColor:Colors.transparent,
+                      selected: false,
                     ).cPadSymmetric(h: 8),
                     ListTileItem(
                       name: 'Coupon',
@@ -329,16 +346,29 @@ class HomeDrawer extends StatelessWidget {
                         Get.back();
                         Get.toNamed(Routes.coupon);
                       },
+                      iconColor: Color.fromRGBO(101, 101, 101, 1),
+                      choosedColor:Colors.transparent,
+                      selected: false,
                     ).cPadSymmetric(h: 8),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Divider(
+                      color: Color.fromRGBO(101, 101, 101, 1),
+                      height: 1,
+                    ),
                     const SizedBox(
                       height: 10,
                     ),
                     Text('Policy',
                             style: customStyle(
                                 17.0,
-                                const Color.fromRGBO(83, 97, 107, 1),
+                                Colors.black,
                                 FontWeight.normal))
                         .cPadOnly(l: 10),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     ListTileItem(
                       name: 'Help&Support',
                       icon: contactUs,
@@ -347,6 +377,9 @@ class HomeDrawer extends StatelessWidget {
                         Get.back();
                         Get.toNamed(Routes.helpAndSupport);
                       },
+                      iconColor: Color.fromRGBO(101, 101, 101, 1),
+                      choosedColor:Colors.transparent,
+                      selected: false,
                     ).cPadSymmetric(h: 8),
                     ListTileItem(
                       name: 'About Us',
@@ -356,6 +389,9 @@ class HomeDrawer extends StatelessWidget {
                         Get.back();
                         Get.toNamed(Routes.aboutUs);
                       },
+                      iconColor: Color.fromRGBO(101, 101, 101, 1),
+                      choosedColor:Colors.transparent,
+                      selected: false,
                     ).cPadSymmetric(h: 8),
                     ListTileItem(
                       name: 'Privacy Policy',
@@ -365,19 +401,26 @@ class HomeDrawer extends StatelessWidget {
                         Get.back();
                         Get.toNamed(Routes.privacyPolicy);
                       },
+                      iconColor: Color.fromRGBO(101, 101, 101, 1),
+                      choosedColor:Colors.transparent,
+                      selected: false,
                     ).cPadSymmetric(h: 8),
                     const SizedBox(
-                      height: 5,
+                      height: 10,
                     ),
-                    Text('Other',
-                            style: customStyle(
-                                17.0,
-                                const Color.fromRGBO(83, 97, 107, 1),
-                                FontWeight.normal))
-                        .cPadOnly(l: 10),
+                    Divider(
+                      color: Color.fromRGBO(101, 101, 101, 1),
+                      height: 1,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     ListTileItem(
                       name: 'Sign out',
                       icon: signOutIcon,
+                      iconColor: Colors.red,
+                      choosedColor:Colors.transparent,
+                      selected: false,
                       textColor: const Color.fromRGBO(238, 36, 86, 1),
                       onTap: () {
                         showAlertPopup(context, onTapYes: () {
@@ -405,23 +448,34 @@ class ListTileItem extends StatelessWidget {
   var name;
   final Function onTap;
   final Color textColor;
+  var iconColor;
+  var choosedColor;
+  var selected=false;
 
   ListTileItem({
     super.key,
     required this.icon,
     required this.name,
     required this.onTap,
+    required this.iconColor,
+    required this.choosedColor,
+    required this.selected,
     this.textColor = Colors.black,
   });
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      selected: selected,
+      // selectedTileColor: Color.fromRGBO(71, 42, 138, 1),
+
+      selectedColor: Color.fromRGBO(223, 225, 230, 1),
       visualDensity: const VisualDensity(vertical: -3),
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(8))),
       leading: SvgPicture.asset(
         icon,
+        color: iconColor,
         width: 20,
         height: 20,
       ),

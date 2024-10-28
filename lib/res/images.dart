@@ -8,6 +8,7 @@ const String racoBanner = 'assets/images/raco_banner.svg';
 const String invoice_inquiry = 'assets/icons/invoice_inquiry.png';
 const String studentsIcon = 'assets/icons/studentsIcon.svg';
 const String profileIcon = 'assets/icons/profileIcon.svg';
+const String homeIconDrawer = 'assets/icons/homeIcon.svg';
 const String transactionIcon = 'assets/icons/transactionIcon.svg';
 const String bottomBanner = 'assets/images/bottomBanner.png';
 const String homeIcon = 'assets/icons/homeIcon.svg';

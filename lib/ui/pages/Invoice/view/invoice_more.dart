@@ -408,7 +408,8 @@ class ListPart extends StatelessWidget {
                               InkWell(
                                 onTap: () {
                                   openUrl(
-                                      '${baseURL}view_bill/${data.totalBillAmountData?.id ?? ''}',
+                                    'https://app.racotransport.com/view_bill/${data.totalBillAmountData?.id ?? ''}'
+                                      ,
                                       isPay: false);
                                 },
                                 child: CustomButtonWidget(
@@ -510,17 +511,23 @@ void payBillPopupInVoice({
                     const SizedBox(
                       height: 11,
                     ),
-                    Row(
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'Students Name : ',
                           style:
                               customStyle(14.0, Colors.black, FontWeight.bold),
                         ),
+                        SizedBox(height: 3,),
                         Text(
                           studentName,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: customStyle(
-                              12.0, Colors.black, FontWeight.normal),
+                              12.0, Colors.black, FontWeight.bold),
                         ),
                       ],
                     ),
@@ -661,7 +668,7 @@ void payBillPopupInVoice({
                             backgroundColor: Colors.white,
                             borderColor: primaryColorPurple,
                             vPadding: 8,
-                            width: (context.cWidth >= 800) ? 80 : 80,
+                            width: (context.cWidth >= 800) ? 100 : 80,
                             buttonTitle: 'Cancel',
                             titleStyle: customStyle(
                                 10.0, primaryColorPurple, FontWeight.bold),
@@ -679,7 +686,7 @@ void payBillPopupInVoice({
                           },
                           backgroundColor: primaryColorPurple,
                           vPadding: 8,
-                          width: (context.cWidth >= 800) ? 60 : 80,
+                          width: (context.cWidth >= 800) ? 100 : 80,
                           buttonTitle: 'Pay',
                           titleStyle:
                               customStyle(10.0, Colors.white, FontWeight.bold),

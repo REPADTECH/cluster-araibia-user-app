@@ -45,12 +45,12 @@ class FirstPart extends StatelessWidget {
                   children: [
                     Text(
                       'Total payable amount',
-                      style: customStyle(18.0, Colors.white, FontWeight.normal),
+                      style: customStyle(14.0, Colors.white, FontWeight.normal),
                     ),
                     Text(
                       '${logic.totalAmount / 100}',
                       // 'SAR ${double.parse('${logic.homeBillAmount?.data?.totalPayableAmount ?? '0.0'}') / 100}',
-                      style: customStyle(25.0, Colors.white, FontWeight.bold),
+                      style: customStyle(20.0, Colors.white, FontWeight.bold),
                     ),
                   ],
                 ),
@@ -200,7 +200,7 @@ class ChildBox extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       name,
-                      style: customStyle(14.0, Colors.black, FontWeight.bold),
+                      style: customStyle(10.0, Colors.black, FontWeight.bold),
                     ),
                   ),
                   Text(
@@ -234,7 +234,7 @@ class ChildBox extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text('SAR ${price}',
-                        style: customStyle(14.0, Colors.blue, FontWeight.bold))
+                        style: customStyle(12.0, Colors.blue, FontWeight.bold))
                     .cPadOnly(t: 5),
               ],
             ),
@@ -300,7 +300,7 @@ class BillOverView extends StatelessWidget {
           children: [
             Text('Bills Dues',
                 // 'Overview of Billing for ${(logic.startDatePass.cGetFormattedDate(format: 'MMM-yyyy'))}',
-                style: customStyle(19.0, Colors.black, FontWeight.bold)),
+                style: customStyle(16.0, Colors.black, FontWeight.bold)),
 
             const SizedBox(
               height: 8,
@@ -411,16 +411,16 @@ class TransactionItem extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     studentName,
-                    style: customStyle(16.0, Colors.black, FontWeight.bold),
+                    style: customStyle(13.0, Colors.black, FontWeight.bold),
                   ),
                 ),
                 Text(
                   studentClass,
-                  style: customStyle(14.0, Colors.black, FontWeight.normal),
+                  style: customStyle(12.0, Colors.black, FontWeight.normal),
                 ),
                 Text(
                   billMonth,
-                  style: customStyle(14.0, Colors.black, FontWeight.normal),
+                  style: customStyle(12.0, Colors.black, FontWeight.normal),
                 )
               ],
             ),
@@ -437,11 +437,11 @@ class TransactionItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text('SAR',
-                    style: customStyle(14.0, Colors.blue, FontWeight.bold),
+                    style: customStyle(12.0, Colors.blue, FontWeight.bold),
                     ),
                     SizedBox(height: 5,),
                     Text('210',
-                    style: customStyle(22.0, Colors.blue, FontWeight.bold),
+                    style: customStyle(18.0, Colors.blue, FontWeight.bold),
                     )
                   ],
                 ),
@@ -567,17 +567,23 @@ void payBillPopup({
                     const SizedBox(
                       height: 11,
                     ),
-                    Row(
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'Students Name : ',
                           style:
                               customStyle(14.0, Colors.black, FontWeight.bold),
                         ),
+                        SizedBox(height: 3,),
                         Text(
                           studentName,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: customStyle(
-                              11.0, Colors.black, FontWeight.normal),
+                              12.0, Colors.black, FontWeight.bold),
                         ),
                       ],
                     ),
@@ -718,7 +724,7 @@ void payBillPopup({
                             backgroundColor: Colors.white,
                             borderColor: primaryColorPurple,
                             vPadding: 8,
-                            width: (context.cWidth >= 800) ? 80 : 80,
+                            width: (context.cWidth >= 800) ? 100 : 80,
                             buttonTitle: 'Cancel',
                             titleStyle: customStyle(
                                 13.0, primaryColorPurple, FontWeight.bold),
@@ -736,10 +742,10 @@ void payBillPopup({
                           },
                           backgroundColor: primaryColorPurple,
                           vPadding: 8,
-                          width: (context.cWidth >= 800) ? 60 : 80,
-                          buttonTitle: 'Pay',
+                          width: (context.cWidth >= 800) ? 100 : 80,
+                          buttonTitle: 'Pay Now',
                           titleStyle:
-                              customStyle(10.0, Colors.white, FontWeight.bold),
+                              customStyle(13.0, Colors.white, FontWeight.bold),
                         ).cPadOnly(l: 7),
                       ],
                     ),
@@ -825,7 +831,7 @@ class MenuBox extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          Text(text, style: customStyle(15.0, Colors.black, FontWeight.bold))
+          Text(text, style: customStyle(13.0, Colors.black, FontWeight.bold))
         ],
       ),
     );

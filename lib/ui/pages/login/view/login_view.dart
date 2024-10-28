@@ -243,7 +243,7 @@ class LoginPage extends StatelessWidget {
                                           style: const TextStyle(
                                               color: Color.fromRGBO(
                                                   255, 255, 255, 0.6),
-                                              fontSize: 12)),
+                                              fontSize: 9)),
                                       // Directionality(
                                       //   textDirection: TextDirection.ltr,
                                       //   child: Text(' ${logic.dataIsMobileEmail.value}',
