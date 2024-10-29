@@ -91,7 +91,7 @@ class StudentDropDown extends StatelessWidget {
                   gapPadding: 15,
                 ),
                 hintText:
-                    'Filter with child', // Show hint if no selection is made
+                    'Filter with Student', // Show hint if no selection is made
               ),
             ),
             itemAsString: (student.DataList v) => v.studentName ?? '',
@@ -237,7 +237,7 @@ class ListPart extends StatelessWidget {
                         Row(
                           children: [
                             const Icon(
-                              Icons.access_time_filled_rounded,
+                              Icons.calendar_today,
                               size: 18,
                             ),
                             const SizedBox(
@@ -305,33 +305,37 @@ class ListPart extends StatelessWidget {
                     const SizedBox(
                       height: 5,
                     ),
-                    const DottedLine(
-                      dashGapLength: 6,
-                      lineThickness: 0.5,
+                    // const DottedLine(
+                    //   dashGapLength: 6,
+                    //   lineThickness: 0.5,
+                    // ),
+                    Divider(
+                      height: 1,
+                      color: Colors.grey,
                     ),
                     const SizedBox(
                       height: 5,
                     ),
                     Row(
                       children: [
-                        CachedNetworkImage(
-                          imageUrl: data.img ?? '',
-                          height: 25,
-                          width: 25,
-                          placeholder: (context, url) =>
-                              const CircularProgressIndicator(),
-                          errorWidget: (context, url, error) => const Icon(
-                            Icons.account_circle_rounded,
-                            size: 25,
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
+                        // CachedNetworkImage(
+                        //   imageUrl: data.img ?? '',
+                        //   height: 25,
+                        //   width: 25,
+                        //   placeholder: (context, url) =>
+                        //       const CircularProgressIndicator(),
+                        //   errorWidget: (context, url, error) => const Icon(
+                        //     Icons.account_circle_rounded,
+                        //     size: 25,
+                        //   ),
+                        // ),
+                        // const SizedBox(
+                        //   width: 10,
+                        // ),
                         SizedBox(
-                          width: 200,
+                          width: 250,
                           child: Text(
-                              '${data.student?.name ?? ' '} (${data.student?.std ?? ''} ${data.student?.division ?? ''})',
+                              '${data.student?.name ?? ' '} - ${data.student?.std ?? ''} ${data.student?.division ?? ''}',
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: customStyle(
@@ -341,18 +345,18 @@ class ListPart extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        SvgPicture.asset(
-                          schoolcap,
-                          height: 12,
-                          width: 12,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
+                        // SvgPicture.asset(
+                        //   schoolcap,
+                        //   height: 12,
+                        //   width: 12,
+                        // ),
+                        // const SizedBox(
+                        //   width: 5,
+                        // ),
                         Text(data.school?.name ?? '',
                             style: customStyle(
                                 12.0, Colors.black, FontWeight.normal)),
-                        Text(' (${data.school?.id ?? ''})',
+                        Text(' ${data.school?.id ?? ''}',
                             style: customStyle(
                                 12.0,
                                 const Color.fromRGBO(99, 99, 99, 1),
@@ -451,7 +455,7 @@ class ListPart extends StatelessWidget {
                                 ),
                               ),
                           ],
-                        ).cExpanded(1),
+                        ).cPadOnly(t: 8).cExpanded(1),
                       ],
                     ),
                   ],

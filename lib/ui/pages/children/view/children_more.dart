@@ -124,21 +124,16 @@ class ListPart extends StatelessWidget {
                               imageUrl: (data.img ?? ''),
                               placeholder: (context, url) =>
                                   const CircularProgressIndicator(),
-                              width: 40,
-                              height: 40,
+                              width: 55,
+                              height: 55,
                               errorWidget: (context, url, error) =>
                                   const Icon(Icons.error),
-                            ),
-                            // Image.network(
-                            //   data?.img??'',
-                            //   height: 25,
-                            //   width: 25,
-                            // ),
+                            ).cClipAll(10.0),
                             const SizedBox(
                               width: 8,
                             ),
                             SizedBox(
-                              width: 180,
+                              width: 240,
                               child: Text(
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
@@ -147,13 +142,9 @@ class ListPart extends StatelessWidget {
                                   style: customStyle(
                                       15.0, Colors.black, FontWeight.bold)),
                             ),
-                            // Text(' (${data?.gender ?? ''})',
-                            //     style: customStyle(
-                            //         13.0,
-                            //         Color.fromRGBO(99, 99, 99, 1),
-                            //         FontWeight.normal)),
                           ],
                         ),
+
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -165,19 +156,19 @@ class ListPart extends StatelessWidget {
                                       11.0, Colors.black, FontWeight.normal),
                                 ))
                           ],
-                        ).cPadOnly(t: 4),
+                        ).cPadOnly(t: 10),
                         Row(
                           children: [
-                            SvgPicture.asset(
-                              schoolcap,
-                              height: 12,
-                              width: 12,
-                            ),
-                            const SizedBox(
-                              width: 5,
-                            ),
+                            // SvgPicture.asset(
+                            //   schoolcap,
+                            //   height: 12,
+                            //   width: 12,
+                            // ),
+                            // const SizedBox(
+                            //   width: 5,
+                            // ),
                             SizedBox(
-                              width: 235,
+                              width: 265,
                               child: Text(
                                   data.school?.schoolName ?? '',
                                   maxLines: 2,
