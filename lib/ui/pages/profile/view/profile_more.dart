@@ -71,7 +71,7 @@ class ProfileImagePart extends StatelessWidget {
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                     logic.profileModel?.data?.name ?? '',
-                    style: customStyle(20.0, Colors.black, FontWeight.bold),
+                    style: customStyle(16.0, Colors.black, FontWeight.bold),
                   ),
                 ),
                 SizedBox(

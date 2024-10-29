@@ -270,7 +270,7 @@ class HomeDrawer extends StatelessWidget {
                                   maxLines: 3,
                                   overflow: TextOverflow.ellipsis,
                                   style: customStyle(
-                                      20.0, Colors.black, FontWeight.bold)),
+                                      16.0, Colors.black, FontWeight.bold)),
                             ),
                             Text(logic.profileModel?.data?.email ?? '',
                                 style: customStyle(
