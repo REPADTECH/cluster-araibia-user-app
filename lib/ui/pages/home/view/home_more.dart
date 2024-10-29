@@ -322,7 +322,7 @@ class BillOverView extends StatelessWidget {
                     billMonth: (data.billedOn ?? '')
                         .cGetFormattedDate(format: 'MMM yyyy'),
                     amount:
-                        ('SAR ${(double.parse('${data.amount ?? 0}') + double.parse('${data.taxAmount ?? 0}')) / 100}'),
+                        ('${(double.parse('${data.amount ?? 0}') + double.parse('${data.taxAmount ?? 0}')) / 100}'),
                     onclick: () {
                       logic.couponModel = null;
                       logic.couponCodePass = '';
@@ -406,7 +406,7 @@ class TransactionItem extends StatelessWidget {
                   height: 10,
                 ),
                 SizedBox(
-                  width: 190,
+                  width: 180,
                   child: Text(
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -440,8 +440,8 @@ class TransactionItem extends StatelessWidget {
                     style: customStyle(12.0, Colors.blue, FontWeight.bold),
                     ),
                     SizedBox(height: 5,),
-                    Text('210',
-                    style: customStyle(18.0, Colors.blue, FontWeight.bold),
+                    Text(amount,
+                    style: customStyle(16.0, Colors.blue, FontWeight.bold),
                     )
                   ],
                 ),

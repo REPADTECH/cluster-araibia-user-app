@@ -170,7 +170,7 @@ void showDisableDialog({required BuildContext context}) async {
                 children: [
                   Text(
                     'Request to Disable The Student',
-                    style: customStyle(13.0, Colors.black, FontWeight.bold),
+                    style: customStyle(15.0, Colors.black, FontWeight.bold),
                   ),
                   const SizedBox(
                     height: 16,
@@ -190,16 +190,32 @@ void showDisableDialog({required BuildContext context}) async {
                       width: context.cWidth,
                       margin: const EdgeInsets.only(left: 13, right: 13),
                       height: 40,
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                           color: Colors.white,
+                          border: Border.all(width: 1, color: Colors.black),
                           borderRadius:
                               BorderRadius.all(Radius.circular(10.0))),
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
-                        child: Text(
-                          logic.dateTimeChoose,
-                          style: customStyle(
-                              13.0, Colors.black, FontWeight?.normal),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              logic.dateTimeChoose,
+                              style: customStyle(
+                                  13.0, Colors.black, FontWeight?.normal),
+                            ),
+                            IconButton(
+                              iconSize: 20,
+                              padding: EdgeInsets.zero,
+                              icon: const Icon(Icons.calendar_today_sharp),
+                              onPressed: () {
+                                logic.selectDate(context: context);
+                              },
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -250,10 +266,10 @@ void showDisableDialog({required BuildContext context}) async {
                           backgroundColor: Colors.white,
                           borderColor: primaryColorPurple,
                           vPadding: 8,
-                          width: (context.cWidth >= 800) ? 80 : 80,
+                          width: (context.cWidth >= 800) ? 100 : 100,
                           buttonTitle: 'Cancel',
                           titleStyle: customStyle(
-                              10.0, primaryColorPurple, FontWeight.bold),
+                              13.0, primaryColorPurple, FontWeight.bold),
                         ),
                       ),
                       InkWell(
@@ -263,10 +279,10 @@ void showDisableDialog({required BuildContext context}) async {
                         child: CustomButtonWidget(
                           backgroundColor: primaryColorPurple,
                           vPadding: 8,
-                          width: (context.cWidth >= 800) ? 60 : 80,
+                          width: (context.cWidth >= 800) ? 100 : 100,
                           buttonTitle: 'Confirm',
                           titleStyle:
-                              customStyle(10.0, Colors.white, FontWeight.bold),
+                              customStyle(13.0, Colors.white, FontWeight.bold),
                         ).cPadOnly(l: 7),
                       ),
                     ],

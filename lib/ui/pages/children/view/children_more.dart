@@ -115,6 +115,8 @@ class ListPart extends StatelessWidget {
                 child: Stack(
                   children: [
                     Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           children: [
@@ -185,13 +187,7 @@ class ListPart extends StatelessWidget {
                                   style: customStyle(
                                       12.0, Colors.black, FontWeight.normal)),
                             ),
-                            Text(
-                                // ' (ABC1234)',
-                                '(${data.admissionNo ?? ''})',
-                                style: customStyle(
-                                    12.0,
-                                    const Color.fromRGBO(99, 99, 99, 1),
-                                    FontWeight.normal)),
+
                           ],
                         ).cPadOnly(t: 6, b: 10),
                         Row(
@@ -208,16 +204,33 @@ class ListPart extends StatelessWidget {
                                 // 'Route name',
                                 data.busInRoute?.routeInfo?.routeName ?? '',
                                 style: customStyle(
-                                    11.0, Colors.black, FontWeight.normal)),
+                                    10.0, Colors.black, FontWeight.normal)),
                             Text(
                                 // ' (pickup point name)',
-                                ' (${data.pickUp?.pickUpName ?? ''})',
+                                ' (${data.pickUp?.pickUpName ?? ''}) - SAR ${double.parse('${data.busInRoute?.routeInfo?.fareForRoute ?? ' '}') * .01}',
                                 style: customStyle(
-                                    11.0,
+                                    10.0,
                                     const Color.fromRGBO(99, 99, 99, 1),
                                     FontWeight.normal)),
                           ],
                         ).cPadOnly(t: 6),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                                'AD NO :(${data.admissionNo ?? ''})',
+                                style: customStyle(
+                                    10.0,
+                                    Colors.black,
+                                    FontWeight.normal)).cPadOnly(t: 6),
+
+                            Text(
+                                'View Details',
+                                style: defaultUnder10Line).cPadOnly(t: 6),
+                          ],
+                        ),
                       ],
                     ),
                     Row(
@@ -257,18 +270,20 @@ class ListPart extends StatelessWidget {
                       width: 30,
                       height: 30,
                     ).cPosition(r: 0, t: 30),
-                    CustomButtonWidget(
-                            backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
-                            borderColor: Colors.black54,
-                            vPadding: 4,
-                            // width: 85,
-                            radius: 13,
-                            // buttonTitle: 'SAR 100.50',
-                            buttonTitle:
-                                '${double.parse('${data.busInRoute?.routeInfo?.fareForRoute ?? ' '}') * .01}',
-                            titleStyle: customStyle(
-                                11.0, Colors.black, FontWeight.normal))
-                        .cPosition(r: 0, b: 0),
+
+
+                    // CustomButtonWidget(
+                    //         backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
+                    //         borderColor: Colors.black54,
+                    //         vPadding: 4,
+                    //         // width: 85,
+                    //         radius: 13,
+                    //         // buttonTitle: 'SAR 100.50',
+                    //         buttonTitle:
+                    //             '${double.parse('${data.busInRoute?.routeInfo?.fareForRoute ?? ' '}') * .01}',
+                    //         titleStyle: customStyle(
+                    //             11.0, Colors.black, FontWeight.normal))
+                    //     .cPosition(r: 0, b: 0),
                   ],
                 ),
               ).cPadOnly(t: (i == 0) ? 5 : 13),
