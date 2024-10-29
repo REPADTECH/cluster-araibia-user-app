@@ -10,6 +10,7 @@ class HelpAndSupport extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: commonBackGroundColor,
       floatingActionButton:  const Contact(),
       appBar: commonAppBarBack('Help and Support', primaryColorPurple, () {
         HelpAndSupportController.to.onInit();

@@ -292,8 +292,8 @@ class BillOverView extends StatelessWidget {
       return Container(
         // height: 135,
         width: context.cWidth,
-        decoration: const BoxDecoration(
-          color: Color.fromRGBO(255, 255, 255, 1),
+        decoration:  BoxDecoration(
+          color: commonBackGroundColor,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -487,7 +487,7 @@ class MainMenu extends StatelessWidget {
                 HomeStackDashboardController.to.changeTabIndex(2);
               },
               child: MenuBox(
-                text: 'Children',
+                text: 'Students',
                 img: studentsIcon,
                 backgroundColor: Color.fromRGBO(225, 223, 255, 1),
               ),

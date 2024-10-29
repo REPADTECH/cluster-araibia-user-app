@@ -19,7 +19,8 @@ class ChildrenView extends StatelessWidget {
         return false;
       },
       child: Scaffold(
-        appBar: commonAppBarBack('Children', primaryColorPurple,(){
+        backgroundColor: commonBackGroundColor,
+        appBar: commonAppBarBack('Students', primaryColorPurple,(){
           ChildrenController.to.onInit();
         }),
         body: GetBuilder<ChildrenController>(

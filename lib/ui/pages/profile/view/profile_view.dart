@@ -1,3 +1,4 @@
+import 'package:cluster_arabia/res/colors.dart';
 import 'package:cluster_arabia/ui/pages/home_stack_dashboard/bind/home_stack_dashboard_bind.dart';
 import 'package:cluster_arabia/ui/pages/profile/view/profile_more.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +16,9 @@ class ProfileView extends StatelessWidget {
        return false;
       },
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: const Color.fromRGBO(242, 250, 251, 1),
+          backgroundColor: Colors.white,
           leading: InkWell(
               onTap: () {
                 HomeStackDashboardController.to.changeTabIndex(0);

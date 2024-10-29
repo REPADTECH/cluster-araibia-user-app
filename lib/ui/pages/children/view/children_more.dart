@@ -124,8 +124,8 @@ class ListPart extends StatelessWidget {
                               imageUrl: (data.img ?? ''),
                               placeholder: (context, url) =>
                                   const CircularProgressIndicator(),
-                              width: 25,
-                              height: 25,
+                              width: 40,
+                              height: 40,
                               errorWidget: (context, url, error) =>
                                   const Icon(Icons.error),
                             ),
@@ -138,7 +138,7 @@ class ListPart extends StatelessWidget {
                               width: 8,
                             ),
                             SizedBox(
-                              width: 140,
+                              width: 180,
                               child: Text(
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
@@ -157,19 +157,15 @@ class ListPart extends StatelessWidget {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Icon(
-                              Icons.location_pin,
-                              size: 15,
-                            ),
                             SizedBox(
                                 width: 270,
                                 child: Text(
-                                  data.address ?? '',
+                                  '${data.std ?? ' '}(${data.division ?? ''})',
                                   style: customStyle(
                                       11.0, Colors.black, FontWeight.normal),
                                 ))
                           ],
-                        ).cPadOnly(t: 8),
+                        ).cPadOnly(t: 4),
                         Row(
                           children: [
                             SvgPicture.asset(
@@ -184,12 +180,13 @@ class ListPart extends StatelessWidget {
                               width: 235,
                               child: Text(
                                   data.school?.schoolName ?? '',
+                                  maxLines: 2,
                                   style: customStyle(
                                       12.0, Colors.black, FontWeight.normal)),
                             ),
 
                           ],
-                        ).cPadOnly(t: 6, b: 10),
+                        ).cPadOnly(t: 2, b: 10),
                         Row(
                           children: [
                             SvgPicture.asset(
@@ -213,63 +210,73 @@ class ListPart extends StatelessWidget {
                                     const Color.fromRGBO(99, 99, 99, 1),
                                     FontWeight.normal)),
                           ],
-                        ).cPadOnly(t: 6),
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                                'AD NO :(${data.admissionNo ?? ''})',
-                                style: customStyle(
-                                    10.0,
-                                    Colors.black,
-                                    FontWeight.normal)).cPadOnly(t: 6),
-
-                            Text(
-                                'View Details',
-                                style: defaultUnder10Line).cPadOnly(t: 6),
-                          ],
-                        ),
+                        ).cPadOnly(t: 1),
+                        // Row(
+                        //   mainAxisSize: MainAxisSize.max,
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   crossAxisAlignment: CrossAxisAlignment.center,
+                        //   children: [
+                        //     Text(
+                        //         'AD NO :(${data.admissionNo ?? ''})',
+                        //         style: customStyle(
+                        //             10.0,
+                        //             Colors.black,
+                        //             FontWeight.normal)).cPadOnly(t: 6),
+                        //
+                        //     Text(
+                        //         'View Details',
+                        //         style: defaultUnder10Line).cPadOnly(t: 6),
+                        //   ],
+                        // ),
                       ],
                     ),
                     Row(
                       children: [
-                        CustomButtonWidget(
-                            backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
-                            borderColor: Colors.black54,
-                            vPadding: 4,
-                            width: (context.cWidth >= 800) ? 55 : 55,
-                            radius: 13,
-                            // buttonTitle: '4(B)',
-                            buttonTitle:
-                                '${data.std ?? ' '}(${data.division ?? ''})',
-                            titleStyle: customStyle(
-                                11.0, Colors.black, FontWeight.normal)),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        CustomButtonWidget(
-                            backgroundColor: (data.status ??true)
+                        // CustomButtonWidget(
+                        //     backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
+                        //     borderColor: Colors.black54,
+                        //     vPadding: 4,
+                        //     width: (context.cWidth >= 800) ? 55 : 55,
+                        //     radius: 13,
+                        //     // buttonTitle: '4(B)',
+                        //     buttonTitle:
+                        //         '${data.std ?? ' '}(${data.division ?? ''})',
+                        //     titleStyle: customStyle(
+                        //         11.0, Colors.black, FontWeight.normal)),
+                        // const SizedBox(
+                        //   width: 5,
+                        // ),
+                        Container(width: 15,
+                        height: 15,
+                          decoration: BoxDecoration(
+                            color: (data.status ??true)
                                 ? const Color.fromRGBO(3, 159, 0, 1)
                                 : Colors.redAccent,
-                            vPadding: 5,
-                            width: (context.cWidth >= 800) ? 70 : 65,
-                            radius: 13,
-                            // buttonTitle: (data?.status==1)?'${(data?.status)}':'${(data?.status)}',
-                            // buttonTitle: "${data?.status ?? '--'}",
-                            buttonTitle: (data.status ??true)?'Active':'Inactive',
-                            titleStyle: customStyle(
-                                11.0, Colors.white, FontWeight.bold)),
+                            shape: BoxShape.circle
+                          ),
+                        )
+
+                        // CustomButtonWidget(
+                        //     backgroundColor: (data.status ??true)
+                        //         ? const Color.fromRGBO(3, 159, 0, 1)
+                        //         : Colors.redAccent,
+                        //     vPadding: 5,
+                        //     width: (context.cWidth >= 800) ? 70 : 65,
+                        //     radius: 13,
+                        //     // buttonTitle: (data?.status==1)?'${(data?.status)}':'${(data?.status)}',
+                        //     // buttonTitle: "${data?.status ?? '--'}",
+                        //     buttonTitle: (data.status ??true)?'Active':'Inactive',
+                        //     titleStyle: customStyle(
+                        //         11.0, Colors.white, FontWeight.bold)),
                       ],
                     ).cPosition(r: 0),
                     // Icon(Icons.location_on_rounded).cPosition(r: 0, t: 35),
-                    SvgPicture.asset(
-                      locationIcon,
-                      color: primaryColorPurple,
-                      width: 30,
-                      height: 30,
-                    ).cPosition(r: 0, t: 30),
+                    // SvgPicture.asset(
+                    //   locationIcon,
+                    //   color: primaryColorPurple,
+                    //   width: 30,
+                    //   height: 30,
+                    // ).cPosition(r: 0, t: 30),
 
 
                     // CustomButtonWidget(

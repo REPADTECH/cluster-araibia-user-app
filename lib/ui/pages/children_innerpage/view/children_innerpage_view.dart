@@ -1,4 +1,5 @@
 
+import 'package:cluster_arabia/res/colors.dart';
 import 'package:cluster_arabia/ui/pages/children_innerpage/bind/children_innerpage_bind.dart';
 import 'package:cluster_arabia/ui/pages/children_innerpage/view/children_innerPage_more.dart';
 import 'package:flutter/material.dart';
@@ -12,9 +13,9 @@ class ChildrenInnerPage extends StatelessWidget {
   Widget build(BuildContext context) {
     ChildrenInnerPageController.to.context=context;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: commonBackGroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: commonBackGroundColor,
         leading: InkWell(
           onTap: (){
             Get.back();

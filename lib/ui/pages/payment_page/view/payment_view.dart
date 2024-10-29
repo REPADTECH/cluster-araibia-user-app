@@ -11,6 +11,7 @@ class PaymentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: commonBackGroundColor,
       appBar: AppBar(
         backgroundColor: primaryColorPurple,
         leading: IconButton(

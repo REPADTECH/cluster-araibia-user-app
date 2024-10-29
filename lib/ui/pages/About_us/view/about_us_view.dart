@@ -9,6 +9,7 @@ class AboutUsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: commonBackGroundColor,
       appBar: commonAppBarBack('About Us', primaryColorPurple,(){
       }),
       body: Column(children: [

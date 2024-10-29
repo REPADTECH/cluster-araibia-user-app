@@ -172,7 +172,7 @@ class HomeStackDashboard extends StatelessWidget {
                     width: 25,
                   ),
                 ),
-                label: 'Children',
+                label: 'Students',
                 backgroundColor: Colors.white,
               ),
               BottomNavigationBarItem(
@@ -327,7 +327,7 @@ class HomeDrawer extends StatelessWidget {
                       selected: false,
                     ).cPadSymmetric(h: 8),
                     ListTileItem(
-                      name: 'Children',
+                      name: 'Students',
                       icon: studentsIcon,
                       onTap: () {
                         Get.back();

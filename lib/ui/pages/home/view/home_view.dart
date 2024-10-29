@@ -16,6 +16,7 @@ class HomePage extends StatelessWidget {
     HomeController.to.context = context;
     return GetBuilder<HomeController>(builder: (logic) {
       return Scaffold(
+        backgroundColor: commonBackGroundColor,
         // extendBodyBehindAppBar: true,
         appBar: AppBar(
           backgroundColor: primaryColorPurple,
@@ -48,7 +49,6 @@ class HomePage extends StatelessWidget {
 
           ],
         ),
-        backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
         // drawer: const HomeDrawer(),
         // key: HomeController.to.scaffoldKey,
         body: SingleChildScrollView(

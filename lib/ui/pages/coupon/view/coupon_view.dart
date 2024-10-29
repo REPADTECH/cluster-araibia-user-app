@@ -10,6 +10,7 @@ class CouponPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: commonBackGroundColor,
         appBar: commonAppBarBack('Gift Voucher', primaryColorPurple, () {
           CouponController.to.onInit();
         }),

@@ -17,7 +17,7 @@ class InvoicePage extends StatelessWidget {
         return false;
       },
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: commonBackGroundColor,
         appBar: commonAppBarBack('Invoices', primaryColorPurple, () {
           InvoiceController.to.onInit();
         }),

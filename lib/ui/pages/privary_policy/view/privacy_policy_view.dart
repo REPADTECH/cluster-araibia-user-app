@@ -9,6 +9,7 @@ class PrivacyPolicy extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: commonBackGroundColor,
       appBar: commonAppBarBack('Privacy Policy', primaryColorPurple,(){}),
       body: Column(children: [
         ListView.builder(

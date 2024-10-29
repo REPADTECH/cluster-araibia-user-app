@@ -13,6 +13,7 @@ class ContactUs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: commonBackGroundColor,
       appBar: commonAppBarBack( 'Contact Us', primaryColorPurple,(){
         ContactUsController.to.onInit();
       }),
