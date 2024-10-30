@@ -142,9 +142,11 @@ class FirstPart extends StatelessWidget {
                           .cGetFormattedDate(format: 'MMM yyyy'),
                       profileImg: (data?.img),
                       name: data?.student?.name ?? '',
-                    ).cPadOnly(l: (i == 0) ? 0 : 15);
+                    ).cPadOnly(l: (i == 0) ? 30 : 15);
                   }),
-            ).cPadOnly(t: 72, l: 30),
+            ).cPadOnly(
+              t: 72,
+            ),
         ],
       );
     });
@@ -255,7 +257,7 @@ class BannerSection extends StatelessWidget {
         children: [
           CarouselSlider.builder(
             options: CarouselOptions(
-              aspectRatio: 2.01,
+              aspectRatio: 1.96,
               viewportFraction: 0.8,
               initialPage: 0,
               enableInfiniteScroll: true,
@@ -271,14 +273,19 @@ class BannerSection extends StatelessWidget {
             itemCount: logic.sliderModel?.data?.length ?? 0,
             itemBuilder:
                 (BuildContext context, int itemIndex, int pageViewIndex) =>
-                    CachedNetworkImage(
-              imageUrl: logic.sliderModel?.data?[itemIndex].img ??
-                  'https://pleased-uniquely-bat.ngrok-free.app/assets/default_image.jpeg',
-              errorWidget: (context, url, error) => const Icon(Icons.error),
+                    Container(
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  image: DecorationImage(
+                    image: NetworkImage(
+                        logic.sliderModel?.data?[itemIndex].img ?? ''),
+                    fit: BoxFit.fill,
+                  )),
             ),
-          ),
+          ).cPadOnly(t: 10, b: 10),
         ],
-      ).cPadOnly(t: 4);
+      );
     });
   }
 }
@@ -292,7 +299,7 @@ class BillOverView extends StatelessWidget {
       return Container(
         // height: 135,
         width: context.cWidth,
-        decoration:  BoxDecoration(
+        decoration: BoxDecoration(
           color: commonBackGroundColor,
         ),
         child: Column(
@@ -301,11 +308,9 @@ class BillOverView extends StatelessWidget {
             Text('Bills Dues',
                 // 'Overview of Billing for ${(logic.startDatePass.cGetFormattedDate(format: 'MMM-yyyy'))}',
                 style: customStyle(16.0, Colors.black, FontWeight.bold)),
-
             const SizedBox(
               height: 8,
             ),
-
             const SizedBox(
               height: 10,
             ),
@@ -339,13 +344,10 @@ class BillOverView extends StatelessWidget {
                               ((data.taxAmount ?? 0) / 100).toStringAsFixed(2));
                     },
                   ).cPadOnly(t: (i == 0) ? 0 : 10);
-
                 }),
-
             const SizedBox(
               height: 8,
             ),
-
           ],
         ).cPadOnly(l: 10, r: 10, t: 10),
       );
@@ -424,28 +426,36 @@ class TransactionItem extends StatelessWidget {
                 )
               ],
             ),
-             Row(
+            Row(
               children: [
                 const VerticalDivider(
                   width: 1,
                   color: Colors.grey,
                 ),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
                 Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text('SAR',
-                    style: customStyle(12.0, Colors.blue, FontWeight.bold),
+                    Text(
+                      'SAR',
+                      style: customStyle(12.0, Colors.blue, FontWeight.bold),
                     ),
-                    SizedBox(height: 5,),
-                    Text(amount,
-                    style: customStyle(16.0, Colors.blue, FontWeight.bold),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      amount,
+                      style: customStyle(16.0, Colors.blue, FontWeight.bold),
                     )
                   ],
                 ),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
                 InkWell(
                   onTap: onclick,
                   child: Container(
@@ -456,8 +466,9 @@ class TransactionItem extends StatelessWidget {
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     ),
                     child: Center(
-                      child: Text('Pay Now',
-                      style: customStyle(12.0, Colors.white, FontWeight.bold),
+                      child: Text(
+                        'Pay Now',
+                        style: customStyle(12.0, Colors.white, FontWeight.bold),
                       ),
                     ),
                   ),
@@ -577,13 +588,15 @@ void payBillPopup({
                           style:
                               customStyle(14.0, Colors.black, FontWeight.bold),
                         ),
-                        SizedBox(height: 3,),
+                        SizedBox(
+                          height: 3,
+                        ),
                         Text(
                           studentName,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: customStyle(
-                              12.0, Colors.black, FontWeight.bold),
+                          style:
+                              customStyle(12.0, Colors.black, FontWeight.bold),
                         ),
                       ],
                     ),
