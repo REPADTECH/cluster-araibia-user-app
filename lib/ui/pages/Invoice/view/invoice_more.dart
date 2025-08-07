@@ -65,21 +65,30 @@ class StudentDropDown extends StatelessWidget {
       child: GetBuilder<InvoiceController>(
         builder: (logic) {
           return DropdownSearch<student.DataList>(
-            dropdownButtonProps: DropdownButtonProps(
-                padding: const EdgeInsets.only(right: 8),
-                constraints: const BoxConstraints(maxWidth: 20),
-                isVisible: logic.billFilterStudentChooses == null),
-            clearButtonProps: ClearButtonProps(
-              constraints: const BoxConstraints(maxWidth: 30),
-              padding: const EdgeInsets.only(right: 10, left: 10),
-              isVisible: logic.billFilterStudentChooses !=
-                  null, // Show clear button only if an item is selected
-              icon: const Icon(Icons.clear, size: 20),
-            ),
-            dropdownDecoratorProps: DropDownDecoratorProps(
-              dropdownSearchDecoration: InputDecoration(
+            key: ValueKey('studentFilter'),
+
+            // ────────────────────────────────────────────────────────────────────────────
+            // your selection logic
+            selectedItem: logic.studentModelList?.data?.dataList
+                ?.firstWhere((e) => e.id == logic.filterChooses,
+                orElse: () => student.DataList(
+                  id: '',
+                  studentName: 'Filter with child',
+                )),
+            onChanged: (student.DataList? v) {
+              logic.invoiceList.clear();
+              logic.billFilterStudentChooses = v;
+              logic.filterChooses = v?.id ?? '';
+              logic.getInvoiceList();
+            },
+            enabled: true,
+
+            // ────────────────────────────────────────────────────────────────────────────
+            // 1) decoratorProps now takes `decoration`, not `dropdownSearchDecoration`:
+            decoratorProps: DropDownDecoratorProps(
+              decoration: InputDecoration(
                 contentPadding:
-                    const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                 disabledBorder: InputBorder.none,
                 focusColor: Colors.black,
                 focusedBorder: OutlineInputBorder(
@@ -90,35 +99,53 @@ class StudentDropDown extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   gapPadding: 15,
                 ),
-                hintText:
-                    'Filter with Student', // Show hint if no selection is made
+                hintText: 'Filter with Student',
               ),
             ),
+
+            // ────────────────────────────────────────────────────────────────────────────
+            // 2) suffixProps controls the “clear” (×) and the suffix icon group:
+            suffixProps: DropdownSuffixProps(
+              // showClearButton: logic.billFilterStudentChooses != null,
+              clearButtonProps: ClearButtonProps(
+                constraints: const BoxConstraints(maxWidth: 30),
+                padding: const EdgeInsets.only(right: 10, left: 10),
+                icon: const Icon(Icons.clear, size: 20),
+              ),
+              // if you want to override the default arrow icons, you could also do:
+              // dropdownButtonProps: DropdownButtonProps(
+              //   iconClosed: Icon(Icons.keyboard_arrow_down),
+              //   iconOpened: Icon(Icons.keyboard_arrow_up),
+              // ),
+            ),
+
+            // ────────────────────────────────────────────────────────────────────────────
+            // 3) clickProps controls whether that little arrow actually shows up at all:
+            // clickProps: ClickProps(
+            //   // showDropdownButton: logic.billFilterStudentChooses == null,
+            //   dropdownButtonProps: DropdownButtonProps(
+            //     padding: const EdgeInsets.only(right: 8),
+            //     constraints: const BoxConstraints(maxWidth: 20),
+            //   ),
+            // ),
+
+            // ────────────────────────────────────────────────────────────────────────────
+            // 4) items now must be a sync or async function:
+            items: (String? filter, LoadProps? lp) {
+              return logic.studentModelList?.data?.dataList
+                  ?? <student.DataList>[];
+            },
+
+            // ────────────────────────────────────────────────────────────────────────────
+            // 5) everything else stays the same:
             itemAsString: (student.DataList v) => v.studentName ?? '',
+            compareFn: (a, b) => a.id == b.id,
             popupProps: PopupProps.menu(
               fit: FlexFit.loose,
-              menuProps: MenuProps(
-                borderRadius: BorderRadius.circular(10),
-              ),
+              menuProps: MenuProps(borderRadius: BorderRadius.circular(10)),
               showSearchBox: false,
               showSelectedItems: false,
-              disabledItemFn: (student.DataList s) => (s.gender ?? '')
-                  .startsWith('I'), // Disable items starting with 'I'
-            ),
-            items: logic.studentModelList?.data?.dataList ?? [],
-            enabled: true,
-            onChanged: (value) {
-              logic.invoiceList.clear(); // Clear list on change
-              logic.billFilterStudentChooses = value;
-              logic.filterChooses = value?.id ?? '';
-              logic.getInvoiceList(); // Rebuild the invoice list
-            },
-            selectedItem: logic.studentModelList?.data?.dataList?.firstWhere(
-              (element) => element.id == logic.filterChooses,
-              orElse: () => student.DataList(
-                id: '', // Provide default values
-                studentName: 'Filter with child',
-              ), // Default DataList instance
+              disabledItemFn: (s) => (s.gender ?? '').startsWith('I'),
             ),
           ).cToCenter; // Center the widget using your extension
         },
