@@ -152,9 +152,9 @@ class LoginPage extends StatelessWidget {
                                                     contentPadding:
                                                         const EdgeInsets.only(
                                                             bottom: 5),
-                                                    hintText: 'Enter Email',
+                                                    hintText: 'Enter Mobile Number',
                                                     hintStyle: customStyle(
-                                                        15.0,
+                                                        14.0,
                                                         Colors.white,
                                                         FontWeight.normal)))
                                             .cPadOnly(l: 10),

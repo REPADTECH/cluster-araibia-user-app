@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
     //   initState: (_) {},
     //   builder: (logic) {
     return GetMaterialApp(
-      title: 'Parent App',
+      title: 'RaCo Transport',
       debugShowCheckedModeBanner: false,
       initialRoute: Routes.splash,
       // translations: LocaleString(),
