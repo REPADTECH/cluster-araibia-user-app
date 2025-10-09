@@ -129,6 +129,7 @@ class LoginPage extends StatelessWidget {
                                       child: SizedBox(
                                         width: 200,
                                         child: TextFormField(
+                                            maxLength: 10, // exactly 10 digits allowed
                                                 style: customStyle(
                                                     17.0,
                                                     Colors.white,
@@ -144,8 +145,8 @@ class LoginPage extends StatelessWidget {
                                                 validator: (text) =>
                                                     validateLoginPage(
                                                       value: text!),
-                                                // keyboardType:
-                                                //     TextInputType.number,
+                                                keyboardType:
+                                                    TextInputType.number,
                                                 decoration: InputDecoration(
                                                     counterText: '',
                                                     border: InputBorder.none,
