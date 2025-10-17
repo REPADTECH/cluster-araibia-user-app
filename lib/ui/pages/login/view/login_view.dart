@@ -142,9 +142,9 @@ class LoginPage extends StatelessWidget {
                                                 },
                                                 controller:
                                                     LoginController.to.mob,
-                                                validator: (text) =>
-                                                    validateLoginPage(
-                                                      value: text!),
+                                                // validator: (text) =>
+                                                //     validateLoginPage(
+                                                //       value: text!),
                                                 keyboardType:
                                                     TextInputType.number,
                                                 decoration: InputDecoration(
