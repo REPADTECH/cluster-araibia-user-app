@@ -1,5 +1,6 @@
 import 'package:cluster_arabia/res/colors.dart';
 import 'package:cluster_arabia/ui/pages/About_us/bind/about_us_bind.dart';
+import 'package:cluster_arabia/ui/pages/terms_and_conditions/bind/terms_bind.dart';
 import 'package:cluster_arabia/utilities/common_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_utils/flutter_custom_utils.dart';
@@ -15,7 +16,7 @@ class TermsPage extends StatelessWidget {
       backgroundColor: commonBackGroundColor,
       appBar: commonAppBarBack('Terms And Condition', primaryColorPurple,(){
       }),
-      body: GetBuilder<AboutUsController>(
+      body: GetBuilder<TermsAndConditionController>(
           builder: (logic) {
             return WebViewWidget(controller: logic.webViewController);
           }
